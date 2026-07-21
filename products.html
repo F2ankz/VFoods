@@ -63,6 +63,12 @@
 .prod-card-brand { font-size:.72rem; color:rgba(255,255,255,0.85); font-weight:400; }
 /* NEW flag */
 .prod-card-flag { position:absolute; top:10px; right:10px; z-index:2; padding:4px 9px; border-radius:6px; background:var(--gold,#FFD35C); color:#5a2a00; font-size:.6rem; font-weight:800; letter-spacing:.1em; font-family:'Sarabun',sans-serif; box-shadow:0 4px 10px rgba(0,0,0,.25); }
+/* faint white centered logo watermark over the product image (NOT the flavor tunnel) */
+.prod-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:190px; z-index:1; pointer-events:none;
+  background:url("img/watermark-white.png") center/60% no-repeat; opacity:.32;
+  filter:drop-shadow(0 1px 2px rgba(0,0,0,.28));
+}
 /* Shine sweep */
 .prod-card::after {
   content:''; position:absolute; top:0; left:-70%; width:50%; height:100%;
@@ -81,7 +87,7 @@
 .cat-float:hover { animation-play-state:paused; transform:rotate(15deg) scale(1.1); }
 
 @media(max-width:900px) { .prod-cards { grid-template-columns:repeat(3,1fr); } }
-@media(max-width:640px) { .prod-cards { grid-template-columns:repeat(2,1fr); } .prod-card-img { height:150px; } }
+@media(max-width:640px) { .prod-cards { grid-template-columns:repeat(2,1fr); } .prod-card-img { height:150px; } .prod-card::before { height:150px; } }
 
 /* ซ่อนไอคอนหมวดหมู่ (แบดจ์อีโมจิ) */
 .cat-badge { display:none; }
@@ -217,15 +223,15 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
     <div class="tunnel-bg"><i class="ta"></i><i class="tb"></i></div>
     <div class="tunnel-rings" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
     <div class="tunnel-scene">
-      <a class="gate" href="#sticks"      data-name="ขนมขาไก่"           data-fc="#FFC94D" style="--fc:#FFC94D"><span class="gate-ring"></span><img class="gate-img" src="img/products/c1-5flavor.webp" alt=""><b>Biscuit Sticks</b><small>ขนมขาไก่</small></a>
-      <a class="gate" href="#biscuit"     data-name="บิสกิตและแครกเกอร์"  data-fc="#F49B42" style="--fc:#F49B42"><span class="gate-ring"></span><img class="gate-img" src="img/products/c2-english.webp" alt=""><b>Biscuit &amp; Cracker</b><small>บิสกิตและแครกเกอร์</small></a>
-      <a class="gate" href="#cream"       data-name="บิสกิตสอดไส้"         data-fc="#FFE9B0" style="--fc:#FFE9B0"><span class="gate-ring"></span><img class="gate-img" src="img/products/c3-bearchoc.webp" alt=""><b>Cream Filled</b><small>บิสกิตสอดไส้</small></a>
-      <a class="gate" href="#jam"         data-name="แยมสับปะรด"          data-fc="#FFE14D" style="--fc:#FFE14D"><span class="gate-ring"></span><img class="gate-img" src="img/products/c4-donut.webp" alt=""><b>Pineapple Jam</b><small>บิสกิตสอดไส้แยมสับปะรด</small></a>
-      <a class="gate" href="#wafer-stick" data-name="เวเฟอร์สติ๊ก"         data-fc="#B8763B" style="--fc:#B8763B"><span class="gate-ring"></span><img class="gate-img" src="img/products/c5-vochoc.webp" alt=""><b>Rolled Wafer</b><small>เวเฟอร์สติ๊ก</small></a>
-      <a class="gate" href="#sandwich"    data-name="คุ้กกี้สอดไส้ครีม"      data-fc="#FFF4E8" style="--fc:#FFF4E8"><span class="gate-ring"></span><img class="gate-img" src="img/products/c6-daisychoc.webp" alt=""><b>Sandwich Cookies</b><small>คุ้กกี้สอดไส้ครีม</small></a>
-      <a class="gate" href="#snack"       data-name="ขนมทานเล่น"          data-fc="#FF9A3C" style="--fc:#FF9A3C"><span class="gate-ring"></span><img class="gate-img" src="img/products/c7-friesbbq.webp" alt=""><b>Snack</b><small>ขนมทานเล่น</small></a>
-      <a class="gate" href="#wafer"       data-name="เวเฟอร์แผ่น"          data-fc="#FF7FA0" style="--fc:#FF7FA0"><span class="gate-ring"></span><img class="gate-img" src="img/products/c8-choc.webp" alt=""><b>Wafer</b><small>เวเฟอร์แผ่น</small></a>
-      <a class="gate" href="#fried"       data-name="ตัวทอด"              data-fc="#FFB347" style="--fc:#FFB347"><span class="gate-ring"></span><img class="gate-img" src="img/products/c9-shrimpgrid.webp" alt=""><b>Fried Snacks</b><small>ตัวทอด</small></a>
+      <a class="gate" href="#sticks"      data-name="ขนมขาไก่"           data-fc="#FFC94D" style="--fc:#FFC94D"><span class="gate-ring"></span><img class="gate-img" src="img/products/c1-5flavor.webp?v=2" alt=""><b>Biscuit Sticks</b><small>ขนมขาไก่</small></a>
+      <a class="gate" href="#biscuit"     data-name="บิสกิตและแครกเกอร์"  data-fc="#F49B42" style="--fc:#F49B42"><span class="gate-ring"></span><img class="gate-img" src="img/products/c2-english.webp?v=2" alt=""><b>Biscuit &amp; Cracker</b><small>บิสกิตและแครกเกอร์</small></a>
+      <a class="gate" href="#cream"       data-name="บิสกิตสอดไส้"         data-fc="#FFE9B0" style="--fc:#FFE9B0"><span class="gate-ring"></span><img class="gate-img" src="img/products/c3-bearchoc.webp?v=2" alt=""><b>Cream Filled</b><small>บิสกิตสอดไส้</small></a>
+      <a class="gate" href="#jam"         data-name="แยมสับปะรด"          data-fc="#FFE14D" style="--fc:#FFE14D"><span class="gate-ring"></span><img class="gate-img" src="img/products/c4-donut.webp?v=2" alt=""><b>Pineapple Jam</b><small>บิสกิตสอดไส้แยมสับปะรด</small></a>
+      <a class="gate" href="#wafer-stick" data-name="เวเฟอร์สติ๊ก"         data-fc="#B8763B" style="--fc:#B8763B"><span class="gate-ring"></span><img class="gate-img" src="img/products/c5-vochoc.webp?v=2" alt=""><b>Rolled Wafer</b><small>เวเฟอร์สติ๊ก</small></a>
+      <a class="gate" href="#sandwich"    data-name="คุ้กกี้สอดไส้ครีม"      data-fc="#FFF4E8" style="--fc:#FFF4E8"><span class="gate-ring"></span><img class="gate-img" src="img/products/c6-daisychoc.webp?v=2" alt=""><b>Sandwich Cookies</b><small>คุ้กกี้สอดไส้ครีม</small></a>
+      <a class="gate" href="#snack"       data-name="ขนมทานเล่น"          data-fc="#FF9A3C" style="--fc:#FF9A3C"><span class="gate-ring"></span><img class="gate-img" src="img/products/c7-friesbbq.webp?v=2" alt=""><b>Snack</b><small>ขนมทานเล่น</small></a>
+      <a class="gate" href="#wafer"       data-name="เวเฟอร์แผ่น"          data-fc="#FF7FA0" style="--fc:#FF7FA0"><span class="gate-ring"></span><img class="gate-img" src="img/products/c8-choc.webp?v=2" alt=""><b>Wafer</b><small>เวเฟอร์แผ่น</small></a>
+      <a class="gate" href="#fried"       data-name="ตัวทอด"              data-fc="#FFB347" style="--fc:#FFB347"><span class="gate-ring"></span><img class="gate-img" src="img/products/c9-shrimpgrid.webp?v=2" alt=""><b>Fried Snacks</b><small>ตัวทอด</small></a>
     </div>
     <div class="tunnel-ui">
       <div class="tunnel-label"><b id="tunnel-name">ขนมขาไก่</b><span id="tunnel-count">01 / 09</span></div>
@@ -245,14 +251,14 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
     </div>
   </div>
   <div class="prod-cards">
-    <div class="prod-card reveal" style="--d:.05s"><img class="prod-card-img" src="img/products/c1-5flavor.webp" alt="ขนมขาไก่ 5 รสชาติ" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ขนมขาไก่ 5 รสชาติ</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal" style="--d:.1s"><img class="prod-card-img" src="img/products/c1-salty.webp" alt="ขาไก่แท่งเค็ม" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ขาไก่แท่งเค็ม</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal" style="--d:.15s"><img class="prod-card-img" src="img/products/c1-kingkong.webp" alt="คิงคอง" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">คิงคอง</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal" style="--d:.2s"><img class="prod-card-img" src="img/products/c1-nongthong.webp" alt="น่องทอง" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">น่องทอง</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal" style="--d:.25s"><img class="prod-card-img" src="img/products/c1-busarakam.webp" alt="บุษราคัม" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">บุษราคัม</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal" style="--d:.3s"><img class="prod-card-img" src="img/products/c1-pooja.webp" alt="ปูจ๋า" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ปูจ๋า</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal" style="--d:.35s"><img class="prod-card-img" src="img/products/c1-poopet.webp" alt="ปูเผ็ด" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ปูเผ็ด</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal" style="--d:.4s"><img class="prod-card-img" src="img/products/c1-pile.webp" alt="ขาไก่กอง" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ขนมขาไก่ (แบบกอง)</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal" style="--d:.05s"><img class="prod-card-img" src="img/products/c1-5flavor.webp?v=2" alt="ขนมขาไก่ 5 รสชาติ" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ขนมขาไก่ 5 รสชาติ</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal" style="--d:.1s"><img class="prod-card-img" src="img/products/c1-salty.webp?v=2" alt="ขาไก่แท่งเค็ม" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ขาไก่แท่งเค็ม</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal" style="--d:.15s"><img class="prod-card-img" src="img/products/c1-kingkong.webp?v=2" alt="คิงคอง" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">คิงคอง</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal" style="--d:.2s"><img class="prod-card-img" src="img/products/c1-nongthong.webp?v=2" alt="น่องทอง" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">น่องทอง</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal" style="--d:.25s"><img class="prod-card-img" src="img/products/c1-busarakam.webp?v=2" alt="บุษราคัม" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">บุษราคัม</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal" style="--d:.3s"><img class="prod-card-img" src="img/products/c1-pooja.webp?v=2" alt="ปูจ๋า" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ปูจ๋า</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal" style="--d:.35s"><img class="prod-card-img" src="img/products/c1-poopet.webp?v=2" alt="ปูเผ็ด" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ปูเผ็ด</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal" style="--d:.4s"><img class="prod-card-img" src="img/products/c1-pile.webp?v=2" alt="ขาไก่กอง" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ขนมขาไก่ (แบบกอง)</div><div class="prod-card-brand">VFoods</div></div></div>
   </div>
 </section>
 
@@ -265,14 +271,14 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
     </div>
   </div>
   <div class="prod-cards">
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c2-thinbiscuit.webp" alt="บิสกิตบางรสดั้งเดิม" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">บิสกิตบางรสดั้งเดิม</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c2-thincracker.webp" alt="แครกเกอร์บางรสดั้งเดิม" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">แครกเกอร์บางรสดั้งเดิม</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c2-english.webp" alt="อิงลิชแครกเกอร์" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">อิงลิชแครกเกอร์</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c2-seaweed.webp" alt="อิงลิชแครกเกอร์สาหร่าย" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">อิงลิชแครกเกอร์สาหร่าย</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c2-sesame.webp" alt="บิสกิตงาทอง" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">บิสกิตงาทอง</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c2-minicracker.webp" alt="มินิครีมแครกเกอร์" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">มินิครีมแครกเกอร์</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c2-abc.webp" alt="บิสกิต ABC" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">บิสกิต ABC</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c2-shark.webp" alt="บิสกิตฉลาม" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">บิสกิตฉลาม</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c2-thinbiscuit.webp?v=2" alt="บิสกิตบางรสดั้งเดิม" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">บิสกิตบางรสดั้งเดิม</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c2-thincracker.webp?v=2" alt="แครกเกอร์บางรสดั้งเดิม" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">แครกเกอร์บางรสดั้งเดิม</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c2-english.webp?v=2" alt="อิงลิชแครกเกอร์" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">อิงลิชแครกเกอร์</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c2-seaweed.webp?v=2" alt="อิงลิชแครกเกอร์สาหร่าย" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">อิงลิชแครกเกอร์สาหร่าย</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c2-sesame.webp?v=2" alt="บิสกิตงาทอง" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">บิสกิตงาทอง</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c2-minicracker.webp?v=2" alt="มินิครีมแครกเกอร์" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">มินิครีมแครกเกอร์</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c2-abc.webp?v=2" alt="บิสกิต ABC" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">บิสกิต ABC</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c2-shark.webp?v=2" alt="บิสกิตฉลาม" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">บิสกิตฉลาม</div><div class="prod-card-brand">VFoods</div></div></div>
   </div>
 </section>
 
@@ -285,14 +291,14 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
     </div>
   </div>
   <div class="prod-cards">
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c3-bearchoc.webp" alt="หมีสอดไส้ดับเบิลช็อก" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">หมีสอดไส้ดับเบิลช็อก</div><div class="prod-card-brand">Mr.Teddy</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c3-heechoc.webp" alt="หมีช็อก" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">หมีช็อก</div><div class="prod-card-brand">Mr.Teddy</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c3-flowerchoc.webp" alt="บิสกิตดอกไม้หน้าครีมช็อกโกแลต" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">บิสกิตดอกไม้หน้าครีมช็อกโกแลต</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c3-flowerstraw.webp" alt="บิสกิตดอกไม้หน้าครีมสตรอเบอร์รี่" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">บิสกิตดอกไม้หน้าครีมสตรอเบอร์รี่</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c3-violinchoc.webp" alt="ไวโอลินสอดไส้ช็อกโกแลต" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ไวโอลินสอดไส้ช็อกโกแลต</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c3-violindurian.webp" alt="ไวโอลินสอดไส้ทุเรียน" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ไวโอลินสอดไส้ทุเรียน</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c3-teddy.webp" alt="เทดดี้คุกกี้" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เทดดี้คุกกี้</div><div class="prod-card-brand">Mr.Teddy</div></div></div>
-    <div class="prod-card reveal"><span class="prod-card-flag">NEW</span><img class="prod-card-img" src="img/products/c3-sea.webp" alt="บิสกิตลายท้องทะเล" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">บิสกิตลายท้องทะเล</div><div class="prod-card-brand">VFoods · ใหม่ล่าสุด</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c3-bearchoc.webp?v=2" alt="หมีสอดไส้ดับเบิลช็อก" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">หมีสอดไส้ดับเบิลช็อก</div><div class="prod-card-brand">Mr.Teddy</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c3-heechoc.webp?v=2" alt="หมีช็อก" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">หมีช็อก</div><div class="prod-card-brand">Mr.Teddy</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c3-flowerchoc.webp?v=2" alt="บิสกิตดอกไม้หน้าครีมช็อกโกแลต" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">บิสกิตดอกไม้หน้าครีมช็อกโกแลต</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c3-flowerstraw.webp?v=2" alt="บิสกิตดอกไม้หน้าครีมสตรอเบอร์รี่" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">บิสกิตดอกไม้หน้าครีมสตรอเบอร์รี่</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c3-violinchoc.webp?v=2" alt="ไวโอลินสอดไส้ช็อกโกแลต" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ไวโอลินสอดไส้ช็อกโกแลต</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c3-violindurian.webp?v=2" alt="ไวโอลินสอดไส้ทุเรียน" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ไวโอลินสอดไส้ทุเรียน</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c3-teddy.webp?v=2" alt="เทดดี้คุกกี้" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เทดดี้คุกกี้</div><div class="prod-card-brand">Mr.Teddy</div></div></div>
+    <div class="prod-card reveal"><span class="prod-card-flag">NEW</span><img class="prod-card-img" src="img/products/c3-sea.webp?v=2" alt="บิสกิตลายท้องทะเล" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">บิสกิตลายท้องทะเล</div><div class="prod-card-brand">VFoods · ใหม่ล่าสุด</div></div></div>
   </div>
 </section>
 
@@ -305,14 +311,14 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
     </div>
   </div>
   <div class="prod-cards">
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c4-donut.webp" alt="โดนัทสับปะรด" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">โดนัทสับปะรด</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c4-tartnorn.webp" alt="ทาร์ตหนอนสับปะรด" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ทาร์ตหนอนสับปะรด</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c4-jakthong.webp" alt="จักรทองสับปะรด" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">จักรทองสับปะรด</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c4-mali.webp" alt="มะลิสับปะรด" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">มะลิสับปะรด</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c4-yimchaeng.webp" alt="ยิ้มแฉ่งสับปะรด" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ยิ้มแฉ่งสับปะรด</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c4-cheese.webp" alt="ชีสสอดไส้สับปะรด" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ชีสสอดไส้สับปะรด</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c4-kiaoko.webp" alt="เกี๊ยวโก๊ะไส้สับปะรด" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เกี๊ยวโก๊ะไส้สับปะรด</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c4-english.webp" alt="อิงลิชสับปะรด" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">อิงลิชสับปะรด</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c4-donut.webp?v=2" alt="โดนัทสับปะรด" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">โดนัทสับปะรด</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c4-tartnorn.webp?v=2" alt="ทาร์ตหนอนสับปะรด" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ทาร์ตหนอนสับปะรด</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c4-jakthong.webp?v=2" alt="จักรทองสับปะรด" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">จักรทองสับปะรด</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c4-mali.webp?v=2" alt="มะลิสับปะรด" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">มะลิสับปะรด</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c4-yimchaeng.webp?v=2" alt="ยิ้มแฉ่งสับปะรด" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ยิ้มแฉ่งสับปะรด</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c4-cheese.webp?v=2" alt="ชีสสอดไส้สับปะรด" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ชีสสอดไส้สับปะรด</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c4-kiaoko.webp?v=2" alt="เกี๊ยวโก๊ะไส้สับปะรด" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เกี๊ยวโก๊ะไส้สับปะรด</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c4-english.webp?v=2" alt="อิงลิชสับปะรด" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">อิงลิชสับปะรด</div><div class="prod-card-brand">VFoods</div></div></div>
   </div>
 </section>
 
@@ -325,14 +331,14 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
     </div>
   </div>
   <div class="prod-cards">
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c5-vochoc.webp" alt="เวเฟอร์สติ๊กช็อกโกแลต" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์สติ๊กช็อกโกแลต</div><div class="prod-card-brand">Royal Wafer</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c5-durian.webp" alt="เวเฟอร์สติ๊กทุเรียน" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์สติ๊กทุเรียน</div><div class="prod-card-brand">Royal Wafer</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c5-mango.webp" alt="เวเฟอร์สติ๊กมะม่วง" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์สติ๊กมะม่วง</div><div class="prod-card-brand">Royal Wafer</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c5-lychee.webp" alt="เวเฟอร์สติ๊กลิ้นจี่" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์สติ๊กลิ้นจี่</div><div class="prod-card-brand">Royal Wafer</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c5-thaitea.webp" alt="เวเฟอร์สติ๊กชาไทย" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์สติ๊กชาไทย</div><div class="prod-card-brand">Royal Wafer</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c5-latte.webp" alt="เวเฟอร์สติ๊กลาเต้" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์สติ๊กลาเต้</div><div class="prod-card-brand">Royal Wafer</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c5-rainbow.webp" alt="เวเฟอร์สติ๊กเรนโบว์สตรอเบอร์รี่" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์สติ๊กเรนโบว์สตรอเบอร์รี่</div><div class="prod-card-brand">Royal Wafer</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c5-zebra.webp" alt="เวเฟอร์สติ๊กซีบราช็อกโกแลต" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์สติ๊กซีบราช็อกโกแลต</div><div class="prod-card-brand">Royal Wafer</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c5-vochoc.webp?v=2" alt="เวเฟอร์สติ๊กช็อกโกแลต" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์สติ๊กช็อกโกแลต</div><div class="prod-card-brand">Royal Wafer</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c5-durian.webp?v=2" alt="เวเฟอร์สติ๊กทุเรียน" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์สติ๊กทุเรียน</div><div class="prod-card-brand">Royal Wafer</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c5-mango.webp?v=2" alt="เวเฟอร์สติ๊กมะม่วง" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์สติ๊กมะม่วง</div><div class="prod-card-brand">Royal Wafer</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c5-lychee.webp?v=2" alt="เวเฟอร์สติ๊กลิ้นจี่" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์สติ๊กลิ้นจี่</div><div class="prod-card-brand">Royal Wafer</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c5-thaitea.webp?v=2" alt="เวเฟอร์สติ๊กชาไทย" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์สติ๊กชาไทย</div><div class="prod-card-brand">Royal Wafer</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c5-latte.webp?v=2" alt="เวเฟอร์สติ๊กลาเต้" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์สติ๊กลาเต้</div><div class="prod-card-brand">Royal Wafer</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c5-rainbow.webp?v=2" alt="เวเฟอร์สติ๊กเรนโบว์สตรอเบอร์รี่" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์สติ๊กเรนโบว์สตรอเบอร์รี่</div><div class="prod-card-brand">Royal Wafer</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c5-zebra.webp?v=2" alt="เวเฟอร์สติ๊กซีบราช็อกโกแลต" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์สติ๊กซีบราช็อกโกแลต</div><div class="prod-card-brand">Royal Wafer</div></div></div>
   </div>
 </section>
 
@@ -345,14 +351,14 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
     </div>
   </div>
   <div class="prod-cards">
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c6-daisychoc.webp" alt="คุกกี้เดซี่ช็อกโกแลต" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">คุกกี้เดซี่ช็อกโกแลต</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c6-daisymilk.webp" alt="คุกกี้เดซี่นม" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">คุกกี้เดซี่นม</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c6-daisypandan.webp" alt="คุกกี้เดซี่ใบเตย" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">คุกกี้เดซี่ใบเตย</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c6-thaitea.webp" alt="คุกกี้ชาไทย" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">คุกกี้ชาไทย</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c6-taro.webp" alt="คุกกี้เผือก" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">คุกกี้เผือก</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c6-rabbit.webp" alt="คุกกี้กระต่าย" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">คุกกี้กระต่าย</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c6-vostraw.webp" alt="วีโอ สตรอเบอร์รี่" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">วีโอ สตรอเบอร์รี่</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><span class="prod-card-flag">NEW</span><img class="prod-card-img" src="img/products/c6-galaxy.webp" alt="มินิคุกกี้กาแล็คซี" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">มินิคุกกี้กาแล็คซี</div><div class="prod-card-brand">VFoods · ใหม่ล่าสุด</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c6-daisychoc.webp?v=2" alt="คุกกี้เดซี่ช็อกโกแลต" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">คุกกี้เดซี่ช็อกโกแลต</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c6-daisymilk.webp?v=2" alt="คุกกี้เดซี่นม" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">คุกกี้เดซี่นม</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c6-daisypandan.webp?v=2" alt="คุกกี้เดซี่ใบเตย" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">คุกกี้เดซี่ใบเตย</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c6-thaitea.webp?v=2" alt="คุกกี้ชาไทย" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">คุกกี้ชาไทย</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c6-taro.webp?v=2" alt="คุกกี้เผือก" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">คุกกี้เผือก</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c6-rabbit.webp?v=2" alt="คุกกี้กระต่าย" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">คุกกี้กระต่าย</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c6-vostraw.webp?v=2" alt="วีโอ สตรอเบอร์รี่" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">วีโอ สตรอเบอร์รี่</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><span class="prod-card-flag">NEW</span><img class="prod-card-img" src="img/products/c6-galaxy.webp?v=2" alt="มินิคุกกี้กาแล็คซี" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">มินิคุกกี้กาแล็คซี</div><div class="prod-card-brand">VFoods · ใหม่ล่าสุด</div></div></div>
   </div>
 </section>
 
@@ -365,14 +371,14 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
     </div>
   </div>
   <div class="prod-cards">
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c7-friesbbq.webp" alt="เฟรนช์ฟรายส์ BBQ" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เฟรนช์ฟรายส์ BBQ</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c7-friesshrimp.webp" alt="เฟรนช์ฟรายส์กุ้งสไปซี่" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เฟรนช์ฟรายส์กุ้งสไปซี่</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c7-friestomato.webp" alt="เฟรนช์ฟรายส์มะเขือเทศ" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เฟรนช์ฟรายส์มะเขือเทศ</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c7-manjangbbq.webp" alt="มันจังบาร์บีคิว" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">มันจังบาร์บีคิว</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c7-manjangnori.webp" alt="มันจังโนริ" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">มันจังโนริ</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c7-cornchoc.webp" alt="ข้าวโพดอบช็อกโกแลต" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ข้าวโพดอบช็อกโกแลต</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c7-shrimp.webp" alt="หนวดกุ้ง" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">หนวดกุ้ง</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c7-bomb.webp" alt="บอมบ์บอมบ์" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">บอมบ์บอมบ์</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c7-friesbbq.webp?v=2" alt="เฟรนช์ฟรายส์ BBQ" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เฟรนช์ฟรายส์ BBQ</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c7-friesshrimp.webp?v=2" alt="เฟรนช์ฟรายส์กุ้งสไปซี่" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เฟรนช์ฟรายส์กุ้งสไปซี่</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c7-friestomato.webp?v=2" alt="เฟรนช์ฟรายส์มะเขือเทศ" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เฟรนช์ฟรายส์มะเขือเทศ</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c7-manjangbbq.webp?v=2" alt="มันจังบาร์บีคิว" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">มันจังบาร์บีคิว</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c7-manjangnori.webp?v=2" alt="มันจังโนริ" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">มันจังโนริ</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c7-cornchoc.webp?v=2" alt="ข้าวโพดอบช็อกโกแลต" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ข้าวโพดอบช็อกโกแลต</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c7-shrimp.webp?v=2" alt="หนวดกุ้ง" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">หนวดกุ้ง</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c7-bomb.webp?v=2" alt="บอมบ์บอมบ์" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">บอมบ์บอมบ์</div><div class="prod-card-brand">VFoods</div></div></div>
   </div>
 </section>
 
@@ -385,14 +391,14 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
     </div>
   </div>
   <div class="prod-cards">
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c8-choc.webp" alt="เวเฟอร์แผ่นช็อกโกแลต" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์แผ่นช็อกโกแลต</div><div class="prod-card-brand">Royal Wafer</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c8-milk.webp" alt="เวเฟอร์แผ่นนม" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์แผ่นนม</div><div class="prod-card-brand">Royal Wafer</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c8-coconut.webp" alt="เวเฟอร์แผ่นมะพร้าว" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์แผ่นมะพร้าว</div><div class="prod-card-brand">Royal Wafer</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c8-straw.webp" alt="เวเฟอร์แผ่นสตรอเบอร์รี่" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์แผ่นสตรอเบอร์รี่</div><div class="prod-card-brand">Royal Wafer</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c8-orange.webp" alt="เวเฟอร์แผ่นส้ม" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์แผ่นส้ม</div><div class="prod-card-brand">Royal Wafer</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c8-dicechoc.webp" alt="เวเฟอร์ลูกเต๋าช็อกโกแลต" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์ลูกเต๋าช็อกโกแลต</div><div class="prod-card-brand">Royal Wafer</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c8-diceblue.webp" alt="เวเฟอร์ลูกเต๋าบลูเบอร์รี่" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์ลูกเต๋าบลูเบอร์รี่</div><div class="prod-card-brand">Royal Wafer</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c8-kiochoc.webp" alt="เวเฟอร์คิ้วช็อกโกแลต" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์คิ้วช็อกโกแลต</div><div class="prod-card-brand">Royal Wafer</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c8-choc.webp?v=2" alt="เวเฟอร์แผ่นช็อกโกแลต" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์แผ่นช็อกโกแลต</div><div class="prod-card-brand">Royal Wafer</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c8-milk.webp?v=2" alt="เวเฟอร์แผ่นนม" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์แผ่นนม</div><div class="prod-card-brand">Royal Wafer</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c8-coconut.webp?v=2" alt="เวเฟอร์แผ่นมะพร้าว" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์แผ่นมะพร้าว</div><div class="prod-card-brand">Royal Wafer</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c8-straw.webp?v=2" alt="เวเฟอร์แผ่นสตรอเบอร์รี่" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์แผ่นสตรอเบอร์รี่</div><div class="prod-card-brand">Royal Wafer</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c8-orange.webp?v=2" alt="เวเฟอร์แผ่นส้ม" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์แผ่นส้ม</div><div class="prod-card-brand">Royal Wafer</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c8-dicechoc.webp?v=2" alt="เวเฟอร์ลูกเต๋าช็อกโกแลต" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์ลูกเต๋าช็อกโกแลต</div><div class="prod-card-brand">Royal Wafer</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c8-diceblue.webp?v=2" alt="เวเฟอร์ลูกเต๋าบลูเบอร์รี่" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์ลูกเต๋าบลูเบอร์รี่</div><div class="prod-card-brand">Royal Wafer</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c8-kiochoc.webp?v=2" alt="เวเฟอร์คิ้วช็อกโกแลต" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">เวเฟอร์คิ้วช็อกโกแลต</div><div class="prod-card-brand">Royal Wafer</div></div></div>
   </div>
 </section>
 
@@ -405,9 +411,9 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
     </div>
   </div>
   <div class="prod-cards">
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c9-shrimpgrid.webp" alt="ข้าวเกรียบตารางรสกุ้ง" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ข้าวเกรียบตารางรสกุ้ง</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c9-paprika.webp" alt="ข้าวเกรียบตารางรสปาปริก้า" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ข้าวเกรียบตารางรสปาปริก้า</div><div class="prod-card-brand">VFoods</div></div></div>
-    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c9-shrimptube.webp" alt="ข้าวเกรียบหลอดรสกุ้ง" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ข้าวเกรียบหลอดรสกุ้ง</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c9-shrimpgrid.webp?v=2" alt="ข้าวเกรียบตารางรสกุ้ง" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ข้าวเกรียบตารางรสกุ้ง</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c9-paprika.webp?v=2" alt="ข้าวเกรียบตารางรสปาปริก้า" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ข้าวเกรียบตารางรสปาปริก้า</div><div class="prod-card-brand">VFoods</div></div></div>
+    <div class="prod-card reveal"><img class="prod-card-img" src="img/products/c9-shrimptube.webp?v=2" alt="ข้าวเกรียบหลอดรสกุ้ง" loading="lazy"><div class="prod-card-inner"><div class="prod-card-name">ข้าวเกรียบหลอดรสกุ้ง</div><div class="prod-card-brand">VFoods</div></div></div>
   </div>
 </section>
 

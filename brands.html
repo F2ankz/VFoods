@@ -275,6 +275,28 @@ body { transition:background-color .6s ease; }
 .bc-cnt { font-size:.78rem; font-weight:800; color:#C4160C; background:rgba(229,26,29,.1); padding:4px 12px; border-radius:999px; }
 .bc-title p { color:rgba(43,27,22,.68); font-size:.9rem; font-weight:300; line-height:1.62; }
 .bc-head .cat-toolbar { margin:0; justify-content:flex-end; }
+
+/* ── brand chips selector (replaces the 12-card grid) ── */
+.brand-chips { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:26px; }
+.brand-chip { display:inline-flex; align-items:center; gap:9px; padding:9px 16px 9px 10px; border-radius:999px;
+  background:#fff; border:1.5px solid rgba(142,27,24,.16); cursor:pointer; font-weight:700; font-size:.9rem; color:#8E1B18;
+  box-shadow:0 4px 14px rgba(142,27,24,.06); transition:transform .28s cubic-bezier(.23,1,.32,1), border-color .28s, background .28s, box-shadow .28s; }
+.brand-chip:hover { transform:translateY(-2px); border-color:rgba(229,26,29,.5); }
+.brand-chip.active { background:linear-gradient(135deg,#E51A1D,#FF5A36); color:#fff; border-color:transparent; box-shadow:0 10px 26px rgba(229,26,29,.34); }
+.chip-mono { width:26px; height:26px; border-radius:8px; display:inline-flex; align-items:center; justify-content:center;
+  background:rgba(142,27,24,.1); color:#8E1B18; font-size:.72rem; font-weight:800; }
+.brand-chip.active .chip-mono { background:rgba(255,255,255,.22); color:#fff; }
+.chip-n { font-size:.68rem; font-weight:800; padding:2px 8px; border-radius:999px; background:rgba(142,27,24,.1); color:#8E1B18; }
+.brand-chip.active .chip-n { background:rgba(255,255,255,.25); color:#fff; }
+/* products without dimension data (image-only brands) */
+.prod-dims.prod-nd { justify-content:center; align-items:center; min-height:0; }
+.nd-note { font-size:.7rem; color:rgba(43,27,22,.5); font-weight:600; text-align:center; padding:3px 0; }
+/* faint white centered logo watermark on catalog cards */
+.prod-stage::before {
+  content:''; position:absolute; inset:15%; z-index:2; pointer-events:none;
+  background:url("img/watermark-white.png") center/contain no-repeat; opacity:.32;
+  filter:drop-shadow(0 1px 2px rgba(0,0,0,.28));
+}
 </style>
 <style>
 /* FC Vision Rounded — ฟอนต์พาดหัว (Fontcraft, Bold ตัวเดียว; ประกาศ 100-900 กัน faux-bold) */
@@ -344,201 +366,22 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
 
 <!-- HERO -->
 <div class="page-hero">
-  <span class="eyebrow">12 แบรนด์ · 118 สินค้า</span>
+  <span class="eyebrow">แคตตาล็อกสินค้า · 129 รายการ</span>
   <h1>แบรนด์ของเรา</h1>
-  <p>12 แบรนด์ที่วางใจได้ ครอบคลุมทุกกลุ่มผู้บริโภค — พร้อมข้อมูลขนาดสินค้าและลังจริงจากโรงงาน</p>
-</div>
-
-<!-- ── FLAVOR TIP ── -->
-<div style="background:var(--og3);padding:16px 24px;text-align:center;border-bottom:1px solid rgba(255,255,255,.1);">
-  <p style="font-size:.82rem;color:rgba(255,255,255,.85);font-family:'Sarabun',sans-serif;">
-    <strong>ลองวางเมาส์</strong>บนแบรนด์เพื่อดูรสชาติ — พื้นหลังจะเปลี่ยนสีตามรสชาติของสินค้านั้นๆ
-  </p>
+  <p>รวมสินค้าทุกแบรนด์ในกลุ่มวีฟู้ดส์ พร้อมขนาดสินค้า ขนาดลัง และจำนวนบรรจุจริงจากโรงงาน</p>
 </div>
 
 <!-- ── FLAVOR FILTER ── -->
 <div class="brands-section">
   <div class="brands-inner">
-    <div style="margin-bottom:36px;padding-top:8px;">
-      <div class="sec-eye">Our Brands</div>
-      <h2 class="sec-title reveal">12 แบรนด์ที่คุณไว้ใจ</h2>
-      <p class="sec-desc reveal">แต่ละแบรนด์มีเอกลักษณ์เฉพาะตัว ตอบโจทย์ผู้บริโภคทุกกลุ่ม</p>
+    <div style="margin-bottom:26px;padding-top:8px;">
+      <div class="sec-eye">Product Catalog</div>
+      <h2 class="sec-title reveal">สินค้าทั้งหมดพร้อมขนาดจริง</h2>
+      <p class="sec-desc reveal">เลือกแบรนด์เพื่อดูสินค้าทั้งหมด พร้อมขนาดสินค้า ขนาดลัง และจำนวนบรรจุต่อลัง — อ้างอิงสเปคจริงจากโรงงาน</p>
     </div>
 
-    <!-- Flavor filter -->
-    <div class="flavor-filter">
-      <button class="flt active" data-flavor="all" onclick="filterFlavor(this,'all')">ทั้งหมด</button>
-      <button class="flt" data-flavor="chocolate" onclick="filterFlavor(this,'chocolate')">ช็อคโกแลต</button>
-      <button class="flt" data-flavor="strawberry" onclick="filterFlavor(this,'strawberry')">สตรอเบอรี่</button>
-      <button class="flt" data-flavor="vanilla" onclick="filterFlavor(this,'vanilla')">วานิลลา</button>
-      <button class="flt" data-flavor="mango" onclick="filterFlavor(this,'mango')">มะม่วง</button>
-      <button class="flt" data-flavor="durian" onclick="filterFlavor(this,'durian')">ทุเรียน</button>
-      <button class="flt" data-flavor="coconut" onclick="filterFlavor(this,'coconut')">มะพร้าว</button>
-    </div>
-
-    <!-- BRANDS GRID -->
-    <div class="brands-grid" id="brandsGrid">
-
-      <!-- 1. VFOODS -->
-      <div class="brand-card has-catalog reveal" data-flavors="chocolate,strawberry,vanilla,original" data-bg="linear-gradient(135deg,rgba(200,80,0,.3),rgba(140,40,0,.2))" data-glow="rgba(255,160,60,.2)" style="--brand-glow:rgba(255,160,60,.2);" onmouseenter="brandHover(this)" onmouseleave="brandLeave()" onclick="openBrand('VFOODS')">
-        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">VF</div>
-        <div class="brand-name">VFOODS <span class="brand-tag-new">NEW</span></div>
-        <div class="brand-name-th">แบรนด์หลัก</div>
-        <div class="brand-flavors">
-          <span class="flavor-chip f-choc">ช็อคโกแลต</span>
-          <span class="flavor-chip f-straw">สตรอเบอรี่</span>
-          <span class="flavor-chip f-van">วานิลลา</span>
-        </div>
-        <div class="brand-desc">แบรนด์หลักของกลุ่ม วาไรตี้ ฟู้ดส์ สินค้าพรีเมียมคุณภาพสูง</div>
-        <div class="brand-count">109 สินค้า</div>
-      </div>
-
-      <!-- 2. มิกซ์ -->
-      <div class="brand-card has-catalog reveal" data-flavors="original,seafood,bbq" data-bg="linear-gradient(135deg,rgba(0,100,200,.25),rgba(0,60,140,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()" onclick="openBrand('Mix')">
-        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">Mx</div>
-        <div class="brand-name">มิกซ์</div>
-        <div class="brand-name-th">Mix</div>
-        <div class="brand-flavors">
-          <span class="flavor-chip f-orig">ออริจินัล</span>
-          <span class="flavor-chip f-seafood">ซีฟูด</span>
-          <span class="flavor-chip f-bbq">บาร์บีคิว</span>
-        </div>
-        <div class="brand-desc">ขนมขาไก่รสจัดจ้าน ดั้งเดิม โนริ ฮอตชิลลี่ ไก่เผ็ดเกาหลี</div>
-        <div class="brand-count">4 สินค้า</div>
-      </div>
-
-      <!-- 3. Dear Teddy -->
-      <div class="brand-card reveal" data-flavors="chocolate,strawberry,milk" data-bg="linear-gradient(135deg,rgba(180,30,60,.25),rgba(100,10,30,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()">
-        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">DT</div>
-        <div class="brand-name">Dear Teddy</div>
-        <div class="brand-name-th">เดียร์ เทดดี้</div>
-        <div class="brand-flavors">
-          <span class="flavor-chip f-choc">ช็อคโกแลต</span>
-          <span class="flavor-chip f-straw">สตรอเบอรี่</span>
-          <span class="flavor-chip f-milk">นม</span>
-        </div>
-        <div class="brand-desc">ขนมน่ารักสำหรับเด็ก บรรจุภัณฑ์สวยงาม</div>
-      </div>
-
-      <!-- 4. รอยัล เวเฟอร์ -->
-      <div class="brand-card reveal" data-flavors="chocolate,vanilla,durian" data-bg="linear-gradient(135deg,rgba(150,100,0,.25),rgba(80,50,0,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()">
-        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">RW</div>
-        <div class="brand-name">Royal Wafer</div>
-        <div class="brand-name-th">รอยัล เวเฟอร์</div>
-        <div class="brand-flavors">
-          <span class="flavor-chip f-choc">ช็อคโกแลต</span>
-          <span class="flavor-chip f-van">วานิลลา</span>
-          <span class="flavor-chip f-durian">ทุเรียน</span>
-        </div>
-        <div class="brand-desc">เวเฟอร์พรีเมียม สูตรหลวง รสชาติอันเป็นเอกลักษณ์</div>
-      </div>
-
-      <!-- 5. เซเลเบรท -->
-      <div class="brand-card reveal" data-flavors="vanilla,milk,original" data-bg="linear-gradient(135deg,rgba(200,160,0,.2),rgba(140,100,0,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()">
-        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">Ce</div>
-        <div class="brand-name">Celebrate</div>
-        <div class="brand-name-th">เซเลเบรท</div>
-        <div class="brand-flavors">
-          <span class="flavor-chip f-van">วานิลลา</span>
-          <span class="flavor-chip f-milk">นม</span>
-          <span class="flavor-chip f-orig">ออริจินัล</span>
-        </div>
-        <div class="brand-desc">ขนมสำหรับทุกเทศกาลและโอกาสพิเศษ</div>
-      </div>
-
-      <!-- 6. อินดี้ -->
-      <div class="brand-card reveal" data-flavors="bbq,seafood,original" data-bg="linear-gradient(135deg,rgba(0,60,0,.25),rgba(20,80,20,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()">
-        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">In</div>
-        <div class="brand-name">Indy</div>
-        <div class="brand-name-th">อินดี้</div>
-        <div class="brand-flavors">
-          <span class="flavor-chip f-bbq">บาร์บีคิว</span>
-          <span class="flavor-chip f-seafood">ซีฟูด</span>
-          <span class="flavor-chip f-orig">ออริจินัล</span>
-        </div>
-        <div class="brand-desc">สำหรับคนที่มีสไตล์ รสชาติที่แตกต่าง</div>
-      </div>
-
-      <!-- 7. มิสเตอร์หมี -->
-      <div class="brand-card reveal" data-flavors="chocolate,strawberry,mango" data-bg="linear-gradient(135deg,rgba(160,80,0,.25),rgba(80,40,0,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()">
-        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">MM</div>
-        <div class="brand-name">Mr. Mee</div>
-        <div class="brand-name-th">มิสเตอร์หมี</div>
-        <div class="brand-flavors">
-          <span class="flavor-chip f-choc">ช็อคโกแลต</span>
-          <span class="flavor-chip f-straw">สตรอเบอรี่</span>
-          <span class="flavor-chip f-mango">มะม่วง</span>
-        </div>
-        <div class="brand-desc">น่ารัก สนุกสนาน เหมาะสำหรับเด็กและครอบครัว</div>
-      </div>
-
-      <!-- 8. เบลส -->
-      <div class="brand-card reveal" data-flavors="original,matcha,vanilla" data-bg="linear-gradient(135deg,rgba(20,100,20,.25),rgba(10,60,10,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()">
-        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">Bl</div>
-        <div class="brand-name">Bless</div>
-        <div class="brand-name-th">เบลส</div>
-        <div class="brand-flavors">
-          <span class="flavor-chip f-orig">ออริจินัล</span>
-          <span class="flavor-chip f-matcha">มัทฉะ</span>
-          <span class="flavor-chip f-van">วานิลลา</span>
-        </div>
-        <div class="brand-desc">รสชาติธรรมชาติ สูตรใส่ใจสุขภาพ</div>
-      </div>
-
-      <!-- 9. พิน่า -->
-      <div class="brand-card reveal" data-flavors="coconut,mango,durian" data-bg="linear-gradient(135deg,rgba(0,140,80,.2),rgba(0,80,40,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()">
-        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">Pi</div>
-        <div class="brand-name">Pina</div>
-        <div class="brand-name-th">พิน่า</div>
-        <div class="brand-flavors">
-          <span class="flavor-chip f-coco">มะพร้าว</span>
-          <span class="flavor-chip f-mango">มะม่วง</span>
-          <span class="flavor-chip f-durian">ทุเรียน</span>
-        </div>
-        <div class="brand-desc">รสผลไม้เขตร้อน ความอร่อยแบบไทยๆ</div>
-      </div>
-
-      <!-- 10. มิสเตอร์เทดดี้ -->
-      <div class="brand-card reveal" data-flavors="chocolate,strawberry,vanilla,milk" data-bg="linear-gradient(135deg,rgba(180,30,30,.25),rgba(100,10,10,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()">
-        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">MT</div>
-        <div class="brand-name">Mr. Teddy</div>
-        <div class="brand-name-th">มิสเตอร์เทดดี้</div>
-        <div class="brand-flavors">
-          <span class="flavor-chip f-choc">ช็อคโกแลต</span>
-          <span class="flavor-chip f-straw">สตรอเบอรี่</span>
-          <span class="flavor-chip f-van">วานิลลา</span>
-        </div>
-        <div class="brand-desc">ขนมระดับพรีเมียม บรรจุภัณฑ์หรูหรา</div>
-      </div>
-
-      <!-- 11. เบนจี้ -->
-      <div class="brand-card has-catalog reveal" data-flavors="original" data-bg="linear-gradient(135deg,rgba(180,120,0,.25),rgba(120,70,0,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()" onclick="openBrand('Benjy')">
-        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">Bj</div>
-        <div class="brand-name">Benjy</div>
-        <div class="brand-name-th">เบนจี้</div>
-        <div class="brand-flavors">
-          <span class="flavor-chip f-orig">ข้าวอบกรอบ</span>
-          <span class="flavor-chip f-mango">ฟักทอง</span>
-          <span class="flavor-chip f-straw">มิกซ์เบอร์รี่</span>
-        </div>
-        <div class="brand-desc">ข้าวอบกรอบเพื่อสุขภาพ ผสมฟักทอง มันม่วง และเนื้อผลไม้จริง</div>
-        <div class="brand-count">5 สินค้า</div>
-      </div>
-
-      <!-- 12. ชิโด้ -->
-      <div class="brand-card reveal" data-flavors="coconut,durian,mango,original" data-bg="linear-gradient(135deg,rgba(200,120,0,.2),rgba(120,60,0,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()">
-        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">Ch</div>
-        <div class="brand-name">Chido</div>
-        <div class="brand-name-th">ชิโด้</div>
-        <div class="brand-flavors">
-          <span class="flavor-chip f-coco">มะพร้าว</span>
-          <span class="flavor-chip f-durian">ทุเรียน</span>
-          <span class="flavor-chip f-mango">มะม่วง</span>
-        </div>
-        <div class="brand-desc">รสชาติเอเชียตะวันออกเฉียงใต้ สูตรพิเศษ</div>
-      </div>
-
-    </div><!-- /brands-grid -->
+    <!-- brand selector chips -->
+    <div class="brand-chips" id="brandChips"></div>
 
     <!-- ── INLINE BRAND CATALOG (สินค้าทั้งหมดพร้อมขนาดจริง แยกตามแบรนด์) ── -->
     <div class="brand-catalog" id="catalog">
@@ -635,6 +478,17 @@ initTilt('.brand-card, .pk-card');
   const P = window.BRAND_PRODUCTS || [];
   const state = { brand:'VFOODS', group:'all', q:'' };
 
+  // brand selector order — brands with data + an "Other" bucket for the rest
+  const BRANDS = [
+    { key:'VFOODS',      label:'VFOODS',      mono:'VF' },
+    { key:'Mix',         label:'มิกซ์',        mono:'Mx' },
+    { key:'Benjy',       label:'เบนจี้',       mono:'Bj' },
+    { key:'Dear Teddy',  label:'Dear Teddy',  mono:'DT' },
+    { key:'Royal Wafer', label:'Royal Wafer', mono:'RW' },
+    { key:'Celebrate',   label:'Celebrate',   mono:'Ce' },
+    { key:'Other',       label:'อื่นๆ',        mono:'•', other:['Indy','Mr. Mee','Bless','Pina','Mr. Teddy','Chido'] },
+  ];
+
   const grid   = document.getElementById('catGrid');
   const grpEl  = document.getElementById('catGroup');
   const cntEl  = document.getElementById('catCount');
@@ -645,24 +499,18 @@ initTilt('.brand-card, .pk-card');
   const bcntEl = document.getElementById('bcCnt');
   const descEl = document.getElementById('bcDesc');
   const toolbarEl = document.getElementById('catToolbar');
+  const chipsEl = document.getElementById('brandChips');
 
-  // ── wire the 12 brand cards as the catalog selector ──
-  const cards = [...document.querySelectorAll('.brand-card')];
-  const INFO = {};
-  cards.forEach(c=>{
-    const nameEl = c.querySelector('.brand-name');
-    const nm = nameEl.childNodes[0].textContent.trim();
-    const key = nm==='มิกซ์'?'Mix' : (nm==='Benjy'?'Benjy' : (nm==='VFOODS'?'VFOODS' : nm));
-    const mono = (c.querySelector('.brand-logo-wrap')?.textContent || nm.slice(0,2)).trim();
-    const count = P.filter(p=>p.b===key).length;
-    INFO[key] = { label:nm, mono, count };
-    c.dataset.brandKey = key;
-    c.classList.toggle('no-cat', count===0);
-    if(count===0 && !c.querySelector('.brand-soon')){
-      const s=document.createElement('div'); s.className='brand-soon'; s.textContent='แคตตาล็อกเร็วๆ นี้'; c.appendChild(s);
-    }
-    if(!c.getAttribute('onclick')) c.addEventListener('click', ()=>selectBrand(key));
-  });
+  function brandCount(k){ return k==='Other'?0:P.filter(p=>p.b===k).length; }
+
+  function renderChips(){
+    chipsEl.innerHTML = BRANDS.map(b=>{
+      const n = brandCount(b.key);
+      return `<button class="brand-chip" data-key="${b.key}">
+        <span class="chip-mono">${b.mono}</span> ${b.label}${n?`<span class="chip-n">${n}</span>`:''}</button>`;
+    }).join('');
+    chipsEl.querySelectorAll('.brand-chip').forEach(ch=>ch.onclick=()=>selectBrand(ch.dataset.key));
+  }
 
   // clean numeric: 12.0 -> "12", '-' -> null
   function num(v){
@@ -693,37 +541,50 @@ initTilt('.brand-card, .pk-card');
     grpEl.onchange = ()=>{ state.group=grpEl.value; renderGrid(); };
   }
 
+  function noDims(p){
+    return p.nd || [p.pw,p.pl,p.ph,p.cw,p.cl,p.ch,p.pk].every(x=>x==null||x==='-'||x==='');
+  }
+
   function renderGrid(){
+    // "Other" bucket → list the placeholder brands, no products
+    if(state.brand==='Other'){
+      const b = BRANDS.find(x=>x.key==='Other');
+      cntEl.innerHTML=''; grid.innerHTML='';
+      emptyEl.innerHTML = 'แบรนด์ต่อไปนี้กำลังจัดเตรียมแคตตาล็อกสินค้า เร็วๆ นี้<br><b>'+(b.other||[]).join(' · ')+'</b>';
+      emptyEl.hidden=false; return;
+    }
     const q = state.q.trim().toLowerCase();
     const items = P.filter(p=>
       p.b===state.brand &&
       (state.group==='all' || p.g===state.group) &&
       (!q || (p.n+' '+(p.en||'')).toLowerCase().includes(q))
     );
-    const brandCount = P.filter(p=>p.b===state.brand).length;
-    cntEl.innerHTML = brandCount ? `พบ <b>${items.length}</b> รายการ` : '';
-    emptyEl.textContent = brandCount===0
-      ? `ยังไม่มีข้อมูลสินค้าพร้อมขนาดสำหรับแบรนด์ “${(INFO[state.brand]||{}).label||state.brand}” — เร็วๆ นี้`
-      : 'ไม่พบสินค้าที่ค้นหา';
+    cntEl.innerHTML = `พบ <b>${items.length}</b> รายการ`;
+    emptyEl.textContent = 'ไม่พบสินค้าที่ค้นหา';
     emptyEl.hidden = items.length>0;
-    grid.innerHTML = items.map((p,i)=>`
+    grid.innerHTML = items.map((p,i)=>{
+      const dimBlock = noDims(p)
+        ? `<div class="prod-dims prod-nd"><span class="nd-note">น้ำหนัก ${p.w||'—'} · ขนาดบรรจุ: สอบถามฝ่ายขาย</span></div>`
+        : `<div class="prod-dims">
+            <div class="dim"><span class="dim-ic">${ICON.prod}</span><span class="dim-l">ขนาดสินค้า</span><span class="dim-v">${dims(p.pw,p.pl,p.ph)}</span></div>
+            <div class="dim"><span class="dim-ic">${ICON.carton}</span><span class="dim-l">ขนาดลัง</span><span class="dim-v">${dims(p.cw,p.cl,p.ch)}</span></div>
+            <div class="dim"><span class="dim-ic">${ICON.pack}</span><span class="dim-l">บรรจุ/ลัง</span><span class="dim-v">${packFmt(p.pk)}</span></div>
+          </div>`;
+      return `
       <article class="prod-card" style="animation-delay:${Math.min(i*22,420)}ms">
         <div class="prod-stage">
           <span class="prod-pk">${p.g}</span>
           ${p.w?`<span class="prod-w">${p.w}</span>`:''}
-          <img src="${p.img}" loading="lazy" alt="${p.n.replace(/"/g,'&quot;')}"
+          <img src="${p.img}?v=6" loading="lazy" alt="${p.n.replace(/"/g,'&quot;')}"
                onerror="this.style.opacity=.15;this.onerror=null">
         </div>
         <div class="prod-body">
           <h3 class="prod-name">${p.n}</h3>
           ${p.en?`<div class="prod-en">${p.en}</div>`:''}
-          <div class="prod-dims">
-            <div class="dim"><span class="dim-ic">${ICON.prod}</span><span class="dim-l">ขนาดสินค้า</span><span class="dim-v">${dims(p.pw,p.pl,p.ph)}</span></div>
-            <div class="dim"><span class="dim-ic">${ICON.carton}</span><span class="dim-l">ขนาดลัง</span><span class="dim-v">${dims(p.cw,p.cl,p.ch)}</span></div>
-            <div class="dim"><span class="dim-ic">${ICON.pack}</span><span class="dim-l">บรรจุ/ลัง</span><span class="dim-v">${packFmt(p.pk)}</span></div>
-          </div>
+          ${dimBlock}
         </div>
-      </article>`).join('');
+      </article>`;
+    }).join('');
   }
 
   let t;
@@ -733,21 +594,25 @@ initTilt('.brand-card, .pk-card');
   });
 
   function selectBrand(key, scroll){
+    const b = BRANDS.find(x=>x.key===key) || { key, label:key, mono:key.slice(0,2) };
     state.brand = key; state.group='all'; state.q=''; if(searchEl) searchEl.value='';
-    cards.forEach(c=>c.classList.toggle('selected', c.dataset.brandKey===key));
-    const m = INFO[key] || { label:key, mono:key.slice(0,2), count:0 };
-    monoEl.textContent = m.mono; bnameEl.textContent = m.label;
-    bcntEl.textContent = m.count ? `${m.count} สินค้า` : '';
-    bcntEl.style.display = m.count ? '' : 'none';
-    toolbarEl.style.display = m.count ? '' : 'none';
-    descEl.textContent = m.count
-      ? 'แสดงขนาดสินค้า · ขนาดลัง · จำนวนบรรจุต่อลัง อ้างอิงสเปคจริงจากโรงงาน — คลิกแบรนด์อื่นด้านบนเพื่อสลับดู'
-      : 'ยังไม่มีข้อมูลสินค้าพร้อมขนาดสำหรับแบรนด์นี้ กำลังจัดเตรียม เร็วๆ นี้';
+    chipsEl.querySelectorAll('.brand-chip').forEach(c=>c.classList.toggle('active', c.dataset.key===key));
+    const count = brandCount(key);
+    const hasDims = P.some(p=>p.b===key && !noDims(p));
+    monoEl.textContent = b.mono; bnameEl.textContent = b.label;
+    bcntEl.textContent = count ? `${count} สินค้า` : '';
+    bcntEl.style.display = count ? '' : 'none';
+    toolbarEl.style.display = count ? '' : 'none';
+    descEl.textContent = count
+      ? (hasDims ? 'แสดงขนาดสินค้า · ขนาดลัง · จำนวนบรรจุต่อลัง อ้างอิงสเปคจริงจากโรงงาน — คลิกแบรนด์อื่นเพื่อสลับดู'
+                 : 'สินค้าแบรนด์นี้ (ข้อมูลขนาดบรรจุอยู่ระหว่างจัดเก็บ) — คลิกแบรนด์อื่นเพื่อสลับดู')
+      : 'แบรนด์ในกลุ่มนี้กำลังจัดเตรียมข้อมูลสินค้า เร็วๆ นี้';
     renderGroups(); renderGrid();
     if(scroll!==false) document.getElementById('catalog').scrollIntoView({behavior:'smooth', block:'start'});
   }
   window.openBrand = selectBrand;
 
+  renderChips();
   selectBrand('VFOODS', false); // default, no scroll on load
 })();
 </script>
