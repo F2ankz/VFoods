@@ -71,17 +71,15 @@
   function navSearch(e){ e.preventDefault(); var q=(e.currentTarget.querySelector('input').value||'').trim(); if(!q){return false;} location.href='../products.html?q='+encodeURIComponent(q); return false; }
 </script>
 
-<!-- ═══ HERO — Home slide 1 เลื่อนสกรอลล์คุมเฟรม (scroll-scrub) ═══ -->
-<div id="hero-stage">
-  <section class="hero" id="hero">
-    <canvas id="canvas"></canvas>
-    <div class="hero-copy">
-      <h1 class="hero-heading">อร่อยทุกคำ <span class="accent">ทุกโอกาส</span></h1>
-      <p class="hero-tagline">จากคุกกี้นับร้อยชิ้น สู่แพ็คเกจในมือคุณ — ส่งออกกว่า 30 ประเทศทั่วโลก</p>
-    </div>
-    <div class="scroll-cue" aria-hidden="true"><i></i><span>เลื่อนลง</span></div>
-  </section>
-</div>
+<!-- ═══ HERO — คลิป Home Slide 1 → 2 เล่นต่อกันวนลูป ═══ -->
+<section class="hero" id="hero">
+  <video class="hero-vid show" id="hero-v0" muted playsinline preload="auto" src="media/hero-1.mp4"></video>
+  <video class="hero-vid" id="hero-v1" muted playsinline preload="auto" src="media/hero-2.mp4"></video>
+  <div class="hero-copy">
+    <h1 class="hero-heading">อร่อยทุกคำ <span class="accent">ทุกโอกาส</span></h1>
+    <p class="hero-tagline">จากคุกกี้นับร้อยชิ้น สู่แพ็คเกจในมือคุณ — ส่งออกกว่า 30 ประเทศทั่วโลก</p>
+  </div>
+</section>
 
 <!-- ═══ QUICK BAR — ปุ่ม 3 อันเพียว ๆ ไม่บังจอ ═══ -->
 <div id="quick-bar" aria-label="เมนูด่วน">

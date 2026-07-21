@@ -124,17 +124,17 @@ body::after {
 }
 
 /* ── HERO — cinematic "projection" of the white cookie clip ── */
-.hero { background: radial-gradient(70% 60% at 50% 42%, #F5842A, var(--cv-bg) 72%); }
+.hero { background: radial-gradient(70% 60% at 50% 42%, #E86A18, var(--cv-bg) 70%); }
 /* feather the white-bg clip so its edges melt into the orange universe */
 #canvas {
   -webkit-mask: radial-gradient(125% 82% at 50% 46%, #000 52%, rgba(0,0,0,.35) 80%, transparent 95%);
           mask: radial-gradient(125% 82% at 50% 46%, #000 52%, rgba(0,0,0,.35) 80%, transparent 95%);
 }
-/* warm colour-grade: multiply amber wash → kills harsh white, keeps cookies bright */
+/* warm colour-grade: เบาลงมาก — คลิปมีพื้นส้มอยู่แล้ว ไม่ต้องกลบขาว */
 .hero::before {
   content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
   background: linear-gradient(180deg, #FFE9CB 0%, #FFDCA8 55%, #FFC583 100%);
-  mix-blend-mode: multiply; opacity: .95;
+  mix-blend-mode: multiply; opacity: .28;
 }
 /* vignette to seat the projection into the page */
 .hero::after {

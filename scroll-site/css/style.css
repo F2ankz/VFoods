@@ -82,30 +82,18 @@ a { text-decoration: none; color: inherit; }
 }
 .nav-pill:hover { transform: translateY(-3px); }
 
-/* ═══ HERO — Home slide 1 scroll-scrub ═══ */
-#hero-stage { position: relative; height: 300vh; background: #fff; }
+/* ═══ HERO — คลิปวิดีโอเล่นวนลูป ═══ */
 .hero {
-  position: sticky; top: 0; height: 100vh; min-height: 560px;
-  background: #fff; overflow: hidden;
+  position: relative; height: 100vh; min-height: 560px;
+  background: #D6590C; overflow: hidden;
 }
-#canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.scroll-cue {
-  position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%);
-  z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 7px;
-  font-family: var(--font-display); font-weight: 600; font-size: .72rem;
-  letter-spacing: .18em; text-transform: uppercase; color: var(--red);
-  pointer-events: none;
+.hero-vid {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  opacity: 0; transition: opacity .6s ease;
+  will-change: opacity;
 }
-.scroll-cue i {
-  width: 22px; height: 34px; border-radius: 12px;
-  border: 2px solid var(--red); position: relative;
-}
-.scroll-cue i::after {
-  content: ''; position: absolute; left: 50%; top: 7px; width: 3px; height: 7px;
-  border-radius: 3px; background: var(--red); transform: translateX(-50%);
-  animation: cueScroll 1.5s ease-in-out infinite;
-}
-@keyframes cueScroll { 0%,100% { opacity: 0; transform: translate(-50%,0); } 40% { opacity: 1; } 80% { opacity: 0; transform: translate(-50%,12px); } }
+.hero-vid.show { opacity: 1; }
 .hero-copy {
   position: absolute; left: 50%; top: 76px; transform: translateX(-50%);
   z-index: 3; width: max-content; max-width: 92vw;

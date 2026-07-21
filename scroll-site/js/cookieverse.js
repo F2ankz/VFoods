@@ -241,11 +241,7 @@
 
   /* ── 3. MOUSE-DEPTH PARALLAX + CAMERA ZOOM ───────────────── */
   if (hasGSAP && window.ScrollTrigger) {
-    // camera push-in: clip zooms while scrolling out of the hero
-    gsap.to("#canvas", {
-      scale: 1.14, ease: "none",
-      scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: true }
-    });
+    // camera push-in ปิดไว้: การซูม/รีเพนต์ canvas ใหญ่ระหว่างสกรอลล์ทำให้แลคตอนสกรับเฟรม
     // objects fly apart at different speeds → depth
     objEls.forEach(({ el, depth }) => {
       gsap.to(el, {
@@ -271,7 +267,8 @@
     }
   }
 
-  /* ── 4. PARTICLES: crumbs · sparkles · volumetric orbs ───── */
+  /* ── 4. PARTICLES ── ปิดเพื่อลดแลค (constant fullscreen redraw) ── */
+  if (true) return;   // skip particle system entirely
   const pc = document.createElement("canvas");
   pc.id = "cv-particles";
   hero.appendChild(pc);

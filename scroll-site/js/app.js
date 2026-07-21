@@ -1,121 +1,70 @@
 /* VFOODS — compact landing
-   HERO = scroll-scrub ตอนเดียว: Home Slide 3
-   (frames-b/ = "Home Slide 3.mp4" · 192 เฟรม)
+   HERO = คลิป Home Slide 1 → 2 เล่นต่อกันวนลูป (ไม่มี scroll-scrub แล้ว = ลื่น)
    ปุ่มเมนูด่วนลอยขึ้นมาเอง ไม่บังหน้า เลื่อนต่อได้ปกติ */
-
-const SEQS = [
-  { dir: "frames-b", count: 192 }    /* Home Slide 3 */
-];
-const SCALE = 0.85;
-const TOTAL_FRAMES = SEQS.reduce((s, q) => s + q.count, 0);
-/* map global index 0..TOTAL-1 → {dir, local} */
-function frameSrc(g) {
-  let n = g;
-  for (const q of SEQS) { if (n < q.count) return `${q.dir}/frame_${String(n + 1).padStart(4, "0")}.webp`; n -= q.count; }
-  return null;
-}
 
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-const stage = document.getElementById("hero-stage");
-const hero = document.getElementById("hero");
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
 const loader = document.getElementById("loader");
 const loaderFill = document.getElementById("loader-fill");
 const loaderPercent = document.getElementById("loader-percent");
 const quickBar = document.getElementById("quick-bar");
 
-const frames = new Array(TOTAL_FRAMES).fill(null);
-let curFrame = 0;
-
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 
-/* ── canvas sizing (dpr-aware, self-healing when viewport starts at 0) ── */
-function sizeCanvas() {
-  const w = hero.clientWidth, h = hero.clientHeight;
-  if (w < 10 || h < 10) { setTimeout(sizeCanvas, 300); return; }
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  canvas.width = w * dpr;
-  canvas.height = h * dpr;
-  draw();
-}
-addEventListener("resize", sizeCanvas);
-document.addEventListener("visibilitychange", () => {
-  if (!document.hidden && canvas.width < 10) sizeCanvas();
-});
+/* ── HERO VIDEO SEQUENCER: v0 (slide1) → v1 (slide2) → วน ── */
+const vids = [document.getElementById("hero-v0"), document.getElementById("hero-v1")];
+let active = 0;
 
-function draw() {
-  const img = frames[curFrame];
-  if (!img || canvas.width < 10) return;
-  const cw = canvas.width, ch = canvas.height;
-  const iw = img.naturalWidth, ih = img.naturalHeight;
-  const scale = Math.max(cw / iw, ch / ih) * SCALE;
-  const dw = iw * scale, dh = ih * scale;
-  ctx.fillStyle = "#FFFFFF";
-  ctx.fillRect(0, 0, cw, ch);
-  ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+function showClip(i) {
+  const cur = vids[i], prev = vids[i ^ 1];
+  vids.forEach(v => v && v.classList.remove("show"));
+  if (!cur) return;
+  cur.classList.add("show");
+  try { cur.currentTime = 0; } catch (e) {}
+  const p = cur.play();
+  if (p && p.catch) p.catch(() => {});
+  if (prev) { try { prev.pause(); } catch (e) {} }
 }
 
-/* ── scroll-scrub: ตำแหน่งสกรอลล์ใน #hero-stage → เฟรม ── */
-function scrubProgress() {
-  const total = stage.offsetHeight - window.innerHeight;
-  if (total <= 0) return 0;
-  const top = stage.getBoundingClientRect().top;   /* 0 ที่บนสุด, ลบเมื่อเลื่อนผ่าน */
-  return clamp(-top / total, 0, 1);
-}
-let ticking = false;
-function onScrollScrub() {
-  if (ticking) return;
-  ticking = true;
-  requestAnimationFrame(() => {
-    ticking = false;
-    const p = scrubProgress();
-    const idx = Math.round(p * (TOTAL_FRAMES - 1));
-    if (idx !== curFrame) { curFrame = idx; draw(); }
-  });
-}
-
-/* ── preload ── */
-let loadedCount = 0;
-function bump() {
-  loadedCount++;
-  const pct = Math.round((loadedCount / TOTAL_FRAMES) * 100);
-  loaderFill.style.width = pct + "%";
-  loaderPercent.textContent = pct + "%";
-}
-function loadFrame(i) {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => { frames[i] = img; resolve(img); };
-    img.onerror = () => resolve(null);
-    img.src = frameSrc(i);
-  });
-}
-async function preload() {
-  const BATCH = 32;
-  for (let start = 0; start < TOTAL_FRAMES; start += BATCH) {
-    const jobs = [];
-    for (let i = start; i < Math.min(start + BATCH, TOTAL_FRAMES); i++) {
-      jobs.push(loadFrame(i).then(bump));
-      /* วาดเฟรมแรกทันทีที่โหลดเสร็จ เพื่อโชว์ hero ระหว่างโหลด */
-      if (i === 0) jobs[jobs.length - 1].then(() => { sizeCanvas(); });
-    }
-    await Promise.all(jobs);
+function initHeroVideo() {
+  vids.forEach(v => { if (v) { v.muted = true; v.playsInline = true; } });
+  if (reduceMotion) {
+    /* ลดการเคลื่อนไหว: โชว์เฟรมแรกของ slide1 นิ่ง ๆ */
+    const v = vids[0];
+    if (v) { v.classList.add("show"); v.pause(); }
+    return;
   }
+  vids.forEach((v, i) => {
+    if (!v) return;
+    v.addEventListener("ended", () => {
+      active = (i + 1) % vids.length;
+      showClip(active);
+    });
+  });
+  showClip(0);
+}
+
+/* ── loader: ปิดเมื่อคลิปแรกพร้อมเล่น (หรือกันเหนียว 6 วิ) ── */
+function hideLoader() {
+  if (loader.classList.contains("done")) return;
   loader.classList.add("done");
-  sizeCanvas();
-  if (reduceMotion) { curFrame = 0; draw(); }
-  else { onScrollScrub(); }
   revealBar();
 }
+if (loaderFill) loaderFill.style.width = "100%";
+if (loaderPercent) loaderPercent.textContent = "100%";
+if (vids[0]) {
+  if (vids[0].readyState >= 2) hideLoader();
+  vids[0].addEventListener("loadeddata", hideLoader, { once: true });
+  vids[0].addEventListener("canplay", hideLoader, { once: true });
+}
+setTimeout(hideLoader, 6000);
 
 /* ── quick bar: โผล่เมื่อเริ่มเลื่อน / ซ่อนเมื่อถึง "เกี่ยวกับเรา" ── */
 let barShown = false;
 const aboutSection = document.getElementById("about-us");
 
 function updateBar() {
-  if (!barShown) return;
+  if (!barShown || !aboutSection) return;
   const aboutTop = aboutSection.getBoundingClientRect().top;
   quickBar.classList.toggle("show", aboutTop > innerHeight * 0.85);
 }
@@ -125,7 +74,6 @@ function revealBar() {
   updateBar();
 }
 addEventListener("scroll", () => {
-  onScrollScrub();
   if (scrollY > 60) revealBar();
   updateBar();
 }, { passive: true });
@@ -153,5 +101,4 @@ const cio = new IntersectionObserver((entries) => {
 document.querySelectorAll("[data-count]").forEach((el) => cio.observe(el));
 
 /* ── boot ── */
-sizeCanvas();
-preload();
+initHeroVideo();
