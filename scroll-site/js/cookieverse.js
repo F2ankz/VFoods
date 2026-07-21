@@ -24,8 +24,8 @@
     window.__lenis = lenis;
   }
 
-  /* ── 2. FLOATING INGREDIENTS ─────────────────────────────── */
-  if (!touch && !reduce) {
+  /* ── 2. FLOATING INGREDIENTS ── ปิดตามคำขอ (เอาคุกกี้ลอยออก) ── */
+  if (false) {
     const layer = document.createElement("div");
     layer.id = "cv-float";
     const bits = ["🍪", "🍫", "🥛", "🌰", "🍩", "✨"];
@@ -229,7 +229,7 @@
     { src: "img/hero/cookie-5.png", style: "right:26%;top:11%;    width:98px",  depth: 3.0, bob: "5s",  rot: "0deg",   sway: "10deg" },
   ];
   const objEls = [];
-  if (!touch) OBJS.forEach((o, i) => {
+  if (false) OBJS.forEach((o, i) => {   /* ปิดคุกกี้ลอยในฮีโร่ตามคำขอ */
     const div = document.createElement("div");
     div.className = "cv-obj";
     div.style.cssText = o.style;

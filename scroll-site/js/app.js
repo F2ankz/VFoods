@@ -1,10 +1,9 @@
 /* VFOODS — compact landing
-   HERO = scroll-scrub 2 ตอนต่อกัน: Home slide 1 → Home Slide 3
-   (frames-a/ = "Home slide1.mp4", frames-b/ = "Home Slide 3.mp4" · 192 เฟรม/ตอน)
+   HERO = scroll-scrub ตอนเดียว: Home Slide 3
+   (frames-b/ = "Home Slide 3.mp4" · 192 เฟรม)
    ปุ่มเมนูด่วนลอยขึ้นมาเอง ไม่บังหน้า เลื่อนต่อได้ปกติ */
 
 const SEQS = [
-  { dir: "frames-a", count: 192 },   /* Home slide 1 */
   { dir: "frames-b", count: 192 }    /* Home Slide 3 */
 ];
 const SCALE = 0.85;
