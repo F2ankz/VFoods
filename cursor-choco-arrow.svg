@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="34" height="36" viewBox="0 0 34 36">
+  <defs>
+    <radialGradient id="choc" cx="32%" cy="24%" r="92%">
+      <stop offset="0" stop-color="#F0BA80"/>
+      <stop offset=".34" stop-color="#BE7A40"/>
+      <stop offset=".70" stop-color="#7A421F"/>
+      <stop offset="1" stop-color="#43200E"/>
+    </radialGradient>
+    <radialGradient id="spec" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FFF1DE" stop-opacity=".92"/>
+      <stop offset="1" stop-color="#FFF1DE" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="sh" x="-45%" y="-45%" width="190%" height="190%">
+      <feDropShadow dx="0" dy="1.4" stdDeviation="1.1" flood-color="#180800" flood-opacity=".55"/>
+    </filter>
+  </defs>
+  <g filter="url(#sh)">
+    <path d="M3 2 L3 25 L9.5 19.5 L13.6 29 L17.4 27.3 L13.4 18.2 L21 17.6 Z"
+          fill="url(#choc)" stroke="#2A1204" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M4.5 4.4 L4.5 21" stroke="#F6D9AE" stroke-width="1.1" stroke-linecap="round" opacity=".5"/>
+    <ellipse cx="6.8" cy="8.6" rx="3.2" ry="4.8" fill="url(#spec)"/>
+  </g>
+</svg>

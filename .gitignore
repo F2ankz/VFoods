@@ -1,0 +1,25 @@
+# ── Source / working assets (not needed to run the live site) ──
+VFOODS Drive/
+_archive/
+_backups/
+_docs/
+_source-images/
+_source-videos/
+Logo Brand/
+product home/
+brand-assets/
+ลูกค้าของเรา/
+
+# ── Large / binary source files ──
+*.xlsx
+*.ai
+~$*
+
+# ── Local tooling / config ──
+.claude/
+.mcp.json
+
+# ── OS junk ──
+Thumbs.db
+Desktop.ini
+.DS_Store

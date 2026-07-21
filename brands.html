@@ -1,0 +1,755 @@
+﻿<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แบรนด์ของเรา — VFoods</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=2">
+<link rel="stylesheet" href="theme-white.css?v=2">
+<style>
+/* ── FLAVOR BG MORPH ── */
+body { transition:background-color .6s ease; }
+.brand-bg-overlay {
+  position:fixed; inset:0; z-index:-1; pointer-events:none;
+  transition:opacity .5s ease, background .5s ease;
+  opacity:0;
+}
+
+/* ── BRAND GRID ── */
+.brands-section { padding:80px 0; }
+.brands-inner { max-width:1200px; margin:0 auto; padding:0 24px; }
+.brands-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+.brand-card {
+  background:rgba(255,255,255,.1); backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.2); border-radius:var(--r2);
+  padding:32px 20px; text-align:center; cursor:pointer;
+  position:relative; overflow:hidden;
+  transition:all .45s cubic-bezier(.23,1,.32,1);
+}
+.brand-card::before {
+  content:''; position:absolute; inset:0; border-radius:inherit;
+  background:radial-gradient(ellipse 70% 50% at 50% 0%,var(--brand-glow,rgba(255,255,255,.15)),transparent 70%);
+  opacity:0; transition:opacity .4s;
+}
+.brand-card:hover::before { opacity:1; }
+.brand-card:hover {
+  transform:translateY(-10px) scale(1.02);
+  box-shadow:0 20px 60px rgba(0,0,0,.3);
+  border-color:rgba(255,255,255,.45);
+}
+.brand-card:hover .brand-logo-wrap { transform:scale(1.12) rotate(3deg); }
+
+.brand-logo-wrap {
+  width:80px; height:80px; border-radius:20px;
+  background:rgba(255,255,255,.15); border:1.5px solid rgba(255,255,255,.25);
+  display:flex; align-items:center; justify-content:center;
+  font-size:2.5rem; margin:0 auto 16px;
+  transition:all .4s cubic-bezier(.34,1.56,.64,1);
+}
+.brand-name { font-family:'Sarabun',sans-serif; font-size:1rem; font-weight:700; letter-spacing:-.01em; margin-bottom:6px; }
+.brand-name-th { font-size:.82rem; color:rgba(255,255,255,0.85); margin-bottom:12px; font-weight:300; }
+.brand-flavors { display:flex; flex-wrap:wrap; gap:5px; justify-content:center; margin-bottom:12px; }
+.flavor-chip {
+  padding:3px 9px; border-radius:20px; font-size:.62rem; font-weight:600;
+  border:1px solid; cursor:pointer; transition:all .25s;
+  font-family:'Sarabun',sans-serif;
+}
+.flavor-chip:hover { transform:scale(1.08); }
+/* Flavor color classes */
+.f-choc { background:rgba(0,0,0,.42); border-color:rgba(160,80,0,.5); color:#F5C070; }
+.f-straw { background:rgba(0,0,0,.42); border-color:rgba(220,50,80,.4); color:#FFB0B0; }
+.f-van { background:rgba(0,0,0,.42); border-color:rgba(220,190,80,.4); color:#FFE89C; }
+.f-mango { background:rgba(0,0,0,.42); border-color:rgba(240,160,0,.4); color:#FFCC60; }
+.f-coco { background:rgba(0,0,0,.42); border-color:rgba(0,180,130,.4); color:#80FFCC; }
+.f-durian { background:rgba(0,0,0,.42); border-color:rgba(160,200,0,.4); color:#D4F060; }
+.f-matcha { background:rgba(0,0,0,.42); border-color:rgba(60,140,40,.4); color:#A0FF88; }
+.f-milk { background:rgba(0,0,0,.42); border-color:rgba(240,220,140,.3); color:#FFEEC0; }
+.f-seafood { background:rgba(0,0,0,.42); border-color:rgba(0,140,220,.4); color:#80CCFF; }
+.f-bbq { background:rgba(0,0,0,.42); border-color:rgba(200,70,0,.4); color:#FFAA80; }
+.f-orig { background:rgba(0,0,0,.42); border-color:rgba(240,240,240,.3); color:#F0F0F0; }
+
+.brand-desc { font-size:.75rem; color:rgba(255,255,255,0.85); line-height:1.65; font-weight:300; }
+.brand-tag-new { display:inline-block; padding:3px 8px; border-radius:5px; background:rgba(0,0,0,.42); border:1px solid rgba(255,200,0,.4); font-size:.6rem; font-weight:700; color:#FFE060; font-family:'Sarabun',sans-serif; margin-left:6px; }
+
+/* ── FLAVOR FILTER TABS ── */
+.flavor-filter {
+  max-width:1200px; margin:0 auto 36px; padding:0 24px;
+  display:flex; gap:8px; flex-wrap:wrap;
+}
+.flt { padding:7px 16px; border-radius:8px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18); font-size:.75rem; font-weight:600; cursor:pointer; transition:all .25s; color:rgba(255,255,255,0.85); font-family:'Sarabun',sans-serif; }
+.flt:hover, .flt.active { background:rgba(255,255,255,.22); border-color:rgba(255,255,255,.45); color:#fff; transform:translateY(-2px); }
+
+/* ── PACKAGING SECTION (OEM formats) ── */
+.pack-section {
+  padding:96px 0 108px; position:relative; overflow:hidden;
+  background:
+    radial-gradient(1100px 560px at 50% -12%, rgba(229,26,29,.22), transparent 62%),
+    var(--dark);
+}
+.pack-section::after {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(130% 90% at 50% 118%, rgba(0,0,0,.6), transparent 58%);
+}
+.pk-grid {
+  position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:0 24px;
+  display:grid; grid-template-columns:repeat(4,1fr); gap:22px;
+}
+.pk-card {
+  background:linear-gradient(180deg,#ffffff,#fff5f2);
+  border:1px solid rgba(255,255,255,.14); border-radius:22px; overflow:hidden;
+  box-shadow:0 18px 50px rgba(0,0,0,.42);
+  display:flex; flex-direction:column;
+  transition:transform .5s cubic-bezier(.23,1,.32,1), box-shadow .5s;
+}
+.pk-card:hover { transform:translateY(-12px); box-shadow:0 34px 82px rgba(0,0,0,.58), 0 0 0 1px rgba(229,26,29,.28); }
+.pk-stage {
+  position:relative; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;
+  padding:22px 22px 6px; background:linear-gradient(180deg,#ffffff,#fbfbfb);
+}
+.pk-stage::before {
+  content:''; position:absolute; width:74%; height:74%; left:13%; top:12%;
+  background:radial-gradient(circle, var(--pg,rgba(229,26,29,.42)), transparent 68%);
+  filter:blur(4px); opacity:.5; transition:opacity .5s, transform .6s;
+}
+.pk-card:hover .pk-stage::before { opacity:.9; transform:scale(1.12); }
+.pk-stage img {
+  position:relative; z-index:1; max-width:100%; max-height:100%; object-fit:contain;
+  filter:drop-shadow(0 16px 22px rgba(0,0,0,.26));
+  transition:transform .6s cubic-bezier(.23,1,.32,1), opacity .3s ease;
+}
+.pk-card:hover .pk-stage img { transform:scale(1.07) translateY(-4px); }
+.pk-tag {
+  position:absolute; top:13px; left:13px; z-index:3;
+  padding:4px 12px; border-radius:20px; font-family:'Sarabun',sans-serif;
+  font-size:.62rem; font-weight:800; letter-spacing:.02em;
+  background:#E51A1D; color:#fff; box-shadow:0 5px 16px rgba(229,26,29,.42);
+}
+.pk-body { padding:4px 20px 22px; text-align:center; }
+.pk-en { font-size:.6rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:#C4160C; margin-bottom:3px; font-family:'Sarabun',sans-serif; }
+/* NOTE: .pk-card is a WHITE gradient card, so this text stays dark. */
+.pk-name { font-family:'Sarabun',sans-serif; font-size:1.02rem; font-weight:800; color:#1A0005; letter-spacing:-.01em; }
+.pk-desc { font-family:'Sarabun',sans-serif; font-size:.74rem; line-height:1.62; color:rgba(26,0,5,.72); font-weight:300; margin-top:8px; }
+.pk-vars { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:14px; }
+.pk-thumb {
+  width:30px; height:30px; border-radius:9px; cursor:pointer; padding:0; border:1.5px solid rgba(26,0,5,.1);
+  background-size:cover; background-position:center; background-color:#fff;
+  transition:transform .2s, box-shadow .2s, border-color .2s;
+}
+.pk-thumb:hover { transform:translateY(-2px) scale(1.06); }
+.pk-thumb.active { border-color:#E51A1D; box-shadow:0 0 0 2px rgba(229,26,29,.35); }
+.pk-count { display:inline-block; margin-top:12px; font-family:'Sarabun',sans-serif; font-size:.6rem; font-weight:800; letter-spacing:.02em; color:#C4160C; background:rgba(196,22,12,.1); padding:4px 12px; border-radius:20px; }
+
+@media(max-width:980px) { .pk-grid { grid-template-columns:repeat(3,1fr); } }
+@media(max-width:900px) { .brands-grid { grid-template-columns:repeat(3,1fr); } }
+@media(max-width:680px) { .pk-grid { grid-template-columns:repeat(2,1fr); gap:16px; } }
+@media(max-width:640px) { .brands-grid { grid-template-columns:repeat(2,1fr); } }
+@media(max-width:420px) { .pk-grid { grid-template-columns:1fr; } }
+
+/* ══════════════ PRODUCT CATALOG (dimensions) ══════════════ */
+.catalog {
+  position:relative; padding:88px 0 104px; overflow:hidden;
+  background:
+    radial-gradient(1200px 620px at 50% -10%, rgba(229,26,29,.10), transparent 60%),
+    linear-gradient(180deg,#FFF6ED 0%, #FFEFE3 100%);
+}
+.cat-inner { max-width:1240px; margin:0 auto; padding:0 24px; }
+.cat-head { text-align:center; max-width:720px; margin:0 auto 40px; }
+.cat-head .sec-eye { color:#C4160C; font-weight:800; letter-spacing:.18em; text-transform:uppercase; font-size:.72rem; }
+.cat-head h2 { font-size:clamp(1.7rem,3.4vw,2.5rem); font-weight:800; color:#2B1B16; letter-spacing:-.02em; margin:8px 0 12px; }
+.cat-head p { color:rgba(43,27,22,.72); line-height:1.72; font-weight:300; font-size:.95rem; }
+
+/* brand tabs */
+.cat-tabs { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-bottom:26px; }
+.cat-tab {
+  display:flex; align-items:center; gap:9px; padding:10px 18px; border-radius:999px;
+  background:#fff; border:1.5px solid rgba(142,27,24,.16); cursor:pointer;
+  font-weight:700; font-size:.9rem; color:#8E1B18; transition:all .28s cubic-bezier(.23,1,.32,1);
+  box-shadow:0 4px 14px rgba(142,27,24,.06);
+}
+.cat-tab:hover { transform:translateY(-2px); border-color:rgba(229,26,29,.5); }
+.cat-tab.active { background:linear-gradient(135deg,#E51A1D,#FF5A36); color:#fff; border-color:transparent; box-shadow:0 10px 26px rgba(229,26,29,.34); }
+.cat-tab .tab-n { font-size:.7rem; font-weight:800; padding:2px 8px; border-radius:999px; background:rgba(142,27,24,.1); color:#8E1B18; }
+.cat-tab.active .tab-n { background:rgba(255,255,255,.25); color:#fff; }
+
+/* toolbar */
+.cat-toolbar { display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:center; margin-bottom:30px; }
+.cat-search { position:relative; display:flex; align-items:center; }
+.cat-search svg { position:absolute; left:14px; color:#C4160C; pointer-events:none; }
+.cat-search input {
+  padding:11px 16px 11px 40px; width:290px; max-width:70vw; border-radius:10px;
+  border:1.5px solid rgba(142,27,24,.18); background:#fff; font-size:.9rem; color:#2B1B16;
+  outline:none; transition:border-color .2s, box-shadow .2s;
+}
+.cat-search input:focus { border-color:#E51A1D; box-shadow:0 0 0 3px rgba(229,26,29,.14); }
+.cat-select {
+  padding:11px 34px 11px 15px; border-radius:10px; border:1.5px solid rgba(142,27,24,.18);
+  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' fill='none' stroke='%238E1B18' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 13px center;
+  font-size:.88rem; color:#2B1B16; cursor:pointer; outline:none; appearance:none; -webkit-appearance:none;
+}
+.cat-select:focus { border-color:#E51A1D; box-shadow:0 0 0 3px rgba(229,26,29,.14); }
+.cat-count { font-size:.82rem; color:rgba(43,27,22,.6); font-weight:600; }
+.cat-count b { color:#C4160C; }
+
+/* grid */
+.cat-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(232px,1fr)); gap:20px; }
+.prod-card {
+  background:linear-gradient(180deg,#ffffff,#fffaf7); border:1px solid rgba(142,27,24,.1);
+  border-radius:18px; overflow:hidden; display:flex; flex-direction:column;
+  box-shadow:0 10px 30px rgba(120,20,10,.08);
+  transition:transform .45s cubic-bezier(.23,1,.32,1), box-shadow .45s, border-color .45s;
+  animation:cardIn .5s both;
+}
+@keyframes cardIn { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+.prod-card:hover { transform:translateY(-8px); box-shadow:0 26px 60px rgba(120,20,10,.20); border-color:rgba(229,26,29,.28); }
+.prod-stage {
+  position:relative; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;
+  padding:20px; background:radial-gradient(circle at 50% 42%, #fff 0%, #fbf3ee 78%);
+}
+.prod-stage::after {
+  content:''; position:absolute; width:66%; height:22%; left:17%; bottom:9%;
+  background:radial-gradient(ellipse, rgba(120,20,10,.16), transparent 70%); filter:blur(3px);
+}
+.prod-stage img {
+  position:relative; z-index:1; max-width:88%; max-height:88%; object-fit:contain;
+  filter:drop-shadow(0 12px 18px rgba(0,0,0,.18)); transition:transform .55s cubic-bezier(.23,1,.32,1);
+}
+.prod-card:hover .prod-stage img { transform:scale(1.07) translateY(-3px); }
+.prod-pk {
+  position:absolute; top:11px; left:11px; z-index:2; max-width:74%;
+  padding:4px 10px; border-radius:999px; background:rgba(43,27,22,.82); color:#FFE2D1;
+  font-size:.6rem; font-weight:700; letter-spacing:.01em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.prod-w {
+  position:absolute; top:11px; right:11px; z-index:2;
+  padding:4px 10px; border-radius:999px; background:#E51A1D; color:#fff;
+  font-size:.62rem; font-weight:800; box-shadow:0 4px 12px rgba(229,26,29,.4);
+}
+.prod-body { padding:14px 16px 16px; display:flex; flex-direction:column; flex:1; }
+.prod-name { font-size:.92rem; font-weight:800; color:#2B1B16; line-height:1.35; letter-spacing:-.01em; min-height:2.5em; }
+.prod-en { font-size:.64rem; color:rgba(43,27,22,.45); font-weight:400; margin-top:3px; line-height:1.3;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.prod-dims { margin-top:12px; border-top:1px dashed rgba(142,27,24,.16); padding-top:11px; display:flex; flex-direction:column; gap:7px; }
+.dim { display:flex; align-items:center; gap:8px; }
+.dim-ic { flex:none; width:22px; height:22px; border-radius:7px; display:flex; align-items:center; justify-content:center;
+  background:rgba(229,26,29,.09); color:#C4160C; }
+.dim-l { font-size:.64rem; color:rgba(43,27,22,.55); font-weight:600; width:56px; flex:none; }
+.dim-v { font-size:.74rem; color:#2B1B16; font-weight:700; letter-spacing:.01em; }
+.cat-empty { text-align:center; padding:60px 0; color:rgba(43,27,22,.5); font-weight:600; }
+
+@media(max-width:560px){
+  .cat-grid { grid-template-columns:repeat(2,1fr); gap:11px; }
+  .prod-body { padding:11px 12px 13px; }
+  .prod-name { font-size:.8rem; min-height:0; }
+  .prod-en { display:none; }
+  .dim-l { width:48px; font-size:.6rem; }
+  .dim-v { font-size:.68rem; }
+}
+
+/* brand-card product-count chip */
+.brand-count { display:inline-flex; align-items:center; gap:5px; margin-top:10px; padding:4px 12px; border-radius:999px;
+  background:rgba(229,26,29,.1); border:1px solid rgba(229,26,29,.32); color:#C4160C; font-size:.66rem; font-weight:800; }
+.brand-card.has-catalog { cursor:pointer; }
+.brand-card.has-catalog:hover .brand-count { background:#E51A1D; border-color:#E51A1D; color:#fff; }
+.brand-card.has-catalog .brand-count::after { content:' · ดูสินค้า →'; font-weight:800; }
+.brand-card.has-catalog:hover::after { opacity:1; transform:none; }
+.brand-soon { display:inline-block; margin-top:10px; padding:4px 11px; border-radius:999px;
+  background:rgba(43,27,22,.06); border:1px solid rgba(43,27,22,.14); font-size:.62rem; font-weight:700; color:rgba(43,27,22,.5); }
+.brand-card.no-cat { cursor:pointer; }
+
+/* selected brand card */
+.brand-card.selected { border-color:#E51A1D !important;
+  box-shadow:0 0 0 2px rgba(229,26,29,.55), 0 22px 54px rgba(120,20,10,.28) !important; }
+.brand-card.selected .brand-count { background:#E51A1D; border-color:#E51A1D; color:#fff; }
+
+/* ── inline brand catalog (inside the 12-brand section) ── */
+.brand-catalog { margin-top:46px; padding-top:38px; border-top:1px solid rgba(142,27,24,.16); scroll-margin-top:96px; }
+.bc-head { display:flex; justify-content:space-between; align-items:flex-end; gap:22px; flex-wrap:wrap; margin-bottom:28px; }
+.bc-title { max-width:640px; }
+.bc-title .sec-eye { color:#C4160C; font-weight:800; letter-spacing:.16em; font-size:.7rem; text-transform:uppercase; }
+.bc-title h3 { font-size:clamp(1.45rem,2.8vw,2rem); font-weight:800; color:#2B1B16; letter-spacing:-.02em; margin:7px 0 8px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.bc-mono { display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:11px;
+  background:linear-gradient(135deg,#E51A1D,#FF5A36); color:#fff; font-size:1rem; font-weight:800; box-shadow:0 8px 20px rgba(229,26,29,.32); }
+.bc-cnt { font-size:.78rem; font-weight:800; color:#C4160C; background:rgba(229,26,29,.1); padding:4px 12px; border-radius:999px; }
+.bc-title p { color:rgba(43,27,22,.68); font-size:.9rem; font-weight:300; line-height:1.62; }
+.bc-head .cat-toolbar { margin:0; justify-content:flex-end; }
+</style>
+<style>
+/* FC Vision Rounded — ฟอนต์พาดหัว (Fontcraft, Bold ตัวเดียว; ประกาศ 100-900 กัน faux-bold) */
+@font-face { font-family:'FC Vision Rounded'; src:url('fonts/fc-vision-rounded.woff2') format('woff2'); font-weight:100 900; font-style:normal; font-display:swap; }
+body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; }
+</style>
+</head>
+<body>
+
+<!-- Flavor BG Overlay -->
+<div class="brand-bg-overlay" id="bgOverlay"></div>
+
+<!-- NAV -->
+<nav id="g-nav">
+  <a class="nav-brand" href="scroll-site/index.html"><img class="nav-logo-img" src="img/logo-vfoods.png" alt="VFOODS วีฟู้ดส์"></a>
+  <div class="nav-links">
+    <a href="news.html">News &amp; Activities</a>
+    <div class="nav-item">
+      <a href="products.html" class="nav-parent">Products <span class="nav-caret">▾</span></a>
+      <div class="nav-dropdown mega">
+        <a href="products.html#sticks">ขนมขาไก่</a>
+        <a href="products.html#biscuit">บิสกิตและแครกเกอร์</a>
+        <a href="products.html#cream">บิสกิตสอดไส้</a>
+        <a href="products.html#jam">แยมสับปะรด</a>
+        <a href="products.html#wafer-stick">เวเฟอร์สติ๊ก</a>
+        <a href="products.html#sandwich">คุ้กกี้สอดไส้ครีม</a>
+        <a href="products.html#snack">ขนมทานเล่น</a>
+        <a href="products.html#wafer">เวเฟอร์แผ่น</a>
+        <a href="products.html#fried">ตัวทอด</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="brands.html" class="nav-parent active">Our Brands <span class="nav-caret">▾</span></a>
+      <div class="nav-dropdown mega-brands">
+        <a href="brands.html">VFOODS</a>
+        <a href="brands.html">Mr. Teddy</a>
+        <a href="brands.html">Dear Teddy</a>
+        <a href="brands.html">Royal Wafer</a>
+        <a href="brands.html">Mr. Mee</a>
+        <a href="brands.html">Celebrate</a>
+        <a href="brands.html">Mix</a>
+        <a href="brands.html">Indy</a>
+        <a href="brands.html">Bless</a>
+        <a href="brands.html">Pina</a>
+        <a href="brands.html">Benjy</a>
+        <a href="brands.html">Chido</a>
+      </div>
+    </div>
+    <a href="oem-guide.html">OEM Engagement Guide</a>
+    <a href="scroll-site/index.html#about-us">About Us</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+  <form class="nav-search" role="search" onsubmit="return navSearch(event)">
+    <input type="search" placeholder="ค้นหาสินค้า…" aria-label="ค้นหาสินค้า">
+    <button type="submit" aria-label="ค้นหา"><svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="8.5" cy="8.5" r="5.5"/><line x1="12.8" y1="12.8" x2="18" y2="18" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="nav-hamburger" id="nav-burger"><span></span><span></span><span></span></div>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <a href="news.html">News &amp; Activities</a>
+  <a href="products.html">Products</a>
+  <a href="brands.html">Our Brands</a>
+  <a href="oem-guide.html">OEM Engagement Guide</a>
+  <a href="scroll-site/index.html#about-us">About Us</a>
+  <a href="contact.html">Contact Us</a>
+</div>
+
+<!-- HERO -->
+<div class="page-hero">
+  <span class="eyebrow">12 แบรนด์ · 118 สินค้า</span>
+  <h1>แบรนด์ของเรา</h1>
+  <p>12 แบรนด์ที่วางใจได้ ครอบคลุมทุกกลุ่มผู้บริโภค — พร้อมข้อมูลขนาดสินค้าและลังจริงจากโรงงาน</p>
+</div>
+
+<!-- ── FLAVOR TIP ── -->
+<div style="background:var(--og3);padding:16px 24px;text-align:center;border-bottom:1px solid rgba(255,255,255,.1);">
+  <p style="font-size:.82rem;color:rgba(255,255,255,.85);font-family:'Sarabun',sans-serif;">
+    <strong>ลองวางเมาส์</strong>บนแบรนด์เพื่อดูรสชาติ — พื้นหลังจะเปลี่ยนสีตามรสชาติของสินค้านั้นๆ
+  </p>
+</div>
+
+<!-- ── FLAVOR FILTER ── -->
+<div class="brands-section">
+  <div class="brands-inner">
+    <div style="margin-bottom:36px;padding-top:8px;">
+      <div class="sec-eye">Our Brands</div>
+      <h2 class="sec-title reveal">12 แบรนด์ที่คุณไว้ใจ</h2>
+      <p class="sec-desc reveal">แต่ละแบรนด์มีเอกลักษณ์เฉพาะตัว ตอบโจทย์ผู้บริโภคทุกกลุ่ม</p>
+    </div>
+
+    <!-- Flavor filter -->
+    <div class="flavor-filter">
+      <button class="flt active" data-flavor="all" onclick="filterFlavor(this,'all')">ทั้งหมด</button>
+      <button class="flt" data-flavor="chocolate" onclick="filterFlavor(this,'chocolate')">ช็อคโกแลต</button>
+      <button class="flt" data-flavor="strawberry" onclick="filterFlavor(this,'strawberry')">สตรอเบอรี่</button>
+      <button class="flt" data-flavor="vanilla" onclick="filterFlavor(this,'vanilla')">วานิลลา</button>
+      <button class="flt" data-flavor="mango" onclick="filterFlavor(this,'mango')">มะม่วง</button>
+      <button class="flt" data-flavor="durian" onclick="filterFlavor(this,'durian')">ทุเรียน</button>
+      <button class="flt" data-flavor="coconut" onclick="filterFlavor(this,'coconut')">มะพร้าว</button>
+    </div>
+
+    <!-- BRANDS GRID -->
+    <div class="brands-grid" id="brandsGrid">
+
+      <!-- 1. VFOODS -->
+      <div class="brand-card has-catalog reveal" data-flavors="chocolate,strawberry,vanilla,original" data-bg="linear-gradient(135deg,rgba(200,80,0,.3),rgba(140,40,0,.2))" data-glow="rgba(255,160,60,.2)" style="--brand-glow:rgba(255,160,60,.2);" onmouseenter="brandHover(this)" onmouseleave="brandLeave()" onclick="openBrand('VFOODS')">
+        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">VF</div>
+        <div class="brand-name">VFOODS <span class="brand-tag-new">NEW</span></div>
+        <div class="brand-name-th">แบรนด์หลัก</div>
+        <div class="brand-flavors">
+          <span class="flavor-chip f-choc">ช็อคโกแลต</span>
+          <span class="flavor-chip f-straw">สตรอเบอรี่</span>
+          <span class="flavor-chip f-van">วานิลลา</span>
+        </div>
+        <div class="brand-desc">แบรนด์หลักของกลุ่ม วาไรตี้ ฟู้ดส์ สินค้าพรีเมียมคุณภาพสูง</div>
+        <div class="brand-count">109 สินค้า</div>
+      </div>
+
+      <!-- 2. มิกซ์ -->
+      <div class="brand-card has-catalog reveal" data-flavors="original,seafood,bbq" data-bg="linear-gradient(135deg,rgba(0,100,200,.25),rgba(0,60,140,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()" onclick="openBrand('Mix')">
+        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">Mx</div>
+        <div class="brand-name">มิกซ์</div>
+        <div class="brand-name-th">Mix</div>
+        <div class="brand-flavors">
+          <span class="flavor-chip f-orig">ออริจินัล</span>
+          <span class="flavor-chip f-seafood">ซีฟูด</span>
+          <span class="flavor-chip f-bbq">บาร์บีคิว</span>
+        </div>
+        <div class="brand-desc">ขนมขาไก่รสจัดจ้าน ดั้งเดิม โนริ ฮอตชิลลี่ ไก่เผ็ดเกาหลี</div>
+        <div class="brand-count">4 สินค้า</div>
+      </div>
+
+      <!-- 3. Dear Teddy -->
+      <div class="brand-card reveal" data-flavors="chocolate,strawberry,milk" data-bg="linear-gradient(135deg,rgba(180,30,60,.25),rgba(100,10,30,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()">
+        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">DT</div>
+        <div class="brand-name">Dear Teddy</div>
+        <div class="brand-name-th">เดียร์ เทดดี้</div>
+        <div class="brand-flavors">
+          <span class="flavor-chip f-choc">ช็อคโกแลต</span>
+          <span class="flavor-chip f-straw">สตรอเบอรี่</span>
+          <span class="flavor-chip f-milk">นม</span>
+        </div>
+        <div class="brand-desc">ขนมน่ารักสำหรับเด็ก บรรจุภัณฑ์สวยงาม</div>
+      </div>
+
+      <!-- 4. รอยัล เวเฟอร์ -->
+      <div class="brand-card reveal" data-flavors="chocolate,vanilla,durian" data-bg="linear-gradient(135deg,rgba(150,100,0,.25),rgba(80,50,0,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()">
+        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">RW</div>
+        <div class="brand-name">Royal Wafer</div>
+        <div class="brand-name-th">รอยัล เวเฟอร์</div>
+        <div class="brand-flavors">
+          <span class="flavor-chip f-choc">ช็อคโกแลต</span>
+          <span class="flavor-chip f-van">วานิลลา</span>
+          <span class="flavor-chip f-durian">ทุเรียน</span>
+        </div>
+        <div class="brand-desc">เวเฟอร์พรีเมียม สูตรหลวง รสชาติอันเป็นเอกลักษณ์</div>
+      </div>
+
+      <!-- 5. เซเลเบรท -->
+      <div class="brand-card reveal" data-flavors="vanilla,milk,original" data-bg="linear-gradient(135deg,rgba(200,160,0,.2),rgba(140,100,0,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()">
+        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">Ce</div>
+        <div class="brand-name">Celebrate</div>
+        <div class="brand-name-th">เซเลเบรท</div>
+        <div class="brand-flavors">
+          <span class="flavor-chip f-van">วานิลลา</span>
+          <span class="flavor-chip f-milk">นม</span>
+          <span class="flavor-chip f-orig">ออริจินัล</span>
+        </div>
+        <div class="brand-desc">ขนมสำหรับทุกเทศกาลและโอกาสพิเศษ</div>
+      </div>
+
+      <!-- 6. อินดี้ -->
+      <div class="brand-card reveal" data-flavors="bbq,seafood,original" data-bg="linear-gradient(135deg,rgba(0,60,0,.25),rgba(20,80,20,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()">
+        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">In</div>
+        <div class="brand-name">Indy</div>
+        <div class="brand-name-th">อินดี้</div>
+        <div class="brand-flavors">
+          <span class="flavor-chip f-bbq">บาร์บีคิว</span>
+          <span class="flavor-chip f-seafood">ซีฟูด</span>
+          <span class="flavor-chip f-orig">ออริจินัล</span>
+        </div>
+        <div class="brand-desc">สำหรับคนที่มีสไตล์ รสชาติที่แตกต่าง</div>
+      </div>
+
+      <!-- 7. มิสเตอร์หมี -->
+      <div class="brand-card reveal" data-flavors="chocolate,strawberry,mango" data-bg="linear-gradient(135deg,rgba(160,80,0,.25),rgba(80,40,0,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()">
+        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">MM</div>
+        <div class="brand-name">Mr. Mee</div>
+        <div class="brand-name-th">มิสเตอร์หมี</div>
+        <div class="brand-flavors">
+          <span class="flavor-chip f-choc">ช็อคโกแลต</span>
+          <span class="flavor-chip f-straw">สตรอเบอรี่</span>
+          <span class="flavor-chip f-mango">มะม่วง</span>
+        </div>
+        <div class="brand-desc">น่ารัก สนุกสนาน เหมาะสำหรับเด็กและครอบครัว</div>
+      </div>
+
+      <!-- 8. เบลส -->
+      <div class="brand-card reveal" data-flavors="original,matcha,vanilla" data-bg="linear-gradient(135deg,rgba(20,100,20,.25),rgba(10,60,10,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()">
+        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">Bl</div>
+        <div class="brand-name">Bless</div>
+        <div class="brand-name-th">เบลส</div>
+        <div class="brand-flavors">
+          <span class="flavor-chip f-orig">ออริจินัล</span>
+          <span class="flavor-chip f-matcha">มัทฉะ</span>
+          <span class="flavor-chip f-van">วานิลลา</span>
+        </div>
+        <div class="brand-desc">รสชาติธรรมชาติ สูตรใส่ใจสุขภาพ</div>
+      </div>
+
+      <!-- 9. พิน่า -->
+      <div class="brand-card reveal" data-flavors="coconut,mango,durian" data-bg="linear-gradient(135deg,rgba(0,140,80,.2),rgba(0,80,40,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()">
+        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">Pi</div>
+        <div class="brand-name">Pina</div>
+        <div class="brand-name-th">พิน่า</div>
+        <div class="brand-flavors">
+          <span class="flavor-chip f-coco">มะพร้าว</span>
+          <span class="flavor-chip f-mango">มะม่วง</span>
+          <span class="flavor-chip f-durian">ทุเรียน</span>
+        </div>
+        <div class="brand-desc">รสผลไม้เขตร้อน ความอร่อยแบบไทยๆ</div>
+      </div>
+
+      <!-- 10. มิสเตอร์เทดดี้ -->
+      <div class="brand-card reveal" data-flavors="chocolate,strawberry,vanilla,milk" data-bg="linear-gradient(135deg,rgba(180,30,30,.25),rgba(100,10,10,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()">
+        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">MT</div>
+        <div class="brand-name">Mr. Teddy</div>
+        <div class="brand-name-th">มิสเตอร์เทดดี้</div>
+        <div class="brand-flavors">
+          <span class="flavor-chip f-choc">ช็อคโกแลต</span>
+          <span class="flavor-chip f-straw">สตรอเบอรี่</span>
+          <span class="flavor-chip f-van">วานิลลา</span>
+        </div>
+        <div class="brand-desc">ขนมระดับพรีเมียม บรรจุภัณฑ์หรูหรา</div>
+      </div>
+
+      <!-- 11. เบนจี้ -->
+      <div class="brand-card has-catalog reveal" data-flavors="original" data-bg="linear-gradient(135deg,rgba(180,120,0,.25),rgba(120,70,0,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()" onclick="openBrand('Benjy')">
+        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">Bj</div>
+        <div class="brand-name">Benjy</div>
+        <div class="brand-name-th">เบนจี้</div>
+        <div class="brand-flavors">
+          <span class="flavor-chip f-orig">ข้าวอบกรอบ</span>
+          <span class="flavor-chip f-mango">ฟักทอง</span>
+          <span class="flavor-chip f-straw">มิกซ์เบอร์รี่</span>
+        </div>
+        <div class="brand-desc">ข้าวอบกรอบเพื่อสุขภาพ ผสมฟักทอง มันม่วง และเนื้อผลไม้จริง</div>
+        <div class="brand-count">5 สินค้า</div>
+      </div>
+
+      <!-- 12. ชิโด้ -->
+      <div class="brand-card reveal" data-flavors="coconut,durian,mango,original" data-bg="linear-gradient(135deg,rgba(200,120,0,.2),rgba(120,60,0,.15))" onmouseenter="brandHover(this)" onmouseleave="brandLeave()">
+        <div class="brand-logo-wrap" style="font-size:1.6rem;font-weight:800;font-family:'Sarabun',sans-serif;">Ch</div>
+        <div class="brand-name">Chido</div>
+        <div class="brand-name-th">ชิโด้</div>
+        <div class="brand-flavors">
+          <span class="flavor-chip f-coco">มะพร้าว</span>
+          <span class="flavor-chip f-durian">ทุเรียน</span>
+          <span class="flavor-chip f-mango">มะม่วง</span>
+        </div>
+        <div class="brand-desc">รสชาติเอเชียตะวันออกเฉียงใต้ สูตรพิเศษ</div>
+      </div>
+
+    </div><!-- /brands-grid -->
+
+    <!-- ── INLINE BRAND CATALOG (สินค้าทั้งหมดพร้อมขนาดจริง แยกตามแบรนด์) ── -->
+    <div class="brand-catalog" id="catalog">
+      <div class="bc-head">
+        <div class="bc-title">
+          <div class="sec-eye">Product Catalog · สินค้าพร้อมขนาดจริง</div>
+          <h3><span class="bc-mono" id="bcMono">VF</span> <span id="bcName">VFOODS</span> <span class="bc-cnt" id="bcCnt"></span></h3>
+          <p id="bcDesc">เลือกแบรนด์ด้านบนเพื่อดูสินค้าทั้งหมด พร้อมขนาดสินค้า ขนาดลัง และจำนวนบรรจุ — อ้างอิงสเปคจริงจากโรงงาน</p>
+        </div>
+        <div class="cat-toolbar" id="catToolbar">
+          <div class="cat-search">
+            <svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="8.5" cy="8.5" r="5.5"/><line x1="12.8" y1="12.8" x2="18" y2="18" stroke-linecap="round"/></svg>
+            <input type="search" id="catSearch" placeholder="ค้นหาชื่อสินค้า…" aria-label="ค้นหาสินค้า">
+          </div>
+          <select id="catGroup" class="cat-select" aria-label="กรองตามบรรจุภัณฑ์"></select>
+          <span class="cat-count" id="catCount"></span>
+        </div>
+      </div>
+      <div class="cat-grid" id="catGrid"></div>
+      <div class="cat-empty" id="catEmpty" hidden>ไม่พบสินค้าที่ค้นหา</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- OEM CTA -->
+<section style="padding:72px 24px;text-align:center;background:var(--og3);">
+  <div style="max-width:620px;margin:0 auto;">
+    <h2 style="font-family:'Sarabun',sans-serif;font-size:2rem;font-weight:700;letter-spacing:-.03em;margin-bottom:14px;">สร้างแบรนด์ของคุณ</h2>
+    <p style="color:rgba(255,255,255,.85);line-height:1.8;margin-bottom:32px;font-weight:300;">ผลิตสินค้าภายใต้แบรนด์ของคุณเองผ่านบริการ OEM ของเรา</p>
+    <a href="oem-guide.html" class="btn-w">ดูคู่มือ OEM →</a>
+  </div>
+</section>
+
+<footer id="g-footer">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="logo-text">VFoods</div><p>ผู้ผลิตขนมปังปี๊บอันดับ 1 ในประเทศไทย</p></div>
+    <div class="footer-col"><h4>เมนู</h4><a href="scroll-site/index.html">หน้าแรก</a><a href="products.html">สินค้า</a><a href="brands.html">แบรนด์</a></div>
+    <div class="footer-col"><h4>บริการ</h4><a href="oem-guide.html">OEM Guide</a><a href="contact.html">ติดต่อ</a></div>
+    <div class="footer-col"><h4>ติดต่อ</h4><a href="mailto:info@vfoods.co.th">info@vfoods.co.th</a></div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 VFoods Co., Ltd.</p></div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+// Brand hover — background morph
+const overlay = document.getElementById('bgOverlay');
+function brandHover(card) {
+  const bg = card.dataset.bg || 'rgba(255,100,0,.2)';
+  overlay.style.background = bg;
+  overlay.style.opacity = '1';
+}
+function brandLeave() {
+  overlay.style.opacity = '0';
+}
+
+// Flavor filter
+function filterFlavor(btn, flavor) {
+  document.querySelectorAll('.flt').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.brand-card').forEach(card => {
+    if(flavor === 'all') {
+      card.style.opacity = '1'; card.style.transform = '';
+    } else {
+      const flavors = card.dataset.flavors || '';
+      if(flavors.includes(flavor)) {
+        card.style.opacity = '1'; card.style.transform = '';
+      } else {
+        card.style.opacity = '.25'; card.style.transform = 'scale(.96)';
+      }
+    }
+  });
+}
+
+// Packaging variant image swap
+function pkSwap(btn, src) {
+  const card = btn.closest('.pk-card');
+  const img = card.querySelector('.pk-stage img');
+  if (img.getAttribute('src') === src) return;
+  img.style.opacity = '0';
+  setTimeout(() => { img.src = src; img.style.opacity = '1'; }, 160);
+  card.querySelectorAll('.pk-thumb').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+initTilt('.brand-card, .pk-card');
+</script>
+
+<!-- ══════════════ CATALOG DATA + RENDER ══════════════ -->
+<script src="brand-products.js"></script>
+<script>
+(function(){
+  const P = window.BRAND_PRODUCTS || [];
+  const state = { brand:'VFOODS', group:'all', q:'' };
+
+  const grid   = document.getElementById('catGrid');
+  const grpEl  = document.getElementById('catGroup');
+  const cntEl  = document.getElementById('catCount');
+  const emptyEl= document.getElementById('catEmpty');
+  const searchEl = document.getElementById('catSearch');
+  const monoEl = document.getElementById('bcMono');
+  const bnameEl= document.getElementById('bcName');
+  const bcntEl = document.getElementById('bcCnt');
+  const descEl = document.getElementById('bcDesc');
+  const toolbarEl = document.getElementById('catToolbar');
+
+  // ── wire the 12 brand cards as the catalog selector ──
+  const cards = [...document.querySelectorAll('.brand-card')];
+  const INFO = {};
+  cards.forEach(c=>{
+    const nameEl = c.querySelector('.brand-name');
+    const nm = nameEl.childNodes[0].textContent.trim();
+    const key = nm==='มิกซ์'?'Mix' : (nm==='Benjy'?'Benjy' : (nm==='VFOODS'?'VFOODS' : nm));
+    const mono = (c.querySelector('.brand-logo-wrap')?.textContent || nm.slice(0,2)).trim();
+    const count = P.filter(p=>p.b===key).length;
+    INFO[key] = { label:nm, mono, count };
+    c.dataset.brandKey = key;
+    c.classList.toggle('no-cat', count===0);
+    if(count===0 && !c.querySelector('.brand-soon')){
+      const s=document.createElement('div'); s.className='brand-soon'; s.textContent='แคตตาล็อกเร็วๆ นี้'; c.appendChild(s);
+    }
+    if(!c.getAttribute('onclick')) c.addEventListener('click', ()=>selectBrand(key));
+  });
+
+  // clean numeric: 12.0 -> "12", '-' -> null
+  function num(v){
+    if(v===null||v===undefined) return null;
+    let s = (''+v).trim();
+    if(s===''||s==='-') return null;
+    s = s.replace(/\.0+$/,'');
+    return s;
+  }
+  function dims(w,l,h){
+    const a=[num(w),num(l),num(h)].filter(x=>x!==null);
+    return a.length ? a.join(' × ')+' ซม.' : '—';
+  }
+  function packFmt(pk){ return pk ? (''+pk).replace(/x/gi,'×') : '—'; }
+
+  const ICON = {
+    prod:'<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>',
+    carton:'<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="6" width="17" height="13" rx="1.5"/><path d="M3.5 10h17M9 6V4.5h6V6"/></svg>',
+    pack:'<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg>',
+  };
+
+  function renderGroups(){
+    const groups = [...new Set(P.filter(p=>p.b===state.brand).map(p=>p.g))];
+    grpEl.innerHTML = `<option value="all">บรรจุภัณฑ์ทั้งหมด (${groups.length})</option>` +
+      groups.map(g=>`<option value="${g}">${g}</option>`).join('');
+    grpEl.value = state.group;
+    grpEl.style.display = groups.length>1 ? '' : 'none';
+    grpEl.onchange = ()=>{ state.group=grpEl.value; renderGrid(); };
+  }
+
+  function renderGrid(){
+    const q = state.q.trim().toLowerCase();
+    const items = P.filter(p=>
+      p.b===state.brand &&
+      (state.group==='all' || p.g===state.group) &&
+      (!q || (p.n+' '+(p.en||'')).toLowerCase().includes(q))
+    );
+    const brandCount = P.filter(p=>p.b===state.brand).length;
+    cntEl.innerHTML = brandCount ? `พบ <b>${items.length}</b> รายการ` : '';
+    emptyEl.textContent = brandCount===0
+      ? `ยังไม่มีข้อมูลสินค้าพร้อมขนาดสำหรับแบรนด์ “${(INFO[state.brand]||{}).label||state.brand}” — เร็วๆ นี้`
+      : 'ไม่พบสินค้าที่ค้นหา';
+    emptyEl.hidden = items.length>0;
+    grid.innerHTML = items.map((p,i)=>`
+      <article class="prod-card" style="animation-delay:${Math.min(i*22,420)}ms">
+        <div class="prod-stage">
+          <span class="prod-pk">${p.g}</span>
+          ${p.w?`<span class="prod-w">${p.w}</span>`:''}
+          <img src="${p.img}" loading="lazy" alt="${p.n.replace(/"/g,'&quot;')}"
+               onerror="this.style.opacity=.15;this.onerror=null">
+        </div>
+        <div class="prod-body">
+          <h3 class="prod-name">${p.n}</h3>
+          ${p.en?`<div class="prod-en">${p.en}</div>`:''}
+          <div class="prod-dims">
+            <div class="dim"><span class="dim-ic">${ICON.prod}</span><span class="dim-l">ขนาดสินค้า</span><span class="dim-v">${dims(p.pw,p.pl,p.ph)}</span></div>
+            <div class="dim"><span class="dim-ic">${ICON.carton}</span><span class="dim-l">ขนาดลัง</span><span class="dim-v">${dims(p.cw,p.cl,p.ch)}</span></div>
+            <div class="dim"><span class="dim-ic">${ICON.pack}</span><span class="dim-l">บรรจุ/ลัง</span><span class="dim-v">${packFmt(p.pk)}</span></div>
+          </div>
+        </div>
+      </article>`).join('');
+  }
+
+  let t;
+  searchEl.addEventListener('input', e=>{
+    clearTimeout(t);
+    t = setTimeout(()=>{ state.q=e.target.value; renderGrid(); }, 140);
+  });
+
+  function selectBrand(key, scroll){
+    state.brand = key; state.group='all'; state.q=''; if(searchEl) searchEl.value='';
+    cards.forEach(c=>c.classList.toggle('selected', c.dataset.brandKey===key));
+    const m = INFO[key] || { label:key, mono:key.slice(0,2), count:0 };
+    monoEl.textContent = m.mono; bnameEl.textContent = m.label;
+    bcntEl.textContent = m.count ? `${m.count} สินค้า` : '';
+    bcntEl.style.display = m.count ? '' : 'none';
+    toolbarEl.style.display = m.count ? '' : 'none';
+    descEl.textContent = m.count
+      ? 'แสดงขนาดสินค้า · ขนาดลัง · จำนวนบรรจุต่อลัง อ้างอิงสเปคจริงจากโรงงาน — คลิกแบรนด์อื่นด้านบนเพื่อสลับดู'
+      : 'ยังไม่มีข้อมูลสินค้าพร้อมขนาดสำหรับแบรนด์นี้ กำลังจัดเตรียม เร็วๆ นี้';
+    renderGroups(); renderGrid();
+    if(scroll!==false) document.getElementById('catalog').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+  window.openBrand = selectBrand;
+
+  selectBrand('VFOODS', false); // default, no scroll on load
+})();
+</script>
+</body>
+</html>
