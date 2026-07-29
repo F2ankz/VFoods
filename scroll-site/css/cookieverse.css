@@ -109,7 +109,7 @@ body::after {
 
 /* ── HEADER → red glass ── */
 .site-header {
-  background: rgba(140,28,6,.5); backdrop-filter: blur(16px) saturate(1.2);
+  background: rgba(140,28,6,.9);
   border-bottom: 1px solid rgba(255,211,92,.25);
   box-shadow: 0 8px 30px rgba(96,10,2,.35);
 }
@@ -152,12 +152,16 @@ body::after {
   background: linear-gradient(135deg, var(--cv-red), var(--cv-red-deep) 70%);
   box-shadow: 0 12px 30px rgba(143,15,6,.45), inset 0 1.5px 0 rgba(255,255,255,.3);
 }
-/* char-split heading (JS injects .cv-ch spans) */
-.cv-ch { display: inline-block; will-change: transform, opacity; }
+/* hero heading entrance — pure CSS auto-play, no JS (resting state = visible,
+   so it can never get stuck invisible). `backwards` applies the start frame
+   during the delay only. */
+.hero-heading { animation: heroIn .85s cubic-bezier(.2,.9,.3,1.15) .28s backwards; }
+@keyframes heroIn { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .hero-heading { animation: none; } }
 
 /* ── QUICK BAR ── */
 #quick-bar {
-  background: rgba(140,28,6,.6); backdrop-filter: blur(14px);
+  background: rgba(140,28,6,.92);
   border: 1.5px solid rgba(255,211,92,.35);
   box-shadow: 0 18px 44px rgba(96,10,2,.5);
 }
@@ -199,7 +203,6 @@ body::after {
   background: linear-gradient(160deg, rgba(150,35,8,.55), rgba(96,15,4,.65));
   border: 1.5px solid rgba(255,211,92,.28);
   box-shadow: 0 6px 20px rgba(96,10,2,.4), inset 0 1px 0 rgba(255,255,255,.08);
-  backdrop-filter: blur(4px);
 }
 .prod:hover {
   border-color: var(--cv-gold);
@@ -430,8 +433,8 @@ body::after {
 .tunnel-fallback .gate-img { height: 150px; }
 .tunnel-fallback .tunnel-ui { position: relative; left: auto; bottom: auto; transform: none; margin: 0 auto; padding-bottom: 10px; }
 
-/* ── REVEAL: add a touch more cinematic ── */
-.rv { transform: translateY(42px); filter: blur(10px); }
+/* ── REVEAL (blur removed for smoothness) ── */
+.rv { transform: translateY(32px); }
 
 @media (prefers-reduced-motion: reduce) {
   body::before { animation: none; }
@@ -443,8 +446,7 @@ body::after {
    (สอดคล้องกับ #g-nav ของหน้าอื่น)
    ═══════════════════════════════════════════════════════════ */
 .site-header {
-  background: rgba(240,120,0,.97) !important;
-  backdrop-filter: blur(14px) !important;
+  background: rgba(240,120,0,.98) !important;
   border-bottom: 1px solid rgba(255,255,255,.14) !important;
   box-shadow: 0 2px 20px rgba(0,0,0,.16) !important;
   padding: 0 40px !important;

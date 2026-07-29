@@ -291,12 +291,6 @@ body { transition:background-color .6s ease; }
 /* products without dimension data (image-only brands) */
 .prod-dims.prod-nd { justify-content:center; align-items:center; min-height:0; }
 .nd-note { font-size:.7rem; color:rgba(43,27,22,.5); font-weight:600; text-align:center; padding:3px 0; }
-/* faint white centered logo watermark on catalog cards */
-.prod-stage::before {
-  content:''; position:absolute; inset:15%; z-index:2; pointer-events:none;
-  background:url("img/watermark-white.png") center/contain no-repeat; opacity:.32;
-  filter:drop-shadow(0 1px 2px rgba(0,0,0,.28));
-}
 </style>
 <style>
 /* FC Vision Rounded — ฟอนต์พาดหัว (Fontcraft, Bold ตัวเดียว; ประกาศ 100-900 กัน faux-bold) */
