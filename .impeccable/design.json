@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-31T00:00:00Z",
+  "title": "Design System: VFoods COOKIEVERSE",
+  "extensions": {
+    "colorMeta": {
+      "clip-orange": { "role": "primary", "displayName": "Clip Orange", "canonical": "#D6590C", "tonalRamp": ["#3A1602", "#5C2404", "#7E3306", "#A54309", "#D6590C", "#EB7A2E", "#F5A167", "#FBCBA5"] },
+      "orange-primary": { "role": "primary", "displayName": "Bright Orange", "canonical": "#FF6D1A", "tonalRamp": ["#421B03", "#6B2C05", "#963E08", "#C4520B", "#FF6D1A", "#FF8C48", "#FFB080", "#FFD6BC"] },
+      "gold": { "role": "secondary", "displayName": "Golden Highlight", "canonical": "#FFD35C", "tonalRamp": ["#4A3A0C", "#6E5613", "#94741C", "#BE9526", "#E8A81E", "#FFD35C", "#FFE293", "#FFF1CC"] },
+      "panel-red": { "role": "tertiary", "displayName": "Panel Red", "canonical": "#8C1F06", "tonalRamp": ["#2C0A02", "#460F03", "#631705", "#8C1F06", "#B4300F", "#D9542C", "#E88C6C", "#F5C4B2"] },
+      "chocolate": { "role": "neutral", "displayName": "Chocolate", "canonical": "#2B1B16", "tonalRamp": ["#1A0F0B", "#2B1B16", "#4A342B", "#6E5347", "#977666", "#BFA093", "#DFCABF", "#F2E7E0"] },
+      "cream": { "role": "neutral", "displayName": "Warm Cream", "canonical": "#FFF6ED", "tonalRamp": ["#6E5A48", "#96806B", "#BCA890", "#DAC9B4", "#F0E4D4", "#FBF1E4", "#FFF6ED", "#FFFBF6"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Page-hero H1 and the home hero. FC Vision Rounded (Latin) over Sarabun (Thai fallback)." },
+      "headline": { "displayName": "Section Title", "purpose": "Section titles (.sec-title), Sarabun 700, tight tracking." },
+      "body": { "displayName": "Body", "purpose": "Running copy and section descriptions. Sarabun weight 300 — the light-body signature." },
+      "label": { "displayName": "Eyebrow / Label", "purpose": "Wide-tracked uppercase section eyebrows, tags, form labels." }
+    },
+    "shadows": [
+      { "name": "card-rest-warm", "value": "0 2px 12px rgba(255,109,26,0.06)", "purpose": "Cards at rest on cream pages — warm-tinted, never neutral black." },
+      { "name": "card-hover-lift", "value": "0 8px 28px rgba(255,109,26,0.14)", "purpose": "Cards on hover, paired with translateY(-6px)." },
+      { "name": "panel-deep", "value": "0 14px 52px rgba(0,0,0,0.28)", "purpose": "Home-world glass panels and modals." },
+      { "name": "accent-glow", "value": "0 0 32px rgba(255,140,0,0.6), 0 0 80px rgba(255,100,0,0.2)", "purpose": "Home-only accent glow — do not port to cream pages." }
+    ],
+    "motion": [
+      { "name": "ease-out-expo", "value": "cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Reveal and card transitions — the signature settle easing." },
+      { "name": "ease-standard", "value": "ease", "purpose": "Default color/background state transitions on buttons and nav (0.2–0.25s)." },
+      { "name": "letter-in", "value": "cubic-bezier(0.34, 1.56, 0.64, 1)", "purpose": "Overshoot easing for animated hero letters only." }
+    ],
+    "breakpoints": [
+      { "name": "nav-condense", "value": "1080px" },
+      { "name": "mobile-nav", "value": "900px" },
+      { "name": "footer-2col", "value": "768px" },
+      { "name": "grid-1col", "value": "560px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Solid dark-red CTA on cream pages; AA-safe white text, color-transition hover with no bounce.",
+      "html": "<button class=\"ds-btn-primary\">ปรึกษา OEM</button>",
+      "css": ".ds-btn-primary { display:inline-flex; align-items:center; gap:.5rem; background:#D6590C; color:#fff; font-family:'Sarabun',sans-serif; font-weight:500; font-size:.95rem; padding:12px 22px; border:none; border-radius:8px; box-shadow:0 1px 2px rgba(0,0,0,.12); cursor:pointer; transition:background-color .2s ease, box-shadow .2s ease; } .ds-btn-primary:hover { background:#B8480A; box-shadow:0 4px 14px rgba(142,27,24,.28); } .ds-btn-primary:focus-visible { outline:2px solid #FF9E5C; outline-offset:2px; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary CTA — inset warm ring, dark-red text, ring thickens on hover.",
+      "html": "<button class=\"ds-btn-outline\">ดูสินค้า</button>",
+      "css": ".ds-btn-outline { display:inline-flex; align-items:center; gap:.5rem; background:transparent; color:#D6590C; font-family:'Sarabun',sans-serif; font-weight:500; font-size:.95rem; padding:12px 22px; border:none; border-radius:8px; box-shadow:inset 0 0 0 1px rgba(142,27,24,.5); cursor:pointer; transition:background-color .2s ease, box-shadow .2s ease; } .ds-btn-outline:hover { background:rgba(255,109,26,.08); box-shadow:inset 0 0 0 1px #D6590C; } .ds-btn-outline:focus-visible { outline:2px solid #FF9E5C; outline-offset:2px; }"
+    },
+    {
+      "name": "Dark Button",
+      "kind": "button",
+      "refersTo": "button-dark",
+      "description": "High-emphasis chocolate CTA — the one button that lifts on hover.",
+      "html": "<button class=\"ds-btn-dark\">เริ่มโปรเจกต์</button>",
+      "css": ".ds-btn-dark { display:inline-block; background:#2B1B16; color:#fff; font-family:'Sarabun',sans-serif; font-weight:700; font-size:.93rem; padding:13px 32px; border:none; border-radius:11px; box-shadow:0 4px 24px rgba(0,0,0,.18); cursor:pointer; transition:background .35s, transform .35s, box-shadow .35s; } .ds-btn-dark:hover { background:#651313; transform:translateY(-4px); box-shadow:0 14px 52px rgba(0,0,0,.28); }"
+    },
+    {
+      "name": "Product Card",
+      "kind": "card",
+      "refersTo": "product-card",
+      "description": "Solid white catalog card with warm hairline border; lifts on hover with a warm-tinted shadow.",
+      "html": "<div class=\"ds-prod-card\"><div class=\"ds-prod-ph\"></div><div class=\"ds-prod-body\"><span class=\"ds-prod-brand\">VFOODS</span><h3 class=\"ds-prod-name\">คุกกี้เนยสด</h3><span class=\"ds-prod-weight\">120 g</span></div></div>",
+      "css": ".ds-prod-card { background:#fff; border:1px solid rgba(255,109,26,.12); border-radius:16px; overflow:hidden; box-shadow:0 2px 12px rgba(255,109,26,.06); transition:border-color .3s, box-shadow .3s, transform .3s; font-family:'Sarabun',sans-serif; } .ds-prod-card:hover { border-color:rgba(255,109,26,.32); box-shadow:0 10px 32px rgba(255,109,26,.14); transform:translateY(-6px); } .ds-prod-ph { height:150px; background:linear-gradient(135deg,rgba(255,109,26,.07),rgba(255,109,26,.03)); border-bottom:1px solid rgba(255,109,26,.07); } .ds-prod-body { padding:18px 20px; } .ds-prod-brand { display:block; color:#D6590C; font-weight:600; font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; } .ds-prod-name { margin:4px 0; color:#2B1B16; font-weight:700; font-size:1.05rem; } .ds-prod-weight { color:rgba(43,27,22,.45); font-size:.82rem; }"
+    },
+    {
+      "name": "Input Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Contact/OEM form field — off-white fill, warm border, orange focus ring.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"ชื่อ-นามสกุล\" />",
+      "css": ".ds-input { width:100%; background:#FAFAFA; color:#2B1B16; font-family:'Sarabun',sans-serif; font-size:.95rem; padding:12px 14px; border:1px solid rgba(255,109,26,.15); border-radius:8px; outline:none; transition:background .2s, border-color .2s, box-shadow .2s; } .ds-input::placeholder { color:rgba(43,27,22,.3); } .ds-input:focus { background:#FFF8F8; border-color:rgba(255,109,26,.5); box-shadow:0 0 0 3px rgba(255,109,26,.08); }"
+    },
+    {
+      "name": "Navigation Bar",
+      "kind": "nav",
+      "refersTo": "nav-bar",
+      "description": "The constant orange spine — maroon glass bar present on every page and scroll state.",
+      "html": "<nav class=\"ds-nav\"><span class=\"ds-nav-logo\">วีฟู้ดส์<span class=\"ds-nav-badge\">VFOODS</span></span><span class=\"ds-nav-links\"><a class=\"ds-nav-link ds-active\">PRODUCTS</a><a class=\"ds-nav-link\">OUR BRANDS</a><a class=\"ds-nav-link\">OEM GUIDE</a></span></nav>",
+      "css": ".ds-nav { display:flex; align-items:center; gap:22px; height:64px; padding:0 24px; background:rgba(142,27,24,.97); backdrop-filter:blur(14px); border-bottom:1px solid rgba(255,255,255,.14); font-family:'Sarabun',sans-serif; } .ds-nav-logo { color:#fff; font-size:1.3rem; font-weight:800; font-style:italic; letter-spacing:-.02em; } .ds-nav-badge { vertical-align:super; margin-left:5px; background:#E51A1D; color:#fff; font-style:normal; font-size:.5rem; font-weight:800; letter-spacing:.08em; padding:2px 6px; border-radius:6px; } .ds-nav-links { display:flex; gap:5px; margin-left:auto; } .ds-nav-link { padding:9px 14px; border-radius:11px; color:rgba(255,255,255,.92); font-size:.84rem; font-weight:600; letter-spacing:.02em; text-transform:uppercase; cursor:pointer; transition:background .25s, color .25s; } .ds-nav-link:hover, .ds-nav-link.ds-active { background:rgba(255,255,255,.18); color:#fff; }"
+    },
+    {
+      "name": "Search Pill",
+      "kind": "input",
+      "refersTo": "nav-search",
+      "description": "White pill search in the nav with an orange circular submit button.",
+      "html": "<div class=\"ds-search\"><input placeholder=\"ค้นหาสินค้า\" /><button aria-label=\"search\"><svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><line x1=\"21\" y1=\"21\" x2=\"16.65\" y2=\"16.65\"/></svg></button></div>",
+      "css": ".ds-search { display:inline-flex; align-items:center; gap:4px; background:#fff; border-radius:50px; padding:5px 6px 5px 16px; box-shadow:0 3px 14px rgba(0,0,0,.14); } .ds-search input { border:none; outline:none; background:transparent; font-family:'Sarabun',sans-serif; font-size:.9rem; color:#3a1800; width:150px; } .ds-search input::placeholder { color:rgba(58,24,0,.45); } .ds-search button { display:flex; align-items:center; justify-content:center; width:32px; height:32px; border:none; border-radius:50%; background:#F07800; color:#fff; cursor:pointer; transition:background .2s, transform .2s; } .ds-search button:hover { background:#D05E00; transform:scale(1.06); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Warm Bakery at Golden Hour",
+    "overview": "VFoods is Thailand's No.1 'ขนมปังปี๊บ' (tin-packaged biscuit/snack) maker, and the site should feel like a warm, appetizing, credible category leader. The system runs on the color of caramelizing sugar and toasted cookie — clip-orange, chocolate, and a single beam of golden highlight. The identity lives in two coordinated worlds joined by one constant orange bar: a warm, playful, mascot-led home, and sunlit warm-cream inner pages where real product photography and real SKU data do the selling. Motion is playful-but-light — CSS, native scroll, video, and pre-rendered mascot art, no WebGL/3D engine — with packet-wiggle-on-click energy in the spirit of taokaenoi/rinbee.",
+    "keyCharacteristics": [
+      "Warm, food-first palette — clip-orange, chocolate, and cream; gold used only as a highlight.",
+      "Mascot-led personality: 3D-rendered snack characters carry the brand's charm.",
+      "Two worlds, one bar: warm playful home vs. sunlit cream catalog, unified by a constant orange nav.",
+      "Real over rendered on the catalog: true packshots and real dimensions, not decorative placeholders.",
+      "AA contrast is a first-class constraint — small text on light backgrounds shifts to dark red, never bright orange.",
+      "Playful-but-performant motion: CSS/native scroll/video only, no WebGL."
+    ],
+    "rules": [
+      { "name": "The Dark-Red Small-Text Rule", "body": "On any light background, text below ~16px must use Clip Orange #D6590C (dark red), never bright #FF6D1A, which fails WCAG AA on cream.", "section": "colors" },
+      { "name": "The One Beam Rule", "body": "Gold is a highlight, not a fill. It appears on at most one element per viewport — a hero accent word, a stat number, a single glow.", "section": "colors" },
+      { "name": "The Warm-White Rule", "body": "Backgrounds on light pages are cream (#FFF6ED) or true white for cards — never a cold gray or blue-white.", "section": "colors" },
+      { "name": "The Light-Body Rule", "body": "Running paragraph text is weight 300, not 400. Headlines carry the weight; body stays light.", "section": "typography" },
+      { "name": "The Uppercase-Eyebrow Rule", "body": "Every section opens with a small, wide-tracked, uppercase eyebrow in dark red or orange-soft.", "section": "typography" },
+      { "name": "The Warm-Shadow Rule", "body": "On light pages, every shadow is tinted orange (rgba(255,109,26,…)), never neutral black.", "section": "elevation" },
+      { "name": "The Lift-On-Intent Rule", "body": "Cream cards are flat at rest; elevation is a response to hover/focus — ~6px of travel with a warm shadow.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep the nav bar orange (maroon #8E1B18 → #6E2A05 scrolled) on every page and every scroll state.",
+      "Do use dark red #D6590C for small text, tags, eyebrows, and active tabs on light backgrounds.",
+      "Do tint shadows warm on cream pages and let cards lift ~6px only on hover.",
+      "Do open every section with a wide-tracked uppercase eyebrow, and set running body copy in Sarabun weight 300.",
+      "Do use real product photography and real SKU/dimension data in the catalog.",
+      "Do lead with the mascots and keep motion playful-but-light — CSS/native scroll/video, packet-wiggle-on-click energy à la taokaenoi.",
+      "Do show the real OEM client logos (ลูกค้าของเรา/) and the cert row on the pages the brief calls for (OEM guide, home)."
+    ],
+    "donts": [
+      "Don't put bright #FF6D1A or gold on small text over cream.",
+      "Don't use pure #FFF as a page background or any cold gray/blue neutral — the page is warm cream #FFF6ED.",
+      "Don't carry the home's translucent glass cards onto inner pages; flatten them to solid white.",
+      "Don't reach for WebGL / a 3D engine / heavy scroll libraries — the brief never asks for it; keep it native and fast.",
+      "Don't ship a flat corporate template, a generic Bootstrap card grid, a cold minimal-white SaaS layout, or a stock-photo hero.",
+      "Don't use neutral black shadows or sharp right-angled box corners.",
+      "Don't fabricate certs, metrics, or clients — show only the five confirmed certs and the real logos in ลูกค้าของเรา/."
+    ]
+  }
+}

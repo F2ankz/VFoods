@@ -14,10 +14,10 @@
 html { scroll-behavior: smooth; }
 html, body {
   background: var(--bg-light); color: var(--text-on-light); font-family: var(--font-body);
-  cursor: none;   /* chocolate DOM cursor (cookieverse.js) is the only cursor */
+  cursor: url('../../cursor-choco-arrow.svg') 3 2, auto;   /* native chocolate cursor — custom DOM cursor removed for perf */
 }
 a, button, [role="button"], label, summary {
-  cursor: none;
+  cursor: url('../../cursor-choco-hand.svg') 11 2, pointer;
 }
 a { text-decoration: none; color: inherit; }
 ::selection { background: var(--red); color: #fff; }

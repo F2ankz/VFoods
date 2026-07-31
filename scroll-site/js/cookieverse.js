@@ -26,3 +26,46 @@
     vids.forEach((v) => vio.observe(v));
   }
 })();
+
+/* ── OEM JOURNEY · horizontal ZIGZAG scroll-scrub (ย้ายมาจากหน้า OEM) ── */
+(function(){
+  const scroll=document.getElementById('journeyScroll');
+  const track=document.getElementById('journeyTrack');
+  if(!scroll||!track) return;
+  const stages=[...track.querySelectorAll('.jp')];
+  const dots=[...document.querySelectorAll('#journeyDots .jdot')];
+  const prog=document.getElementById('groundProgress');
+  const hint=document.getElementById('scrollHint');
+  const lineSpan=90;                      // ground line spans 5vw..95vw
+  const mobile=()=>window.matchMedia('(max-width:760px)').matches;
+  let ticking=false;
+
+  function apply(){
+    ticking=false;
+    if(mobile()){ track.style.transform=''; stages.forEach(s=>s.classList.add('in')); return; }
+    const total=scroll.offsetHeight-window.innerHeight;
+    if(total<=0) return;
+    let p=(-scroll.getBoundingClientRect().top)/total;
+    p=Math.max(0,Math.min(1,p));
+    // move the world left by the real overflow width
+    const shift=Math.max(0,track.scrollWidth-window.innerWidth);
+    track.style.transform='translateX(-'+(p*shift)+'px)';
+    // ground progress + hint fade
+    if(prog) prog.style.width=(p*lineSpan)+'vw';
+    if(hint) hint.style.opacity=p>0.02?'0':'1';
+    // reveal each card as it enters view (stays revealed = zigzag trail),
+    // active dot = card nearest to screen centre (where the mascot walks)
+    const mid=window.innerWidth/2; let best=0, bestD=1e9;
+    stages.forEach((s,i)=>{
+      const r=s.getBoundingClientRect(), cx=r.left+r.width/2;
+      if(cx< window.innerWidth*1.08 && cx> -r.width*0.08) s.classList.add('in');
+      const d=Math.abs(cx-mid);
+      if(d<bestD){ bestD=d; best=i; }
+    });
+    dots.forEach((d,i)=>d.classList.toggle('on',i===best));
+  }
+  function onScroll(){ if(!ticking){ ticking=true; requestAnimationFrame(apply); } }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',apply);
+  apply();
+})();
