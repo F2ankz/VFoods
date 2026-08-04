@@ -20,11 +20,18 @@ function initHeroVideo() {
   v.muted = true; v.playsInline = true; v.loop = true;
   v.classList.add("show");
   if (reduceMotion) { v.pause(); return; }
-  const p = v.play();
-  if (p && p.catch) p.catch(() => {});
+  const play = () => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
+  play();
+  /* หยุดถอดรหัสวิดีโอเมื่อเลื่อนพ้นจอ → ลดภาระ CPU/GPU ตอน scroll (ลดอาการหน่วง) */
+  const heroSection = document.getElementById("hero");
+  if (heroSection && "IntersectionObserver" in window) {
+    new IntersectionObserver((es) => {
+      es.forEach(e => { if (e.isIntersecting) play(); else v.pause(); });
+    }, { threshold: 0.05 }).observe(heroSection);
+  }
 }
 
-/* ── loader: ปิดเมื่อคลิปแรกพร้อมเล่น (หรือกันเหนียว 6 วิ) ── */
+/* ── loader: แสดงเนื้อหาทันทีที่หน้าเรนเดอร์ — ไม่รอวิดีโอ (แก้อาการข้อมูลขึ้นช้า) ── */
 function hideLoader() {
   if (loader.classList.contains("done")) return;
   loader.classList.add("done");
@@ -32,12 +39,10 @@ function hideLoader() {
 }
 if (loaderFill) loaderFill.style.width = "100%";
 if (loaderPercent) loaderPercent.textContent = "100%";
-if (vids[0]) {
-  if (vids[0].readyState >= 2) hideLoader();
-  vids[0].addEventListener("loadeddata", hideLoader, { once: true });
-  vids[0].addEventListener("canplay", hideLoader, { once: true });
-}
-setTimeout(hideLoader, 6000);
+/* พอ DOM/CSS พร้อมก็เปิดหน้าเลย ไม่ผูกกับการโหลดวิดีโอ/สคริปต์หนัก */
+requestAnimationFrame(() => setTimeout(hideLoader, 120));
+addEventListener("load", hideLoader);
+setTimeout(hideLoader, 1600);   /* กันเหนียว */
 
 /* ── quick bar: โผล่เมื่อเริ่มเลื่อน / ซ่อนเมื่อถึง "เกี่ยวกับเรา" ── */
 let barShown = false;
