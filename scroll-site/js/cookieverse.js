@@ -8,12 +8,12 @@
   let lenis = null;
   if (typeof Lenis !== 'undefined' && !reduce) {
     lenis = new Lenis({
-      // lerp สูงขึ้น = ตอบสนองไวตามล้อ/นิ้ว ลดอาการหน่วง แต่ยังนุ่ม
-      lerp: 0.12,
-      easing: (t) => 1 - Math.pow(1 - t, 3),   // easeOutCubic — คลายตัวนุ่ม
+      // lerp สูงมาก = ล้อเมาส์ตอบสนองเกือบทันที ไวเหมือนลากแถบ scrollbar เอง (ตัดหางไถล)
+      lerp: 0.35,
+      easing: (t) => 1 - Math.pow(1 - t, 3),
       smoothWheel: true,
-      syncTouch: true,        // มือถือ/แทร็คแพดลื่นตาม
-      wheelMultiplier: 1,     // ตามล้อ 1:1 ไม่หน่วง
+      syncTouch: true,        // มือถือ/แทร็คแพดยังลื่น
+      wheelMultiplier: 1.1,   // ต่อ notch ขยับพอ ๆ กับ native
       touchMultiplier: 1.8
     });
 
