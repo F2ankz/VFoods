@@ -47,8 +47,10 @@
   let isScrolling = false, scrollTimeout = null;
   let isSectionVisible = false;
   let animRendering = false;
+  let triggerRender = null;   // จะถูกกำหนดค่าเมื่อ setupMascot3D() ทำงาน (หลัง Three.js โหลด)
 
-  if (canvas3d && typeof THREE !== 'undefined') {
+  function setupMascot3D() {
+    if (!canvas3d || typeof THREE === 'undefined' || mascotObj) return;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, 260 / 320, 0.1, 100);
     camera.position.set(0, 0.25, 4.0);
@@ -301,11 +303,37 @@
       }
     }
 
-    function triggerRender() {
+    triggerRender = function () {
       if (!animRendering && isSectionVisible) {
         animRendering = true;
         requestAnimationFrame(animateLoop);
       }
+    };
+
+    // วาดเฟรมแรกให้เห็นมาสคอตทันทีหลังเซ็ตอัพ
+    renderScene();
+    if (isSectionVisible) triggerRender();
+  }
+
+  /* 3b. LAZY-LOAD Three.js เฉพาะเมื่อใกล้ถึงส่วน journey (ลดภาระตอนโหลดหน้าแรก) */
+  function loadThreeThenMascot() {
+    if (typeof THREE !== 'undefined') { setupMascot3D(); return; }
+    if (window.__threeLoading) return;
+    window.__threeLoading = true;
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+    s.onload = setupMascot3D;
+    document.head.appendChild(s);
+  }
+  if (canvas3d && !reduce) {
+    const journeyEl = document.getElementById('steps') || document.getElementById('journeyScroll');
+    if (journeyEl && 'IntersectionObserver' in window) {
+      const preObs = new IntersectionObserver((es) => {
+        if (es.some(e => e.isIntersecting)) { preObs.disconnect(); loadThreeThenMascot(); }
+      }, { rootMargin: '600px 0px' });
+      preObs.observe(journeyEl);
+    } else {
+      loadThreeThenMascot();
     }
   }
 
