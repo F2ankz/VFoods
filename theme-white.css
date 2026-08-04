@@ -111,8 +111,11 @@ body { background:#FFF6ED !important; color:#2B1B16; }
 /* ══════════════════
    PRODUCTS PAGE
 ══════════════════ */
-.cat-section { background:#fff !important; }
-.cat-section:nth-child(even) { background:#FFF5F5 !important; }
+/* พื้นหลังสลับ ส้มสด / ส้มอ่อน (cat-section เรียงติดกัน → สลับถูกเสมอ) */
+.cat-section:nth-child(odd)  { background:#F2731C !important; }  /* ส้มสด */
+.cat-section:nth-child(even) { background:#FDE7D3 !important; }  /* ส้มอ่อน */
+/* บนพื้นส้มสด: ทำคำอธิบายย่อยเข้มทึบขึ้น ให้อ่านชัด (พื้นส้มอ่อนคอนทราสต์ดีอยู่แล้ว) */
+.cat-section:nth-child(odd) .cat-desc { color:#2B1B16 !important; }
 .cat-h { color:#2B1B16 !important; }
 .cat-h small { color:rgba(43,27,22,.45) !important; }
 .cat-desc { color:rgba(43,27,22,.55) !important; }
@@ -537,13 +540,15 @@ html .flt.active, html .nft.active, html button.flt.active, html button.nft.acti
 }
 html .ct-h span, html .ct-hero h1 span, html .ct-hero h2 span { color:#D6590C !important; }
 
-/* Flavor Tunnel (ย้ายมาอยู่หน้า products) = ฉากมืด Dark Burgundy ตามพาเลตต์ */
-html .tunnel-intro, html #tunnel { background:#651313 !important; }
-html .tunnel-intro .sec-eyebrow { color:#FF9E5C !important; }
+/* Flavor Tunnel (หน้า products) = ฉากส้ม + ตัวอักษรขาวล้วน (ห้ามฟอนต์ส้ม) */
+html .tunnel-intro { background:#E45F06 !important; }
+html #tunnel { background:radial-gradient(70% 80% at 50% 40%, #F2731C 0%, #C24A0C 78%) !important; }
+html #tunnel.tunnel-fallback { background:linear-gradient(180deg,#E45F06,#C24A0C) !important; }
+html .tunnel-intro .sec-eyebrow { color:#fff !important; }
 html .tunnel-intro h2 { color:#fff !important; }
-html .tunnel-intro p { color:#FFE2D1 !important; }
-html #tunnel .tunnel-hint { color:#FFE2D1 !important; }
-html #tunnel .tunnel-label span { color:#FFE2D1 !important; }
+html .tunnel-intro p { color:#fff !important; }
+html #tunnel .tunnel-hint { color:#fff !important; }
+html #tunnel .tunnel-label span { color:#fff !important; }
 
 /* ═══ PATCH 3 — section พื้นมืด (inline style) ที่ตัวหนังสือโดน flip เป็นสีเข้ม ═══ */
 html section[style*="--dark"] h2, html section[style*="--dark"] p,

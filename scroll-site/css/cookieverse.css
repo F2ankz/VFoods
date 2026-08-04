@@ -81,6 +81,8 @@ body::after {
 
 /* ── HERO — cinematic "projection" of the white cookie clip ── */
 .hero { background: radial-gradient(70% 60% at 50% 42%, #E86A18, var(--cv-bg) 70%); }
+/* ขยับคลิป hero ลงมาใต้เมนู (เห็นหัวคลิปเต็ม ไม่โดนแถบเมนูบัง) */
+.hero-vid { top: 150px !important; height: calc(100% - 150px) !important; }
 /* feather the white-bg clip so its edges melt into the orange universe */
 #canvas {
   -webkit-mask: radial-gradient(125% 82% at 50% 46%, #000 52%, rgba(0,0,0,.35) 80%, transparent 95%);
@@ -401,7 +403,7 @@ body::after {
    (สอดคล้องกับ #g-nav ของหน้าอื่น)
    ═══════════════════════════════════════════════════════════ */
 .site-header {
-  background: rgba(240,120,0,.98) !important;
+  background: #E45F06 !important;
   border-bottom: 1px solid rgba(255,255,255,.14) !important;
   box-shadow: 0 2px 20px rgba(0,0,0,.16) !important;
   padding: 0 40px !important;
@@ -577,19 +579,26 @@ body::after {
 /* ══ bottom sidewalk: walking mascot + progress ══ */
 .journey-ground{position:absolute;left:0;right:0;bottom:0;height:132px;z-index:7;pointer-events:none;
   background:linear-gradient(180deg,rgba(255,251,239,0),#FFFBEF 44%);}
-.ground-line{position:absolute;left:5vw;right:5vw;top:66px;height:5px;border-radius:5px;
-  background:repeating-linear-gradient(90deg,rgba(58,38,0,.3) 0 16px,transparent 16px 30px);}
+/* พื้น = ถนน: แอสฟัลต์เทาเข้ม + เส้นแบ่งเลนประสีเหลืองตรงกลาง */
+.ground-line{position:absolute;left:5vw;right:5vw;top:59px;height:18px;border-radius:3px;
+  background:
+    repeating-linear-gradient(90deg,#F7C948 0 30px,rgba(0,0,0,0) 30px 62px),
+    linear-gradient(180deg,#514F54,#343237);
+  background-size:100% 3px,100% 100%;
+  background-position:center,center;
+  background-repeat:no-repeat,no-repeat;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 7px 16px rgba(0,0,0,.2);}
 .ground-line::after{content:'';position:absolute;right:-5px;top:50%;transform:translateY(-50%);
-  border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:13px solid rgba(58,38,0,.5);}
-.ground-progress{position:absolute;left:5vw;top:66px;height:5px;width:0;border-radius:5px;
-  background:linear-gradient(90deg,#E8172B,#FF8A1F);box-shadow:0 0 16px rgba(232,23,43,.5);transition:width .1s linear;}
-.mascot{position:absolute;left:50%;top:66px;transform:translate(-50%,-100%);width:92px;cursor:pointer;pointer-events:auto;z-index:9;}
+  border-top:9px solid transparent;border-bottom:9px solid transparent;border-left:14px solid #F7C948;}
+.ground-progress{position:absolute;left:5vw;top:59px;height:18px;width:0;border-radius:3px;
+  background:linear-gradient(90deg,rgba(247,201,72,0),rgba(247,201,72,.28));transition:width .1s linear;}
+.mascot{position:absolute;left:50%;top:66px;transform:translate(-50%,-100%);width:150px;cursor:pointer;pointer-events:auto;z-index:9;}
 .mascot .mascot-float{animation:mascotBob .5s ease-in-out infinite alternate;}
-@keyframes mascotBob{0%{transform:translateY(0) rotate(-2deg);}100%{transform:translateY(-5px) rotate(2deg);}}
-.mascot .m-shadow{width:74px;height:11px;margin:2px auto 0;border-radius:50%;
-  background:radial-gradient(ellipse,rgba(58,38,0,.24),transparent 70%);animation:mShadow .5s ease-in-out infinite alternate;}
+@keyframes mascotBob{0%{transform:translateY(0) rotate(-2deg);}100%{transform:translateY(-6px) rotate(2deg);}}
+.mascot .m-shadow{width:110px;height:14px;margin:2px auto 0;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(58,38,0,.28),transparent 70%);animation:mShadow .5s ease-in-out infinite alternate;}
 @keyframes mShadow{0%{transform:scaleX(1);opacity:.7;}100%{transform:scaleX(.8);opacity:.45;}}
-.m-bubble{position:absolute;bottom:110px;left:50%;transform:translateX(-50%) scale(.6);transform-origin:bottom center;
+.m-bubble{position:absolute;bottom:185px;left:50%;transform:translateX(-50%) scale(.6);transform-origin:bottom center;
   min-width:180px;max-width:264px;padding:11px 16px;border-radius:16px;background:#fff;border:2px solid #1A0604;
   box-shadow:0 6px 0 rgba(26,6,4,.16);font-family:'Baloo 2',sans-serif;font-weight:500;font-size:.86rem;line-height:1.5;
   color:#3A2600;text-align:center;opacity:0;pointer-events:none;transition:.3s cubic-bezier(.23,1,.32,1);}

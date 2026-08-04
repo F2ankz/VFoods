@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=2">
+<link rel="stylesheet" href="style.css?v=3">
 <link rel="stylesheet" href="theme-white.css?v=2">
 <style>
 /* ── NEWS GRID ── */
@@ -91,6 +91,41 @@
 .sb-ig { background:rgba(225,48,108,.2); border-color:rgba(225,48,108,.4); color:#fff; }
 .sb-tw { background:rgba(29,161,242,.2); border-color:rgba(29,161,242,.4); color:#fff; }
 
+/* ── social icons แบบเดียวกับหน้า Contact (soc-chip) — ตัวอักษรขาวสำหรับพื้นมืด ── */
+.social-row { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; margin-top:36px; }
+.soc-chip { display:flex; flex-direction:column; align-items:center; gap:10px; text-decoration:none; width:104px; transition:transform .3s cubic-bezier(.23,1,.32,1); }
+.soc-chip:hover { transform:translateY(-6px); }
+.soc-ico { width:72px; height:72px; border-radius:22px; display:flex; align-items:center; justify-content:center; color:#fff; box-shadow:0 8px 24px rgba(0,0,0,.28); transition:box-shadow .3s, transform .3s; }
+.soc-chip:hover .soc-ico { box-shadow:0 14px 34px rgba(0,0,0,.4); transform:scale(1.05); }
+.soc-ico svg { width:38px; height:38px; }
+.soc-name { font-family:'Sarabun',sans-serif; font-size:.82rem; font-weight:700; color:#fff; }
+.soc-handle { font-size:.7rem; color:rgba(255,255,255,.6); margin-top:-6px; }
+.ico-fb { background:linear-gradient(135deg,#1877F2,#0D5DB8); }
+.ico-ig { background:linear-gradient(135deg,#FEDA75,#FA7E1E,#D62976,#962FBF,#4F5BD5); }
+.ico-tt { background:#111; }
+.ico-sp { background:linear-gradient(135deg,#FF6D3F,#EE4D2D); }
+.ico-lz { background:linear-gradient(135deg,#1A0DAB,#F03D6E 55%,#FF8B00); }
+
+/* ── ติดตามเราได้ที่ = พื้นขาว ตัวอักษรเข้ม ── */
+html .social-section { background:#fff !important; }
+html .social-section .sec-title { color:#2B1B16 !important; }
+html .social-section .sec-desc { color:rgba(43,27,22,.62) !important; }
+html .social-section .sec-eye { color:#E45F06 !important; }
+html .social-section .soc-name { color:#2B1B16 !important; }
+html .social-section .soc-handle { color:rgba(43,27,22,.5) !important; }
+html .social-section .soc-ico { box-shadow:0 8px 24px rgba(0,0,0,.14) !important; }
+html .social-section .fb-promo { background:rgba(228,95,6,.08) !important; border:1px solid rgba(228,95,6,.28) !important; }
+html .social-section .fb-promo .fb-promo-t { color:#2B1B16 !important; }
+html .social-section .fb-promo .fb-promo-p { color:rgba(43,27,22,.7) !important; }
+
+/* ── แถบล่างสุด (footer) = สีส้ม ── */
+html #g-footer { background:#E45F06 !important; }
+html #g-footer .logo-text, html #g-footer .footer-col h4 { color:#fff !important; }
+html #g-footer .footer-brand p, html #g-footer .footer-col a { color:rgba(255,255,255,.82) !important; }
+html #g-footer .footer-col a:hover { color:#fff !important; }
+html #g-footer .footer-bottom { border-top-color:rgba(255,255,255,.28) !important; }
+html #g-footer .footer-bottom p { color:rgba(255,255,255,.85) !important; }
+
 @media(max-width:900px) {
   .news-featured { grid-template-columns:1fr; }
   .news-reg-grid { grid-template-columns:repeat(2,1fr); }
@@ -108,6 +143,7 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
 <nav id="g-nav">
   <a class="nav-brand" href="scroll-site/index.html"><img class="nav-logo-img" src="img/logo-vfoods.png" alt="VFOODS วีฟู้ดส์"></a>
   <div class="nav-links">
+    <a href="scroll-site/index.html">Home</a>
     <a href="news.html" class="active">News &amp; Activities</a>
     <div class="nav-item">
       <a href="products.html" class="nav-parent">Products <span class="nav-caret">▾</span></a>
@@ -141,7 +177,6 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
       </div>
     </div>
     <a href="oem-guide.html">OEM Engagement Guide</a>
-    <a href="scroll-site/index.html#about-us">About Us</a>
     <a href="contact.html">Contact Us</a>
   </div>
   <form class="nav-search" role="search" onsubmit="return navSearch(event)">
@@ -151,11 +186,11 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
   <div class="nav-hamburger" id="nav-burger"><span></span><span></span><span></span></div>
 </nav>
 <div class="nav-mobile" id="nav-mobile">
+  <a href="scroll-site/index.html">Home</a>
   <a href="news.html">News &amp; Activities</a>
   <a href="products.html">Products</a>
   <a href="brands.html">Our Brands</a>
   <a href="oem-guide.html">OEM Engagement Guide</a>
-  <a href="scroll-site/index.html#about-us">About Us</a>
   <a href="contact.html">Contact Us</a>
 </div>
 
@@ -281,16 +316,37 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
   <div class="social-inner">
     <div class="sec-eye" style="color:var(--og5);">Follow Us</div>
     <h2 class="sec-title reveal">ติดตามเราได้ที่</h2>
-    <p class="sec-desc reveal" style="color:rgba(255,255,255,.85);">ข่าวสาร โปรโมชั่น และกิจกรรมก่อนใคร ติดตามเราทุกช่องทาง</p>
-    <div class="social-icons">
-      <a href="https://www.facebook.com/VFoods" target="_blank" class="social-btn sb-fb"><span class="sbi"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></span>Facebook</a>
-      <a href="#" target="_blank" class="social-btn sb-yt"><span class="sbi"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span>YouTube</a>
-      <a href="#" target="_blank" class="social-btn sb-ig"><span class="sbi"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></span>Instagram</a>
-      <a href="#" target="_blank" class="social-btn sb-tw"><span class="sbi"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644z"/></svg></span>Twitter/X</a>
+    <p class="sec-desc reveal">ข่าวสาร โปรโมชั่น และกิจกรรมก่อนใคร ติดตามเราทุกช่องทาง</p>
+    <div class="social-row reveal">
+      <a href="https://www.facebook.com/VFoods" target="_blank" rel="noopener" class="soc-chip">
+        <span class="soc-ico ico-fb"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></span>
+        <span class="soc-name">Facebook</span>
+        <span class="soc-handle">@VFoods</span>
+      </a>
+      <a href="https://www.instagram.com/vfoods" target="_blank" rel="noopener" class="soc-chip">
+        <span class="soc-ico ico-ig"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></span>
+        <span class="soc-name">Instagram</span>
+        <span class="soc-handle">@vfoods</span>
+      </a>
+      <a href="https://www.tiktok.com/@vfoods" target="_blank" rel="noopener" class="soc-chip">
+        <span class="soc-ico ico-tt"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></span>
+        <span class="soc-name">TikTok</span>
+        <span class="soc-handle">@vfoods</span>
+      </a>
+      <a href="https://shopee.co.th/vfoods" target="_blank" rel="noopener" class="soc-chip">
+        <span class="soc-ico ico-sp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c-2.35 0-4.28 1.9-4.35 4.24H4.2a1.2 1.2 0 0 0-1.2 1.28l.83 12.06A3.2 3.2 0 0 0 7.02 22h9.96a3.2 3.2 0 0 0 3.19-2.92l.83-12.06a1.2 1.2 0 0 0-1.2-1.28h-3.45C16.28 3.4 14.35 1.5 12 1.5zm0 1.9c1.3 0 2.37 1.05 2.44 2.34H9.56C9.63 4.45 10.7 3.4 12 3.4zm-.2 5.3c1.86 0 3.16.94 3.16 2.34 0 1.16-.9 1.86-2.16 2.32l-.86.32c-.9.34-1.2.66-1.2 1.14 0 .5.44.86 1.22.86.72 0 1.4-.24 1.98-.6l.5 1.5c-.68.42-1.6.68-2.52.68-1.86 0-3.1-.98-3.1-2.44 0-1.14.78-1.86 2.06-2.34l.9-.34c.96-.36 1.26-.64 1.26-1.12 0-.48-.46-.78-1.2-.78-.66 0-1.36.22-1.94.56l-.5-1.48c.7-.42 1.62-.66 2.6-.66z"/></svg></span>
+        <span class="soc-name">Shopee</span>
+        <span class="soc-handle">VFoods Shop</span>
+      </a>
+      <a href="https://www.lazada.co.th/shop/vfoods" target="_blank" rel="noopener" class="soc-chip">
+        <span class="soc-ico ico-lz"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2 4.4 6.55v6.3c0 4.02 3.1 6.72 7.6 8.95 4.5-2.23 7.6-4.93 7.6-8.95v-6.3L12 2.2zm-2.9 6.1 2.9 1.68 2.9-1.68v3.36L12 13.34 9.1 11.66V8.3z"/></svg></span>
+        <span class="soc-name">Lazada</span>
+        <span class="soc-handle">VFoods Store</span>
+      </a>
     </div>
-    <div style="margin-top:40px;padding:28px;background:rgba(66,103,178,.15);border:1px solid rgba(66,103,178,.3);border-radius:var(--r2);">
-      <div style="font-family:'Sarabun',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:8px;">VFoods Thailand Facebook Page</div>
-      <p style="font-size:.85rem;color:rgba(255,255,255,.85);margin-bottom:16px;">ข่าวสาร โปรโมชั่น และกิจกรรมล่าสุด อัปเดตทุกวัน</p>
+    <div class="fb-promo" style="margin-top:40px;padding:28px;border-radius:var(--r2);">
+      <div class="fb-promo-t" style="font-family:'Sarabun',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:8px;">VFoods Thailand Facebook Page</div>
+      <p class="fb-promo-p" style="font-size:.85rem;margin-bottom:16px;">ข่าวสาร โปรโมชั่น และกิจกรรมล่าสุด อัปเดตทุกวัน</p>
       <a href="https://www.facebook.com/VFoods" target="_blank" class="btn-w" style="font-size:.85rem;padding:10px 24px;">เยี่ยมชม Facebook →</a>
     </div>
   </div>

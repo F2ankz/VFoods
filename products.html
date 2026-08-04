@@ -7,12 +7,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=2">
-<link rel="stylesheet" href="theme-white.css?v=2">
+<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="theme-white.css?v=5">
 <style>
 /* ── CATEGORY SECTIONS ── */
 .cat-section { padding:80px 0; position:relative; overflow:hidden; }
-.cat-section:nth-child(odd) { background:var(--og); }
+/* พื้นหลังสลับ ส้มสด / ส้มอ่อน — คุมจริงที่ theme-white.css (ธีมหน้านี้) */
+.cat-section:nth-child(odd)  { background:var(--og); }
 .cat-section:nth-child(even) { background:var(--og3); }
 
 .cat-header {
@@ -111,7 +112,7 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
 
 #tunnel { position:relative; height:100vh; overflow:hidden; background:radial-gradient(70% 80% at 50% 40%, #8F3806 0%, #2B0705 78%); }
 #tunnel.tunnel-fallback { background:linear-gradient(180deg,#2B0705,#7E2205); }
-.tunnel-viewport { position:absolute; inset:0; perspective:900px; perspective-origin:50% 46%; color:#FFC94D; transition:color .8s ease; }
+.tunnel-viewport { position:absolute; inset:0; perspective:900px; perspective-origin:50% 46%; color:#fff; transition:color .8s ease; }
 .tunnel-bg { position:absolute; inset:0; z-index:0; }
 .tunnel-bg i { position:absolute; inset:0; opacity:0; background:radial-gradient(62% 58% at 50% 46%, var(--fc,#FFC94D) 0%, transparent 72%); filter:opacity(.32) saturate(1.15); transition:opacity 1s ease; }
 .tunnel-bg i.on { opacity:1; }
@@ -124,7 +125,7 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
 .gate-ring { position:absolute; left:50%; top:42%; width:min(320px,58vw); height:min(320px,58vw); transform:translate(-50%,-50%); border-radius:50%; border:3px solid rgba(255,255,255,.92); box-shadow:0 0 46px rgba(255,255,255,.7),0 0 100px rgba(255,255,255,.38),inset 0 0 50px rgba(255,255,255,.3); background:radial-gradient(circle,rgba(255,255,255,.24),transparent 66%); }
 .gate-img { position:relative; z-index:1; height:min(260px,46vw); width:auto; filter:drop-shadow(0 22px 34px rgba(96,10,2,.5)) drop-shadow(0 0 30px rgba(255,255,255,.6)); animation:cvBob 6.5s ease-in-out infinite alternate; }
 .gate b { position:relative; z-index:1; margin-top:6px; font-family:var(--font-display); font-weight:800; font-size:clamp(1.6rem,3.4vw,2.7rem); line-height:1.05; color:#fff; text-shadow:0 2px 18px rgba(96,10,2,.6),0 0 30px color-mix(in srgb,var(--fc) 55%,transparent); }
-.gate small { position:relative; z-index:1; font-size:clamp(1.05rem,1.9vw,1.45rem); font-weight:600; color:#FFEAD4; text-shadow:0 2px 12px rgba(96,10,2,.55); }
+.gate small { position:relative; z-index:1; font-size:clamp(1.05rem,1.9vw,1.45rem); font-weight:600; color:#fff; text-shadow:0 2px 12px rgba(96,10,2,.55); }
 @keyframes cvBob { 0%{transform:translateY(-10px)} 100%{transform:translateY(12px)} }
 .tunnel-ui { position:absolute; left:50%; bottom:56px; z-index:5; transform:translateX(-50%); width:min(420px,80vw); text-align:center; }
 .tunnel-label { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; }
@@ -143,6 +144,10 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
 .tunnel-fallback .gate-ring { display:none; }
 .tunnel-fallback .gate-img { height:150px; }
 .tunnel-fallback .tunnel-ui { position:relative; left:auto; bottom:auto; transform:none; margin:0 auto; padding-bottom:10px; }
+
+/* ═══ ห้ามฟอนต์สีส้มทุกจุดบนหน้า product → สีช็อกโกแลตเข้ม (ตัดกับพื้นส้ม/ขาว) ═══ */
+html .cat-en, html .prod-card-brand, html .cat-new,
+html .cat-badge-text, html .sec-eye, html .eyebrow { color:#2B1B16 !important; }
 </style>
 </head>
 <body>
@@ -151,6 +156,7 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
 <nav id="g-nav">
   <a class="nav-brand" href="scroll-site/index.html"><img class="nav-logo-img" src="img/logo-vfoods.png" alt="VFOODS วีฟู้ดส์"></a>
   <div class="nav-links">
+    <a href="scroll-site/index.html">Home</a>
     <a href="news.html">News &amp; Activities</a>
     <div class="nav-item">
       <a href="products.html" class="nav-parent active">Products <span class="nav-caret">▾</span></a>
@@ -184,7 +190,6 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
       </div>
     </div>
     <a href="oem-guide.html">OEM Engagement Guide</a>
-    <a href="scroll-site/index.html#about-us">About Us</a>
     <a href="contact.html">Contact Us</a>
   </div>
   <form class="nav-search" role="search" onsubmit="return navSearch(event)">
@@ -194,11 +199,11 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
   <div class="nav-hamburger" id="nav-burger"><span></span><span></span><span></span></div>
 </nav>
 <div class="nav-mobile" id="nav-mobile">
+  <a href="scroll-site/index.html">Home</a>
   <a href="news.html">News &amp; Activities</a>
   <a href="products.html">Products</a>
   <a href="brands.html">Our Brands</a>
   <a href="oem-guide.html">OEM Engagement Guide</a>
-  <a href="scroll-site/index.html#about-us">About Us</a>
   <a href="contact.html">Contact Us</a>
 </div>
 

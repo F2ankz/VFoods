@@ -1,5 +1,5 @@
 /* VFOODS — compact landing
-   HERO = คลิป Home Slide 1 → 2 เล่นต่อกันวนลูป (ไม่มี scroll-scrub แล้ว = ลื่น)
+   HERO = คลิป Home Slide 3 คลิปเดียว เล่นวนลูปเต็มจอ (ไม่มี scroll-scrub = ลื่น)
    ปุ่มเมนูด่วนลอยขึ้นมาเอง ไม่บังหน้า เลื่อนต่อได้ปกติ */
 
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -11,37 +11,17 @@ const quickBar = document.getElementById("quick-bar");
 
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 
-/* ── HERO VIDEO SEQUENCER: v0 (slide1) → v1 (slide2) → วน ── */
-const vids = [document.getElementById("hero-v0"), document.getElementById("hero-v1")];
-let active = 0;
-
-function showClip(i) {
-  const cur = vids[i], prev = vids[i ^ 1];
-  vids.forEach(v => v && v.classList.remove("show"));
-  if (!cur) return;
-  cur.classList.add("show");
-  try { cur.currentTime = 0; } catch (e) {}
-  const p = cur.play();
-  if (p && p.catch) p.catch(() => {});
-  if (prev) { try { prev.pause(); } catch (e) {} }
-}
+/* ── HERO VIDEO: คลิปเดียว เล่นวนลูปเต็มจอ ── */
+const vids = [document.getElementById("hero-v0")];
 
 function initHeroVideo() {
-  vids.forEach(v => { if (v) { v.muted = true; v.playsInline = true; } });
-  if (reduceMotion) {
-    /* ลดการเคลื่อนไหว: โชว์เฟรมแรกของ slide1 นิ่ง ๆ */
-    const v = vids[0];
-    if (v) { v.classList.add("show"); v.pause(); }
-    return;
-  }
-  vids.forEach((v, i) => {
-    if (!v) return;
-    v.addEventListener("ended", () => {
-      active = (i + 1) % vids.length;
-      showClip(active);
-    });
-  });
-  showClip(0);
+  const v = vids[0];
+  if (!v) return;
+  v.muted = true; v.playsInline = true; v.loop = true;
+  v.classList.add("show");
+  if (reduceMotion) { v.pause(); return; }
+  const p = v.play();
+  if (p && p.catch) p.catch(() => {});
 }
 
 /* ── loader: ปิดเมื่อคลิปแรกพร้อมเล่น (หรือกันเหนียว 6 วิ) ── */

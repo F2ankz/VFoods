@@ -7,8 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/cookieverse.css">
+<link rel="stylesheet" href="css/style.css?v=2">
+<link rel="stylesheet" href="css/cookieverse.css?v=4">
 </head>
 <body>
 
@@ -24,6 +24,7 @@
   <nav>
     <a class="logo" href="#top"><img class="nav-logo-img" src="../img/logo-vfoods.png" alt="VFOODS วีฟู้ดส์"></a>
     <div class="nav-links">
+      <a href="#top">Home</a>
       <a href="#news">News &amp; Activities</a>
       <div class="nav-item">
         <a href="../products.html" class="nav-parent">Products <span class="nav-caret">▾</span></a>
@@ -57,7 +58,6 @@
         </div>
       </div>
       <a href="../oem-guide.html">OEM Engagement Guide</a>
-      <a href="#about-us">About Us</a>
       <a href="../contact.html">Contact Us</a>
     </div>
     <form class="nav-search" role="search" onsubmit="return navSearch(event)">
@@ -71,14 +71,9 @@
   function navSearch(e){ e.preventDefault(); var q=(e.currentTarget.querySelector('input').value||'').trim(); if(!q){return false;} location.href='../products.html?q='+encodeURIComponent(q); return false; }
 </script>
 
-<!-- ═══ HERO — คลิป Home Slide 1 → 2 เล่นต่อกันวนลูป ═══ -->
+<!-- ═══ HERO — คลิป Home Slide 3 เต็มจอ เล่นวนลูป ═══ -->
 <section class="hero" id="hero">
-  <video class="hero-vid show" id="hero-v0" muted playsinline preload="auto" src="media/hero-1.mp4"></video>
-  <video class="hero-vid" id="hero-v1" muted playsinline preload="metadata" src="media/hero-2.mp4"></video>
-  <div class="hero-copy">
-    <h1 class="hero-heading">อร่อยทุกคำ <span class="accent">ทุกโอกาส</span></h1>
-    <p class="hero-tagline">จากคุกกี้นับร้อยชิ้น สู่แพ็คเกจในมือคุณ — ส่งออกกว่า 30 ประเทศทั่วโลก</p>
-  </div>
+  <video class="hero-vid show" id="hero-v0" muted loop autoplay playsinline preload="auto" src="media/hero-3.mp4"></video>
 </section>
 
 <!-- ═══ QUICK BAR — ปุ่ม 3 อันเพียว ๆ ไม่บังจอ ═══ -->
@@ -395,8 +390,9 @@
         <!-- walking mascot -->
         <div class="mascot" id="cookieChar">
           <div class="m-bubble" id="tourBubble">สวัสดีครับ! ผม <strong>คุกกี้น้อย</strong> — เลื่อนลงมาเดินไปพร้อมกันเลย!</div>
-          <div class="mascot-float">
-            <svg width="100" height="138" viewBox="0 0 120 160" fill="none">
+          <div class="mascot-float" id="mascotFloat">
+            <canvas id="cookie-3d-canvas" width="260" height="320" style="display:none; margin: 0 auto; width:100%; height:auto;"></canvas>
+            <svg id="svgMascotFallback" width="100" height="138" viewBox="0 0 120 160" fill="none">
               <g class="ck-al"><rect x="9" y="70" width="13" height="32" rx="6.5" fill="#C8762A"/><rect x="11" y="70" width="9" height="32" rx="4.5" fill="#E09340"/><circle cx="15.5" cy="102" r="7.5" fill="#C8762A"/><circle cx="15.5" cy="102" r="5.5" fill="#E09340"/></g>
               <g class="ck-ar"><rect x="98" y="70" width="13" height="32" rx="6.5" fill="#C8762A"/><rect x="100" y="70" width="9" height="32" rx="4.5" fill="#E09340"/><circle cx="104.5" cy="102" r="7.5" fill="#C8762A"/><circle cx="104.5" cy="102" r="5.5" fill="#E09340"/></g>
               <ellipse cx="60" cy="88" rx="36" ry="34" fill="#C8762A"/><ellipse cx="60" cy="86" rx="32" ry="30" fill="#E09340"/>
@@ -509,8 +505,11 @@
   </div>
 </footer>
 
-<!-- ultra-smooth build: native scroll, no GSAP/ScrollTrigger/Lenis -->
-<script src="js/app.js"></script>
-<script src="js/cookieverse.js"></script>
+<!-- Lenis Smooth Scroll & Three.js 3D Model -->
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="js/app.js?v=2"></script>
+<script src="js/cookieverse.js?v=5"></script>
 </body>
 </html>
