@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css?v=2">
-<link rel="stylesheet" href="css/cookieverse.css?v=4">
+<link rel="stylesheet" href="css/cookieverse.css?v=8">
 </head>
 <body>
 
@@ -71,9 +71,12 @@
   function navSearch(e){ e.preventDefault(); var q=(e.currentTarget.querySelector('input').value||'').trim(); if(!q){return false;} location.href='../products.html?q='+encodeURIComponent(q); return false; }
 </script>
 
-<!-- ═══ HERO — คลิป Home Slide 3 เต็มจอ เล่นวนลูป ═══ -->
+<!-- ═══ HERO — คลิป Home Slide 3_V2 เต็มจอ + ข้อความ 3D ═══ -->
 <section class="hero" id="hero">
-  <video class="hero-vid show" id="hero-v0" muted loop autoplay playsinline preload="auto" src="media/hero-3.mp4"></video>
+  <video class="hero-vid show" id="hero-v0" muted loop autoplay playsinline preload="auto" src="media/hero-3-v2.mp4"></video>
+  <div class="hero-3d">
+    <h1 class="hero-3d-title">THE VARIETY WORLD OF<br>BISCUITS, COOKIES, AND SNACKS</h1>
+  </div>
 </section>
 
 <!-- ═══ QUICK BAR — ปุ่ม 3 อันเพียว ๆ ไม่บังจอ ═══ -->
@@ -226,7 +229,17 @@
     <h2 class="rv" style="--d:.06s">สินค้าของเรา</h2>
     <p class="rv" style="--d:.12s">บิสกิต คุกกี้ เวเฟอร์ และขนมขบเคี้ยว กว่า 9 หมวดหมู่ — คัดสรรรสชาติที่ดีที่สุดในทุกคำ</p>
   </div>
-  <div class="sec-cta rv" style="--d:.18s"><a href="../products.html" class="btn-line">ดูสินค้าทั้งหมด →</a></div>
+  <div class="prod-preview rv" style="--d:.16s">
+    <a class="pp-card" href="../brands.html"><div class="pp-stage"><img src="../img/brand-packs/kathi.webp" alt="กะทิสับปะรด" loading="lazy"></div><span class="pp-name">กะทิสับปะรด</span></a>
+    <a class="pp-card" href="../brands.html"><div class="pp-stage"><img src="../img/brand-packs/kai5.webp" alt="ขาไก่ 5 รส" loading="lazy"></div><span class="pp-name">ขาไก่ 5 รส</span></a>
+    <a class="pp-card" href="../brands.html"><div class="pp-stage"><img src="../img/brand-packs/creamvanilla.webp" alt="คุกกี้ครีมวานิลลา" loading="lazy"></div><span class="pp-name">คุกกี้ครีมวานิลลา</span></a>
+    <a class="pp-card" href="../brands.html"><div class="pp-stage"><img src="../img/brand-packs/minivo.webp" alt="มินิวีโอ" loading="lazy"></div><span class="pp-name">มินิวีโอ</span></a>
+    <a class="pp-card" href="../brands.html"><div class="pp-stage"><img src="../img/brand-packs/bearchoc.webp" alt="หมีน้อยช็อกโกแลต" loading="lazy"></div><span class="pp-name">หมีน้อยช็อกโกแลต</span></a>
+    <a class="pp-card" href="../brands.html"><div class="pp-stage"><img src="../img/brand-packs/cheese.webp" alt="ชีสจิ๋วสับปะรด" loading="lazy"></div><span class="pp-name">ชีสจิ๋วสับปะรด</span></a>
+    <a class="pp-card" href="../brands.html"><div class="pp-stage"><img src="../img/brand-packs/abc.webp" alt="บิสกิต ABC" loading="lazy"></div><span class="pp-name">บิสกิต ABC</span></a>
+    <a class="pp-card" href="../brands.html"><div class="pp-stage"><img src="../img/brand-packs/shrimp.webp" alt="ข้าวเกรียบกุ้ง" loading="lazy"></div><span class="pp-name">ข้าวเกรียบกุ้ง</span></a>
+  </div>
+  <div class="sec-cta rv" style="--d:.2s"><a href="../products.html" class="btn-line">ดูสินค้าทั้งหมด →</a></div>
 </section>
 
 <!-- ════ OEM JOURNEY · horizontal scroll-scrub (ย้ายมาจากหน้า OEM) ════ -->
@@ -508,6 +521,6 @@
 <!-- Lenis (smooth scroll) — Three.js โหลดแบบ lazy ในภายหลังเมื่อใกล้ถึงส่วนมาสคอต -->
 <script defer src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 <script defer src="js/app.js?v=3"></script>
-<script defer src="js/cookieverse.js?v=8"></script>
+<script defer src="js/cookieverse.js?v=9"></script>
 </body>
 </html>

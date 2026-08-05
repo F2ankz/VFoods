@@ -82,7 +82,7 @@ body::after {
 /* ── HERO — cinematic "projection" of the white cookie clip ── */
 .hero { background: radial-gradient(70% 60% at 50% 42%, #E86A18, var(--cv-bg) 70%); }
 /* ขยับคลิป hero ลงมาใต้เมนู (เห็นหัวคลิปเต็ม ไม่โดนแถบเมนูบัง) */
-.hero-vid { top: 150px !important; height: calc(100% - 150px) !important; }
+.hero-vid { top: 110px !important; height: calc(100% - 110px) !important; }
 /* feather the white-bg clip so its edges melt into the orange universe */
 #canvas {
   -webkit-mask: radial-gradient(125% 82% at 50% 46%, #000 52%, rgba(0,0,0,.35) 80%, transparent 95%);
@@ -635,3 +635,55 @@ body::after {
 @media(prefers-reduced-motion:reduce){
   .jp-prod,.jp-coin,.jp-pack,.jp-disc::before,.jp-badge::before,.mascot .mascot-float,.scroll-hint .arrw,.jm-row{animation:none!important;}
 }
+
+/* ═══ PRODUCT PREVIEW (หน้าแรก · สินค้าของเรา) — ตัวอย่างแพ็คสินค้าจริงจากหน้า Brands ═══ */
+.prod-preview{
+  max-width:1160px; margin:38px auto 4px; padding:0 4vw;
+  display:grid; grid-template-columns:repeat(4,1fr); gap:18px;
+}
+.pp-card{
+  display:flex; flex-direction:column; align-items:center; gap:10px;
+  text-decoration:none; padding:18px 14px 16px; border-radius:20px;
+  background:rgba(255,255,255,.94); border:1px solid rgba(255,255,255,.65);
+  box-shadow:0 10px 30px rgba(120,20,10,.12);
+  transition:box-shadow .4s ease;   /* ไม่ transform ตัวการ์ด → hit area นิ่ง ไม่สั่น */
+}
+.pp-card:hover{ box-shadow:0 22px 46px rgba(120,20,10,.22); }
+.pp-stage{
+  width:100%; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;
+  border-radius:14px;
+  background:radial-gradient(ellipse at 50% 66%, rgba(232,106,24,.12), transparent 70%);
+}
+.pp-stage img{
+  max-width:90%; max-height:90%; object-fit:contain;
+  filter:drop-shadow(0 10px 16px rgba(0,0,0,.16));
+  transition:transform .45s cubic-bezier(.23,1,.32,1);
+}
+.pp-card:hover .pp-stage img{ transform:translateY(-8px) scale(1.06); }
+.pp-name{ font-family:'Sarabun',sans-serif; font-size:.86rem; font-weight:700; color:#7A2408; text-align:center; line-height:1.3; }
+@media(max-width:900px){ .prod-preview{ grid-template-columns:repeat(3,1fr); } }
+@media(max-width:560px){ .prod-preview{ grid-template-columns:repeat(2,1fr); gap:12px; } }
+
+/* ═══ HERO 3D TEXT — "THE VARIETY WORLD OF BISCUITS, COOKIES, AND SNACKS" ═══ */
+.hero-3d{
+  position:absolute; left:50%; top:14%; transform:translateX(-50%);
+  z-index:4; width:min(1120px,92vw); text-align:center; pointer-events:none;
+}
+.hero-3d-title{
+  margin:0; font-family:var(--font-display,'Sarabun'),sans-serif; font-weight:800;
+  font-size:clamp(1.5rem,4.7vw,3.7rem); line-height:1.06; letter-spacing:.012em;
+  text-transform:uppercase; color:#fff;
+  /* ชั้นนูน 3D โทนส้ม-น้ำตาล + เงาตกกระทบ */
+  text-shadow:
+    0 1px 0 #F0B36A, 0 2px 0 #E7A552, 0 3px 0 #DB933B,
+    0 4px 0 #CD8229, 0 5px 0 #BE7019, 0 6px 0 #AC5F0E,
+    0 7px 1px rgba(60,20,0,.2), 0 9px 16px rgba(70,18,0,.5);
+  transform:perspective(720px) rotateX(15deg);
+  animation:hero3dIn .9s cubic-bezier(.2,.9,.3,1.15) .2s backwards;
+}
+@keyframes hero3dIn{
+  from{ opacity:0; transform:perspective(720px) rotateX(15deg) translateY(26px); }
+  to{   opacity:1; transform:perspective(720px) rotateX(15deg) translateY(0); }
+}
+@media(max-width:760px){ .hero-3d{ top:11%; } }
+@media(prefers-reduced-motion:reduce){ .hero-3d-title{ animation:none; } }

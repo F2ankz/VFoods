@@ -8,12 +8,11 @@
   let lenis = null;
   if (typeof Lenis !== 'undefined' && !reduce) {
     lenis = new Lenis({
-      // lerp สูงมาก = ล้อเมาส์ตอบสนองเกือบทันที ไวเหมือนลากแถบ scrollbar เอง (ตัดหางไถล)
-      lerp: 0.35,
+      // ปิด smooth ของล้อเมาส์ → scroll แบบ native ทันที ไวเป๊ะเท่าลากแถบ scrollbar เอง
+      smoothWheel: false,
+      lerp: 0.35,             // ใช้กับจอสัมผัส/scrollTo เท่านั้น (ไม่มีผลกับล้อแล้ว)
       easing: (t) => 1 - Math.pow(1 - t, 3),
-      smoothWheel: true,
       syncTouch: true,        // มือถือ/แทร็คแพดยังลื่น
-      wheelMultiplier: 1.1,   // ต่อ notch ขยับพอ ๆ กับ native
       touchMultiplier: 1.8
     });
 
