@@ -382,13 +382,39 @@ nav{
 .pk:hover{transform:translateY(-8px);box-shadow:var(--sh2);border-color:rgba(232,23,43,.25);}
 .pk::before{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(ellipse 80% 55% at 50% 0%,rgba(232,23,43,.04),transparent 70%);opacity:0;transition:opacity .4s;}
 .pk:hover::before{opacity:1;}
-.pk-scene{perspective:700px;height:190px;display:flex;align-items:center;justify-content:center;}
+.pk-scene{perspective:900px;height:200px;display:flex;align-items:flex-end;justify-content:center;position:relative;}
 .pk-obj{animation:spinY 7s linear infinite;cursor:grab;filter:drop-shadow(0 12px 26px rgba(232,23,43,.14)) drop-shadow(0 3px 8px rgba(0,0,0,.09));transition:filter .3s,animation-duration .4s;}
 .pk:hover .pk-obj{animation-duration:3s;filter:drop-shadow(0 18px 38px rgba(232,23,43,.28)) drop-shadow(0 3px 8px rgba(0,0,0,.11));}
 .pk-obj:active{cursor:grabbing;}
+/* real packaging mockups — floating 3D presentation */
+.pk-scene::before{content:'';position:absolute;left:50%;top:44%;width:74%;height:66%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(232,23,43,.11),transparent 70%);filter:blur(6px);opacity:.65;transition:opacity .45s,transform .5s;pointer-events:none;}
+.pk:hover .pk-scene::before{opacity:1;transform:translate(-50%,-50%) scale(1.13);}
+.pk-scene::after{content:'';position:absolute;left:50%;bottom:2px;width:60%;height:16px;transform:translateX(-50%);background:radial-gradient(ellipse at center,rgba(80,34,10,.32),transparent 72%);filter:blur(5px);transition:width .5s cubic-bezier(.23,1,.32,1),opacity .5s;pointer-events:none;}
+.pk:hover .pk-scene::after{width:46%;opacity:.85;}
+.pk-photo{position:relative;z-index:1;max-width:84%;max-height:186px;object-fit:contain;filter:drop-shadow(0 16px 22px rgba(80,34,10,.24));animation:pkbob 5s ease-in-out infinite;transition:transform .5s cubic-bezier(.23,1,.32,1),filter .4s;transform-origin:50% 100%;will-change:transform;}
+.pk:hover .pk-photo{animation:none;transform:translateY(-10px) scale(1.06);filter:drop-shadow(0 28px 34px rgba(232,23,43,.3));}
+@keyframes pkbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
 .pk-name{font-family:'Sarabun',sans-serif;font-size:1.05rem;font-weight:700;letter-spacing:-.02em;margin-top:14px;margin-bottom:5px;}
 .pk-desc{font-size:.81rem;color:var(--t3);line-height:1.74;font-weight:300;}
 .pk-tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:14px;}
+
+/* ── CUSTOMER LOGOS · marquee ── */
+.cust-sec{padding:80px 0 90px;background:var(--cr);overflow:hidden;}
+.cust-in{max-width:820px;margin:0 auto 46px;padding:0 22px;text-align:center;}
+.logo-marquee{position:relative;width:100%;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);}
+.logo-track{display:flex;align-items:center;gap:24px;width:max-content;animation:logoScroll 52s linear infinite;}
+.logo-marquee:hover .logo-track{animation-play-state:paused;}
+.logo-item{flex:0 0 auto;width:158px;height:92px;display:flex;align-items:center;justify-content:center;
+  background:#fff;border:1px solid rgba(26,6,8,.07);border-radius:14px;padding:16px 22px;
+  box-shadow:0 6px 18px rgba(120,50,20,.07);
+  transition:transform .35s cubic-bezier(.23,1,.32,1),box-shadow .35s;}
+.logo-item img{max-width:100%;max-height:100%;object-fit:contain;}
+.logo-item:hover{transform:translateY(-5px);box-shadow:0 14px 30px rgba(120,50,20,.16);}
+@keyframes logoScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:560px){.logo-item{width:132px;height:78px;padding:13px 16px;}}
+@media(prefers-reduced-motion:reduce){.logo-track{animation:none;flex-wrap:wrap;justify-content:center;width:auto;}}
 
 /* ── FEATURES ── */
 .feat-sec{padding:92px 22px;}
@@ -531,7 +557,6 @@ nav{
 
 footer{padding:34px 20px;text-align:center;border-top:1px solid rgba(26,6,8,.06);color:var(--t3);font-size:.78rem;}
 footer a{color:var(--acc);text-decoration:none;font-weight:600;}
-.crumb{position:fixed;pointer-events:none;z-index:400;background:linear-gradient(135deg,#C8762A,#E09340);box-shadow:0 2px 8px rgba(200,118,42,.35);border-radius:50% 40% 50% 40%;}
 @keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── NAV REDESIGN — orange bar · logo · EN menu · dropdown · search ── */
@@ -635,7 +660,7 @@ img.fv-obj{width:92px;height:92px;object-fit:contain;animation:oemFloat 4.6s eas
   <h1 class="h1"><span class="emboss">คู่มือ OEM</span></h1>
   <p class="hero-p">ไม่เพียงแต่เป็นผู้ผลิต เรายังเป็นผู้เชี่ยวชาญ OEM ที่พร้อมให้คำแนะนำตั้งแต่ตัวสินค้า รสชาติ จนถึงบรรจุภัณฑ์ที่ตอบโจทย์แบรนด์ของคุณ</p>
   <div class="hero-btns">
-    <a href="#builder" class="btn-red">ลองสร้างสินค้าแบรนด์คุณ</a>
+    <a href="#contact" class="btn-red">ปรึกษาทีม OEM</a>
     <a href="scroll-site/index.html#steps" class="btn-ghost">ดูขั้นตอน OEM</a>
   </div>
   <div class="hero-scene">
@@ -738,36 +763,7 @@ img.fv-obj{width:92px;height:92px;object-fit:contain;animation:oemFloat 4.6s eas
       <!-- 1) Kraft Corrugated Carton · กล่องลังกระดาษ -->
       <div class="pk">
         <div class="pk-scene">
-          <svg class="pk-obj" width="184" height="184" viewBox="0 0 200 200">
-            <defs>
-              <linearGradient id="krTop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EBC488"/><stop offset="1" stop-color="#CE9A57"/></linearGradient>
-              <linearGradient id="krFront" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C88E4D"/><stop offset="1" stop-color="#A46C31"/></linearGradient>
-              <linearGradient id="krSide" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9E672F"/><stop offset="1" stop-color="#7B4C21"/></linearGradient>
-            </defs>
-            <ellipse cx="100" cy="180" rx="80" ry="14" fill="rgba(60,30,0,.22)"/>
-            <!-- top lid -->
-            <polygon points="100,26 180,66 100,106 20,66" fill="url(#krTop)"/>
-            <!-- front-left face -->
-            <polygon points="20,66 100,106 100,184 20,144" fill="url(#krFront)"/>
-            <!-- right face -->
-            <polygon points="180,66 100,106 100,184 180,144" fill="url(#krSide)"/>
-            <!-- flap seam + edge highlights -->
-            <line x1="100" y1="26" x2="100" y2="106" stroke="rgba(90,52,14,.55)" stroke-width="1.6"/>
-            <polyline points="20,66 100,26 180,66" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1.2"/>
-            <!-- packing tape across top seam -->
-            <polygon points="66,46 134,46 116,64 84,64" fill="rgba(226,212,176,.7)"/>
-            <line x1="66" y1="46" x2="84" y2="64" stroke="rgba(150,120,70,.4)" stroke-width="1"/>
-            <line x1="134" y1="46" x2="116" y2="64" stroke="rgba(150,120,70,.4)" stroke-width="1"/>
-            <!-- tape down the front seam -->
-            <polygon points="86,104 100,111 100,150 86,143" fill="rgba(224,210,174,.6)"/>
-            <!-- corrugated flute edge along bottom-front -->
-            <path d="M20,140 L100,180" fill="none" stroke="rgba(60,34,8,.35)" stroke-width="3"/>
-            <path d="M100,180 L180,140" fill="none" stroke="rgba(40,22,4,.4)" stroke-width="3"/>
-            <!-- stamp -->
-            <text x="40" y="126" font-family="'Sarabun',sans-serif" font-size="15" font-weight="800" fill="rgba(74,42,10,.9)">VFoods</text>
-            <rect x="40" y="132" width="42" height="7" rx="1.5" fill="none" stroke="rgba(74,42,10,.55)" stroke-width="1"/>
-            <text x="43" y="138" font-family="'Sarabun',sans-serif" font-size="5.4" letter-spacing="1" fill="rgba(74,42,10,.7)">FRAGILE · OEM</text>
-          </svg>
+          <img class="pk-photo" src="mockup/box.png" alt="กล่องลังกระดาษ" loading="lazy">
         </div>
         <div class="pk-name">กล่องลังกระดาษ</div>
         <div class="pk-desc">ลังลูกฟูกกระดาษคราฟท์ แข็งแรง สำหรับบรรจุ-ขนส่งจำนวนมาก พิมพ์โลโก้แบรนด์ได้</div>
@@ -777,28 +773,7 @@ img.fv-obj{width:92px;height:92px;object-fit:contain;animation:oemFloat 4.6s eas
       <!-- 2) Stand-up Zip Pouch · ซองซิปล็อก -->
       <div class="pk">
         <div class="pk-scene">
-          <svg class="pk-obj" width="146" height="184" viewBox="0 0 130 176" style="animation-delay:-.6s">
-            <defs>
-              <linearGradient id="pchBody" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8E9096"/><stop offset="26%" stop-color="#F4F5FA"/><stop offset="55%" stop-color="#C7C9D1"/><stop offset="100%" stop-color="#83858C"/></linearGradient>
-              <linearGradient id="pchLbl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF4247"/><stop offset="100%" stop-color="#C01120"/></linearGradient>
-            </defs>
-            <ellipse cx="65" cy="168" rx="52" ry="9" fill="rgba(60,30,0,.2)"/>
-            <!-- body -->
-            <path d="M24 30 L12 150 Q12 164 65 164 Q118 164 118 150 L106 30 Z" fill="url(#pchBody)"/>
-            <!-- top zip seal -->
-            <rect x="20" y="20" width="90" height="15" rx="7.5" fill="#B7B9C1"/>
-            <line x1="24" y1="27.5" x2="106" y2="27.5" stroke="rgba(90,90,100,.5)" stroke-width="1" stroke-dasharray="3 2.5"/>
-            <ellipse cx="65" cy="20" rx="34" ry="5" fill="rgba(255,255,255,.35)"/>
-            <!-- red label -->
-            <rect x="26" y="46" width="78" height="92" rx="9" fill="url(#pchLbl)"/>
-            <text x="40" y="76" font-family="'Sarabun',sans-serif" font-size="12" font-weight="800" fill="#fff">VFoods</text>
-            <text x="37" y="92" font-family="'Sarabun',sans-serif" font-size="8" fill="rgba(255,255,255,.85)">Premium Cookie</text>
-            <!-- cookie hint -->
-            <circle cx="55" cy="115" r="13" fill="#C8842E"/><circle cx="50" cy="111" r="2" fill="#5A2E00"/><circle cx="60" cy="117" r="2" fill="#5A2E00"/><circle cx="57" cy="108" r="1.6" fill="#5A2E00"/>
-            <text x="80" y="132" font-family="'Sarabun',sans-serif" font-size="6.5" fill="rgba(255,255,255,.7)">Net 150g</text>
-            <!-- gloss -->
-            <path d="M30 34 Q40 30 46 40 L40 150 Q34 150 30 146 Z" fill="rgba(255,255,255,.28)"/>
-          </svg>
+          <img class="pk-photo" src="mockup/pouch.png" alt="ซองซิปล็อก Stand-up" loading="lazy" style="animation-delay:-1s">
         </div>
         <div class="pk-name">ซองซิปล็อก Stand-up</div>
         <div class="pk-desc">ซองฟอยล์ตั้งได้ Doy-pack มีซิปล็อกเปิด-ปิด กันความชื้น พิมพ์ฟิล์มสีจริง</div>
@@ -808,68 +783,17 @@ img.fv-obj{width:92px;height:92px;object-fit:contain;animation:oemFloat 4.6s eas
       <!-- 3) Metal Tin · ปี๊บ -->
       <div class="pk">
         <div class="pk-scene">
-          <svg class="pk-obj" width="150" height="178" viewBox="0 0 130 168" style="animation-delay:-1.2s">
-            <defs>
-              <linearGradient id="tinBody" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9BA0AA"/><stop offset="18%" stop-color="#EFF2F7"/><stop offset="40%" stop-color="#C9CDD6"/><stop offset="62%" stop-color="#F2F4F9"/><stop offset="82%" stop-color="#B7BCC6"/><stop offset="100%" stop-color="#8B909A"/></linearGradient>
-              <linearGradient id="tinLid" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#AFB4BE"/><stop offset="50%" stop-color="#F4F6FA"/><stop offset="100%" stop-color="#9EA3AD"/></linearGradient>
-              <linearGradient id="tinLbl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF4247"/><stop offset="100%" stop-color="#C01120"/></linearGradient>
-            </defs>
-            <ellipse cx="65" cy="160" rx="54" ry="10" fill="rgba(60,30,0,.22)"/>
-            <!-- body -->
-            <rect x="13" y="34" width="104" height="112" fill="url(#tinBody)"/>
-            <ellipse cx="65" cy="146" rx="52" ry="13" fill="#8E939D"/>
-            <!-- lid -->
-            <rect x="9" y="20" width="112" height="20" rx="4" fill="url(#tinLid)"/>
-            <ellipse cx="65" cy="20" rx="56" ry="13" fill="#F0F2F7"/>
-            <ellipse cx="65" cy="20" rx="56" ry="13" fill="none" stroke="rgba(0,0,0,.08)" stroke-width="1"/>
-            <ellipse cx="52" cy="16" rx="24" ry="5" fill="rgba(255,255,255,.55)"/>
-            <!-- red label band -->
-            <rect x="13" y="58" width="104" height="60" fill="url(#tinLbl)"/>
-            <text x="30" y="84" font-family="'Sarabun',sans-serif" font-size="14" font-weight="800" fill="#fff">VFoods</text>
-            <text x="27" y="99" font-family="'Sarabun',sans-serif" font-size="8.5" fill="rgba(255,255,255,.86)">Cookie Collection</text>
-            <line x1="27" y1="104" x2="103" y2="104" stroke="rgba(255,255,255,.25)" stroke-width=".8"/>
-            <text x="44" y="114" font-family="'Sarabun',sans-serif" font-size="7.5" fill="rgba(255,255,255,.7)">Premium · 300g</text>
-            <!-- specular streaks -->
-            <rect x="30" y="34" width="7" height="112" fill="rgba(255,255,255,.4)"/>
-            <rect x="88" y="34" width="4" height="112" fill="rgba(255,255,255,.28)"/>
-          </svg>
+          <img class="pk-photo" src="mockup/tin.png" alt="ปี๊บ (กระป๋องโลหะ)" loading="lazy" style="animation-delay:-2s">
         </div>
         <div class="pk-name">ปี๊บ (กระป๋องโลหะ)</div>
-        <div class="pk-desc">บรรจุภัณฑ์โลหะทรงกระบอก ทน ปิดสนิท เก็บได้นาน ดูพรีเมียม เหมาะเป็นของฝาก</div>
+        <div class="pk-desc">บรรจุภัณฑ์โลหะทรงเหลี่ยม ทน ปิดสนิท เก็บได้นาน ดูพรีเมียม เหมาะเป็นของฝาก</div>
         <div class="pk-tags"><span class="stag">โลหะ</span><span class="stag">ปิดสนิท</span><span class="stag">เก็บนาน</span></div>
       </div>
 
       <!-- 4) Jar · กระปุก -->
       <div class="pk">
         <div class="pk-scene">
-          <svg class="pk-obj" width="150" height="180" viewBox="0 0 130 170" style="animation-delay:-1.8s">
-            <defs>
-              <linearGradient id="jarGlass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(180,200,210,.55)"/><stop offset="30%" stop-color="rgba(245,250,252,.35)"/><stop offset="70%" stop-color="rgba(170,190,200,.4)"/><stop offset="100%" stop-color="rgba(120,140,150,.5)"/></linearGradient>
-              <linearGradient id="jarLid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF4247"/><stop offset="100%" stop-color="#B8101E"/></linearGradient>
-            </defs>
-            <ellipse cx="65" cy="162" rx="48" ry="9" fill="rgba(60,30,0,.22)"/>
-            <!-- jar body -->
-            <path d="M22 58 Q22 50 30 50 L100 50 Q108 50 108 58 L108 146 Q108 158 65 158 Q22 158 22 146 Z" fill="url(#jarGlass)"/>
-            <path d="M22 58 Q22 50 30 50 L100 50 Q108 50 108 58 L108 146 Q108 158 65 158 Q22 158 22 146 Z" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.4"/>
-            <!-- cookies inside -->
-            <g>
-              <circle cx="50" cy="122" r="15" fill="#C8842E"/><circle cx="46" cy="118" r="2.2" fill="#5A2E00"/><circle cx="55" cy="125" r="2.2" fill="#5A2E00"/><circle cx="52" cy="115" r="1.8" fill="#5A2E00"/>
-              <circle cx="80" cy="126" r="14" fill="#B87328"/><circle cx="76" cy="122" r="2" fill="#5A2E00"/><circle cx="85" cy="129" r="2" fill="#5A2E00"/>
-              <circle cx="66" cy="106" r="14" fill="#D08E36"/><circle cx="62" cy="103" r="2" fill="#5A2E00"/><circle cx="71" cy="109" r="2" fill="#5A2E00"/><circle cx="67" cy="99" r="1.7" fill="#5A2E00"/>
-            </g>
-            <!-- label band -->
-            <rect x="30" y="72" width="70" height="24" rx="5" fill="#fff" opacity=".92"/>
-            <text x="46" y="88" font-family="'Sarabun',sans-serif" font-size="11" font-weight="800" fill="#C01120">VFoods</text>
-            <!-- glass gloss -->
-            <rect x="30" y="56" width="9" height="98" rx="4" fill="rgba(255,255,255,.4)"/>
-            <!-- screw lid -->
-            <rect x="26" y="34" width="78" height="22" rx="6" fill="url(#jarLid)"/>
-            <ellipse cx="65" cy="34" rx="39" ry="8" fill="#FF585C"/>
-            <ellipse cx="52" cy="32" rx="16" ry="3.5" fill="rgba(255,255,255,.4)"/>
-            <g stroke="rgba(0,0,0,.12)" stroke-width="1.2">
-              <line x1="36" y1="38" x2="36" y2="52"/><line x1="50" y1="39" x2="50" y2="53"/><line x1="65" y1="39" x2="65" y2="53"/><line x1="80" y1="39" x2="80" y2="53"/><line x1="94" y1="38" x2="94" y2="52"/>
-            </g>
-          </svg>
+          <img class="pk-photo" src="mockup/jar.png" alt="กระปุก" loading="lazy" style="animation-delay:-3s">
         </div>
         <div class="pk-name">กระปุก</div>
         <div class="pk-desc">กระปุกใส PET เห็นตัวสินค้าชัด ฝาเกลียวปิดแน่น หยิบง่าย เหมาะวางหน้าร้าน-โชว์คุกกี้</div>
@@ -879,201 +803,52 @@ img.fv-obj{width:92px;height:92px;object-fit:contain;animation:oemFloat 4.6s eas
   </div>
 </section>
 
-<!-- ════ PRODUCT BUILDER (INTERACTIVE) ════ -->
-<section class="builder-sec" id="builder">
-  <div class="builder-in">
-    <div class="sec-eye">Try It Yourself</div>
-    <h2 class="sec-title">ลองสร้างสินค้าแบรนด์คุณเอง</h2>
-    <p class="sec-desc">เลือกคุกกี้ → รสชาติ → บรรจุภัณฑ์ แล้วเราจะเตรียมรายละเอียดส่งให้ทีมงาน OEM ผ่านหน้าติดต่อโดยอัตโนมัติ</p>
+<!-- ════ CUSTOMER LOGOS · ลูกค้าของเรา ════ -->
+<section class="cust-sec" id="customers">
+  <div class="cust-in">
+    <div class="sec-eye">Our Customers</div>
+    <h2 class="sec-title">แบรนด์ชั้นนำที่ไว้วางใจให้เราผลิต</h2>
+    <p class="sec-desc">ลูกค้าและคู่ค้าที่เลือกให้ VFoods เป็นผู้ผลิต OEM เบื้องหลังสินค้าคุณภาพของพวกเขา</p>
+  </div>
 
-    <!-- STEPPER -->
-    <div class="bstep-bar">
-      <div class="bstep active" data-step="1"><span class="bstep-n">1</span><span class="bstep-l">เลือกคุกกี้</span></div>
-      <div class="bstep-line"></div>
-      <div class="bstep" data-step="2"><span class="bstep-n">2</span><span class="bstep-l">เลือกรสชาติ</span></div>
-      <div class="bstep-line"></div>
-      <div class="bstep" data-step="3"><span class="bstep-n">3</span><span class="bstep-l">เลือกบรรจุภัณฑ์</span></div>
-      <div class="bstep-line"></div>
-      <div class="bstep" data-step="4"><span class="bstep-n">4</span><span class="bstep-l">สรุป &amp; ส่ง</span></div>
-    </div>
-
-    <div class="builder-card">
-      <div class="bpanel-wrap">
-
-        <!-- ─ PANEL 1 · COOKIE ─ -->
-        <div class="bpanel active" data-panel="1">
-          <h3 class="bpanel-h">1. เลือกประเภทคุกกี้</h3>
-          <p class="bpanel-sub">เลือกลักษณะและรูปทรงของคุกกี้ที่คุณต้องการ หรือให้เราพัฒนารูปแบบใหม่ให้ก็ได้</p>
-          <div class="opt-grid">
-            <div class="opt" data-group="cookie" data-value="บิสกิตดอกไม้หน้าครีมช็อกโกแลต (Flower Choco)" data-th="ดอกไม้ครีมช็อก">
-              <div class="opt-check">✓</div>
-              <div class="opt-scene photo"><img src="img/products/c3-flowerchoc.webp" alt="บิสกิตดอกไม้หน้าครีมช็อกโกแลต" loading="lazy"></div>
-              <div class="opt-name">ดอกไม้ครีมช็อก</div>
-              <div class="opt-sub">Flower Choco Cream</div>
-            </div>
-            <div class="opt" data-group="cookie" data-value="บิสกิตดอกไม้หน้าครีมสตรอเบอร์รี่ (Flower Strawberry)" data-th="ดอกไม้ครีมสตรอว์">
-              <div class="opt-check">✓</div>
-              <div class="opt-scene photo"><img src="img/products/c3-flowerstraw.webp" alt="บิสกิตดอกไม้หน้าครีมสตรอเบอร์รี่" loading="lazy"></div>
-              <div class="opt-name">ดอกไม้ครีมสตรอว์</div>
-              <div class="opt-sub">Flower Strawberry</div>
-            </div>
-            <div class="opt" data-group="cookie" data-value="คุกกี้เดซี่ช็อกโกแลต (Daisy Choco)" data-th="เดซี่ช็อก">
-              <div class="opt-check">✓</div>
-              <div class="opt-scene photo"><img src="img/products/c6-daisychoc.webp" alt="คุกกี้เดซี่ช็อกโกแลต" loading="lazy"></div>
-              <div class="opt-name">เดซี่ช็อกโกแลต</div>
-              <div class="opt-sub">Daisy Chocolate</div>
-            </div>
-            <div class="opt" data-group="cookie" data-value="คุกกี้เดซี่นม (Daisy Milk)" data-th="เดซี่นม">
-              <div class="opt-check">✓</div>
-              <div class="opt-scene photo"><img src="img/products/c6-daisymilk.webp" alt="คุกกี้เดซี่นม" loading="lazy"></div>
-              <div class="opt-name">เดซี่นม</div>
-              <div class="opt-sub">Daisy Milk</div>
-            </div>
-            <div class="opt" data-group="cookie" data-value="คุกกี้สอดไส้ครีมกาแล็กซี่ (Galaxy Sandwich)" data-th="สอดไส้ครีมกาแล็กซี่">
-              <div class="opt-check">✓</div>
-              <div class="opt-scene photo"><img src="img/products/c6-galaxy.webp" alt="คุกกี้สอดไส้ครีมกาแล็กซี่" loading="lazy"></div>
-              <div class="opt-name">สอดไส้ครีม</div>
-              <div class="opt-sub">Galaxy Sandwich</div>
-            </div>
-            <div class="opt" data-group="cookie" data-value="เทดดี้คุกกี้ (Teddy)" data-th="เทดดี้คุกกี้">
-              <div class="opt-check">✓</div>
-              <div class="opt-scene photo"><img src="img/products/c3-teddy.webp" alt="เทดดี้คุกกี้" loading="lazy"></div>
-              <div class="opt-name">เทดดี้คุกกี้</div>
-              <div class="opt-sub">Teddy Cookie</div>
-            </div>
-            <div class="opt" data-group="cookie" data-value="ให้ VFoods ออกแบบรูปทรงใหม่" data-th="ออกแบบใหม่">
-              <div class="opt-check">✓</div>
-              <div class="opt-scene">
-                <svg width="88" height="88" viewBox="0 0 140 140"><defs><radialGradient id="oc4" cx="38%" cy="32%" r="65%"><stop offset="0%" stop-color="#FF8090"/><stop offset="45%" stop-color="#E8172B"/><stop offset="100%" stop-color="#A01020"/></radialGradient></defs><circle cx="70" cy="70" r="62" fill="url(#oc4)"/><text x="70" y="66" font-family="sans-serif" font-size="40" text-anchor="middle" fill="rgba(255,255,255,.92)">✦</text><text x="70" y="94" font-family="sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="rgba(255,255,255,.85)">CUSTOM</text><ellipse cx="46" cy="40" rx="22" ry="12" fill="rgba(255,255,255,.1)" transform="rotate(-20 46 40)"/></svg>
-              </div>
-              <div class="opt-name">ออกแบบใหม่</div>
-              <div class="opt-sub">ให้ทีม R&amp;D พัฒนาให้</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ─ PANEL 2 · FLAVOR ─ -->
-        <div class="bpanel" data-panel="2">
-          <h3 class="bpanel-h">2. เลือกรสชาติ</h3>
-          <p class="bpanel-sub">รสคลาสสิกและรสผลไม้ไทย หรือสั่งรสพิเศษเฉพาะแบรนด์คุณก็ได้</p>
-          <div class="opt-grid flavors">
-            <div class="opt" data-group="flavor" data-value="สตรอเบอรี่ (Strawberry)" data-th="สตรอเบอรี่">
-              <div class="opt-check">✓</div>
-              <div class="opt-scene photo sm"><img src="img/รสชาติ/Ripe_strawberries.jpeg" alt="รสสตรอเบอรี่" loading="lazy"></div>
-              <div class="opt-name">สตรอเบอรี่</div>
-            </div>
-            <div class="opt" data-group="flavor" data-value="ช็อคโกแลต (Chocolate)" data-th="ช็อคโกแลต">
-              <div class="opt-check">✓</div>
-              <div class="opt-scene photo sm"><img src="img/รสชาติ/Dark_chocolate.jpeg" alt="รสช็อคโกแลต" loading="lazy"></div>
-              <div class="opt-name">ช็อคโกแลต</div>
-            </div>
-            <div class="opt" data-group="flavor" data-value="รสนม (Milk)" data-th="รสนม">
-              <div class="opt-check">✓</div>
-              <div class="opt-scene photo sm"><img src="img/รสชาติ/Fresh_milk.jpeg" alt="รสนม" loading="lazy"></div>
-              <div class="opt-name">รสนม</div>
-            </div>
-            <div class="opt" data-group="flavor" data-value="ทุเรียน (Durian)" data-th="ทุเรียน">
-              <div class="opt-check">✓</div>
-              <div class="opt-scene photo sm"><img src="img/รสชาติ/Durian.jpeg" alt="รสทุเรียน" loading="lazy"></div>
-              <div class="opt-name">ทุเรียน</div>
-            </div>
-            <div class="opt" data-group="flavor" data-value="มะม่วง (Mango)" data-th="มะม่วง">
-              <div class="opt-check">✓</div>
-              <div class="opt-scene photo sm"><img src="img/รสชาติ/mangoes.jpeg" alt="รสมะม่วง" loading="lazy"></div>
-              <div class="opt-name">มะม่วง</div>
-            </div>
-            <div class="opt" data-group="flavor" data-value="มะพร้าว (Coconut)" data-th="มะพร้าว">
-              <div class="opt-check">✓</div>
-              <div class="opt-scene photo sm"><img src="img/รสชาติ/Coconuts.jpeg" alt="รสมะพร้าว" loading="lazy"></div>
-              <div class="opt-name">มะพร้าว</div>
-            </div>
-            <div class="opt" data-group="flavor" data-value="รสพิเศษเฉพาะแบรนด์ (Custom)" data-th="รสพิเศษ">
-              <div class="opt-check">✓</div>
-              <div class="opt-scene photo sm"><img src="img/รสชาติ/special.jpeg" alt="รสพิเศษเฉพาะแบรนด์" loading="lazy"></div>
-              <div class="opt-name">รสพิเศษ</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ─ PANEL 3 · PACKAGING ─ -->
-        <div class="bpanel" data-panel="3">
-          <h3 class="bpanel-h">3. เลือกบรรจุภัณฑ์</h3>
-          <p class="bpanel-sub">ออกแบบลายบรรจุภัณฑ์ได้เอง เพื่อให้แบรนด์ของคุณโดดเด่นบนชั้นวาง</p>
-          <div class="opt-grid">
-            <div class="opt" data-group="pack" data-value="กล่องพรีเมียม" data-th="กล่องพรีเมียม">
-              <div class="opt-check">✓</div>
-              <div class="opt-scene"><svg width="104" height="104" viewBox="0 0 200 200"><defs><linearGradient id="opkf1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FF6070"/><stop offset="100%" stop-color="#C01422"/></linearGradient><linearGradient id="opkt1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FF8090"/><stop offset="100%" stop-color="#E02434"/></linearGradient><linearGradient id="opkr1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#9A0E1C"/><stop offset="100%" stop-color="#680010"/></linearGradient></defs><polygon points="20,72 100,38 180,72 100,108" fill="url(#opkt1)"/><polygon points="20,72 20,148 100,182 100,108" fill="url(#opkf1)"/><polygon points="100,108 100,182 180,148 180,72" fill="url(#opkr1)"/><text x="30" y="138" font-family="sans-serif" font-size="14" font-weight="bold" fill="rgba(255,255,255,.88)">VFoods</text><text x="30" y="156" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,.65)">Premium</text></svg></div>
-              <div class="opt-name">กล่องพรีเมียม</div>
-              <div class="opt-sub">พิมพ์ 4 สี · เคลือบ UV</div>
-            </div>
-            <div class="opt" data-group="pack" data-value="ซองซิปล็อก Stand-up" data-th="ซองซิปล็อก">
-              <div class="opt-check">✓</div>
-              <div class="opt-scene"><svg width="80" height="104" viewBox="0 0 130 170"><defs><linearGradient id="opkp2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#D8D8E0"/><stop offset="35%" stop-color="#F2F2FA"/><stop offset="65%" stop-color="#C0C0C8"/><stop offset="100%" stop-color="#909098"/></linearGradient></defs><path d="M26 26 L10 148 Q10 162 65 162 Q120 162 120 148 L104 26 Z" fill="url(#opkp2)"/><rect x="22" y="18" width="86" height="16" rx="8" fill="#B8B8C0"/><rect x="28" y="44" width="74" height="86" rx="8" fill="#E8172B" opacity=".92"/><text x="40" y="72" font-family="sans-serif" font-size="11" font-weight="bold" fill="white">VFoods</text><text x="36" y="90" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,.82)">Cookie 150g</text></svg></div>
-              <div class="opt-name">ซองซิปล็อก</div>
-              <div class="opt-sub">Stand-up · กันความชื้น</div>
-            </div>
-            <div class="opt" data-group="pack" data-value="กระป๋อง / ปี๊บโลหะ" data-th="กระป๋อง/ปี๊บ">
-              <div class="opt-check">✓</div>
-              <div class="opt-scene"><svg width="80" height="104" viewBox="0 0 130 165"><defs><linearGradient id="opkt2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#B0B0B8"/><stop offset="20%" stop-color="#E8E8F0"/><stop offset="40%" stop-color="#D0D0D8"/><stop offset="60%" stop-color="#F0F0F8"/><stop offset="80%" stop-color="#C8C8D0"/><stop offset="100%" stop-color="#A0A0A8"/></linearGradient></defs><ellipse cx="65" cy="22" rx="52" ry="14" fill="#ECECF4"/><rect x="13" y="22" width="104" height="116" fill="url(#opkt2)"/><ellipse cx="65" cy="138" rx="52" ry="14" fill="#B0B0B8"/><rect x="13" y="52" width="104" height="58" fill="#E8172B" opacity=".92"/><text x="27" y="80" font-family="sans-serif" font-size="13" font-weight="bold" fill="white">VFoods</text><text x="24" y="98" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.82)">Collection 300g</text></svg></div>
-              <div class="opt-name">กระป๋อง / ปี๊บ</div>
-              <div class="opt-sub">โลหะ · ปิดสนิท เก็บนาน</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ─ PANEL 4 · SUMMARY ─ -->
-        <div class="bpanel" data-panel="4">
-          <h3 class="bpanel-h">4. สรุปรายละเอียดสินค้าของคุณ</h3>
-          <p class="bpanel-sub">ตรวจสอบรายการที่เลือก เพิ่มข้อมูลแบรนด์ แล้วส่งต่อให้ทีมงานผ่านหน้าติดต่อได้เลย</p>
-          <div class="sum-list">
-            <div class="sum-row">
-              <div class="sum-ico" id="sumIcoCookie"></div>
-              <div class="sum-body"><div class="sum-lbl">ประเภทคุกกี้</div><div class="sum-val" id="sumCookie">—</div></div>
-              <button type="button" class="sum-edit" data-goto="1">แก้ไข</button>
-            </div>
-            <div class="sum-row">
-              <div class="sum-ico" id="sumIcoFlavor"></div>
-              <div class="sum-body"><div class="sum-lbl">รสชาติ</div><div class="sum-val" id="sumFlavor">—</div></div>
-              <button type="button" class="sum-edit" data-goto="2">แก้ไข</button>
-            </div>
-            <div class="sum-row">
-              <div class="sum-ico" id="sumIcoPack"></div>
-              <div class="sum-body"><div class="sum-lbl">บรรจุภัณฑ์</div><div class="sum-val" id="sumPack">—</div></div>
-              <button type="button" class="sum-edit" data-goto="3">แก้ไข</button>
-            </div>
-          </div>
-
-          <div class="brand-fields">
-            <div class="bf-row">
-              <div class="bf-group">
-                <label class="bf-label" for="bBrand">ชื่อแบรนด์ของคุณ</label>
-                <input class="bf-input" id="bBrand" type="text" placeholder="เช่น Happy Cookie">
-              </div>
-              <div class="bf-group">
-                <label class="bf-label" for="bQty">จำนวนโดยประมาณ</label>
-                <input class="bf-input" id="bQty" type="text" placeholder="เช่น 1,000 ชิ้น / เดือน">
-              </div>
-            </div>
-            <div class="bf-group">
-              <label class="bf-label" for="bNote">รายละเอียดเพิ่มเติม (ถ้ามี)</label>
-              <textarea class="bf-textarea" id="bNote" placeholder="งบประมาณ, กำหนดส่ง, ความต้องการพิเศษ ฯลฯ"></textarea>
-            </div>
-          </div>
-
-          <div class="sum-actions">
-            <a id="toContact" class="btn-red" href="contact.html">กรอกในแบบฟอร์มติดต่อ →</a>
-            <a id="toMail" class="btn-ghost" href="#">ส่งอีเมลทันที</a>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- NAV BAR -->
-      <div class="bnav">
-        <button class="bnav-btn bnav-back" id="bBack" disabled>← ย้อนกลับ</button>
-        <div class="bnav-pick" id="bPick">เลือกคุกกี้เพื่อเริ่มต้น</div>
-        <button class="bnav-btn bnav-next" id="bNext" disabled>ถัดไป →</button>
-      </div>
+  <div class="logo-marquee" aria-label="โลโก้ลูกค้าของ VFoods">
+    <div class="logo-track">
+      <!-- set A -->
+      <span class="logo-item"><img src="customers/1-LotusLogo-e1565968256839.jpg" alt="Lotus's" loading="lazy"></span>
+      <span class="logo-item"><img src="customers/2-Logo-Makro-e1565968224907.jpg" alt="Makro" loading="lazy"></span>
+      <span class="logo-item"><img src="customers/3-Nissin.jpg" alt="Nissin" loading="lazy"></span>
+      <span class="logo-item"><img src="customers/4-Logo-Mahanakhon_edit.jpg" alt="Mahanakhon" loading="lazy"></span>
+      <span class="logo-item"><img src="customers/5-Tops-Logo.jpg" alt="Tops" loading="lazy"></span>
+      <span class="logo-item"><img src="customers/6-Logo-Cold_Storage-e1566039146434.jpg" alt="Cold Storage" loading="lazy"></span>
+      <span class="logo-item"><img src="customers/7-peachy-e1565968384947.jpg" alt="Peachy" loading="lazy"></span>
+      <span class="logo-item"><img src="customers/8-Giant-logo.jpg" alt="Giant" loading="lazy"></span>
+      <span class="logo-item"><img src="customers/10-Logo-BigC.jpg" alt="Big C" loading="lazy"></span>
+      <span class="logo-item"><img src="customers/11-careful-1.jpg" alt="Careful" loading="lazy"></span>
+      <span class="logo-item"><img src="customers/12-Hemali.jpg" alt="Hemali" loading="lazy"></span>
+      <span class="logo-item"><img src="customers/13-Max-mart-Logo.jpg" alt="Max Mart" loading="lazy"></span>
+      <span class="logo-item"><img src="customers/14-Omais.jpg" alt="Omais" loading="lazy"></span>
+      <span class="logo-item"><img src="customers/15-Nilrich.jpg" alt="Nilrich" loading="lazy"></span>
+      <span class="logo-item"><img src="customers/16-1501927058228.jpg" alt="ลูกค้า VFoods" loading="lazy"></span>
+      <span class="logo-item"><img src="customers/17-sp-logo.jpg" alt="SP" loading="lazy"></span>
+      <span class="logo-item"><img src="customers/18-surebuy-logo.jpg" alt="SureBuy" loading="lazy"></span>
+      <!-- set B (duplicate for seamless loop) -->
+      <span class="logo-item" aria-hidden="true"><img src="customers/1-LotusLogo-e1565968256839.jpg" alt="" loading="lazy"></span>
+      <span class="logo-item" aria-hidden="true"><img src="customers/2-Logo-Makro-e1565968224907.jpg" alt="" loading="lazy"></span>
+      <span class="logo-item" aria-hidden="true"><img src="customers/3-Nissin.jpg" alt="" loading="lazy"></span>
+      <span class="logo-item" aria-hidden="true"><img src="customers/4-Logo-Mahanakhon_edit.jpg" alt="" loading="lazy"></span>
+      <span class="logo-item" aria-hidden="true"><img src="customers/5-Tops-Logo.jpg" alt="" loading="lazy"></span>
+      <span class="logo-item" aria-hidden="true"><img src="customers/6-Logo-Cold_Storage-e1566039146434.jpg" alt="" loading="lazy"></span>
+      <span class="logo-item" aria-hidden="true"><img src="customers/7-peachy-e1565968384947.jpg" alt="" loading="lazy"></span>
+      <span class="logo-item" aria-hidden="true"><img src="customers/8-Giant-logo.jpg" alt="" loading="lazy"></span>
+      <span class="logo-item" aria-hidden="true"><img src="customers/10-Logo-BigC.jpg" alt="" loading="lazy"></span>
+      <span class="logo-item" aria-hidden="true"><img src="customers/11-careful-1.jpg" alt="" loading="lazy"></span>
+      <span class="logo-item" aria-hidden="true"><img src="customers/12-Hemali.jpg" alt="" loading="lazy"></span>
+      <span class="logo-item" aria-hidden="true"><img src="customers/13-Max-mart-Logo.jpg" alt="" loading="lazy"></span>
+      <span class="logo-item" aria-hidden="true"><img src="customers/14-Omais.jpg" alt="" loading="lazy"></span>
+      <span class="logo-item" aria-hidden="true"><img src="customers/15-Nilrich.jpg" alt="" loading="lazy"></span>
+      <span class="logo-item" aria-hidden="true"><img src="customers/16-1501927058228.jpg" alt="" loading="lazy"></span>
+      <span class="logo-item" aria-hidden="true"><img src="customers/17-sp-logo.jpg" alt="" loading="lazy"></span>
+      <span class="logo-item" aria-hidden="true"><img src="customers/18-surebuy-logo.jpg" alt="" loading="lazy"></span>
     </div>
   </div>
 </section>
@@ -1095,29 +870,6 @@ img.fv-obj{width:92px;height:92px;object-fit:contain;animation:oemFloat 4.6s eas
 </footer>
 
 <script>
-/* ── CRUMBS PARALLAX ── */
-const crumbs=[], N=16;
-const csz=[8,9,10,11,12,13,14];
-const brs=['50% 40% 50% 40%','40% 60% 40% 60%','60% 40% 60% 40%'];
-for(let i=0;i<N;i++){
-  const el=document.createElement('div');el.className='crumb';
-  const sz=csz[i%csz.length];
-  el.style.cssText=`width:${sz}px;height:${sz*.82}px;border-radius:${brs[i%3]};opacity:${.4+Math.random()*.5};left:-200px;top:-200px;`;
-  document.body.appendChild(el);
-  crumbs.push({el,dist:44+Math.random()*110,ang:Math.random()*Math.PI*2,speed:.04+Math.random()*.07,cx:-200,cy:-200});
-}
-let mx=window.innerWidth/2,my=window.innerHeight/2;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
-(function loop(){
-  crumbs.forEach((c,i)=>{
-    const a=c.ang+Date.now()*.00045*(i%2?1:-1);
-    const tx=mx+Math.cos(a)*c.dist, ty=my+Math.sin(a)*c.dist;
-    c.cx+=(tx-c.cx)*c.speed; c.cy+=(ty-c.cy)*c.speed;
-    c.el.style.left=c.cx+'px'; c.el.style.top=c.cy+'px';
-  });
-  requestAnimationFrame(loop);
-})();
-
 /* ── 3D DRAG ROTATION ── */
 function makeDraggable(obj){
   let drag=false,sx=0,ry=0;
@@ -1231,97 +983,6 @@ window.addEventListener('scroll',()=>{
   });
 })();
 
-/* ── INTERACTIVE PRODUCT BUILDER ── */
-(function(){
-  const state={cookie:null,flavor:null,pack:null};
-  const stepGroup={1:'cookie',2:'flavor',3:'pack'};
-  const labels={1:'คุกกี้',2:'รสชาติ',3:'บรรจุภัณฑ์'};
-  let step=1;
-  const panels=document.querySelectorAll('.bpanel');
-  const steps=document.querySelectorAll('.bstep');
-  const back=document.getElementById('bBack');
-  const next=document.getElementById('bNext');
-  const pick=document.getElementById('bPick');
-
-  // pick an option
-  document.querySelectorAll('.opt').forEach(opt=>{
-    opt.addEventListener('click',()=>{
-      const g=opt.dataset.group;
-      document.querySelectorAll('.opt[data-group="'+g+'"]').forEach(o=>o.classList.remove('sel'));
-      opt.classList.add('sel');
-      const scene=opt.querySelector('.opt-scene');
-      state[g]={value:opt.dataset.value,th:opt.dataset.th,media:scene?scene.innerHTML:''};
-      updateNav();
-    });
-  });
-
-  function goTo(s){
-    step=s;
-    panels.forEach(p=>p.classList.toggle('active',+p.dataset.panel===s));
-    steps.forEach(st=>{
-      const n=+st.dataset.step;
-      st.classList.toggle('active',n===s);
-      st.classList.toggle('done',n<s);
-    });
-    back.disabled=(s===1);
-    next.style.display=(s===4)?'none':'';
-    if(s===4) buildSummary();
-    updateNav();
-    const sec=document.getElementById('builder');
-    if(sec) sec.scrollIntoView({behavior:'smooth',block:'start'});
-  }
-
-  function updateNav(){
-    if(step===4){pick.innerHTML='พร้อมส่งรายละเอียดแล้ว';return;}
-    const chosen=state[stepGroup[step]];
-    next.disabled=!chosen;
-    pick.innerHTML=chosen?('เลือก: <b>'+chosen.th+'</b>'):('กรุณาเลือก'+labels[step]);
-  }
-
-  next.addEventListener('click',()=>{if(step<4&&!next.disabled)goTo(step+1);});
-  back.addEventListener('click',()=>{if(step>1)goTo(step-1);});
-  document.querySelectorAll('.sum-edit').forEach(b=>b.addEventListener('click',()=>goTo(+b.dataset.goto)));
-
-  function setIco(id,s){
-    const el=document.getElementById(id);if(!el)return;
-    el.innerHTML=s?s.media:'';
-    const m=el.querySelector('svg,img');
-    if(m){m.setAttribute('width','44');m.setAttribute('height','44');m.style.width='44px';m.style.height='44px';m.style.objectFit='contain';}
-  }
-  function buildSummary(){
-    document.getElementById('sumCookie').textContent=state.cookie?state.cookie.value:'—';
-    document.getElementById('sumFlavor').textContent=state.flavor?state.flavor.value:'—';
-    document.getElementById('sumPack').textContent=state.pack?state.pack.value:'—';
-    setIco('sumIcoCookie',state.cookie);
-    setIco('sumIcoFlavor',state.flavor);
-    setIco('sumIcoPack',state.pack);
-    updateLinks();
-  }
-  function compose(){
-    const brand=document.getElementById('bBrand').value.trim();
-    const qty=document.getElementById('bQty').value.trim();
-    const note=document.getElementById('bNote').value.trim();
-    let m='สนใจสั่งผลิตสินค้า OEM กับ VFoods ครับ/ค่ะ โดยมีรายละเอียดดังนี้\n\n';
-    m+='• ประเภทคุกกี้: '+(state.cookie?state.cookie.value:'-')+'\n';
-    m+='• รสชาติ: '+(state.flavor?state.flavor.value:'-')+'\n';
-    m+='• บรรจุภัณฑ์: '+(state.pack?state.pack.value:'-')+'\n';
-    if(brand)m+='• ชื่อแบรนด์: '+brand+'\n';
-    if(qty)m+='• จำนวนโดยประมาณ: '+qty+'\n';
-    if(note)m+='• รายละเอียดเพิ่มเติม: '+note+'\n';
-    m+='\nรบกวนติดต่อกลับเพื่อขอคำปรึกษาและใบเสนอราคาด้วยครับ/ค่ะ ขอบคุณครับ/ค่ะ';
-    return m;
-  }
-  function updateLinks(){
-    const msg=compose();
-    document.getElementById('toContact').href='contact.html?interest=oem&msg='+encodeURIComponent(msg);
-    const subject='ขอสอบถาม OEM — '+(state.cookie?state.cookie.value:'สินค้าแบรนด์ของฉัน');
-    document.getElementById('toMail').href='mailto:info@vfoods.co.th?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(msg);
-  }
-  ['bBrand','bQty','bNote'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) el.addEventListener('input',()=>{if(step===4)updateLinks();});
-  });
-})();
 </script>
 
 <!-- Floating Back to Home -->
