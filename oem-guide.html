@@ -999,7 +999,8 @@ img.fv-obj{width:92px;height:92px;object-fit:contain;animation:oemFloat 4.6s eas
         <div class="mascot" id="cookieChar">
           <div class="m-bubble" id="tourBubble">สวัสดีครับ! ผม <strong>คุกกี้น้อย</strong> — เลื่อนลงมาเดินไปพร้อมกันเลย!</div>
           <div class="mascot-float" id="mascotFloat">
-            <svg class="jm-mascot-svg" width="100" height="138" viewBox="0 0 120 160" fill="none">
+            <canvas id="cookie-3d-canvas" width="260" height="320" style="display:none; margin:0 auto; width:100%; height:auto;"></canvas>
+            <svg id="svgMascotFallback" width="100" height="138" viewBox="0 0 120 160" fill="none">
               <g class="ck-al"><rect x="9" y="70" width="13" height="32" rx="6.5" fill="#C8762A"/><rect x="11" y="70" width="9" height="32" rx="4.5" fill="#E09340"/><circle cx="15.5" cy="102" r="7.5" fill="#C8762A"/><circle cx="15.5" cy="102" r="5.5" fill="#E09340"/></g>
               <g class="ck-ar"><rect x="98" y="70" width="13" height="32" rx="6.5" fill="#C8762A"/><rect x="100" y="70" width="9" height="32" rx="4.5" fill="#E09340"/><circle cx="104.5" cy="102" r="7.5" fill="#C8762A"/><circle cx="104.5" cy="102" r="5.5" fill="#E09340"/></g>
               <ellipse cx="60" cy="88" rx="36" ry="34" fill="#C8762A"/><ellipse cx="60" cy="86" rx="32" ry="30" fill="#E09340"/>
@@ -1300,12 +1301,21 @@ window.addEventListener('scroll',()=>{
 <script src="i18n.js?v=1"></script>
 
 <!-- ════ OEM JOURNEY · scroll-scrub engine (ported from the home page) ════ -->
+<script src="mascot3d.js?v=1"></script>
 <script>
 (function () {
   // phones and iPads read the journey as stacked cards — mobile-view.css
   // lays them out and this engine stays out of the way
   const lite = !!window.VF_LITE;
   const reduce = lite || matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // same 3D mascot the home page walks — shared from mascot3d.js
+    const mascot3d = (window.VFMascot3D && !reduce) ? window.VFMascot3D.init({
+      canvas:   document.getElementById('cookie-3d-canvas'),
+      fallback: document.getElementById('svgMascotFallback'),
+      section:  document.getElementById('steps') || document.getElementById('journeyScroll')
+    }) : null;
+
     const scroll = document.getElementById('journeyScroll');
     const track = document.getElementById('journeyTrack');
     const mascot = document.getElementById('cookieChar');
@@ -1368,6 +1378,8 @@ window.addEventListener('scroll',()=>{
     }
 
     function handleScroll() {
+      if (mascot3d) mascot3d.notifyScroll();
+
       if (!ticking) {
         ticking = true;
         requestAnimationFrame(apply);
