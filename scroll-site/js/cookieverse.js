@@ -2,7 +2,10 @@
    VFOODS — Lenis Smooth Scroll + 3D Model Horizontal Walk
    ═══════════════════════════════════════════════════════════ */
 (function () {
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  /* Phones and iPads get the plain build: native scrolling, no WebGL
+     mascot, no horizontal scrub. mobile-view.js sets the flag in <head>. */
+  const lite = !!window.VF_LITE;
+  const reduce = lite || matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* 1. LENIS SMOOTH SCROLL INIT */
   let lenis = null;
@@ -362,7 +365,8 @@
   const prog = document.getElementById('groundProgress');
   const hint = document.getElementById('scrollHint');
   const lineSpan = 90; // ground line 5vw..95vw
-  const mobile = () => window.matchMedia('(max-width:760px)').matches;
+  // lite view stacks the steps vertically at any width, same as narrow phones
+  const mobile = () => lite || window.matchMedia('(max-width:760px)').matches;
   let ticking = false;
 
   // Cache scroll metrics

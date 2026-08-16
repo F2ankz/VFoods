@@ -16,7 +16,8 @@ const vids = [document.getElementById("hero-v0")];
 
 function initHeroVideo() {
   const v = vids[0];
-  if (!v) return;
+  // on a phone/iPad mobile-view.js has already turned this into an <img>
+  if (!v || v.tagName !== "VIDEO") return;
   v.muted = true; v.playsInline = true; v.loop = true;
   v.classList.add("show");
   if (reduceMotion) { v.pause(); return; }

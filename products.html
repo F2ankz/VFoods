@@ -10,15 +10,16 @@
 <link rel="stylesheet" href="style.css?v=3">
 <link rel="stylesheet" href="theme-white.css?v=5">
 <link rel="stylesheet" href="nav.css?v=1">
+<link rel="stylesheet" href="i18n.css?v=1">
 <style>
 /* ── CATEGORY SECTIONS ── */
-.cat-section { padding:80px 0; position:relative; overflow:hidden; }
+.cat-section { padding:clamp(36px,4.8vw,58px) 0; position:relative; overflow:hidden; }
 /* พื้นหลังสลับ ส้มสด / ส้มอ่อน — คุมจริงที่ theme-white.css (ธีมหน้านี้) */
 .cat-section:nth-child(odd)  { background:var(--og); }
 .cat-section:nth-child(even) { background:var(--og3); }
 
 .cat-header {
-  max-width:1200px; margin:0 auto 44px; padding:0 24px;
+  max-width:1200px; margin:0 auto 30px; padding:0 24px;
   display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
 }
 .cat-badge {
@@ -30,7 +31,7 @@
 .cat-badge-icon { font-size:2.1rem; line-height:1; }
 .cat-h {
   font-family:'Sarabun',sans-serif; font-size:clamp(2.1rem,5.2vw,3.6rem);
-  font-weight:800; letter-spacing:-.035em; line-height:1.05; color:#fff;
+  font-weight:800; letter-spacing:-.035em; line-height:1.2; color:#fff;
   text-shadow:0 4px 18px rgba(0,0,0,.22);
 }
 .cat-h .cat-en {
@@ -61,7 +62,7 @@
 }
 .prod-card:hover .prod-card-img { transform:scale(1.08) rotate(-2deg); }
 .prod-card-inner { padding:14px 16px 18px; transition:transform .4s ease; }
-.prod-card-name { font-family:'Sarabun',sans-serif; font-size:.9rem; font-weight:700; letter-spacing:-.01em; margin-bottom:5px; line-height:1.35; }
+.prod-card-name { font-family:'Sarabun',sans-serif; font-size:.9rem; font-weight:700; letter-spacing:-.01em; margin-bottom:5px; line-height:1.5; }
 .prod-card-brand { font-size:.72rem; color:rgba(255,255,255,0.85); font-weight:400; }
 /* NEW flag */
 .prod-card-flag { position:absolute; top:10px; right:10px; z-index:2; padding:4px 9px; border-radius:6px; background:var(--gold,#FFD35C); color:#5a2a00; font-size:.6rem; font-weight:800; letter-spacing:.1em; font-family:'Sarabun',sans-serif; box-shadow:0 4px 10px rgba(0,0,0,.25); }
@@ -105,10 +106,10 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
   --cv-gold:#FFE49A; --cv-cream-dim:#FFE3C8; --cv-bg2:#7E2205;
   --font-display:'FC Vision Rounded','Sarabun',sans-serif;
 }
-.tunnel-intro { text-align:center; max-width:100%; margin:0; padding:88px 24px 44px; background:#2B0705; }
+.tunnel-intro { text-align:center; max-width:100%; margin:0; padding:clamp(44px,5.4vw,64px) 24px clamp(22px,3vw,34px); background:#2B0705; }
 .tunnel-intro > * { max-width:760px; margin-left:auto; margin-right:auto; }
 .tunnel-intro .sec-eyebrow { display:inline-block; font-family:var(--font-display); font-weight:800; font-size:.8rem; letter-spacing:.24em; text-transform:uppercase; color:var(--cv-gold); margin-bottom:10px; }
-.tunnel-intro h2 { font-family:var(--font-display); font-weight:800; font-size:clamp(2rem,5vw,3.2rem); letter-spacing:-.03em; color:#fff; line-height:1.05; }
+.tunnel-intro h2 { font-family:var(--font-display); font-weight:800; font-size:clamp(2rem,5vw,3.2rem); letter-spacing:-.03em; color:#fff; line-height:1.22; }
 .tunnel-intro p { color:var(--cv-cream-dim); font-size:1.05rem; line-height:1.7; margin-top:14px; }
 
 #tunnel { position:relative; height:100vh; overflow:hidden; background:radial-gradient(70% 80% at 50% 40%, #8F3806 0%, #2B0705 78%); }
@@ -125,7 +126,7 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
 .gate { position:absolute; left:50%; top:46%; display:flex; flex-direction:column; align-items:center; gap:4px; width:min(420px,78vw); text-align:center; will-change:transform,opacity; transform:translate(-50%,-50%); text-decoration:none; }
 .gate-ring { position:absolute; left:50%; top:42%; width:min(320px,58vw); height:min(320px,58vw); transform:translate(-50%,-50%); border-radius:50%; border:3px solid rgba(255,255,255,.92); box-shadow:0 0 46px rgba(255,255,255,.7),0 0 100px rgba(255,255,255,.38),inset 0 0 50px rgba(255,255,255,.3); background:radial-gradient(circle,rgba(255,255,255,.24),transparent 66%); }
 .gate-img { position:relative; z-index:1; height:min(260px,46vw); width:auto; filter:drop-shadow(0 22px 34px rgba(96,10,2,.5)) drop-shadow(0 0 30px rgba(255,255,255,.6)); animation:cvBob 6.5s ease-in-out infinite alternate; }
-.gate b { position:relative; z-index:1; margin-top:6px; font-family:var(--font-display); font-weight:800; font-size:clamp(1.6rem,3.4vw,2.7rem); line-height:1.05; color:#fff; text-shadow:0 2px 18px rgba(96,10,2,.6),0 0 30px color-mix(in srgb,var(--fc) 55%,transparent); }
+.gate b { position:relative; z-index:1; margin-top:6px; font-family:var(--font-display); font-weight:800; font-size:clamp(1.6rem,3.4vw,2.7rem); line-height:1.22; color:#fff; text-shadow:0 2px 18px rgba(96,10,2,.6),0 0 30px color-mix(in srgb,var(--fc) 55%,transparent); }
 .gate small { position:relative; z-index:1; font-size:clamp(1.05rem,1.9vw,1.45rem); font-weight:600; color:#fff; text-shadow:0 2px 12px rgba(96,10,2,.55); }
 @keyframes cvBob { 0%{transform:translateY(-10px)} 100%{transform:translateY(12px)} }
 .tunnel-ui { position:absolute; left:50%; bottom:56px; z-index:5; transform:translateX(-50%); width:min(420px,80vw); text-align:center; }
@@ -150,6 +151,8 @@ body, body * { font-family:'FC Vision Rounded','Sarabun',sans-serif !important; 
 html .cat-en, html .prod-card-brand, html .cat-new,
 html .cat-badge-text, html .sec-eye, html .eyebrow { color:#2B1B16 !important; }
 </style>
+<link rel="stylesheet" href="mobile-view.css?v=1">
+<script src="mobile-view.js?v=1"></script>
 </head>
 <body>
 
@@ -424,7 +427,7 @@ html .cat-badge-text, html .sec-eye, html .eyebrow { color:#2B1B16 !important; }
 </section>
 
 <!-- CTA -->
-<section style="padding:72px 24px;text-align:center;background:var(--dark);">
+<section style="padding:clamp(38px,5vw,56px) 24px;text-align:center;background:var(--dark);">
   <div style="max-width:620px;margin:0 auto;">
     <h2 style="font-family:'Sarabun',sans-serif;font-size:2rem;font-weight:700;letter-spacing:-.03em;margin-bottom:14px;">สนใจสั่งผลิต OEM?</h2>
     <p style="color:rgba(255,255,255,.85);line-height:1.8;margin-bottom:32px;font-weight:300;">ผลิตสินค้าภายใต้แบรนด์ของคุณได้เลย เพียง 4 ขั้นตอนง่ายๆ</p>
@@ -478,7 +481,8 @@ html .cat-badge-text, html .sec-eye, html .eyebrow { color:#2B1B16 !important; }
 
   (function init() {
     if (innerWidth < 10) { setTimeout(init, 300); return; }
-    if (reduce || touch || innerWidth < 820 || !hasGSAP) { useFallback(); return; }
+    // phones and iPads get the plain grid, never the 3D fly-through
+    if (window.VF_LITE || reduce || touch || innerWidth < 820 || !hasGSAP) { useFallback(); return; }
     build3D();
   })();
 
@@ -543,8 +547,12 @@ html .cat-badge-text, html .sec-eye, html .eyebrow { color:#2B1B16 !important; }
 
     render(); setStation(0);
     addEventListener("resize", render);
+    // the station label is copied out of data-name, so re-read it after a
+    // language switch (i18n.js has already translated the attribute)
+    addEventListener("vf:langchange", () => { const i = Math.max(curIdx, 0); curIdx = -1; setStation(i); });
   }
 })();
 </script>
+<script src="i18n.js?v=1"></script>
 </body>
 </html>

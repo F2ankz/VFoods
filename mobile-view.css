@@ -1,0 +1,150 @@
+/* ══════════════════════════════════════════════════════════════
+   VFoods — Lite view for phones and tablets
+   Everything here is scoped to html[data-view="mobile"], which
+   mobile-view.js sets on phones and iPads only. Desktop is
+   untouched. Load this LAST so it wins over each page's own CSS.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── stills that replaced a clip inherit the clip's box ───────── */
+html[data-view="mobile"] img[data-lite-still] {
+  display: block; width: 100%; height: 100%;
+  object-fit: cover; background: #D6590C;
+}
+
+/* ── no mouse here, so no custom cursor artwork to download ───── */
+html[data-view="mobile"],
+html[data-view="mobile"] body { cursor: auto; }
+html[data-view="mobile"] a, html[data-view="mobile"] a *,
+html[data-view="mobile"] button, html[data-view="mobile"] button *,
+html[data-view="mobile"] [role="button"], html[data-view="mobile"] summary,
+html[data-view="mobile"] label[for], html[data-view="mobile"] select,
+html[data-view="mobile"] input[type="submit"], html[data-view="mobile"] input[type="button"],
+html[data-view="mobile"] input[type="reset"], html[data-view="mobile"] [onclick] {
+  cursor: pointer !important;
+}
+
+/* spinning 3D packaging / flavour objects hold still */
+html[data-view="mobile"] .spin-obj,
+html[data-view="mobile"] .gc-obj,
+html[data-view="mobile"] .fv-obj,
+html[data-view="mobile"] .pk-obj {
+  animation: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+/* hover tilts and lifts have no meaning on a touch screen */
+html[data-view="mobile"] .sc:hover,
+html[data-view="mobile"] .gc:hover,
+html[data-view="mobile"] .fv-card:hover,
+html[data-view="mobile"] .pk:hover,
+html[data-view="mobile"] .fc:hover,
+html[data-view="mobile"] .prod-card:hover,
+html[data-view="mobile"] .brand-card:hover,
+html[data-view="mobile"] .about-card:hover .about-media,
+html[data-view="mobile"] .news-card:hover {
+  transform: none !important;
+}
+
+/* ── scroll-reveal slides in flat ─────────────────────────────
+   The reveal classes park content 32–40px off-position until an
+   observer fires. On a narrow screen the sideways ones push the
+   document wider than the viewport, and the whole effect is motion
+   we are removing anyway — so show everything in place. */
+html[data-view="mobile"] .reveal,
+html[data-view="mobile"] .reveal-left,
+html[data-view="mobile"] .reveal-right,
+html[data-view="mobile"] .rv {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* ══════════ HOME ══════════ */
+
+/* Hero: the clip is now a 16:9 still, so shorten the stage rather
+   than crop the characters out of frame on a tall phone. */
+html[data-view="mobile"] .hero {
+  height: auto; min-height: 0;
+  padding-top: 74px;                 /* clear the fixed nav */
+  background: #D6590C;
+}
+html[data-view="mobile"] .hero-vid,
+html[data-view="mobile"] img#hero-v0 {
+  position: relative; inset: auto;
+  top: 0 !important;
+  width: 100%; height: auto !important;
+  aspect-ratio: 16 / 9;
+  object-fit: cover; object-position: center 62%;
+  opacity: 1;
+}
+html[data-view="mobile"] .hero-3d {
+  position: static;
+  left: auto; top: auto;
+  transform: none;              /* drop the centring shift that goes with position:absolute */
+  width: auto; max-width: none;
+  padding: 22px 18px 30px;
+  text-align: center;
+}
+html[data-view="mobile"] .hero-3d-title {
+  font-size: clamp(1.35rem, 6.4vw, 2.4rem);
+  line-height: 1.22;
+}
+
+/* OEM journey: no horizontal scrub — stack the three steps as
+   ordinary cards. Same layout cookieverse.css already ships at
+   760px, applied by device instead of by width so iPads get it. */
+html[data-view="mobile"] .journey-scroll { height: auto; }
+html[data-view="mobile"] .journey-vp { position: static; height: auto; overflow: visible; }
+html[data-view="mobile"] .journey-track {
+  position: static; flex-direction: column; height: auto;
+  transform: none !important; will-change: auto;
+}
+html[data-view="mobile"] .jp {
+  width: 100%; flex-basis: auto; min-height: auto;
+  grid-template-columns: 1fr; gap: 26px;
+  padding: 60px 24px; text-align: center;
+}
+html[data-view="mobile"] .jp-txt,
+html[data-view="mobile"] .jp-visual { opacity: 1 !important; transform: none !important; }
+html[data-view="mobile"] .jp-txt { max-width: none; }
+html[data-view="mobile"] .jp-step,
+html[data-view="mobile"] .jp-tags,
+html[data-view="mobile"] .jp-btns,
+html[data-view="mobile"] .jp-fin-list li { justify-content: center; }
+html[data-view="mobile"] .jp-fin-list li { justify-content: flex-start; text-align: left; }
+html[data-view="mobile"] .jp-visual { height: auto; }
+html[data-view="mobile"] .jp-disc { width: min(74vw, 340px); }
+html[data-view="mobile"] .jp-wm { font-size: 30vh; top: auto; bottom: 2%; }
+/* the walking mascot, its ground line, the dots and the scroll hint
+   only make sense while the track is being scrubbed */
+html[data-view="mobile"] .journey-ground,
+html[data-view="mobile"] .journey-dots,
+html[data-view="mobile"] .scroll-hint,
+html[data-view="mobile"] .jm { display: none !important; }
+
+/* looping decoration holds still */
+html[data-view="mobile"] .jp-prod,
+html[data-view="mobile"] .jp-coin,
+html[data-view="mobile"] .jp-pack,
+html[data-view="mobile"] .jp-disc::before,
+html[data-view="mobile"] .jp-badge::before,
+html[data-view="mobile"] .mascot .mascot-float,
+html[data-view="mobile"] .jm-row { animation: none !important; }
+
+/* ══════════ PRODUCTS ══════════ */
+/* The flavour tunnel falls back to a plain grid (products.html calls
+   useFallback in lite mode); make sure nothing 3D leaks through. */
+html[data-view="mobile"] #tunnel .tunnel-scene,
+html[data-view="mobile"] #tunnel .gate {
+  transform: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+html[data-view="mobile"] #tunnel .tunnel-ui,
+html[data-view="mobile"] #tunnel .tunnel-rings,
+html[data-view="mobile"] #tunnel .tunnel-hint { display: none !important; }
+/* the fallback strip is swiped, not dragged by a scrollbar */
+html[data-view="mobile"] .tunnel-fallback .tunnel-scene {
+  scrollbar-width: none; -ms-overflow-style: none;
+}
+html[data-view="mobile"] .tunnel-fallback .tunnel-scene::-webkit-scrollbar { display: none; }

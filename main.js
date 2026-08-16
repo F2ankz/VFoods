@@ -107,7 +107,9 @@ function applyProductSearch(q){
 })();
 
 // ── PARALLAX CRUMBS (shared) ──
+// Follows the mouse, so it has nothing to do on a phone or an iPad.
 function initCrumbs(count = 14) {
+  if (window.VF_LITE) return;
   const crumbs = [];
   const shapes = ['50% 40%','40% 60%','60% 40%'];
   for(let i = 0; i < count; i++) {
@@ -155,6 +157,7 @@ function animateHeroTitle(selector, word) {
 
 // ── 3D CARD TILT ──
 function initTilt(selector) {
+  if (window.VF_LITE) return;
   document.querySelectorAll(selector).forEach(card => {
     card.addEventListener('mousemove', e => {
       const r = card.getBoundingClientRect();
@@ -168,6 +171,7 @@ function initTilt(selector) {
 
 // ── DRAG-ROTATE 3D OBJECTS ──
 function makeDraggable(el) {
+  if (window.VF_LITE) return;
   let drag=false, sx=0, ry=0;
   const start = e => { drag=true; sx=e.clientX||e.touches?.[0]?.clientX||0; el.style.animation='none'; e.preventDefault?.(); };
   const move  = e => { if(!drag)return; const cx=e.clientX||e.touches?.[0]?.clientX||sx; ry+=(cx-sx)*.65; sx=cx; el.style.transform=`rotateY(${ry}deg) rotateX(10deg)`; };

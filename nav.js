@@ -37,6 +37,31 @@
     return '<a href="' + P + 'brands.html">' + b + '</a>';
   }).join('');
 
+  // Language switch — two national flags. i18n.js wires up the clicks and
+  // marks the active one; data-i18n-skip keeps the labels out of the
+  // translation pass.
+  var flagTH =
+    '<svg class="vf-flag" viewBox="0 0 30 20" aria-hidden="true">' +
+      '<rect width="30" height="20" fill="#A51931"/>' +
+      '<rect y="3.34" width="30" height="13.32" fill="#F4F5F8"/>' +
+      '<rect y="6.67" width="30" height="6.66" fill="#2D2A4A"/>' +
+    '</svg>';
+  var flagEN =
+    '<svg class="vf-flag" viewBox="0 0 30 20" aria-hidden="true">' +
+      '<rect width="30" height="20" fill="#012169"/>' +
+      '<path d="M0 0 30 20M30 0 0 20" stroke="#fff" stroke-width="4"/>' +
+      '<path d="M0 0 30 20M30 0 0 20" stroke="#C8102E" stroke-width="2"/>' +
+      '<path d="M15 0V20M0 10H30" stroke="#fff" stroke-width="6.6"/>' +
+      '<path d="M15 0V20M0 10H30" stroke="#C8102E" stroke-width="4"/>' +
+    '</svg>';
+  var langSwitch =
+    '<div class="vf-lang" role="group" aria-label="Language / ภาษา" data-i18n-skip>' +
+      '<button type="button" class="vf-lang-btn" data-lang="th" title="ภาษาไทย" aria-label="ภาษาไทย">' +
+        flagTH + '<span>TH</span></button>' +
+      '<button type="button" class="vf-lang-btn" data-lang="en" title="English" aria-label="English">' +
+        flagEN + '<span>EN</span></button>' +
+    '</div>';
+
   var nav =
     '<nav class="vn" id="vnav">' +
       '<a class="vn-brand" href="' + P + 'scroll-site/index.html" aria-label="VFOODS หน้าแรก">' +
@@ -56,6 +81,7 @@
         '<a href="' + P + 'oem-guide.html"' + (active === 'oem' ? ' class="vn-active"' : '') + '>OEM Engagement Guide</a>' +
         '<a href="' + P + 'contact.html"' + (active === 'contact' ? ' class="vn-active"' : '') + '>Contact Us</a>' +
       '</div>' +
+      langSwitch +
       '<form class="vn-search" role="search">' +
         '<input type="search" placeholder="ค้นหาสินค้า…" aria-label="ค้นหาสินค้า">' +
         '<button type="submit" aria-label="ค้นหา"><svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="8.5" cy="8.5" r="5.5"/><line x1="12.8" y1="12.8" x2="18" y2="18" stroke-linecap="round"/></svg></button>' +

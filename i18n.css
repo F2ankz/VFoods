@@ -1,0 +1,99 @@
+/* ══════════════════════════════════════════════
+   VFoods — Language switch (TH / EN)
+   Flag buttons live inside the shared nav (.vn).
+   Include on any page with:
+     <link rel="stylesheet" href="[prefix]i18n.css">
+     <script src="[prefix]i18n.js"></script>
+   ══════════════════════════════════════════════ */
+
+/* ── the two flag buttons ───────────────────── */
+.vf-lang {
+  display: flex; align-items: center; gap: 4px; flex-shrink: 0;
+  padding: 4px; border-radius: 50px;
+  background: rgba(0, 0, 0, .16);
+  border: 1px solid rgba(255, 255, 255, .22);
+}
+.vf-lang-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 10px 5px 6px; border: none; border-radius: 50px;
+  background: transparent; cursor: pointer;
+  font-family: 'Sarabun', sans-serif; font-size: .74rem; font-weight: 700;
+  letter-spacing: .06em; color: rgba(255, 255, 255, .78);
+  line-height: 1; transition: background .22s, color .22s, transform .22s;
+}
+.vf-lang-btn:hover { background: rgba(255, 255, 255, .16); color: #fff; }
+.vf-lang-btn.is-on {
+  background: #fff; color: #B8410A;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .2);
+}
+.vf-lang-btn:focus-visible { outline: 2px solid #FFD35C; outline-offset: 2px; }
+.vf-flag {
+  width: 21px; height: 14px; display: block; flex-shrink: 0;
+  border-radius: 2.5px; box-shadow: 0 0 0 1px rgba(0, 0, 0, .18);
+}
+
+/* The bar is full at desktop width, so from here down the switch drops its
+   TH / EN labels and the nav tightens up to make room for the flags. */
+@media (max-width: 1400px) {
+  .vf-lang-btn span { display: none; }
+  .vf-lang-btn { padding: 6px; }
+  .vn { padding: 0 22px; gap: 12px; }
+  .vn-logo { height: 46px; }
+  .vn-links > a, .vn-parent { font-size: .85rem; padding: 10px 11px; }
+  .vn-search { padding: 5px 5px 5px 13px; }
+  .vn-search input { width: 104px; }
+}
+@media (max-width: 1180px) {
+  /* below this the bar can only fit the flags by giving up logo size,
+     padding and gap — the search box stays usable rather than being cut */
+  .vn { padding: 0 18px; gap: 10px; }
+  .vn-logo { height: 38px; }
+  .vn-links { gap: 2px; }
+  .vn-links > a, .vn-parent { font-size: .78rem; padding: 9px 8px; }
+  .vn-search { padding: 4px 4px 4px 11px; }
+  .vn-search input { width: 78px; font-size: .84rem; }
+  .vf-flag { width: 19px; height: 13px; }
+  .vf-lang { padding: 3px; }
+  .vf-lang-btn { padding: 5px; }
+}
+/* Below this the full link row plus the flags no longer fit without shrinking
+   the labels past readable — English runs longer than Thai. Bring the site's
+   own burger menu forward instead: the same markup nav.css already styles at
+   900px, just triggered a little earlier. */
+@media (max-width: 1080px) {
+  .vn { padding: 0 20px; height: 74px; }
+  .vn-item { height: 74px; }
+  .vn-links, .vn-search { display: none; }
+  .vn-burger { display: flex; }
+  .vn-mobile {
+    display: block; position: fixed; top: 74px; left: 0; right: 0; z-index: 899;
+    background: #D05E00; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255, 255, 255, .15);
+    max-height: 0; overflow: hidden; transition: max-height .4s ease;
+  }
+  .vn-mobile.open { max-height: 70vh; overflow-y: auto; }
+  .vn-mobile a {
+    display: block; padding: 14px 24px;
+    font-family: 'Sarabun', sans-serif; font-size: .9rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: .03em; color: rgba(255, 255, 255, .9); text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+    transition: background .2s;
+  }
+  .vn-mobile a:hover, .vn-mobile a.vn-active { background: rgba(255, 255, 255, .12); color: #fff; }
+  /* the search is gone here — the switch sits next to the burger */
+  .vf-lang { margin-left: auto; padding: 4px; }
+  .vf-lang-btn { padding: 6px; }
+  .vf-flag { width: 21px; height: 14px; }
+}
+
+/* ── one language at a time ─────────────────────────────────
+   These pages ship bilingual pairs (Thai heading + English
+   sub-line). The engine translates the primary line, so the
+   secondary line is dropped — otherwise it reads twice.
+   ─────────────────────────────────────────────────────────── */
+html[data-lang] .cat-h .cat-en,
+html[data-lang] .cat-h br,
+html[data-lang] .gate small,
+html[data-lang] .fv-sub,
+html[data-lang] .addr-name-en,
+html[data-lang] .prod-en { display: none !important; }

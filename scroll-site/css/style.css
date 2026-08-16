@@ -102,7 +102,7 @@ a { text-decoration: none; color: inherit; }
 .hero-heading {
   font-family: var(--font-display); font-weight: 800;
   font-size: clamp(2.2rem, 4.6vw, 4rem);
-  line-height: 1.12; letter-spacing: -.01em;
+  line-height: 1.26; letter-spacing: -.01em;
   text-shadow: 0 2px 20px rgba(255, 255, 255, .95), 0 0 50px rgba(255, 255, 255, .8);
   margin-bottom: 12px;
 }
@@ -240,7 +240,7 @@ a { text-decoration: none; color: inherit; }
 }
 .oem h2 {
   font-family: var(--font-display); font-weight: 800;
-  font-size: clamp(1.9rem, 4vw, 3rem); line-height: 1.15; letter-spacing: -.01em;
+  font-size: clamp(1.9rem, 4vw, 3rem); line-height: 1.26; letter-spacing: -.01em;
   margin-bottom: 14px;
 }
 .oem h2 em { font-style: normal; color: #FF8082; }
