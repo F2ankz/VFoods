@@ -62,8 +62,12 @@ html[data-view="mobile"] .rv {
 /* ══════════ HOME ══════════ */
 
 /* Hero: the clip is now a 16:9 still, so shorten the stage rather
-   than crop the characters out of frame on a tall phone. */
-html[data-view="mobile"] .hero {
+   than crop the characters out of frame on a tall phone.
+   Scoped to #hero — the HOME hero — on purpose. oem-guide.html also has a
+   `.hero`, but its headline and body copy are dark ink on a cream card;
+   painting that stage solid orange here made the accent headline (#D6590C)
+   the same colour as its own background and it vanished on phones. */
+html[data-view="mobile"] #hero {
   height: auto; min-height: 0;
   padding-top: 74px;                 /* clear the fixed nav */
   background: #D6590C;
@@ -87,7 +91,7 @@ html[data-view="mobile"] .hero-3d {
 }
 html[data-view="mobile"] .hero-3d-title {
   font-size: clamp(1.35rem, 6.4vw, 2.4rem);
-  line-height: 1.22;
+  line-height: 1.34;               /* ระยะบรรทัดเดียวกับเดสก์ท็อป (บรรทัด 2 ห่างขึ้น) */
 }
 
 /* OEM journey: no horizontal scrub — stack the three steps as

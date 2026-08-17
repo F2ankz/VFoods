@@ -29,7 +29,7 @@
 }
 
 /* ── page canvas: living orange-red gradient, never flat ── */
-html, body { background: var(--cv-bg); color: var(--cv-cream); cursor: url('../../cursor-choco-arrow.svg') 3 2, auto; }
+html, body { background: var(--cv-bg); color: var(--cv-cream); }  /* cursor: ../../cursor.css */
 body::before {
   content: ""; position: fixed; inset: -20%; z-index: -3; pointer-events: none;
   background:
@@ -211,7 +211,7 @@ body::after {
   background: radial-gradient(ellipse 55% 45% at 50% 100%, rgba(143,15,6,.35), transparent 70%);
   border-top: 1px solid rgba(255,211,92,.2);
 }
-.certs-head h2 { color: #fff; text-shadow: 0 0 26px rgba(255,211,92,.4); }
+.certs-head h2 { color: #fff; }   /* ไม่มีออร่า/แสงฟุ้งรอบตัวอักษร */
 .certs-head .cert-rosette { stroke: var(--cv-gold); }
 .certs-text, .certs > .certs-text { color: var(--cv-cream-dim); }
 .cert-name { color: #fff; }
@@ -365,7 +365,7 @@ body::after {
 }
 @keyframes cvHint { 0%,100% { opacity: .5; transform: translateX(-50%) translateY(0); } 50% { opacity: 1; transform: translateX(-50%) translateY(5px); } }
 
-.products-cta { padding: 46px 6vw 60px; }
+.products-cta { padding: var(--sec-pt) 6vw var(--sec-pb); }
 
 /* ── fallback: touch / narrow / reduced-motion → horizontal snap strip ── */
 #tunnel.tunnel-fallback { height: auto; overflow: visible; }
@@ -461,7 +461,7 @@ body::after {
 
 /* ══════════ OEM JOURNEY · horizontal scroll-scrub (ย้ายมาจากหน้า OEM) ══════════ */
 .journey{position:relative;background:linear-gradient(180deg,#FFEAD6 0%,#FFEFE0 100%);}
-.journey-head{text-align:center;padding:clamp(40px,5.2vw,60px) 22px 6px;position:relative;z-index:2;}
+.journey-head{text-align:center;padding:var(--sec-pt) 22px 6px;position:relative;z-index:2;}
 /* self-contained heading styles (home ไม่มี .sec-eye/.sec-title/.sec-desc กลาง) */
 .journey-head .sec-eye{font-family:'Sarabun',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.22em;
   text-transform:uppercase;color:#D6590C;display:flex;align-items:center;gap:9px;justify-content:center;margin-bottom:10px;}
@@ -529,7 +529,8 @@ body::after {
   border:3px dashed rgba(255,255,255,.65);animation:spinRing 24s linear infinite;}
 .jp.p1 .jp-disc::before,.jp.p2 .jp-disc::before{border-color:rgba(58,38,0,.22);}
 @keyframes spinRing{to{transform:rotate(360deg);}}
-.jp-prod{max-width:82%;max-height:82%;object-fit:contain;
+/* รูปสินค้ากลางจาน — ทุกขั้นตอนใช้ขนาดเดียวกันหมด (78% ของจาน) */
+.jp-prod{position:relative;z-index:2;width:78%;height:78%;object-fit:contain;
   filter:drop-shadow(0 26px 28px rgba(0,0,0,.32));animation:bob 4.2s ease-in-out infinite;}
 @keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-16px) rotate(2deg);}}
 /* pulsing sticker badge */
@@ -548,13 +549,11 @@ body::after {
 .jp-coin{position:absolute;border-radius:50%;overflow:hidden;background:#0b0b0d;border:5px solid #fff;
   box-shadow:0 14px 28px rgba(0,0,0,.32);animation:bob 4s ease-in-out infinite;z-index:3;}
 .jp-coin img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);}
-.jp-coin.k1{width:56%;height:56%;left:22%;top:20%;border-width:6px;z-index:4;}
-.jp-coin.k2{width:33%;height:33%;right:-8%;top:10%;animation-delay:-1.3s;}
-.jp-coin.k3{width:30%;height:30%;left:-8%;bottom:16%;animation-delay:-2.2s;}
-.jp-coin.k4{width:27%;height:27%;right:4%;bottom:-6%;animation-delay:-.7s;}
-
-/* package svg on disc */
-.jp-pack{width:88%;height:auto;filter:drop-shadow(0 22px 26px rgba(0,0,0,.32));animation:bob 4.4s ease-in-out infinite;}
+/* เหรียญวัตถุดิบ = ของประดับรอบจาน (รูปคุกกี้กลางจานเป็นพระเอก ขนาดเท่าขั้นอื่น) */
+.jp-coin.k1{width:27%;height:27%;left:-7%;top:12%;animation-delay:-1.8s;}
+.jp-coin.k2{width:25%;height:25%;right:-8%;top:8%;animation-delay:-1.3s;}
+.jp-coin.k3{width:23%;height:23%;left:2%;bottom:-4%;animation-delay:-2.2s;}
+.jp-coin.k4{width:22%;height:22%;right:0%;bottom:-6%;animation-delay:-.7s;}
 
 /* finish panel extras */
 .jp-fin-list{list-style:none;display:grid;gap:11px;margin:0 0 26px;}
@@ -600,7 +599,13 @@ body::after {
 .mascot .m-shadow{width:110px;height:14px;margin:2px auto 0;border-radius:50%;
   background:radial-gradient(ellipse,rgba(58,38,0,.28),transparent 70%);animation:mShadow .5s ease-in-out infinite alternate;}
 @keyframes mShadow{0%{transform:scaleX(1);opacity:.7;}100%{transform:scaleX(.8);opacity:.45;}}
-.m-bubble{position:absolute;bottom:185px;left:50%;transform:translateX(-50%) scale(.6);transform-origin:bottom center;
+/* Anchored to the TOP of the mascot, not a fixed pixel offset. The flat SVG
+   fallback is 141px tall but the 3D cookie that replaces it (mascot3d.js) is
+   190px — so the old hardcoded bottom:185px was tuned for the SVG and the
+   bubble sank 18px into the cookie's head as soon as the model loaded.
+   calc(100% + 20px) clears whichever mascot is on screen, and leaves room for
+   the 9px tail plus the 6px bob of .mascot-float. */
+.m-bubble{position:absolute;bottom:calc(100% + 20px);left:50%;transform:translateX(-50%) scale(.6);transform-origin:bottom center;
   min-width:180px;max-width:264px;padding:11px 16px;border-radius:16px;background:#fff;border:2px solid #1A0604;
   box-shadow:0 6px 0 rgba(26,6,4,.16);font-family:'Baloo 2',sans-serif;font-weight:500;font-size:.86rem;line-height:1.5;
   color:#3A2600;text-align:center;opacity:0;pointer-events:none;transition:.3s cubic-bezier(.23,1,.32,1);}
@@ -635,45 +640,78 @@ body::after {
   .journey-ground,.journey-dots,.scroll-hint,.jm{display:none;}
 }
 @media(prefers-reduced-motion:reduce){
-  .jp-prod,.jp-coin,.jp-pack,.jp-disc::before,.jp-badge::before,.mascot .mascot-float,.scroll-hint .arrw,.jm-row{animation:none!important;}
+  .jp-prod,.jp-coin,.jp-disc::before,.jp-badge::before,.mascot .mascot-float,.scroll-hint .arrw,.jm-row{animation:none!important;}
 }
 
-/* ═══ PRODUCT PREVIEW (หน้าแรก · สินค้าของเรา) — ตัวอย่างแพ็คสินค้าจริงจากหน้า Brands ═══ */
+/* ═══ PRODUCT PREVIEW (หน้าแรก · สินค้าของเรา) — ตัวอย่างแพ็คสินค้าจริงจากหน้า Brands ═══
+   รูปแพ็คสินค้าเป็นแนวตั้ง (~358×620 ≈ 0.58) เวทีรูปจึงเป็นสัดส่วนแนวตั้งด้วย
+   ไม่ใช้จัตุรัส — ไม่งั้นรูปถูกบีบตามความสูงและเหลือพื้นที่ว่างซ้าย-ขวาเยอะ */
 .prod-preview{
   max-width:1160px; margin:38px auto 4px; padding:0 4vw;
-  display:grid; grid-template-columns:repeat(4,1fr); gap:18px;
+  display:grid; grid-template-columns:repeat(4,1fr); gap:20px;
 }
 .pp-card{
-  display:flex; flex-direction:column; align-items:center; gap:10px;
-  text-decoration:none; padding:18px 14px 16px; border-radius:20px;
+  display:flex; flex-direction:column; align-items:center; gap:12px;
+  text-decoration:none; padding:14px 12px 16px; border-radius:20px;
   background:rgba(255,255,255,.94); border:1px solid rgba(255,255,255,.65);
   box-shadow:0 10px 30px rgba(120,20,10,.12);
   transition:box-shadow .4s ease;   /* ไม่ transform ตัวการ์ด → hit area นิ่ง ไม่สั่น */
 }
 .pp-card:hover{ box-shadow:0 22px 46px rgba(120,20,10,.22); }
 .pp-stage{
-  width:100%; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;
+  position:relative; width:100%; aspect-ratio:3/4;
   border-radius:14px;
   background:radial-gradient(ellipse at 50% 66%, rgba(232,106,24,.12), transparent 70%);
 }
+/* absolute + object-fit:contain → กรอบสูงตามสัดส่วนเป๊ะ รูปไม่ดันกล่องให้ยืด
+   และรูปแนวตั้งจะเต็มความสูงกรอบพอดี ไม่เหลือที่ว่างเป็นแถบ */
 .pp-stage img{
-  max-width:90%; max-height:90%; object-fit:contain;
+  position:absolute; left:0; top:2%; width:100%; height:96%;
+  object-fit:contain;
   filter:drop-shadow(0 10px 16px rgba(0,0,0,.16));
   transition:transform .45s cubic-bezier(.23,1,.32,1);
 }
-.pp-card:hover .pp-stage img{ transform:translateY(-8px) scale(1.06); }
-.pp-name{ font-family:'Sarabun',sans-serif; font-size:.86rem; font-weight:700; color:#7A2408; text-align:center; line-height:1.3; }
+.pp-card:hover .pp-stage img{ transform:translateY(-6px) scale(1.05); }
+.pp-name{ font-size:.94rem; font-weight:700; color:#7A2408; text-align:center; line-height:1.35; }
 @media(max-width:900px){ .prod-preview{ grid-template-columns:repeat(3,1fr); } }
 @media(max-width:560px){ .prod-preview{ grid-template-columns:repeat(2,1fr); gap:12px; } }
 
+/* ═══ ลูกค้าของเรา · โลโก้แบรนด์เลื่อนวน (ย้ายมาจากหน้า OEM) ═══ */
+.cust-sec{ padding:var(--sec-pt) 0 var(--sec-pb); overflow:hidden; }
+.cust-sec .sec-head{ margin-bottom:26px; }
+.cust-sec .sec-head h2{ color:#fff; }   /* ไม่มีออร่า เช่นเดียวกับหัวข้ออื่น */
+.cust-sec .sec-head p{ color:var(--cv-cream-dim); }
+.logo-marquee{
+  position:relative; width:100%; overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+}
+.logo-track{ display:flex; align-items:center; gap:24px; width:max-content; animation:logoScroll 52s linear infinite; }
+.logo-marquee:hover .logo-track{ animation-play-state:paused; }
+.logo-item{
+  flex:0 0 auto; width:172px; height:100px;
+  display:flex; align-items:center; justify-content:center;
+  background:#fff; border:1px solid rgba(26,6,8,.07); border-radius:14px; padding:14px 18px;
+  box-shadow:0 8px 22px rgba(96,10,2,.22);
+  transition:transform .35s cubic-bezier(.23,1,.32,1), box-shadow .35s;
+}
+.logo-item img{ max-width:100%; max-height:100%; object-fit:contain; }
+.logo-item:hover{ transform:translateY(-5px); box-shadow:0 16px 34px rgba(96,10,2,.32); }
+@keyframes logoScroll{ from{ transform:translateX(0) } to{ transform:translateX(-50%) } }
+@media(max-width:560px){ .logo-item{ width:138px; height:82px; padding:12px 15px; } .logo-track{ gap:16px; } }
+@media(prefers-reduced-motion:reduce){
+  .logo-track{ animation:none; flex-wrap:wrap; justify-content:center; width:auto; }
+}
+
 /* ═══ HERO 3D TEXT — "THE VARIETY WORLD OF BISCUITS, COOKIES, AND SNACKS" ═══ */
 .hero-3d{
-  position:absolute; left:50%; top:14%; transform:translateX(-50%);
+  position:absolute; left:50%; top:18%; transform:translateX(-50%);
   z-index:4; width:min(1120px,92vw); text-align:center; pointer-events:none;
 }
 .hero-3d-title{
+  /* line-height เผื่อที่ให้บรรทัดที่ 2 ห่างจากบรรทัดแรกขึ้น (และกันวรรณยุกต์ไทยชนกัน) */
   margin:0; font-family:var(--font-display,'Sarabun'),sans-serif; font-weight:800;
-  font-size:clamp(1.5rem,4.7vw,3.7rem); line-height:1.2; letter-spacing:.012em;
+  font-size:clamp(1.5rem,4.7vw,3.7rem); line-height:1.42; letter-spacing:.012em;
   text-transform:uppercase; color:#fff;
   /* ชั้นนูน 3D โทนส้ม-น้ำตาล + เงาตกกระทบ */
   text-shadow:
@@ -687,7 +725,7 @@ body::after {
   from{ opacity:0; transform:perspective(720px) rotateX(15deg) translateY(26px); }
   to{   opacity:1; transform:perspective(720px) rotateX(15deg) translateY(0); }
 }
-@media(max-width:760px){ .hero-3d{ top:11%; } }
+@media(max-width:760px){ .hero-3d{ top:14%; } }
 @media(prefers-reduced-motion:reduce){ .hero-3d-title{ animation:none; } }
 
 /* ── SECTION KICKERS HIDDEN ──────────────────────────────────

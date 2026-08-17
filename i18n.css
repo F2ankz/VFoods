@@ -17,7 +17,7 @@
   display: inline-flex; align-items: center; gap: 6px;
   padding: 5px 10px 5px 6px; border: none; border-radius: 50px;
   background: transparent; cursor: pointer;
-  font-family: 'Sarabun', sans-serif; font-size: .74rem; font-weight: 700;
+  font-family: var(--vf-font, 'Sarabun', sans-serif); font-size: .74rem; font-weight: 700;
   letter-spacing: .06em; color: rgba(255, 255, 255, .78);
   line-height: 1; transition: background .22s, color .22s, transform .22s;
 }
@@ -74,7 +74,7 @@
   .vn-mobile.open { max-height: 70vh; overflow-y: auto; }
   .vn-mobile a {
     display: block; padding: 14px 24px;
-    font-family: 'Sarabun', sans-serif; font-size: .9rem; font-weight: 600; text-transform: uppercase;
+    font-family: var(--vf-font, 'Sarabun', sans-serif); font-size: .9rem; font-weight: 600; text-transform: uppercase;
     letter-spacing: .03em; color: rgba(255, 255, 255, .9); text-decoration: none;
     border-bottom: 1px solid rgba(255, 255, 255, .1);
     transition: background .2s;

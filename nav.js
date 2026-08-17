@@ -81,11 +81,12 @@
         '<a href="' + P + 'oem-guide.html"' + (active === 'oem' ? ' class="vn-active"' : '') + '>OEM Engagement Guide</a>' +
         '<a href="' + P + 'contact.html"' + (active === 'contact' ? ' class="vn-active"' : '') + '>Contact Us</a>' +
       '</div>' +
-      langSwitch +
+      /* ลำดับ: ช่องค้นหาสินค้า มาก่อน แล้วปุ่มเปลี่ยนภาษาอยู่ขวาสุด */
       '<form class="vn-search" role="search">' +
         '<input type="search" placeholder="ค้นหาสินค้า…" aria-label="ค้นหาสินค้า">' +
         '<button type="submit" aria-label="ค้นหา"><svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="8.5" cy="8.5" r="5.5"/><line x1="12.8" y1="12.8" x2="18" y2="18" stroke-linecap="round"/></svg></button>' +
       '</form>' +
+      langSwitch +
       '<button class="vn-burger" id="vnBurger" aria-label="เมนู" aria-expanded="false"><span></span><span></span><span></span></button>' +
     '</nav>' +
     '<div class="vn-mobile" id="vnMobile">' +

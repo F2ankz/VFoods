@@ -6,19 +6,21 @@
   --red: #E51A1D;
   --red-deep: #B8121F;
   --red-soft: #FDEDED;
-  --font-display: 'Sarabun', sans-serif;
-  --font-body: 'Sarabun', sans-serif;
+  /* ฟอนต์กลางประกาศไว้ที่ ../../fonts.css (DB HelvethaicaMon X) */
+  --font-display: 'DB HelvethaicaMon X', 'FC Vision Rounded', 'Sarabun', sans-serif;
+  --font-body: 'DB HelvethaicaMon X', 'FC Vision Rounded', 'Sarabun', sans-serif;
+
+  /* ระยะจากขอบบนของ section ถึงหัวข้อ — ค่าเดียวใช้ทุก section ให้เท่ากันหมด */
+  --sec-pt: clamp(30px, 3.4vw, 44px);
+  --sec-pb: clamp(38px, 4.2vw, 52px);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 html, body {
   background: var(--bg-light); color: var(--text-on-light); font-family: var(--font-body);
-  cursor: url('../../cursor-choco-arrow.svg') 3 2, auto;   /* native chocolate cursor — custom DOM cursor removed for perf */
 }
-a, button, [role="button"], label, summary {
-  cursor: url('../../cursor-choco-hand.svg') 11 2, pointer;
-}
+/* chocolate cursor lives in ../../cursor.css (linked by every page) */
 a { text-decoration: none; color: inherit; }
 ::selection { background: var(--red); color: #fff; }
 
@@ -174,7 +176,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* ═══ shared section head ═══ */
-.sec-head { max-width: 760px; margin: 0 auto 34px; text-align: center; }
+.sec-head { max-width: 760px; margin: 0 auto 26px; text-align: center; }
 .sec-eyebrow {
   display: inline-block;
   font-family: var(--font-display); font-weight: 700; font-size: .78rem;
@@ -196,7 +198,7 @@ a { text-decoration: none; color: inherit; }
 .btn-line:hover { background: var(--red); color: #fff; transform: translateY(-3px); box-shadow: 0 12px 26px rgba(229,26,29,.3); }
 
 /* ═══ PRODUCTS ═══ */
-.products { background: var(--bg-light); padding: 60px 6vw; }
+.products { background: var(--bg-light); padding: var(--sec-pt) 6vw var(--sec-pb); }
 .prod-grid {
   max-width: 1220px; margin: 0 auto;
   display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px;
@@ -280,7 +282,7 @@ a { text-decoration: none; color: inherit; }
   background:
     radial-gradient(ellipse 50% 40% at 50% 0%, var(--red-soft), transparent 70%),
     var(--bg-light);
-  padding: 60px 6vw;
+  padding: var(--sec-pt) 6vw var(--sec-pb);
 }
 .news-grid {
   max-width: 1220px; margin: 0 auto;
@@ -315,7 +317,7 @@ a { text-decoration: none; color: inherit; }
 .about-us {
   position: relative;
   background: var(--bg-light);
-  padding: 60px 6vw;
+  padding: var(--sec-pt) 6vw var(--sec-pb);
 }
 .about-head { max-width: 880px; margin: 0 auto 14px; text-align: center; }
 .about-eyebrow {
@@ -372,15 +374,19 @@ a { text-decoration: none; color: inherit; }
   background:
     radial-gradient(ellipse 55% 45% at 50% 100%, var(--red-soft), transparent 70%),
     var(--bg-light);
-  padding: 56px 6vw 64px;
+  padding: var(--sec-pt) 6vw var(--sec-pb);
   border-top: 1px solid rgba(229, 26, 29, .08);
 }
-.certs-head { text-align: center; margin-bottom: 28px; }
-.cert-rosette { width: 62px; height: 62px; margin: 0 auto 18px; display: block; }
+/* ตรารับรองวางแถวเดียวกับหัวข้อ — ระยะขอบบน→หัวข้อจึงเท่ากับ section อื่น */
+.certs-head {
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+  text-align: center; margin-bottom: 22px;
+}
+.cert-rosette { width: 44px; height: 44px; margin: 0; display: block; flex: 0 0 44px; }
 .certs-head h2 {
   font-family: var(--font-display); font-weight: 800;
   font-size: clamp(1.9rem, 3.8vw, 2.8rem);
-  letter-spacing: .28em; text-indent: .28em;
+  letter-spacing: -.01em;          /* ระยะตัวอักษรเท่าหัวข้ออื่นในเว็บ (.sec-head h2 / .about-head h2) */
   color: var(--red-deep);
 }
 .certs-grid {
@@ -425,13 +431,14 @@ a { text-decoration: none; color: inherit; }
   transition: transform .4s cubic-bezier(.2,.8,.2,1);
 }
 .cert-badge:hover .cert-seal { transform: translateY(-6px) rotate(-2.5deg) scale(1.03); }
+/* ข้อความใต้โลโก้การรับรอง — ขนาดใหญ่ขึ้นให้อ่านง่าย */
 .cert-name {
   font-family: var(--font-display); font-weight: 700;
-  font-size: .92rem; letter-spacing: .01em; color: var(--text-on-light);
+  font-size: 1.12rem; letter-spacing: .01em; color: var(--text-on-light);
 }
 .cert-desc {
-  font-size: .74rem; font-weight: 300; line-height: 1.45;
-  color: rgba(43, 5, 8, .6); max-width: 15ch;
+  font-size: .92rem; font-weight: 300; line-height: 1.55;
+  color: rgba(43, 5, 8, .68); max-width: 18ch;
 }
 @media (max-width: 860px) {
   .certs-badges { grid-template-columns: repeat(3, 1fr); gap: 26px 18px; }
@@ -494,7 +501,6 @@ a { text-decoration: none; color: inherit; }
   #quick-bar { width: calc(100% - 24px); justify-content: center; flex-wrap: wrap; border-radius: 26px; bottom: 12px; }
   .qb-btn { padding: 12px 18px; font-size: .88rem; }
   .certs-grid { grid-template-columns: 1fr; }
-  .certs-head h2 { letter-spacing: .14em; text-indent: .14em; }
   .about-grid { grid-template-columns: 1fr; }
   .prod-grid { grid-template-columns: repeat(2, 1fr); }
   .oem-grid { grid-template-columns: 1fr; }

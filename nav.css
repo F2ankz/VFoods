@@ -6,8 +6,10 @@
 /* hide any legacy per-page nav instantly (no flash before nav.js swaps it) */
 #g-nav, #navbar, .site-header, #nav-mobile { display:none !important; }
 
-/* force a consistent nav font even on pages that override body font */
-.vn, .vn *, .vn-mobile, .vn-mobile * { font-family:'Sarabun', sans-serif !important; }
+/* ฟอนต์เมนู = ฟอนต์กลางของเว็บ (ประกาศที่ fonts.css) */
+.vn, .vn *, .vn-mobile, .vn-mobile * {
+  font-family:'DB HelvethaicaMon X','FC Vision Rounded','Sarabun',sans-serif !important;
+}
 
 .vn {
   position:fixed; top:0; left:0; right:0; z-index:900;
@@ -16,7 +18,7 @@
   background:#E45F06;
   -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
   border-bottom:1px solid rgba(255,255,255,.14);
-  font-family:'Sarabun',sans-serif;
+  font-family:var(--vf-font,'Sarabun',sans-serif);
   transition:background .3s, box-shadow .3s;
 }
 .vn.scrolled { box-shadow:0 2px 24px rgba(0,0,0,.22); }
@@ -28,7 +30,7 @@
 .vn-links > a, .vn-parent {
   display:inline-flex; align-items:center; gap:6px;
   padding:12px 17px; border-radius:11px;
-  font-family:'Sarabun',sans-serif; font-size:.94rem; font-weight:600;
+  font-family:var(--vf-font,'Sarabun',sans-serif); font-size:.94rem; font-weight:600;
   letter-spacing:.02em; text-transform:uppercase; white-space:nowrap;
   color:rgba(255,255,255,.92); text-decoration:none; cursor:pointer;
   transition:background .25s, color .25s;
@@ -62,7 +64,7 @@
 .vn-dd a {
   display:flex; align-items:center; gap:9px;
   padding:11px 16px; border-radius:11px;
-  font-family:'Sarabun',sans-serif; font-size:.95rem; font-weight:500;
+  font-family:var(--vf-font,'Sarabun',sans-serif); font-size:.95rem; font-weight:500;
   text-transform:none; letter-spacing:0; text-decoration:none;
   color:rgba(255,255,255,.9); white-space:nowrap;
   transition:background .18s, color .18s, transform .18s;
@@ -76,7 +78,7 @@
 }
 .vn-search input {
   border:none; outline:none; background:transparent;
-  font-family:'Sarabun',sans-serif; font-size:.9rem; color:#3a1800; width:150px;
+  font-family:var(--vf-font,'Sarabun',sans-serif); font-size:.9rem; color:#3a1800; width:150px;
 }
 .vn-search input::placeholder { color:rgba(58,24,0,.45); }
 .vn-search button {
@@ -114,7 +116,7 @@
   .vn-mobile.open { max-height:70vh; overflow-y:auto; }
   .vn-mobile a {
     display:block; padding:14px 24px;
-    font-family:'Sarabun',sans-serif; font-size:.9rem; font-weight:600; text-transform:uppercase;
+    font-family:var(--vf-font,'Sarabun',sans-serif); font-size:.9rem; font-weight:600; text-transform:uppercase;
     letter-spacing:.03em; color:rgba(255,255,255,.9); text-decoration:none;
     border-bottom:1px solid rgba(255,255,255,.1);
     transition:background .2s;

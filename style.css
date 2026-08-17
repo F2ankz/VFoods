@@ -6,13 +6,8 @@
    page's <head> (faster, non-render-blocking) instead of @import here.
    ══════════════════════════════════════════════ */
 
-/* ── CHOCOLATE CURSOR (glossy arrow default · pointing hand on clickables) ── */
-html, body { cursor: url('cursor-choco-arrow.svg') 3 2, auto; }
-a, a *, button, button *, [role="button"], summary, label[for],
-input[type="submit"], input[type="button"], input[type="reset"],
-select, .nav-hamburger, [onclick] {
-  cursor: url('cursor-choco-hand.svg') 11 2, pointer !important;
-}
+/* ── CHOCOLATE CURSOR ── moved to cursor.css, which every page links so the
+   pointer is identical on all of them. Do not re-add `cursor` rules here. ── */
 
 /* ── VARIABLES ── */
 :root {

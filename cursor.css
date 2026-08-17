@@ -1,0 +1,44 @@
+/* ══════════════════════════════════════════════════════════════
+   VFoods — CHOCOLATE CURSOR (single source of truth)
+   Glossy arrow by default · pointing hand on anything clickable.
+
+   Every page links this ONE file, so the pointer looks and behaves
+   the same everywhere. The url()s resolve relative to THIS file
+   (repo root), so pages in subfolders link it as "../cursor.css"
+   and still hit the same two SVGs.
+
+   Do not re-declare `cursor` on html/body/links in a page stylesheet
+   — add the selector here instead.
+
+   Exception: mobile-view.css turns the artwork off for
+   html[data-view="mobile"] (no mouse on a phone, no SVG to download).
+   Its rules use a higher-specificity selector, so they win over the
+   base rule below regardless of link order.
+   ══════════════════════════════════════════════════════════════ */
+
+html, body { cursor: url('cursor-choco-arrow.svg') 3 2, auto; }
+
+/* clickables — !important so a component's own `cursor:pointer`
+   (nav.css, cookieverse.css, i18n.css …) cannot drop back to the
+   system arrow-hand and break the look on one page only */
+a, a *,
+button, button *,
+[role="button"], [role="button"] *,
+summary, label[for], select,
+input[type="submit"], input[type="button"], input[type="reset"],
+.nav-hamburger, .vn-burger, .mascot, .ck-wrap,
+[onclick] {
+  cursor: url('cursor-choco-hand.svg') 11 2, pointer !important;
+}
+
+/* text entry keeps the I-beam — a hand over a text field reads as a link */
+input:not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]),
+textarea {
+  cursor: text !important;
+}
+
+/* disabled controls are not clickable, so they must not say they are */
+button:disabled, button:disabled *,
+input:disabled, [aria-disabled="true"], [aria-disabled="true"] * {
+  cursor: not-allowed !important;
+}

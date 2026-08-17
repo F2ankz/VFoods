@@ -1,0 +1,60 @@
+/* ══════════════════════════════════════════════
+   VFoods — ฟอนต์กลางของเว็บทั้งหมด
+   ฟอนต์หลัก: DB HelvethaicaMon X
+
+   ใช้ไฟล์นี้เป็นที่เดียวที่ประกาศฟอนต์ ทุกหน้าลิงก์ไฟล์นี้เป็น
+   สไตล์ชีตตัวสุดท้าย (หลัง mobile-view.css) เพื่อให้กฎ !important
+   ด้านล่างชนะฟอนต์ที่หน้านั้น ๆ ประกาศไว้เอง
+
+   วิธีติดตั้งไฟล์ฟอนต์ (ลิขสิทธิ์ DB Fonts — ต้องซื้อ/มีสิทธิ์ใช้งานเอง):
+   วางไฟล์ไว้ที่ fonts/ ตามชื่อนี้ แล้วฟอนต์จะขึ้นเองทันที ไม่ต้องแก้โค้ดอีก
+     fonts/db-helvethaicamon-x.woff2   (ตัวปกติ — ใช้ทุกน้ำหนักได้)
+     fonts/db-helvethaicamon-x-bold.woff2  (ถ้ามีตัวหนาแยกไฟล์)
+   ระหว่างที่ยังไม่มีไฟล์ เว็บจะใช้ FC Vision Rounded → Sarabun เป็นตัวสำรอง
+   (เหมือนกันทุกหน้า จึงไม่มีหน้าไหนหลุดไปใช้ฟอนต์อื่น)
+   ══════════════════════════════════════════════ */
+
+/* ฟอนต์หลัก — local() รองรับกรณีเครื่องผู้ใช้ลงฟอนต์นี้ไว้แล้ว */
+@font-face {
+  font-family: 'DB HelvethaicaMon X';
+  src: local('DB HelvethaicaMon X'),
+       local('DB Helvethaica Mon X'),
+       local('DBHelvethaicaMonX'),
+       url('fonts/db-helvethaicamon-x.woff2') format('woff2');
+  font-weight: 100 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DB HelvethaicaMon X';
+  src: local('DB HelvethaicaMon X Bd'),
+       local('DB Helvethaica Mon X Bold'),
+       url('fonts/db-helvethaicamon-x-bold.woff2') format('woff2');
+  font-weight: 701 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ตัวสำรองเดิมของเว็บ (Fontcraft, มี Bold ตัวเดียว; ประกาศ 100-900 กัน faux-bold) */
+@font-face {
+  font-family: 'FC Vision Rounded';
+  src: url('fonts/fc-vision-rounded.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --vf-font: 'DB HelvethaicaMon X', 'FC Vision Rounded', 'Sarabun', sans-serif;
+  /* โทเคนเดิมที่ไฟล์อื่นเรียกใช้ → ชี้มาที่ฟอนต์กลางตัวเดียวกัน */
+  --font-display: var(--vf-font);
+  --font-body: var(--vf-font);
+}
+
+/* ฟอนต์เดียวทั้งเว็บ — ครอบ <text> ใน SVG และองค์ประกอบที่ตั้งฟอนต์ไว้เองด้วย */
+body, body * { font-family: var(--vf-font) !important; }
+
+/* nav.css / i18n.css ตั้ง .vn * ไว้แบบ !important ซึ่ง specificity สูงกว่า body *
+   จึงต้องเขียนทับด้วย selector ที่แรงพอ */
+.vn, .vn *, .vn-mobile, .vn-mobile *,
+.vf-lang, .vf-lang * { font-family: var(--vf-font) !important; }
