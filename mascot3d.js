@@ -64,10 +64,11 @@
       /* The mascot is a Blender model (models/cookie_walk.glb). Its parts
          came out of Blender as separate meshes, so the walk cycle drives
          them by name — there is no armature in the file. */
-      const THIGH_L = ['Cube003'],              FOOT_L = ['Cube012', 'Cube012_1'];
-      const THIGH_R = ['Cube'],                 FOOT_R = ['Cube011', 'Cube011_1'];
+      const THIGH_L = ['thighL'], SHIN_L = ['shinL', 'kneeL'], FOOT_L = ['Cube012', 'Cube012_1'];
+      const THIGH_R = ['thighR'], SHIN_R = ['shinR', 'kneeR'], FOOT_R = ['Cube011', 'Cube011_1'];
 
       const STRIDE   = 0.72;   /* radians the hip swings at full walk */
+      const KNEE     = 0.55;   /* how far the knee folds as the leg swings through */
       const FOOT_LAG = 0.35;   /* ankle counter-rotation, so the shoe stays flatter */
       const TURN     = 38 * Math.PI / 180;   /* three-quarter turn; a head-on mascot hides its own stride */
 
@@ -93,42 +94,46 @@
         const meshes = {};
         model.traverse(function (o) { if (o.isMesh) meshes[o.name] = o; });
 
-        function topOf(names) {
+        function boundsOf(names) {
           const b = new THREE.Box3();
           names.forEach(function (n) { if (meshes[n]) b.expandByObject(meshes[n]); });
-          return b.max.y;
+          return b;
         }
 
         /* Each joint sits at the TOP of the piece it swings. A point on the
            pivot cannot travel when it rotates, so the cut end of the thigh
            stays buried in the body and the cut end of the foot stays inside
-           the ankle, at any stride width. attach() moves a mesh under a new
-           parent without shifting it on screen. */
-        function limb(thighNames, footNames) {
-          const hip = new THREE.Group();
-          hip.position.y = topOf(thighNames);
-          group.add(hip);
-          group.updateMatrixWorld(true);
-          thighNames.forEach(function (n) { if (meshes[n]) hip.attach(meshes[n]); });
+           the ankle, at any stride width. The knee is the exception: thigh
+           and shin both stop dead on the joint, and a ball modelled around
+           it (kneeL / kneeR) hides both caps at any fold. attach() moves a
+           mesh under a new parent without shifting it on screen. */
+        function limb(thighNames, shinNames, footNames) {
+          function joint(parent, names, y, baseY) {
+            const g = new THREE.Group();
+            g.position.y = y - baseY;
+            parent.add(g);
+            parent.updateMatrixWorld(true);
+            names.forEach(function (n) { if (meshes[n]) g.attach(meshes[n]); });
+            return g;
+          }
+          const hipY = boundsOf(thighNames).max.y;
+          /* the knee turns where the thigh ends, which is also where the ball
+             is centred — not at the top of the shin group, since the ball
+             reaches above the joint on purpose */
+          const kneeY = boundsOf(thighNames).min.y;
+          const ankleY = boundsOf(footNames).max.y;
 
-          const ankle = new THREE.Group();
-          ankle.position.y = topOf(footNames) - hip.position.y;
-          hip.add(ankle);
-          hip.updateMatrixWorld(true);
-          footNames.forEach(function (n) { if (meshes[n]) ankle.attach(meshes[n]); });
-
-          return { hip: hip, ankle: ankle };
+          const hip = joint(group, thighNames, hipY, 0);
+          const knee = joint(hip, shinNames, kneeY, hipY);
+          const ankle = joint(knee, footNames, ankleY, kneeY);
+          return { hip: hip, knee: knee, ankle: ankle };
         }
 
-        const left = limb(THIGH_L, FOOT_L);
-        const right = limb(THIGH_R, FOOT_R);
+        const left = limb(THIGH_L, SHIN_L, FOOT_L);
+        const right = limb(THIGH_R, SHIN_R, FOOT_R);
 
         group.rotation.y = TURN;   /* set last: limb() measures in an untransformed group */
-        return {
-          group: group, body: body,
-          leftLeg: left.hip, leftFoot: left.ankle,
-          rightLeg: right.hip, rightFoot: right.ankle
-        };
+        return { group: group, body: body, left: left, right: right };
       }
 
       const clock = new THREE.Clock();
@@ -137,32 +142,35 @@
       function renderScene() {
         const delta = clock.getDelta();
 
-        if (mascotObj) {
-          if (isScrolling) {
-            animTime += delta * 9;
-            const angle = Math.sin(animTime);
+        /* Nothing happens between scrolls: the pose is left exactly where the
+           last frame put it, mid-stride. Springing back to attention read as
+           a twitch every time the page stopped moving. */
+        if (mascotObj && isScrolling) {
+          animTime += delta * 9;
+          const angle = Math.sin(animTime);
+          const swing = Math.cos(animTime);
 
-            // Leg swing, with the shoe lagging behind so it lands flatter
-            mascotObj.leftLeg.rotation.x = angle * STRIDE;
-            mascotObj.rightLeg.rotation.x = -angle * STRIDE;
-            mascotObj.leftFoot.rotation.x = -angle * STRIDE * FOOT_LAG;
-            mascotObj.rightFoot.rotation.x = angle * STRIDE * FOOT_LAG;
+          /* Hips swing opposite each other. A knee only folds while its leg
+             is swinging through — a leg carrying weight stays straight —
+             and that contrast is what makes the walk read as a walk. Peak
+             fold lands mid-swing, where cos runs against the hip. */
+          const hipL = angle * STRIDE, hipR = -angle * STRIDE;
+          const kneeL = Math.max(0, -swing) * KNEE, kneeR = Math.max(0, swing) * KNEE;
 
-            // Body bobbing up and down. The .glb has the arms welded into
-            // the body mesh, so a shoulder sway stands in for an arm swing.
-            mascotObj.body.position.y = Math.abs(Math.sin(animTime * 2)) * 0.06;
-            mascotObj.body.rotation.z = Math.sin(animTime) * 0.04;
-            mascotObj.body.rotation.y = Math.sin(animTime) * 0.05;
-          } else {
-            // Smooth return to idle pose
-            mascotObj.leftLeg.rotation.x *= 0.82;
-            mascotObj.rightLeg.rotation.x *= 0.82;
-            mascotObj.leftFoot.rotation.x *= 0.82;
-            mascotObj.rightFoot.rotation.x *= 0.82;
-            mascotObj.body.position.y *= 0.82;
-            mascotObj.body.rotation.z *= 0.82;
-            mascotObj.body.rotation.y *= 0.82;
-          }
+          mascotObj.left.hip.rotation.x = hipL;
+          mascotObj.right.hip.rotation.x = hipR;
+          mascotObj.left.knee.rotation.x = kneeL;
+          mascotObj.right.knee.rotation.x = kneeR;
+
+          // the shoe lags the whole leg, so it lands flatter than the shin
+          mascotObj.left.ankle.rotation.x = -(hipL + kneeL) * FOOT_LAG;
+          mascotObj.right.ankle.rotation.x = -(hipR + kneeR) * FOOT_LAG;
+
+          // Body bobbing up and down. The .glb has the arms welded into
+          // the body mesh, so a shoulder sway stands in for an arm swing.
+          mascotObj.body.position.y = Math.abs(Math.sin(animTime * 2)) * 0.06;
+          mascotObj.body.rotation.z = angle * 0.04;
+          mascotObj.body.rotation.y = angle * 0.05;
         }
 
         renderer.render(scene, camera);
@@ -175,9 +183,8 @@
         }
         renderScene();
 
-        // เรนเดอร์เฉพาะตอนกำลัง scroll หรือตอนกำลังคืนท่ากลับสู่อะเดิล
-        const isNeedIdleReturn = mascotObj && Math.abs(mascotObj.leftLeg.rotation.x) > 0.005;
-        if (isScrolling || isNeedIdleReturn) {
+        // เรนเดอร์เฉพาะตอนกำลัง scroll — หยุดเลื่อนแล้วค้างท่าไว้อย่างนั้น
+        if (isScrolling) {
           requestAnimationFrame(animateLoop);
         } else {
           animRendering = false;
