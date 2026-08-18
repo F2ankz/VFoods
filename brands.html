@@ -251,10 +251,12 @@ body { transition:background-color .6s ease; }
   font-size:.62rem; font-weight:800; box-shadow:0 4px 12px rgba(229,26,29,.4);
 }
 .prod-body { padding:14px 16px 16px; display:flex; flex-direction:column; flex:1; }
-.prod-name { font-size:.92rem; font-weight:800; color:#2B1B16; line-height:1.5; letter-spacing:-.01em; min-height:2.5em; }
+.prod-name { font-size:.92rem; font-weight:800; color:#2B1B16; line-height:1.5; letter-spacing:-.01em;
+  height:4.5em; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
 .prod-en { font-size:.64rem; color:rgba(43,27,22,.45); font-weight:400; margin-top:3px; line-height:1.45;
-  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-.prod-dims { margin-top:12px; border-top:1px dashed rgba(142,27,24,.16); padding-top:11px; display:flex; flex-direction:column; gap:7px; }
+  height:2.9em; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.prod-dims { margin-top:auto; padding-top:11px; border-top:1px dashed rgba(142,27,24,.16);
+  display:flex; flex-direction:column; justify-content:flex-start; gap:7px; min-height:91px; box-sizing:content-box; }
 .dim { display:flex; align-items:center; gap:8px; }
 .dim-ic { flex:none; width:22px; height:22px; border-radius:7px; display:flex; align-items:center; justify-content:center;
   background:rgba(229,26,29,.09); color:#C4160C; }
@@ -265,10 +267,14 @@ body { transition:background-color .6s ease; }
 @media(max-width:560px){
   .cat-grid { grid-template-columns:repeat(2,1fr); gap:11px; }
   .prod-body { padding:11px 12px 13px; }
-  .prod-name { font-size:.8rem; min-height:0; }
+  .prod-name { font-size:.8rem; height:4.5em; }
   .prod-en { display:none; }
-  .dim-l { width:48px; font-size:.6rem; }
-  .dim-v { font-size:.68rem; }
+  /* stack label over value so long dimension strings stay on one line and every row is equal */
+  .prod-dims { gap:6px; min-height:105px; }
+  .dim { flex-direction:column; align-items:flex-start; gap:1px; min-height:31px; }
+  .dim-ic { display:none; }
+  .dim-l { width:auto; font-size:.58rem; line-height:1.25; }
+  .dim-v { font-size:.68rem; line-height:1.3; }
 }
 
 /* brand-card product-count chip */
@@ -312,7 +318,7 @@ body { transition:background-color .6s ease; }
 .chip-n { font-size:.68rem; font-weight:800; padding:2px 8px; border-radius:999px; background:rgba(142,27,24,.1); color:#8E1B18; }
 .brand-chip.active .chip-n { background:rgba(255,255,255,.25); color:#fff; }
 /* products without dimension data (image-only brands) */
-.prod-dims.prod-nd { justify-content:center; align-items:center; min-height:0; }
+.prod-dims.prod-nd { justify-content:center; align-items:center; }
 .nd-note { font-size:.7rem; color:rgba(43,27,22,.5); font-weight:600; text-align:center; padding:3px 0; }
 </style>
 <link rel="stylesheet" href="mobile-view.css?v=1">
@@ -601,8 +607,8 @@ initTilt('.brand-card, .pk-card');
                onerror="this.style.opacity=.15;this.onerror=null">
         </div>
         <div class="prod-body">
-          <h3 class="prod-name">${p.n}</h3>
-          ${p.en?`<div class="prod-en">${p.en}</div>`:''}
+          <h3 class="prod-name" title="${p.n.replace(/"/g,'&quot;')}">${p.n}</h3>
+          <div class="prod-en">${p.en||''}</div>
           ${dimBlock}
         </div>
       </article>`;
