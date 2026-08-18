@@ -134,36 +134,35 @@
       const clock = new THREE.Clock();
       let animTime = 0;
 
-      /* It keeps walking the whole time it is on screen. Tying the cycle to
-         isScrolling meant anyone who simply stopped scrolling was left
-         looking at a cookie standing to attention — scrolling now sets the
-         pace instead of switching the walk on and off. */
-      const PACE_IDLE = 3.4, PACE_SCROLL = 9;
-      let pace = PACE_IDLE;
-
       function renderScene() {
         const delta = clock.getDelta();
 
         if (mascotObj) {
-          /* ease between the two speeds so the change of pace is not a jolt */
-          const want = isScrolling ? PACE_SCROLL : PACE_IDLE;
-          pace += (want - pace) * Math.min(1, delta * 6);
+          if (isScrolling) {
+            animTime += delta * 9;
+            const angle = Math.sin(animTime);
 
-          animTime += delta * pace;
-          const angle = Math.sin(animTime);
-          const swing = STRIDE * (0.62 + 0.38 * (pace - PACE_IDLE) / (PACE_SCROLL - PACE_IDLE));
+            // Leg swing, with the shoe lagging behind so it lands flatter
+            mascotObj.leftLeg.rotation.x = angle * STRIDE;
+            mascotObj.rightLeg.rotation.x = -angle * STRIDE;
+            mascotObj.leftFoot.rotation.x = -angle * STRIDE * FOOT_LAG;
+            mascotObj.rightFoot.rotation.x = angle * STRIDE * FOOT_LAG;
 
-          // Leg swing, with the shoe lagging behind so it lands flatter
-          mascotObj.leftLeg.rotation.x = angle * swing;
-          mascotObj.rightLeg.rotation.x = -angle * swing;
-          mascotObj.leftFoot.rotation.x = -angle * swing * FOOT_LAG;
-          mascotObj.rightFoot.rotation.x = angle * swing * FOOT_LAG;
-
-          // Body bobbing up and down. The .glb has the arms welded into
-          // the body mesh, so a shoulder sway stands in for an arm swing.
-          mascotObj.body.position.y = Math.abs(Math.sin(animTime * 2)) * 0.06;
-          mascotObj.body.rotation.z = Math.sin(animTime) * 0.04;
-          mascotObj.body.rotation.y = Math.sin(animTime) * 0.05;
+            // Body bobbing up and down. The .glb has the arms welded into
+            // the body mesh, so a shoulder sway stands in for an arm swing.
+            mascotObj.body.position.y = Math.abs(Math.sin(animTime * 2)) * 0.06;
+            mascotObj.body.rotation.z = Math.sin(animTime) * 0.04;
+            mascotObj.body.rotation.y = Math.sin(animTime) * 0.05;
+          } else {
+            // Smooth return to idle pose
+            mascotObj.leftLeg.rotation.x *= 0.82;
+            mascotObj.rightLeg.rotation.x *= 0.82;
+            mascotObj.leftFoot.rotation.x *= 0.82;
+            mascotObj.rightFoot.rotation.x *= 0.82;
+            mascotObj.body.position.y *= 0.82;
+            mascotObj.body.rotation.z *= 0.82;
+            mascotObj.body.rotation.y *= 0.82;
+          }
         }
 
         renderer.render(scene, camera);
@@ -176,9 +175,13 @@
         }
         renderScene();
 
-        /* the IntersectionObserver above is what stops this: nothing renders
-           once the journey scrolls out of view */
-        requestAnimationFrame(animateLoop);
+        // เรนเดอร์เฉพาะตอนกำลัง scroll หรือตอนกำลังคืนท่ากลับสู่อะเดิล
+        const isNeedIdleReturn = mascotObj && Math.abs(mascotObj.leftLeg.rotation.x) > 0.005;
+        if (isScrolling || isNeedIdleReturn) {
+          requestAnimationFrame(animateLoop);
+        } else {
+          animRendering = false;
+        }
       }
 
       triggerRender = function () {
