@@ -31,3 +31,6 @@ Desktop.ini
 *.fbx
 Cookie 3D wlk/
 *.pdf
+
+# …except the web-ready models the site actually serves
+!models/*.glb
