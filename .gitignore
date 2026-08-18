@@ -23,3 +23,11 @@ brand-assets/
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# ── 3D / Blender working files (huge; not served by the site) ──
+*.blend
+*.blend1
+*.glb
+*.fbx
+Cookie 3D wlk/
+*.pdf
