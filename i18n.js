@@ -309,6 +309,9 @@
     'มินิคุกกี้กาแล็คซี': 'Mini Galaxy Cookies',
     'คุกกี้กาแล็กซี่': 'Galaxy Cookies',
     'คุกกี้ดอกไม้สตรอว์เบอร์รี': 'Strawberry Flower Cookies',
+    'คุกกี้หมีน้อย': 'Teddy Bear Cookies',
+    'บิสกิตทรงหมี ทั้งรสนมและช็อกโกแลต ถูกใจเด็ก ๆ':
+      'Bear-shaped biscuits in milk and chocolate — a favourite with kids',
     'เฟรนช์ฟรายส์ BBQ': 'French Fries BBQ',
     'เฟรนช์ฟรายส์กุ้งสไปซี่': 'French Fries, Spicy Shrimp',
     'เฟรนช์ฟรายส์มะเขือเทศ': 'French Fries, Tomato',
@@ -431,15 +434,19 @@
     'หลากรูปแบบให้เลือก ออกแบบลายบรรจุภัณฑ์ได้เอง เพื่อให้แบรนด์ของคุณโดดเด่นบนชั้นวาง':
       'Plenty of formats, with artwork you design yourself, so your brand stands out on the shelf',
     'กล่องลังกระดาษ': 'Corrugated Carton',
+    'ลังลูกฟูกกระดาษคราฟท์ VFOODS': 'VFOODS kraft corrugated carton',
+    'ซองฟอยล์ตั้งได้ Doy-pack': 'Stand-up doy-pack foil pouch',
+    'ปี๊บโลหะฝาหน้าต่าง VFOODS': 'VFOODS metal tin with window lid',
+    'กระปุกใส PET VFOODS': 'VFOODS clear PET jar',
     'ลังลูกฟูกกระดาษคราฟท์ แข็งแรง สำหรับบรรจุ-ขนส่งจำนวนมาก พิมพ์โลโก้แบรนด์ได้':
       'Sturdy kraft corrugated cartons for bulk packing and shipping, printable with your brand logo',
     'ลูกฟูกแข็งแรง': 'Strong corrugation',
     'ขนส่งได้': 'Ship-ready',
     'พิมพ์โลโก้': 'Logo printing',
-    'ซองซิปล็อก Stand-up': 'Stand-up Zip-lock Pouch',
-    'ซองฟอยล์ตั้งได้ Doy-pack มีซิปล็อกเปิด-ปิด กันความชื้น พิมพ์ฟิล์มสีจริง':
-      'A stand-up doy-pack foil pouch with a re-sealable zip lock, moisture resistant, printed in full colour',
-    'ซิปล็อก': 'Zip lock',
+    'ซองตั้งได้ Stand-up': 'Stand-up Pouch',
+    'ซองฟอยล์ตั้งได้ Doy-pack ซีลแน่นกันความชื้น มีหูแขวน พิมพ์ฟิล์มสีจริง':
+      'A stand-up doy-pack foil pouch — tightly sealed against moisture, euro-slot hanger, printed in full colour',
+    'หูแขวน': 'Euro-slot hanger',
     'กันความชื้น': 'Moisture resistant',
     'ตั้งได้': 'Stands upright',
     'ปี๊บ (กระป๋องโลหะ)': 'Tin (Metal Can)',
