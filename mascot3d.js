@@ -64,9 +64,12 @@
       /* The mascot is a Blender model (models/cookie_walk.glb). Its parts
          came out of Blender as separate meshes, so the walk cycle drives
          them by name — there is no armature in the file. */
-      const LEFT_LEG  = ['Cube003', 'Cube012', 'Cube012_1'];   /* thigh + foot */
-      const RIGHT_LEG = ['Cube', 'Cube011', 'Cube011_1'];
-      const HIP_Y = -0.15;   /* where the legs meet the body once the model is fitted */
+      const THIGH_L = ['Cube003'],              FOOT_L = ['Cube012', 'Cube012_1'];
+      const THIGH_R = ['Cube'],                 FOOT_R = ['Cube011', 'Cube011_1'];
+
+      const STRIDE   = 0.72;   /* radians the hip swings at full walk */
+      const FOOT_LAG = 0.35;   /* ankle counter-rotation, so the shoe stays flatter */
+      const TURN     = 38 * Math.PI / 180;   /* three-quarter turn; a head-on mascot hides its own stride */
 
       function buildMascot(gltf) {
         const group = new THREE.Group();
@@ -83,25 +86,49 @@
         model.position.set(-mid.x * fit, -box.min.y * fit - 1.1, -mid.z * fit);
 
         const body = new THREE.Group();
-        const leftLeg = new THREE.Group();
-        const rightLeg = new THREE.Group();
-        leftLeg.position.y = HIP_Y;
-        rightLeg.position.y = HIP_Y;
         body.add(model);
-        group.add(body, leftLeg, rightLeg);
-
-        /* attach() keeps each mesh exactly where it is on screen while
-           moving it under a joint that can swing it from the hip */
+        group.add(body);
         group.updateMatrixWorld(true);
-        const meshes = [];
-        model.traverse(function (o) { if (o.isMesh) meshes.push(o); });
-        meshes.forEach(function (mesh) {
-          if (LEFT_LEG.indexOf(mesh.name) > -1) leftLeg.attach(mesh);
-          else if (RIGHT_LEG.indexOf(mesh.name) > -1) rightLeg.attach(mesh);
-        });
 
-        group.rotation.y = Math.PI / 7;   /* a slight three-quarter turn */
-        return { group: group, body: body, leftLeg: leftLeg, rightLeg: rightLeg };
+        const meshes = {};
+        model.traverse(function (o) { if (o.isMesh) meshes[o.name] = o; });
+
+        function topOf(names) {
+          const b = new THREE.Box3();
+          names.forEach(function (n) { if (meshes[n]) b.expandByObject(meshes[n]); });
+          return b.max.y;
+        }
+
+        /* Each joint sits at the TOP of the piece it swings. A point on the
+           pivot cannot travel when it rotates, so the cut end of the thigh
+           stays buried in the body and the cut end of the foot stays inside
+           the ankle, at any stride width. attach() moves a mesh under a new
+           parent without shifting it on screen. */
+        function limb(thighNames, footNames) {
+          const hip = new THREE.Group();
+          hip.position.y = topOf(thighNames);
+          group.add(hip);
+          group.updateMatrixWorld(true);
+          thighNames.forEach(function (n) { if (meshes[n]) hip.attach(meshes[n]); });
+
+          const ankle = new THREE.Group();
+          ankle.position.y = topOf(footNames) - hip.position.y;
+          hip.add(ankle);
+          hip.updateMatrixWorld(true);
+          footNames.forEach(function (n) { if (meshes[n]) ankle.attach(meshes[n]); });
+
+          return { hip: hip, ankle: ankle };
+        }
+
+        const left = limb(THIGH_L, FOOT_L);
+        const right = limb(THIGH_R, FOOT_R);
+
+        group.rotation.y = TURN;   /* set last: limb() measures in an untransformed group */
+        return {
+          group: group, body: body,
+          leftLeg: left.hip, leftFoot: left.ankle,
+          rightLeg: right.hip, rightFoot: right.ankle
+        };
       }
 
       const clock = new THREE.Clock();
@@ -115,9 +142,11 @@
             animTime += delta * 9;
             const angle = Math.sin(animTime);
 
-            // Leg swing
-            mascotObj.leftLeg.rotation.x = angle * 0.6;
-            mascotObj.rightLeg.rotation.x = -angle * 0.6;
+            // Leg swing, with the shoe lagging behind so it lands flatter
+            mascotObj.leftLeg.rotation.x = angle * STRIDE;
+            mascotObj.rightLeg.rotation.x = -angle * STRIDE;
+            mascotObj.leftFoot.rotation.x = -angle * STRIDE * FOOT_LAG;
+            mascotObj.rightFoot.rotation.x = angle * STRIDE * FOOT_LAG;
 
             // Body bobbing up and down. The .glb has the arms welded into
             // the body mesh, so a shoulder sway stands in for an arm swing.
@@ -128,6 +157,8 @@
             // Smooth return to idle pose
             mascotObj.leftLeg.rotation.x *= 0.82;
             mascotObj.rightLeg.rotation.x *= 0.82;
+            mascotObj.leftFoot.rotation.x *= 0.82;
+            mascotObj.rightFoot.rotation.x *= 0.82;
             mascotObj.body.position.y *= 0.82;
             mascotObj.body.rotation.z *= 0.82;
             mascotObj.body.rotation.y *= 0.82;
