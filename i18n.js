@@ -691,9 +691,16 @@
 
   var textMem = new WeakMap();   // text node  -> { src, out }
   var attrMem = new WeakMap();   // element    -> { 'attr': {src,out}, __txt: string }
+  var blockMem = new WeakMap();  // .lb element-> { src, key, out }
   var titleMem = null;
 
-  function norm(s) { return s.replace(/[\s ]+/g, ' ').trim(); }
+  /* Manual line-break markers are invisible layout hints, never part of the
+     string an editor typed — drop them so the dictionary still matches:
+     U+200B zero-width space (&#8203;, our soft break point), U+200C/U+200D
+     zero-width joiners, U+2060 word joiner, U+00AD soft hyphen.
+     &nbsp; needs no rule: it is \s, so it folds into a plain space below. */
+  var ZW = /[\u200b\u200c\u200d\u2060\u00ad]/g;
+  function norm(s) { return s.replace(ZW, '').replace(/[\s ]+/g, ' ').trim(); }
 
   /* Dictionary keys are written for readability, so fold them once into
      the same shape lookup() produces (collapsed whitespace, trimmed). */
@@ -761,6 +768,30 @@
     if (el.textContent !== out) el.textContent = out;
   }
 
+  /* An element carrying class="lb" has its line breaks placed by hand: the
+     markup inside it — <span class="nb">, &#8203;, <br> — is layout, not
+     language. Translate it as ONE unit so the dictionary stays keyed on the
+     plain sentence, and put the original markup back when Thai returns. */
+  function blockKey(html) {
+    var box = d.createElement('div');
+    box.innerHTML = html.replace(/<br\s*\/?>/gi, ' ');
+    return box.textContent;
+  }
+
+  function applyBlock(el) {
+    var cur = el.innerHTML;
+    var rec = blockMem.get(el);
+    // a page script re-rendered this element -> the new markup is the source
+    if (!rec || rec.out !== cur) { rec = { src: cur, key: blockKey(cur) }; blockMem.set(el, rec); }
+    var hit = lookup(rec.key, lang);
+    if (hit === null) {
+      if (cur !== rec.src) el.innerHTML = rec.src;   // back to the hand-wrapped original
+    } else if (el.textContent !== hit) {
+      el.textContent = hit;                          // the other language wraps on its own
+    }
+    rec.out = el.innerHTML;
+  }
+
   function isSkipped(el) {
     var t = el.tagName;
     return t === 'SCRIPT' || t === 'STYLE' || t === 'NOSCRIPT' ||
@@ -782,6 +813,10 @@
     if (node.tagName === 'TEXTAREA') return;
     if (node.hasAttribute('data-i18n-en') || node.hasAttribute('data-i18n-th')) {
       applyOverride(node);   // replaces the children — do not descend
+      return;
+    }
+    if (node.classList && node.classList.contains('lb')) {
+      applyBlock(node);      // hand-wrapped block — translated whole, do not descend
       return;
     }
     for (var ch = node.firstChild; ch; ch = ch.nextSibling) walk(ch);
@@ -830,8 +865,9 @@
       var n = list[i];
       if (!n.isConnected) continue;
       var p = n.parentElement;
-      // skip our own override rewrites
+      // skip our own rewrites: data-i18n overrides and .lb hand-wrapped blocks
       if (p && (p.hasAttribute('data-i18n-en') || p.hasAttribute('data-i18n-th'))) continue;
+      if (p && p.closest && p.closest('.lb')) continue;
       walk(n);
     }
     syncButtons();
