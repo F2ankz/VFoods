@@ -228,7 +228,11 @@ body { transition:background-color .6s ease; }
 @keyframes cardIn { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
 .prod-card:hover { transform:translateY(-8px); box-shadow:0 26px 60px rgba(120,20,10,.20); border-color:rgba(229,26,29,.28); }
 .prod-stage {
-  position:relative; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;
+  /* flex:none + min-height:0 keep the 1:1 box honest — without them the image's
+     intrinsic height wins over aspect-ratio and every stage ends up a different
+     height, which is only visible once the lazy images have actually loaded. */
+  position:relative; aspect-ratio:1/1; flex:none; min-height:0; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
   padding:20px; background:radial-gradient(circle at 50% 42%, #fff 0%, #fbf3ee 78%);
 }
 .prod-stage::after {
@@ -236,7 +240,10 @@ body { transition:background-color .6s ease; }
   background:radial-gradient(ellipse, rgba(120,20,10,.16), transparent 70%); filter:blur(3px);
 }
 .prod-stage img {
-  position:relative; z-index:1; max-width:88%; max-height:88%; object-fit:contain;
+  /* fills the stage's padding box, so the frame is identical on every card and
+     object-fit keeps each pack centred at its own proportions */
+  position:relative; z-index:1; width:100%; height:100%;
+  object-fit:contain; object-position:center;
   filter:drop-shadow(0 12px 18px rgba(0,0,0,.18)); transition:transform .55s cubic-bezier(.23,1,.32,1);
 }
 .prod-card:hover .prod-stage img { transform:scale(1.07) translateY(-3px); }
