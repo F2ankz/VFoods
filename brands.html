@@ -219,6 +219,7 @@ body { transition:background-color .6s ease; }
 /* grid */
 .cat-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(232px,1fr)); gap:20px; }
 .prod-card {
+  container-type:inline-size;   /* the size rows below key off the card, not the viewport */
   background:linear-gradient(180deg,#ffffff,#fffaf7); border:1px solid rgba(142,27,24,.1);
   border-radius:18px; overflow:hidden; display:flex; flex-direction:column;
   box-shadow:0 10px 30px rgba(120,20,10,.08);
@@ -276,12 +277,27 @@ body { transition:background-color .6s ease; }
   .prod-body { padding:11px 12px 13px; }
   .prod-name { font-size:.8rem; height:4.5em; }
   .prod-en { display:none; }
-  /* stack label over value so long dimension strings stay on one line and every row is equal */
+}
+
+/* The widest carton string needs 239px of card to sit on one line, and the grid
+   hands out cards from 232px up — so below that, stack the label over the value.
+   Left inline, a string that wraps makes its row 8px taller and drags the whole
+   size band out of step with the card beside it. */
+@container (max-width:248px) {
   .prod-dims { gap:6px; min-height:105px; }
   .dim { flex-direction:column; align-items:flex-start; gap:1px; min-height:31px; }
   .dim-ic { display:none; }
   .dim-l { width:auto; font-size:.58rem; line-height:1.25; }
   .dim-v { font-size:.68rem; line-height:1.3; }
+}
+
+/* 320px phones put the card down at ~127px, where even a stacked carton string
+   wraps and takes its row 10px out of line with the others. Buy the width back
+   from the side padding and the face. */
+@container (max-width:170px) {
+  .prod-body { padding-left:9px; padding-right:9px; }
+  .dim-l { font-size:.55rem; }
+  .dim-v { font-size:.62rem; }
 }
 
 /* brand-card product-count chip */
