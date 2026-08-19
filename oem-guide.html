@@ -682,15 +682,22 @@ img.fv-obj{width:92px;height:92px;object-fit:contain;animation:oemFloat 4.6s eas
   animation:pulsate 2s ease-out infinite;}
 @keyframes pulsate{0%{transform:scale(1);opacity:.7;}100%{transform:scale(1.55);opacity:0;}}
 
-/* flavour coins around the disc */
-.jp-coin{position:absolute;border-radius:50%;overflow:hidden;background:#0b0b0d;border:5px solid #fff;
+/* satellite coins around the disc */
+.jp-coin{position:absolute;border-radius:50%;overflow:hidden;background:#fff;border:5px solid #fff;
   box-shadow:0 14px 28px rgba(0,0,0,.32);animation:bob 4s ease-in-out infinite;z-index:3;}
-.jp-coin img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);}
-/* เหรียญวัตถุดิบ = ของประดับรอบจาน (รูปคุกกี้กลางจานเป็นพระเอก ขนาดเท่าขั้นอื่น) */
-.jp-coin.k1{width:27%;height:27%;left:-7%;top:12%;animation-delay:-1.8s;}
-.jp-coin.k2{width:25%;height:25%;right:-8%;top:8%;animation-delay:-1.3s;}
-.jp-coin.k3{width:23%;height:23%;left:2%;bottom:-4%;animation-delay:-2.2s;}
-.jp-coin.k4{width:22%;height:22%;right:0%;bottom:-6%;animation-delay:-.7s;}
+/* every photo in these folders is a cut-out on transparency, so the coins let
+   the whole object sit on a plate instead of cropping it to fill the circle */
+/* tall pack shots lose most of the circle to empty margin at 76% — contain
+   fits the longest side, so the padding has to stay tight */
+.jp-coin img{width:88%;height:88%;margin:6%;object-fit:contain;
+  filter:drop-shadow(0 5px 7px rgba(0,0,0,.24));}
+/* เหรียญรอบจาน — ห้าใบเรียงเป็นวง เว้นมุมขวาบนไว้ให้ badge
+   วางด้วย left/top ล้วน จะได้คุมระยะห่างรอบวงได้เท่ากันจริง */
+.jp-coin.k1{width:29%;height:29%;left:-10%;top:9%;animation-delay:-1.8s;}
+.jp-coin.k2{width:26%;height:26%;left:-12%;top:54%;animation-delay:-1.3s;}
+.jp-coin.k3{width:24%;height:24%;left:21%;top:89%;animation-delay:-2.2s;}
+.jp-coin.k4{width:27%;height:27%;left:63%;top:84%;animation-delay:-.7s;}
+.jp-coin.k5{width:25%;height:25%;left:88%;top:50%;animation-delay:-2.7s;}
 
 /* finish panel extras */
 .jp-fin-list{list-style:none;display:grid;gap:11px;margin:0 0 26px;}
@@ -772,7 +779,7 @@ img.fv-obj{width:92px;height:92px;object-fit:contain;animation:oemFloat 4.6s eas
   .jp-step,.jp-tags,.jp-btns,.jp-fin-list li{justify-content:center;}
   .jp-fin-list li{justify-content:flex-start;text-align:left;}
   .jp-visual{height:auto;}
-  .jp-disc{width:min(74vw,340px);}
+  .jp-disc{width:min(66vw,320px);}
   .jp-wm{font-size:30vh;top:auto;bottom:2%;}
   .journey-ground,.journey-dots,.scroll-hint,.jm{display:none;}
 }
@@ -888,7 +895,12 @@ img.fv-obj{width:92px;height:92px;object-fit:contain;animation:oemFloat 4.6s eas
           </div>
           <div class="jp-visual">
             <div class="jp-disc">
-              <img class="jp-prod" src="img/products/c3-flowerchoc.webp" alt="ตัวคุกกี้ VFoods" loading="lazy">
+              <img class="jp-prod" src="img/products/c3-flowerchoc.webp" alt="คุกกี้ดอกไม้สอดไส้ช็อกโกแลต VFoods" loading="lazy">
+              <div class="jp-coin k1"><img src="img/products/c3-teddy.webp" alt="" aria-hidden="true" loading="lazy"></div>
+              <div class="jp-coin k2"><img src="img/products/c5-rainbow.webp" alt="" aria-hidden="true" loading="lazy"></div>
+              <div class="jp-coin k3"><img src="img/products/c2-shark.webp" alt="" aria-hidden="true" loading="lazy"></div>
+              <div class="jp-coin k4"><img src="img/products/c8-diceblue.webp" alt="" aria-hidden="true" loading="lazy"></div>
+              <div class="jp-coin k5"><img src="img/products/c6-daisychoc.webp" alt="" aria-hidden="true" loading="lazy"></div>
               <div class="jp-badge">อร่อย!</div>
             </div>
           </div>
@@ -905,11 +917,12 @@ img.fv-obj{width:92px;height:92px;object-fit:contain;animation:oemFloat 4.6s eas
           </div>
           <div class="jp-visual">
             <div class="jp-disc">
-              <img class="jp-prod" src="img/products/c3-flowerstraw.webp" alt="คุกกี้รสสตรอเบอรี่ VFoods" loading="lazy">
-              <div class="jp-coin k1"><img src="img/flavor/Ripe_strawberries.png" alt="สตรอเบอรี่" loading="lazy"></div>
-              <div class="jp-coin k2"><img src="img/flavor/mangoes.png" alt="มะม่วง" loading="lazy"></div>
-              <div class="jp-coin k3"><img src="img/flavor/Dark_chocolate.png" alt="ช็อกโกแลต" loading="lazy"></div>
-              <div class="jp-coin k4"><img src="img/flavor/Coconuts.png" alt="มะพร้าว" loading="lazy"></div>
+              <img class="jp-prod" src="img/flavor/Ripe_strawberries.png" alt="สตรอเบอรี่สด วัตถุดิบแต่งรส VFoods" loading="lazy">
+              <div class="jp-coin k1"><img src="img/flavor/Dark_chocolate.png" alt="" aria-hidden="true" loading="lazy"></div>
+              <div class="jp-coin k2"><img src="img/flavor/mangoes.png" alt="" aria-hidden="true" loading="lazy"></div>
+              <div class="jp-coin k3"><img src="img/flavor/Coconuts.png" alt="" aria-hidden="true" loading="lazy"></div>
+              <div class="jp-coin k4"><img src="img/flavor/Fresh_milk.png" alt="" aria-hidden="true" loading="lazy"></div>
+              <div class="jp-coin k5"><img src="img/flavor/Durian.png" alt="" aria-hidden="true" loading="lazy"></div>
               <div class="jp-badge">7 รส+</div>
             </div>
           </div>
@@ -921,13 +934,18 @@ img.fv-obj{width:92px;height:92px;object-fit:contain;animation:oemFloat 4.6s eas
           <div class="jp-txt">
             <span class="jp-step">Step 03 · Package</span>
             <h2 class="jp-h">แพ็กเป็น<br><span class="pop">แบรนด์คุณ</span></h2>
-            <p class="jp-p">กล่องพรีเมียม · กระป๋อง / ปี๊บ · พัสดุ · ซองซิปล็อก ออกแบบลายเอง พิมพ์สีจริง เด่นบนชั้นวาง</p>
-            <div class="jp-tags"><span class="jp-tag">กล่อง</span><span class="jp-tag">ปี๊บ</span><span class="jp-tag">พัสดุ</span><span class="jp-tag">ซอง</span></div>
+            <p class="jp-p">ปี๊บโลหะ · กระปุก · ซองตั้งได้ · กล่องพิมพ์ลาย · ลังขนส่ง ออกแบบลายเอง พิมพ์สีจริง เด่นบนชั้นวาง</p>
+            <div class="jp-tags"><span class="jp-tag">ปี๊บ</span><span class="jp-tag">กระปุก</span><span class="jp-tag">ซอง</span><span class="jp-tag">กล่อง</span><span class="jp-tag">ลัง</span></div>
           </div>
           <div class="jp-visual">
             <div class="jp-disc">
               <div class="jp-badge">คัสตอม</div>
-              <img class="jp-prod" src="img/brand-packs/celebrate-red.webp" alt="กล่องบิสกิต Celebrate — แพ็กเกจแบรนด์ลูกค้า" loading="lazy">
+              <img class="jp-prod" src="img/packaging/tin-print.webp" alt="ปี๊บโลหะพิมพ์ลายเต็มใบ VFOODS" loading="lazy">
+              <div class="jp-coin k1"><img src="img/packaging/pouch.webp" alt="" aria-hidden="true" loading="lazy"></div>
+              <div class="jp-coin k2"><img src="img/packaging/jar.webp" alt="" aria-hidden="true" loading="lazy"></div>
+              <div class="jp-coin k3"><img src="img/packaging/box.webp" alt="" aria-hidden="true" loading="lazy"></div>
+              <div class="jp-coin k4"><img src="img/packaging/tin.webp" alt="" aria-hidden="true" loading="lazy"></div>
+              <div class="jp-coin k5"><img src="img/packaging/carton.webp" alt="" aria-hidden="true" loading="lazy"></div>
             </div>
           </div>
         </article>
@@ -952,6 +970,11 @@ img.fv-obj{width:92px;height:92px;object-fit:contain;animation:oemFloat 4.6s eas
             <div class="jp-disc">
               <div class="jp-badge">GO!</div>
               <img class="jp-prod" src="img/brand-packs/assorted-red.webp" alt="กล่องขนมรวม Assorted Party — สินค้าพร้อมวางขาย" loading="lazy">
+              <div class="jp-coin k1"><img src="img/brand-packs/celebrate-blue.webp" alt="" aria-hidden="true" loading="lazy"></div>
+              <div class="jp-coin k2"><img src="img/brand-packs/benjy-starpurple.webp" alt="" aria-hidden="true" loading="lazy"></div>
+              <div class="jp-coin k3"><img src="img/brand-packs/rw-strawberry.webp" alt="" aria-hidden="true" loading="lazy"></div>
+              <div class="jp-coin k4"><img src="img/brand-packs/dt-coffee.webp" alt="" aria-hidden="true" loading="lazy"></div>
+              <div class="jp-coin k5"><img src="img/brand-packs/cornmilk.webp" alt="" aria-hidden="true" loading="lazy"></div>
             </div>
           </div>
         </article>

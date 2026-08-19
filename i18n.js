@@ -434,9 +434,15 @@
     'หลากรูปแบบให้เลือก ออกแบบลายบรรจุภัณฑ์ได้เอง เพื่อให้แบรนด์ของคุณโดดเด่นบนชั้นวาง':
       'Plenty of formats, with artwork you design yourself, so your brand stands out on the shelf',
     'กล่องลังกระดาษ': 'Corrugated Carton',
+    'คุกกี้ดอกไม้สอดไส้ช็อกโกแลต VFoods': 'VFoods flower cookies with chocolate filling',
+    'สตรอเบอรี่สด วัตถุดิบแต่งรส VFoods': 'Fresh strawberries, a VFoods flavouring ingredient',
+    'ปี๊บโลหะ · กระปุก · ซองตั้งได้ · กล่องพิมพ์ลาย · ลังขนส่ง ออกแบบลายเอง พิมพ์สีจริง เด่นบนชั้นวาง':
+      'Metal tin, jar, stand-up pouch, printed carton, shipping case — design your own artwork, printed in full colour, standing out on the shelf',
+    'ลัง': 'Shipping case',
     'ลังลูกฟูกกระดาษคราฟท์ VFOODS': 'VFOODS kraft corrugated carton',
     'ซองฟอยล์ตั้งได้ Doy-pack': 'Stand-up doy-pack foil pouch',
     'ปี๊บโลหะฝาหน้าต่าง VFOODS': 'VFOODS metal tin with window lid',
+    'ปี๊บโลหะพิมพ์ลายเต็มใบ VFOODS': 'VFOODS metal tin printed edge to edge',
     'กระปุกใส PET VFOODS': 'VFOODS clear PET jar',
     'ลังลูกฟูกกระดาษคราฟท์ แข็งแรง สำหรับบรรจุ-ขนส่งจำนวนมาก พิมพ์โลโก้แบรนด์ได้':
       'Sturdy kraft corrugated cartons for bulk packing and shipping, printable with your brand logo',
