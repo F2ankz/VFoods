@@ -1,0 +1,14 @@
+VFOODS — Social Media Links
+============================
+
+Facebook   : https://www.facebook.com/VarietyFoods
+Instagram  : https://www.instagram.com/vfoods_official/
+YouTube    : https://www.youtube.com/channel/UC-5HbsQsaBov9dHHvGUVoag
+X (Twitter): https://x.com/vfoods
+Shopee     : https://shopee.co.th/vfoods_official
+
+Other channels already on site (unchanged):
+TikTok     : https://www.tiktok.com/@vfoods_shop
+Lazada     : https://s.lazada.co.th/s.ZRjUrg?c=x
+
+Updated in: contact.html, news.html, scroll-site/index.html
