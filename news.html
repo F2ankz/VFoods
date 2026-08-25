@@ -13,118 +13,79 @@
 <link rel="stylesheet" href="i18n.css?v=1">
 <link rel="stylesheet" href="cursor.css?v=1">
 <style>
-/* ── NEWS HERO ── */
-.news-hero {
-  padding:clamp(104px,10vw,124px) 24px clamp(48px,6vw,72px);
-  background:linear-gradient(135deg,#A8480C 0%,#8F3806 50%,#7E2205 100%);
-  position:relative; overflow:hidden; text-align:center;
-}
-.news-hero::before {
-  content:''; position:absolute; inset:0; pointer-events:none;
-  background-image:radial-gradient(circle,rgba(255,255,255,.10) 1px,transparent 1px);
-  background-size:26px 26px;
-  mask-image:radial-gradient(ellipse 90% 80% at 50% 50%,#000 20%,transparent 74%);
-}
-.news-hero-pill {
-  display:inline-flex; align-items:center; gap:8px;
-  padding:6px 16px; border-radius:50px;
-  background:rgba(0,0,0,.30); border:1px solid rgba(255,255,255,.32);
-  font-size:.72rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase;
-  margin-bottom:20px; position:relative; z-index:1;
-  font-family:'Sarabun',sans-serif; color:#8E1B18;
-}
-.news-hero-pill-dot { width:6px; height:6px; border-radius:50%; background:#FFD35C; animation:pdot 1.6s ease infinite; flex-shrink:0; }
-.news-hero h1 {
-  font-family:'Sarabun',sans-serif; font-size:clamp(2rem,6vw,4.2rem);
-  font-weight:800; letter-spacing:-.04em; line-height:1.14; color:#2B1B16;
-  position:relative; z-index:1; margin:0;
-}
-.news-hero p {
-  font-size:1.02rem; font-weight:400; line-height:1.8; color:rgba(43,27,22,.72);
-  max-width:560px; margin:16px auto 0; position:relative; z-index:1;
-}
+/* ── NEWS HERO — real banner image, contained ── */
+.news-hero-wrap { padding:clamp(100px,10vw,120px) 24px 0; }
+.news-hero-inner { max-width:1200px; margin:0 auto; }
+.news-hero-inner img { width:100%; height:auto; display:block; }
 
 /* ── NEWS MAIN ── */
-.news-main { padding:clamp(56px,7vw,88px) 0; }
+.news-main { padding:clamp(40px,5vw,56px) 0; }
 .news-inner { max-width:1200px; margin:0 auto; padding:0 24px; }
 
-/* Company news — populated at runtime from news-data.js */
-.news-grid-wrap { }
-.news-h-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:22px; }
-.news-h-card {
-  display:flex; flex-direction:column; background:#fff;
-  border:1px solid rgba(255,109,26,.14); border-radius:var(--r2); overflow:hidden;
-  text-decoration:none; color:inherit; box-shadow:0 2px 14px rgba(255,109,26,.07);
-  opacity:0; transform:translateY(24px);
-  transition:opacity .6s ease, transform .6s cubic-bezier(.23,1,.32,1), box-shadow .4s, border-color .4s;
-}
-.news-grid-wrap.visible .news-h-card { opacity:1; transform:translateY(0); }
-.news-h-grid .news-h-card:nth-child(1) { transition-delay:.02s; }
-.news-h-grid .news-h-card:nth-child(2) { transition-delay:.08s; }
-.news-h-grid .news-h-card:nth-child(3) { transition-delay:.14s; }
-.news-h-grid .news-h-card:nth-child(4) { transition-delay:.2s; }
-.news-h-grid .news-h-card:nth-child(5) { transition-delay:.26s; }
-.news-h-grid .news-h-card:nth-child(6) { transition-delay:.32s; }
-.news-h-card:hover { transform:translateY(-8px) rotate(-.6deg); box-shadow:0 20px 44px rgba(255,109,26,.18); border-color:rgba(255,109,26,.34); }
-.news-h-thumb { width:100%; aspect-ratio:4/3; object-fit:cover; }
-.news-h-thumb-ph {
-  width:100%; aspect-ratio:4/3; display:flex; align-items:center; justify-content:center;
-  text-align:center; padding:0 20px;
-  background:radial-gradient(circle at 28% 22%,rgba(255,157,58,.4),transparent 62%),
-             linear-gradient(135deg,#FFE3C2,#FFD1A6);
-  font-family:'Sarabun',sans-serif; font-size:.72rem; font-weight:800; letter-spacing:.1em;
-  text-transform:uppercase; color:#B8480A;
-}
-.news-h-body { padding:20px 22px 22px; flex:1; display:flex; flex-direction:column; gap:9px; min-width:0; }
-.news-h-tag {
-  align-self:flex-start; padding:4px 12px; border-radius:999px;
-  background:rgba(214,89,12,.09); color:#D6590C;
-  font-size:.66rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
-}
-.news-h-title { font-family:'Sarabun',sans-serif; font-size:1rem; font-weight:700; color:#2B1B16; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-.news-h-date { font-size:.74rem; color:rgba(43,27,22,.45); margin-top:auto; padding-top:10px; border-top:1px solid rgba(255,109,26,.1); }
-
-/* ── LIVE ON FACEBOOK (secondary panel) ── */
-.fb-live-wrap { max-width:560px; margin:clamp(48px,6vw,72px) auto 0; }
-.fb-live-panel {
+/* Facebook (left) + company news list (right), same height */
+.feed-row { display:grid; grid-template-columns:1fr 1.3fr; gap:20px; align-items:stretch; }
+.fb-live-panel, .news-list-panel {
   background:#fff; border:1px solid rgba(255,109,26,.16); border-radius:var(--r2);
   overflow:hidden; box-shadow:0 10px 32px rgba(255,109,26,.08);
+  display:flex; flex-direction:column; min-height:0;
 }
-.fb-live-head { display:flex; align-items:center; gap:12px; padding:18px 20px; border-bottom:1px solid rgba(255,109,26,.12); }
-.fb-live-ico { width:38px; height:38px; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#fff; flex-shrink:0; background:linear-gradient(135deg,#1877F2,#0D5DB8); }
-.fb-live-ico svg { width:20px; height:20px; }
-.fb-live-name { font-family:'Sarabun',sans-serif; font-weight:700; font-size:.95rem; color:#2B1B16; }
-.fb-live-handle { font-size:.74rem; color:rgba(43,27,22,.5); margin-top:-1px; }
-.fb-live-body { padding:16px; display:flex; justify-content:center; background:#FBF6EF; min-height:420px; }
+.fb-live-head, .news-list-head { display:flex; align-items:center; gap:12px; padding:16px 18px; border-bottom:1px solid rgba(255,109,26,.12); }
+.fb-live-ico, .news-list-ico { width:36px; height:36px; border-radius:11px; display:flex; align-items:center; justify-content:center; color:#fff; flex-shrink:0; }
+.fb-live-ico { background:linear-gradient(135deg,#1877F2,#0D5DB8); }
+.news-list-ico { background:linear-gradient(135deg,#FF7E33,#D6590C); }
+.fb-live-ico svg, .news-list-ico svg { width:18px; height:18px; }
+.fb-live-name, .news-list-name { font-family:'Sarabun',sans-serif; font-weight:700; font-size:.92rem; color:#2B1B16; }
+.fb-live-handle, .news-list-handle { font-size:.72rem; color:rgba(43,27,22,.5); margin-top:-1px; }
+.fb-live-body { flex:1; padding:16px; display:flex; justify-content:center; background:#FBF6EF; }
 .fb-embed-wrap { width:100%; }
 .fb-embed-wrap iframe { width:100% !important; }
 
+/* Company news — populated at runtime from news-data.js, compact scrollable row list */
+.news-h-grid { flex:1; min-height:0; padding:14px; display:flex; flex-direction:column; gap:10px; overflow-y:auto; }
+.news-h-card {
+  display:flex; align-items:center; gap:14px; background:#FBF6EF;
+  border:1px solid rgba(255,109,26,.12); border-radius:14px; padding:10px;
+  text-decoration:none; color:inherit;
+  transition:background .3s, border-color .3s, transform .3s, box-shadow .3s;
+}
+.news-h-card:hover { background:#fff; border-color:rgba(255,109,26,.32); transform:translateX(4px); box-shadow:0 6px 18px rgba(255,109,26,.12); }
+.news-h-thumb, .news-h-thumb-ph { width:60px; height:60px; border-radius:12px; flex-shrink:0; }
+.news-h-thumb { object-fit:cover; }
+.news-h-thumb-ph {
+  display:flex; align-items:center; justify-content:center; text-align:center; padding:2px;
+  background:linear-gradient(135deg,#FFE3C2,#FFD1A6);
+  font-family:'Sarabun',sans-serif; font-size:.52rem; font-weight:800; letter-spacing:.04em;
+  text-transform:uppercase; color:#B8480A;
+}
+.news-h-body { flex:1; min-width:0; display:flex; flex-direction:column; gap:3px; }
+.news-h-tag { font-size:.64rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#D6590C; }
+.news-h-title { font-family:'Sarabun',sans-serif; font-size:.86rem; font-weight:700; color:#2B1B16; line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.news-h-date { font-size:.68rem; color:rgba(43,27,22,.45); }
+
 /* ── SHOP ONLINE (Shopee / Lazada) ── */
-.shop-section { margin-top:clamp(56px,7vw,88px); }
+.shop-section { margin-top:clamp(40px,5vw,56px); }
 .shop-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
 .shop-card {
-  display:flex; align-items:center; gap:20px; padding:28px 30px; border-radius:var(--r2);
+  display:flex; flex-direction:column; gap:16px; padding:26px; border-radius:var(--r2);
   text-decoration:none; color:#fff; transition:transform .35s cubic-bezier(.23,1,.32,1), box-shadow .35s;
   box-shadow:0 12px 34px rgba(0,0,0,.14);
 }
 .shop-card:hover { transform:translateY(-6px); box-shadow:0 18px 44px rgba(0,0,0,.2); }
 .shop-sp { background:linear-gradient(135deg,#FF6D3F,#EE4D2D); }
 .shop-lz { background:linear-gradient(135deg,#1A0DAB,#F03D6E 55%,#FF8B00); }
-.shop-ico { width:56px; height:56px; border-radius:16px; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-.shop-ico svg { width:30px; height:30px; }
-.shop-name { font-family:'Sarabun',sans-serif; font-weight:800; font-size:1.15rem; margin-bottom:4px; }
-.shop-desc { font-size:.82rem; opacity:.88; line-height:1.6; }
-.shop-arrow { margin-left:auto; font-size:1.3rem; flex-shrink:0; opacity:.85; transition:transform .3s; }
+.shop-card-top { display:flex; align-items:center; gap:14px; }
+.shop-ico { width:48px; height:48px; border-radius:14px; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.shop-ico svg { width:26px; height:26px; }
+.shop-name { font-family:'Sarabun',sans-serif; font-weight:800; font-size:1.1rem; }
+.shop-photos { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+.shop-photos img { width:100%; aspect-ratio:1; object-fit:cover; border-radius:10px; background:rgba(255,255,255,.15); }
+.shop-cta { display:flex; align-items:center; gap:8px; font-family:'Sarabun',sans-serif; font-weight:700; font-size:.86rem; margin-top:auto; }
+.shop-arrow { font-size:1.2rem; flex-shrink:0; transition:transform .3s; }
 .shop-card:hover .shop-arrow { transform:translateX(6px); }
 
 /* ── SOCIAL / FOLLOW US (theme-white.css forces this section to a white/cream surface) ── */
-.social-section { padding:clamp(56px,7vw,88px) 0; background:var(--dark); position:relative; overflow:hidden; }
-.social-section::before {
-  content:''; position:absolute; top:-140px; left:50%; transform:translateX(-50%);
-  width:680px; height:420px; pointer-events:none;
-  background:radial-gradient(ellipse at center,rgba(255,157,58,.16),transparent 70%);
-}
-.social-inner { max-width:1200px; margin:0 auto; padding:0 24px; text-align:center; position:relative; z-index:1; }
+.social-section { padding:clamp(40px,5vw,56px) 0; background:var(--dark); }
+.social-inner { max-width:1200px; margin:0 auto; padding:0 24px; text-align:center; }
 
 /* ── social icons แบบเดียวกับหน้า Contact (soc-chip) ── */
 .social-row { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; margin-top:36px; }
@@ -159,10 +120,8 @@ html #g-footer .footer-bottom { border-top-color:rgba(255,255,255,.28) !importan
 html #g-footer .footer-bottom p { color:rgba(255,255,255,.85) !important; }
 
 @media(max-width:900px) {
+  .feed-row { grid-template-columns:1fr; }
   .shop-grid { grid-template-columns:1fr; }
-}
-@media(max-width:560px) {
-  .news-h-grid { grid-template-columns:1fr; }
 }
 </style>
 <link rel="stylesheet" href="mobile-view.css?v=1">
@@ -227,21 +186,16 @@ html #g-footer .footer-bottom p { color:rgba(255,255,255,.85) !important; }
   <a href="contact.html">Contact Us</a>
 </div>
 
-<div class="news-hero">
-  <span class="news-hero-pill"><span class="news-hero-pill-dot"></span>ข่าวสารวีฟู้ดส์</span>
-  <h1>ข่าวสารและกิจกรรม</h1>
-  <p>อัปเดตล่าสุดจากวาไรตี้ ฟู้ดส์ สินค้าใหม่ กิจกรรม และข่าวดีๆ</p>
+<div class="news-hero-wrap">
+  <div class="news-hero-inner">
+    <img src="img/news/banner-hero.jpeg" alt="ข่าวสารและกิจกรรม VFoods — อัปเดตขนมใหม่ๆ และโปรโมชั่นสุดคุ้มที่นี่เลย!">
+  </div>
 </div>
 
 <section class="news-main">
   <div class="news-inner">
-    <!-- Company news — populated at runtime from news-data.js -->
-    <div class="news-grid-wrap reveal">
-      <div id="news-cards" class="news-h-grid"></div>
-    </div>
-
-    <!-- Live feed: Facebook page plugin -->
-    <div class="fb-live-wrap reveal">
+    <!-- Facebook live feed (left) + company news list (right) -->
+    <div class="feed-row reveal">
       <div class="fb-live-panel">
         <div class="fb-live-head">
           <span class="fb-live-ico">
@@ -259,6 +213,16 @@ html #g-footer .footer-bottom p { color:rgba(255,255,255,.85) !important; }
           </div>
         </div>
       </div>
+
+      <div class="news-list-panel">
+        <div class="news-list-head">
+          <span class="news-list-ico">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 4a1 1 0 0 1 1-1h13a1 1 0 0 1 1 1v13.5a2.5 2.5 0 0 1-2.5 2.5H6a3 3 0 0 1-3-3V4zm2 1v11.5A1.5 1.5 0 0 0 6.5 18H16v-1H6.5a.5.5 0 0 1 0-1H16V5H5zm3 3h6v1.5H8V8zm0 3h6v1.5H8V11zm0 3h4v1.5H8V14zM19 6h1a1 1 0 0 1 1 1v10.5a2.5 2.5 0 0 1-2.5 2.5H8v-1h10.5a1.5 1.5 0 0 0 1.5-1.5V7h-1V6z"/></svg>
+          </span>
+          <div><div class="news-list-name">ข่าวสารบริษัท</div><div class="news-list-handle">Company News &amp; Activities</div></div>
+        </div>
+        <div id="news-cards" class="news-h-grid"></div>
+      </div>
     </div>
 
     <!-- Shop online -->
@@ -267,20 +231,28 @@ html #g-footer .footer-bottom p { color:rgba(255,255,255,.85) !important; }
       <p class="sec-desc">สั่งซื้อสินค้า VFoods ได้สะดวกทุกที่ทุกเวลา ผ่านช่องทางออนไลน์ที่คุณคุ้นเคย</p>
       <div class="shop-grid">
         <a href="https://shopee.co.th/vfoods_official" target="_blank" rel="noopener" class="shop-card shop-sp">
-          <span class="shop-ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.9414 17.9633c.229-1.879-.981-3.077-4.1758-4.0969-1.548-.528-2.277-1.22-2.26-2.1719.065-1.056 1.048-1.825 2.352-1.85a5.2898 5.2898 0 0 1 2.8838.89c.116.072.197.06.263-.039.09-.145.315-.494.39-.62.051-.081.061-.187-.068-.281-.185-.1369-.704-.4149-.983-.5319a6.4697 6.4697 0 0 0-2.5118-.514c-1.909.008-3.4129 1.215-3.5389 2.826-.082 1.1629.494 2.1078 1.73 2.8278.262.152 1.6799.716 2.2438.892 1.774.552 2.695 1.5419 2.478 2.6969-.197 1.047-1.299 1.7239-2.818 1.7439-1.2039-.046-2.2878-.537-3.1278-1.19l-.141-.11c-.104-.08-.218-.075-.287.03-.05.077-.376.547-.458.67-.077.108-.035.168.045.234.35.293.817.613 1.134.775a6.7097 6.7097 0 0 0 2.8289.727 4.9048 4.9048 0 0 0 2.0759-.354c1.095-.465 1.8029-1.394 1.9449-2.554zM11.9986 1.4009c-2.068 0-3.7539 1.95-3.8329 4.3899h7.6657c-.08-2.44-1.765-4.3899-3.8328-4.3899zm7.8516 22.5981-.08.001-15.7843-.002c-1.074-.04-1.863-.91-1.971-1.991l-.01-.195L1.298 6.2858a.459.459 0 0 1 .45-.494h4.9748C6.8448 2.568 9.1607 0 11.9996 0c2.8388 0 5.1537 2.5689 5.2757 5.7898h4.9678a.459.459 0 0 1 .458.483l-.773 15.5883-.007.131c-.094 1.094-.979 1.9769-2.0709 2.0059z"/></svg></span>
-          <div>
+          <div class="shop-card-top">
+            <span class="shop-ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.9414 17.9633c.229-1.879-.981-3.077-4.1758-4.0969-1.548-.528-2.277-1.22-2.26-2.1719.065-1.056 1.048-1.825 2.352-1.85a5.2898 5.2898 0 0 1 2.8838.89c.116.072.197.06.263-.039.09-.145.315-.494.39-.62.051-.081.061-.187-.068-.281-.185-.1369-.704-.4149-.983-.5319a6.4697 6.4697 0 0 0-2.5118-.514c-1.909.008-3.4129 1.215-3.5389 2.826-.082 1.1629.494 2.1078 1.73 2.8278.262.152 1.6799.716 2.2438.892 1.774.552 2.695 1.5419 2.478 2.6969-.197 1.047-1.299 1.7239-2.818 1.7439-1.2039-.046-2.2878-.537-3.1278-1.19l-.141-.11c-.104-.08-.218-.075-.287.03-.05.077-.376.547-.458.67-.077.108-.035.168.045.234.35.293.817.613 1.134.775a6.7097 6.7097 0 0 0 2.8289.727 4.9048 4.9048 0 0 0 2.0759-.354c1.095-.465 1.8029-1.394 1.9449-2.554zM11.9986 1.4009c-2.068 0-3.7539 1.95-3.8329 4.3899h7.6657c-.08-2.44-1.765-4.3899-3.8328-4.3899zm7.8516 22.5981-.08.001-15.7843-.002c-1.074-.04-1.863-.91-1.971-1.991l-.01-.195L1.298 6.2858a.459.459 0 0 1 .45-.494h4.9748C6.8448 2.568 9.1607 0 11.9996 0c2.8388 0 5.1537 2.5689 5.2757 5.7898h4.9678a.459.459 0 0 1 .458.483l-.773 15.5883-.007.131c-.094 1.094-.979 1.9769-2.0709 2.0059z"/></svg></span>
             <div class="shop-name">Shopee</div>
-            <div class="shop-desc">ช้อปสินค้า VFoods ครบทุกแบรนด์ พร้อมโปรโมชั่นพิเศษ</div>
           </div>
-          <span class="shop-arrow">→</span>
+          <div class="shop-photos">
+            <img src="img/brand-packs/kai5.webp" alt="สินค้า VFoods บน Shopee" loading="lazy">
+            <img src="img/brand-packs/jak.webp" alt="สินค้า VFoods บน Shopee" loading="lazy">
+            <img src="img/brand-packs/creamvanilla.webp" alt="สินค้า VFoods บน Shopee" loading="lazy">
+          </div>
+          <div class="shop-cta">ไปที่ร้าน Shopee <span class="shop-arrow">→</span></div>
         </a>
         <a href="https://s.lazada.co.th/s.ZRjUrg?c=x" target="_blank" rel="noopener" class="shop-card shop-lz">
-          <span class="shop-ico"><svg viewBox="-687.9465 65.0885 223.0561 181.0968" aria-hidden="true"><defs><linearGradient id="lzg966" gradientUnits="userSpaceOnUse" x1="-.0006" y1=".5" x2="1.0008" y2=".5"><stop offset="0" stop-color="#ffb900"/><stop offset=".338" stop-color="#f38000"/><stop offset=".567" stop-color="#f83c72"/><stop offset=".78" stop-color="#fc1cbe"/><stop offset=".93" stop-color="#fe08ed"/><stop offset="1" stop-color="#ff00ff"/></linearGradient><linearGradient id="lzg948" href="#lzg966" gradientUnits="userSpaceOnUse" x1="-.0006" y1=".5" x2="66.758" y2="-.017"/><linearGradient id="lzg1728" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ee0a3f"/><stop offset="1" stop-color="#ee0a3f" stop-opacity="0"/></linearGradient><linearGradient id="lzg1306" href="#lzg1728" gradientUnits="userSpaceOnUse" x1="18.754" y1="49.006" x2="86.818" y2="11.32"/><linearGradient id="lzg1736" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ed6600"/><stop offset="1" stop-color="#f98200"/></linearGradient><linearGradient id="lzg1308" href="#lzg1736" gradientUnits="userSpaceOnUse" x1="41.793" y1="39.349" x2="75.037" y2="12.569"/></defs><g transform="matrix(3.3097462,0,0,3.3097462,-688.02908,65.088537)"><path fill="url(#lzg948)" d="M 33.7366,54.7161 C 33.2581,54.7194 32.7871,54.5969 32.3707,54.361 28.8059,52.2985 2.4039,35.7444 1.40683,35.239 0.648025,34.8849 0.129878,34.1595 0.0409756,33.3268 V 10.1073 C 0.0213409,9.24058 0.449817,8.42493 1.17463,7.94927 L 1.36585,7.84 C 3.92,6.25561 12.4702,1.03805 13.8224,0.286829 14.1327,0.102692 14.4861,0.00374668 14.8468,0 c 0.3382,0.00382664 0.6706,0.0881007 0.9698,0.245854 0,0 11.9649,7.799026 13.7951,8.495606 1.2842,0.59 2.6845,0.88406 4.0976,0.86049 1.6012,0.03347 3.1834,-0.35265 4.5892,-1.12 C 40.0878,7.53951 51.52,0.286829 51.6429,0.286829 51.9311,0.112743 52.2623,0.0228451 52.599,0.0273171 52.9601,0.0290843 53.3139,0.128172 53.6234,0.314146 55.1805,1.17463 65.7795,7.66244 66.2302,7.94927 66.9757,8.39902 67.4276,9.20946 67.4185,10.08 v 23.2195 c -0.0836,0.8347 -0.6034,1.5624 -1.3658,1.9122 -0.9971,0.5463 -27.3171,17.1005 -30.9503,19.122 -0.4136,0.2455 -0.8848,0.3774 -1.3658,0.3824"/></g><g transform="matrix(3.3097462,0,0,3.3097462,-688.02908,65.088537)"><path fill="url(#lzg1306)" d="m 33.6,54.7162 0.1366,-1e-4 c 0.4785,0.0033 0.9495,-0.1192 1.3658,-0.3551 3.5649,-2.0625 29.9532,-18.6166 30.9503,-19.122 0.7624,-0.3498 1.2822,-1.0775 1.3658,-1.9122 V 10.1073 C 67.4229,9.71423 67.334,9.32571 67.159,8.97366 L 33.6,27.399 v 27.3172"/></g><g transform="matrix(-3.2744849,0,0,3.2744849,-467.18522,65.934126)"><path fill="url(#lzg1308)" d="m 33.6,54.7162 0.1366,-1e-4 c 0.4785,0.0033 0.9495,-0.1192 1.3658,-0.3551 3.5649,-2.0625 29.9532,-18.6166 30.9503,-19.122 0.7624,-0.3498 1.2822,-1.0775 1.3658,-1.9122 V 10.1073 C 67.4229,9.71423 67.334,9.32571 67.159,8.97366 L 33.6,27.399 v 27.3172"/></g></svg></span>
-          <div>
+          <div class="shop-card-top">
+            <span class="shop-ico"><svg viewBox="-687.9465 65.0885 223.0561 181.0968" aria-hidden="true"><defs><linearGradient id="lzg966" gradientUnits="userSpaceOnUse" x1="-.0006" y1=".5" x2="1.0008" y2=".5"><stop offset="0" stop-color="#ffb900"/><stop offset=".338" stop-color="#f38000"/><stop offset=".567" stop-color="#f83c72"/><stop offset=".78" stop-color="#fc1cbe"/><stop offset=".93" stop-color="#fe08ed"/><stop offset="1" stop-color="#ff00ff"/></linearGradient><linearGradient id="lzg948" href="#lzg966" gradientUnits="userSpaceOnUse" x1="-.0006" y1=".5" x2="66.758" y2="-.017"/><linearGradient id="lzg1728" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ee0a3f"/><stop offset="1" stop-color="#ee0a3f" stop-opacity="0"/></linearGradient><linearGradient id="lzg1306" href="#lzg1728" gradientUnits="userSpaceOnUse" x1="18.754" y1="49.006" x2="86.818" y2="11.32"/><linearGradient id="lzg1736" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ed6600"/><stop offset="1" stop-color="#f98200"/></linearGradient><linearGradient id="lzg1308" href="#lzg1736" gradientUnits="userSpaceOnUse" x1="41.793" y1="39.349" x2="75.037" y2="12.569"/></defs><g transform="matrix(3.3097462,0,0,3.3097462,-688.02908,65.088537)"><path fill="url(#lzg948)" d="M 33.7366,54.7161 C 33.2581,54.7194 32.7871,54.5969 32.3707,54.361 28.8059,52.2985 2.4039,35.7444 1.40683,35.239 0.648025,34.8849 0.129878,34.1595 0.0409756,33.3268 V 10.1073 C 0.0213409,9.24058 0.449817,8.42493 1.17463,7.94927 L 1.36585,7.84 C 3.92,6.25561 12.4702,1.03805 13.8224,0.286829 14.1327,0.102692 14.4861,0.00374668 14.8468,0 c 0.3382,0.00382664 0.6706,0.0881007 0.9698,0.245854 0,0 11.9649,7.799026 13.7951,8.495606 1.2842,0.59 2.6845,0.88406 4.0976,0.86049 1.6012,0.03347 3.1834,-0.35265 4.5892,-1.12 C 40.0878,7.53951 51.52,0.286829 51.6429,0.286829 51.9311,0.112743 52.2623,0.0228451 52.599,0.0273171 52.9601,0.0290843 53.3139,0.128172 53.6234,0.314146 55.1805,1.17463 65.7795,7.66244 66.2302,7.94927 66.9757,8.39902 67.4276,9.20946 67.4185,10.08 v 23.2195 c -0.0836,0.8347 -0.6034,1.5624 -1.3658,1.9122 -0.9971,0.5463 -27.3171,17.1005 -30.9503,19.122 -0.4136,0.2455 -0.8848,0.3774 -1.3658,0.3824"/></g><g transform="matrix(3.3097462,0,0,3.3097462,-688.02908,65.088537)"><path fill="url(#lzg1306)" d="m 33.6,54.7162 0.1366,-1e-4 c 0.4785,0.0033 0.9495,-0.1192 1.3658,-0.3551 3.5649,-2.0625 29.9532,-18.6166 30.9503,-19.122 0.7624,-0.3498 1.2822,-1.0775 1.3658,-1.9122 V 10.1073 C 67.4229,9.71423 67.334,9.32571 67.159,8.97366 L 33.6,27.399 v 27.3172"/></g><g transform="matrix(-3.2744849,0,0,3.2744849,-467.18522,65.934126)"><path fill="url(#lzg1308)" d="m 33.6,54.7162 0.1366,-1e-4 c 0.4785,0.0033 0.9495,-0.1192 1.3658,-0.3551 3.5649,-2.0625 29.9532,-18.6166 30.9503,-19.122 0.7624,-0.3498 1.2822,-1.0775 1.3658,-1.9122 V 10.1073 C 67.4229,9.71423 67.334,9.32571 67.159,8.97366 L 33.6,27.399 v 27.3172"/></g></svg></span>
             <div class="shop-name">Lazada</div>
-            <div class="shop-desc">สั่งซื้อสินค้า VFoods ส่งตรงถึงบ้าน ผ่าน LazMall</div>
           </div>
-          <span class="shop-arrow">→</span>
+          <div class="shop-photos">
+            <img src="img/lazada/product-1.webp" alt="สินค้า VFoods บน Lazada" loading="lazy">
+            <img src="img/lazada/product-2.webp" alt="สินค้า VFoods บน Lazada" loading="lazy">
+            <img src="img/lazada/product-3.webp" alt="สินค้า VFoods บน Lazada" loading="lazy">
+          </div>
+          <div class="shop-cta">ไปที่ร้าน Lazada <span class="shop-arrow">→</span></div>
         </a>
       </div>
     </div>
