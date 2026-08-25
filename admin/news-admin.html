@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>จัดการข่าวสาร — VFoods Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --og:#FF6D1A; --og2:#D6590C; --dark:#2B1B16; --bg:#FFF6ED;
+  --line:rgba(214,89,12,.18); --card:#fff;
+}
+*{box-sizing:border-box;}
+body{ margin:0; font-family:'Sarabun',sans-serif; background:var(--bg); color:var(--dark); }
+header{ background:linear-gradient(135deg,#FF7E33,#D6590C); color:#fff; padding:22px 28px; }
+header h1{ margin:0 0 4px; font-size:1.25rem; font-weight:800; }
+header p{ margin:0; font-size:.82rem; opacity:.9; }
+
+.toolbar{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; padding:16px 28px; background:#fff; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:5; }
+.btn{ font-family:'Sarabun',sans-serif; font-weight:700; font-size:.85rem; padding:10px 18px; border-radius:10px; border:1.5px solid var(--og2); background:#fff; color:var(--og2); cursor:pointer; transition:all .2s; }
+.btn:hover{ background:rgba(214,89,12,.08); }
+.btn.primary{ background:var(--og2); color:#fff; }
+.btn.primary:hover{ background:#B8480A; }
+.btn:disabled{ opacity:.4; cursor:not-allowed; }
+.status{ font-size:.8rem; color:rgba(43,27,22,.6); margin-left:auto; }
+.status.dirty{ color:#B8480A; font-weight:700; }
+.status.saved{ color:#1a7a3c; font-weight:700; }
+
+.wrap{ display:grid; grid-template-columns:1.3fr 1fr; gap:0; align-items:start; }
+.panel{ padding:24px 28px; }
+.panel h2{ font-size:.95rem; margin:0 0 14px; color:var(--og2); text-transform:uppercase; letter-spacing:.08em; }
+
+.empty-hint{ padding:40px 20px; text-align:center; color:rgba(43,27,22,.5); font-size:.88rem; border:1.5px dashed var(--line); border-radius:14px; }
+
+.item{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; margin-bottom:12px; }
+.item-top{ display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+.item-num{ font-size:.72rem; font-weight:800; color:#fff; background:var(--og2); width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.item-top .spacer{ flex:1; }
+.icon-btn{ border:none; background:rgba(214,89,12,.08); color:var(--og2); width:28px; height:28px; border-radius:8px; cursor:pointer; font-size:.85rem; line-height:1; }
+.icon-btn:hover{ background:rgba(214,89,12,.18); }
+.icon-btn:disabled{ opacity:.3; cursor:not-allowed; }
+.icon-btn.danger{ color:#C0392B; background:rgba(192,57,43,.08); }
+.icon-btn.danger:hover{ background:rgba(192,57,43,.18); }
+
+.field-row{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px; }
+label{ display:block; font-size:.68rem; font-weight:700; color:rgba(43,27,22,.55); margin-bottom:3px; text-transform:uppercase; letter-spacing:.05em; }
+input[type=text]{ width:100%; font-family:'Sarabun',sans-serif; font-size:.85rem; padding:8px 10px; border:1px solid var(--line); border-radius:8px; background:#FFFBF6; color:var(--dark); }
+input[type=text]:focus{ outline:none; border-color:var(--og2); background:#fff; }
+.full{ grid-column:1 / -1; }
+
+.add-row{ display:flex; justify-content:center; margin:18px 0 6px; }
+
+/* ── live preview: mirrors the .news-h-card look on news.html ── */
+.preview-shell{ position:sticky; top:74px; background:#FBF6EF; border:1px solid var(--line); border-radius:16px; padding:16px; }
+.preview-grid{ display:grid; grid-template-rows:repeat(2,1fr); grid-auto-flow:column; grid-auto-columns:150px; gap:10px; overflow-x:auto; padding-bottom:6px; }
+.p-card{ display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+.p-thumb{ width:100%; height:64px; object-fit:cover; }
+.p-thumb-ph{ width:100%; height:64px; display:flex; align-items:center; justify-content:center; text-align:center; padding:0 6px; background:linear-gradient(135deg,rgba(255,109,26,.14),rgba(255,109,26,.04)); font-size:.56rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--og2); }
+.p-body{ padding:8px 9px; display:flex; flex-direction:column; gap:2px; }
+.p-tag{ font-size:.5rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--og2); }
+.p-title{ font-size:.66rem; font-weight:700; line-height:1.35; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+.p-date{ font-size:.55rem; color:rgba(43,27,22,.45); margin-top:auto; }
+.preview-note{ font-size:.72rem; color:rgba(43,27,22,.55); margin-top:10px; line-height:1.6; }
+
+.footnote{ padding:18px 28px 32px; font-size:.78rem; color:rgba(43,27,22,.55); line-height:1.8; }
+.footnote code{ background:rgba(214,89,12,.1); padding:1px 6px; border-radius:5px; }
+
+@media(max-width:860px){ .wrap{ grid-template-columns:1fr; } .preview-shell{ position:static; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>จัดการข่าวสาร &amp; กิจกรรม</h1>
+  <p>แก้ไขการ์ดข่าวที่โชว์ในหน้า news.html — เพิ่ม/ลบ/เรียงลำดับได้ที่นี่ ไม่ต้องแก้โค้ด</p>
+</header>
+
+<div class="toolbar">
+  <button class="btn primary" id="btnOpen">📂 เปิดไฟล์ news-data.js</button>
+  <button class="btn" id="btnSave" disabled>💾 บันทึก</button>
+  <button class="btn" id="btnDownload" disabled>⬇️ ดาวน์โหลดไฟล์</button>
+  <input type="file" id="fileFallback" accept=".js" style="display:none">
+  <span class="status" id="status">ยังไม่ได้เปิดไฟล์ — กด "เปิดไฟล์ news-data.js" แล้วเลือกไฟล์ในโฟลเดอร์เว็บ (D:\VFOOD\news-data.js)</span>
+</div>
+
+<div class="wrap">
+  <div class="panel">
+    <h2>รายการข่าว</h2>
+    <div id="list"></div>
+    <div class="add-row">
+      <button class="btn primary" id="btnAdd" disabled>+ เพิ่มข่าวใหม่</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="preview-shell">
+      <h2 style="margin-top:0;">พรีวิวบนหน้าเว็บ</h2>
+      <div class="preview-grid" id="previewGrid"></div>
+      <p class="preview-note">
+        นี่คือหน้าตาจริงของการ์ดในส่วน "ข่าวสารบริษัท" บนหน้า news.html (กริดแนวนอน 2 แถว ต่อจากฟีด Facebook) —
+        การ์ดที่อยู่บนสุดของรายการทางซ้าย = การ์ดแรกที่โชว์
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="footnote">
+  <b>วิธีใช้งาน</b><br>
+  1. กด <b>"📂 เปิดไฟล์ news-data.js"</b> แล้วเลือกไฟล์ <code>news-data.js</code> ที่อยู่ในโฟลเดอร์เว็บ (เปิดครั้งเดียวต่อรอบการแก้ไข)<br>
+  2. แก้ไข / เพิ่ม / ลบ / สลับลำดับข่าวทางซ้าย — พรีวิวทางขวาจะอัปเดตให้ทันที<br>
+  3. กด <b>"💾 บันทึก"</b> เพื่อเขียนทับไฟล์ news-data.js โดยตรง (เบราว์เซอร์จะถามสิทธิ์ครั้งแรกที่บันทึก)<br>
+  4. ถ้าเบราว์เซอร์ไม่รองรับการบันทึกโดยตรง (เช่น Firefox) ให้ใช้ <b>"⬇️ ดาวน์โหลดไฟล์"</b> แล้วนำไฟล์ที่ได้ไปแทนที่ <code>news-data.js</code> เดิมเอง<br>
+  5. เว็บไซต์เป็นไฟล์สแตติก — หลังบันทึกแล้วต้อง commit + push ขึ้น GitHub อีกครั้งเพื่อให้เว็บจริงอัปเดต (บอก Claude ให้ "commit push deploy" ได้เลย)
+</div>
+
+<script>
+var items = [];
+var fileHandle = null; // File System Access API handle, if supported
+var dirty = false;
+
+var HEADER = "/*\n" +
+"  อัปเดตข่าวสาร/กิจกรรมของบริษัทได้จากไฟล์นี้ไฟล์เดียว — ไม่ต้องแตะ news.html เลย\n" +
+"\n" +
+"  วิธีเพิ่มข่าวใหม่:\n" +
+"  1. คัดลอกก้อน { ... } อันหนึ่งด้านล่างนี้\n" +
+"  2. วางไว้ที่ตำแหน่งแรกสุดของลิสต์ (ก้อนแรกจะโชว์เป็นการ์ดแรกในหน้าเว็บ)\n" +
+"  3. แก้ข้อความในก้อนที่คัดลอกมา:\n" +
+"       tag   = หมวดหมู่สั้นๆ เช่น \"NPD Update\", \"กิจกรรม\", \"รางวัล\", \"CSR\", \"ประกาศ\"\n" +
+"       title = หัวข้อข่าว\n" +
+"       date  = วันที่ (พิมพ์อิสระ เช่น \"เมษายน 2026\")\n" +
+"       img   = พาธรูปภาพ (ถ้าไม่มีรูป ลบบรรทัดนี้ทิ้งได้ — ระบบจะโชว์ป้ายหมวดหมู่แทนรูป)\n" +
+"       link  = ลิงก์เมื่อคลิกการ์ด (ถ้าไม่มีลิงก์ ลบบรรทัดนี้ทิ้งได้)\n" +
+"  4. บันทึกไฟล์ แล้วรีเฟรชหน้าเว็บ — การ์ดใหม่จะขึ้นทันที ไม่ต้องแก้โค้ดที่อื่น\n" +
+"\n" +
+"  ลบข่าวเก่า: ลบทั้งก้อน { ... } ของข่าวนั้นออก (อย่าลืมลบ , ที่เกินด้วย)\n" +
+"\n" +
+"  ไฟล์นี้ยังแก้ไขได้ผ่านโปรแกรมหลังบ้านขนาดย่อที่ admin/news-admin.html ด้วย\n" +
+"*/";
+
+var $list = document.getElementById('list');
+var $preview = document.getElementById('previewGrid');
+var $status = document.getElementById('status');
+var $btnOpen = document.getElementById('btnOpen');
+var $btnSave = document.getElementById('btnSave');
+var $btnDownload = document.getElementById('btnDownload');
+var $btnAdd = document.getElementById('btnAdd');
+var $fileFallback = document.getElementById('fileFallback');
+
+function parseItems(text) {
+  var m = text.match(/const\s+NEWS_ITEMS\s*=\s*(\[[\s\S]*?\]);/);
+  if (!m) throw new Error('หารายการ NEWS_ITEMS ในไฟล์ไม่เจอ — ไฟล์นี้ใช่ news-data.js หรือเปล่า?');
+  return Function('"use strict"; return (' + m[1] + ');')();
+}
+
+function esc(s) { return JSON.stringify(s == null ? '' : s); }
+
+function serialize() {
+  var blocks = items.map(function (it) {
+    var props = [];
+    if (it.tag)   props.push('    tag: ' + esc(it.tag));
+    if (it.title) props.push('    title: ' + esc(it.title));
+    if (it.date)  props.push('    date: ' + esc(it.date));
+    if (it.img)   props.push('    img: ' + esc(it.img));
+    if (it.link)  props.push('    link: ' + esc(it.link));
+    return '  {\n' + props.join(',\n') + '\n  }';
+  });
+  return HEADER + '\nconst NEWS_ITEMS = [\n' + blocks.join(',\n') + '\n];\n';
+}
+
+function setDirty(v) {
+  dirty = v;
+  $status.textContent = v ? 'มีการแก้ไขที่ยังไม่ได้บันทึก' : 'บันทึกแล้ว';
+  $status.className = 'status ' + (v ? 'dirty' : 'saved');
+}
+
+function render() {
+  $list.innerHTML = '';
+  if (!items.length) {
+    var e = document.createElement('div');
+    e.className = 'empty-hint';
+    e.textContent = 'ยังไม่มีข่าว — กด "+ เพิ่มข่าวใหม่" ด้านล่างเพื่อเริ่มเพิ่ม';
+    $list.appendChild(e);
+  }
+  items.forEach(function (it, i) {
+    $list.appendChild(buildItemCard(it, i));
+  });
+  renderPreview();
+}
+
+function buildItemCard(it, i) {
+  var wrap = document.createElement('div');
+  wrap.className = 'item';
+
+  var top = document.createElement('div');
+  top.className = 'item-top';
+
+  var num = document.createElement('span');
+  num.className = 'item-num';
+  num.textContent = i + 1;
+  top.appendChild(num);
+
+  var spacer = document.createElement('span');
+  spacer.className = 'spacer';
+  top.appendChild(spacer);
+
+  var upBtn = mkIconBtn('▲', i === 0, function () { moveItem(i, -1); });
+  var downBtn = mkIconBtn('▼', i === items.length - 1, function () { moveItem(i, 1); });
+  var delBtn = mkIconBtn('🗑', false, function () { deleteItem(i); }, true);
+  top.appendChild(upBtn);
+  top.appendChild(downBtn);
+  top.appendChild(delBtn);
+  wrap.appendChild(top);
+
+  wrap.appendChild(buildFieldRow([
+    mkField('หมวดหมู่ (tag)', it.tag, function (v) { it.tag = v; onEdit(); }),
+    mkField('วันที่ (date)', it.date, function (v) { it.date = v; onEdit(); })
+  ]));
+  wrap.appendChild(buildFieldRow([
+    mkField('หัวข้อข่าว (title)', it.title, function (v) { it.title = v; onEdit(); }, true)
+  ]));
+  wrap.appendChild(buildFieldRow([
+    mkField('รูปภาพ (img) — เว้นว่างได้', it.img, function (v) { it.img = v; onEdit(); }, true)
+  ]));
+  wrap.appendChild(buildFieldRow([
+    mkField('ลิงก์เมื่อคลิก (link) — เว้นว่างได้', it.link, function (v) { it.link = v; onEdit(); }, true)
+  ]));
+
+  return wrap;
+}
+
+function mkIconBtn(txt, disabled, onClick, danger) {
+  var b = document.createElement('button');
+  b.className = 'icon-btn' + (danger ? ' danger' : '');
+  b.textContent = txt;
+  b.disabled = !!disabled;
+  b.onclick = onClick;
+  return b;
+}
+
+function mkField(labelText, value, onInput, full) {
+  var box = document.createElement('div');
+  if (full) box.className = 'full';
+  var lbl = document.createElement('label');
+  lbl.textContent = labelText;
+  var inp = document.createElement('input');
+  inp.type = 'text';
+  inp.value = value || '';
+  inp.addEventListener('input', function () { onInput(inp.value); });
+  box.appendChild(lbl);
+  box.appendChild(inp);
+  return box;
+}
+
+function buildFieldRow(fields) {
+  var row = document.createElement('div');
+  row.className = 'field-row';
+  fields.forEach(function (f) { row.appendChild(f); });
+  return row;
+}
+
+function onEdit() {
+  setDirty(true);
+  renderPreview();
+}
+
+function moveItem(i, dir) {
+  var j = i + dir;
+  if (j < 0 || j >= items.length) return;
+  var tmp = items[i];
+  items[i] = items[j];
+  items[j] = tmp;
+  setDirty(true);
+  render();
+}
+
+function deleteItem(i) {
+  if (!confirm('ลบข่าว "' + (items[i].title || '(ไม่มีหัวข้อ)') + '" ?')) return;
+  items.splice(i, 1);
+  setDirty(true);
+  render();
+}
+
+function addItem() {
+  items.unshift({ tag: '', title: 'ข่าวใหม่', date: '', img: '', link: '' });
+  setDirty(true);
+  render();
+}
+
+function renderPreview() {
+  $preview.innerHTML = '';
+  items.forEach(function (it) {
+    var card = document.createElement('div');
+    card.className = 'p-card';
+
+    if (it.img) {
+      var img = document.createElement('img');
+      img.className = 'p-thumb';
+      img.alt = '';
+      // news-data.js paths are relative to the site root, but this admin page lives in /admin/
+      img.src = '../' + it.img;
+      img.onerror = function () {
+        var ph = document.createElement('div');
+        ph.className = 'p-thumb-ph';
+        ph.textContent = it.tag || 'NEWS';
+        img.replaceWith(ph);
+      };
+      card.appendChild(img);
+    } else {
+      var ph = document.createElement('div');
+      ph.className = 'p-thumb-ph';
+      ph.textContent = it.tag || 'NEWS';
+      card.appendChild(ph);
+    }
+
+    var body = document.createElement('div');
+    body.className = 'p-body';
+    var tag = document.createElement('span');
+    tag.className = 'p-tag';
+    tag.textContent = it.tag || '';
+    var title = document.createElement('div');
+    title.className = 'p-title';
+    title.textContent = it.title || '';
+    var date = document.createElement('div');
+    date.className = 'p-date';
+    date.textContent = it.date || '';
+    body.appendChild(tag);
+    body.appendChild(title);
+    body.appendChild(date);
+    card.appendChild(body);
+
+    $preview.appendChild(card);
+  });
+}
+
+function loadFromText(text, sourceLabel) {
+  try {
+    items = parseItems(text);
+  } catch (err) {
+    alert(err.message);
+    return;
+  }
+  $btnAdd.disabled = false;
+  $btnDownload.disabled = false;
+  setDirty(false);
+  $status.textContent = 'เปิดไฟล์แล้ว (' + sourceLabel + ') — พร้อมแก้ไข';
+  $status.className = 'status';
+  render();
+}
+
+async function openFile() {
+  if (window.showOpenFilePicker) {
+    try {
+      var handles = await window.showOpenFilePicker({
+        types: [{ description: 'JavaScript file', accept: { 'text/javascript': ['.js'] } }],
+        excludeAcceptAllOption: false,
+        multiple: false
+      });
+      fileHandle = handles[0];
+      var file = await fileHandle.getFile();
+      var text = await file.text();
+      loadFromText(text, file.name);
+      $btnSave.disabled = false;
+    } catch (err) {
+      if (err.name !== 'AbortError') alert('เปิดไฟล์ไม่สำเร็จ: ' + err.message);
+    }
+  } else {
+    $fileFallback.click();
+  }
+}
+
+$fileFallback.addEventListener('change', function () {
+  var file = $fileFallback.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function () {
+    loadFromText(reader.result, file.name);
+    $btnSave.disabled = true; // no direct-write support — use download instead
+  };
+  reader.readAsText(file);
+});
+
+async function saveFile() {
+  var text = serialize();
+  if (fileHandle) {
+    try {
+      var writable = await fileHandle.createWritable();
+      await writable.write(text);
+      await writable.close();
+      setDirty(false);
+      $status.textContent = 'บันทึกลงไฟล์เรียบร้อย — อย่าลืม commit + push เพื่อขึ้นเว็บจริง';
+      $status.className = 'status saved';
+    } catch (err) {
+      alert('บันทึกไม่สำเร็จ: ' + err.message);
+    }
+  } else {
+    downloadFile();
+  }
+}
+
+function downloadFile() {
+  var text = serialize();
+  var blob = new Blob([text], { type: 'text/javascript' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'news-data.js';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  setDirty(false);
+  $status.textContent = 'ดาวน์โหลดไฟล์แล้ว — นำไปแทนที่ news-data.js เดิม แล้ว commit + push';
+  $status.className = 'status saved';
+}
+
+$btnOpen.addEventListener('click', openFile);
+$btnSave.addEventListener('click', saveFile);
+$btnDownload.addEventListener('click', downloadFile);
+$btnAdd.addEventListener('click', addItem);
+
+window.addEventListener('beforeunload', function (e) {
+  if (dirty) { e.preventDefault(); e.returnValue = ''; }
+});
+
+// Try to auto-load the current news-data.js for a quick look (read-only until "เปิดไฟล์" grants write access)
+fetch('../news-data.js').then(function (r) {
+  if (!r.ok) throw new Error();
+  return r.text();
+}).then(function (text) {
+  if (!fileHandle) {
+    loadFromText(text, 'พรีวิวอัตโนมัติ — ยังบันทึกไม่ได้จนกว่าจะกด "เปิดไฟล์"');
+    $btnSave.disabled = true;
+  }
+}).catch(function () { /* served without a local server, or file missing — ignore */ });
+</script>
+
+</body>
+</html>
