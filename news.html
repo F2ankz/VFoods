@@ -40,27 +40,28 @@
 .fb-embed-wrap { width:100%; }
 .fb-embed-wrap iframe { width:100% !important; }
 
-/* Company news — populated at runtime from news-data.js, compact scrollable row list */
-.news-h-grid { flex:1; min-height:0; padding:14px; display:flex; flex-direction:column; gap:10px; overflow-y:auto; }
+/* Company news — populated at runtime from news-data.js; only the first 3 show, as big cards */
+.news-h-grid { flex:1; min-height:0; padding:14px; display:flex; flex-direction:column; gap:14px; overflow-y:auto; }
 .news-h-card {
-  display:flex; align-items:center; gap:14px; background:#FBF6EF;
-  border:1px solid rgba(255,109,26,.12); border-radius:14px; padding:10px;
+  display:flex; flex-direction:column; background:#FBF6EF;
+  border:1px solid rgba(255,109,26,.12); border-radius:16px; overflow:hidden;
   text-decoration:none; color:inherit;
   transition:background .3s, border-color .3s, transform .3s, box-shadow .3s;
 }
-.news-h-card:hover { background:#fff; border-color:rgba(255,109,26,.32); transform:translateX(4px); box-shadow:0 6px 18px rgba(255,109,26,.12); }
-.news-h-thumb, .news-h-thumb-ph { width:60px; height:60px; border-radius:12px; flex-shrink:0; }
+.news-h-grid .news-h-card:nth-child(n+4) { display:none; }
+.news-h-card:hover { background:#fff; border-color:rgba(255,109,26,.32); transform:translateY(-3px); box-shadow:0 10px 24px rgba(255,109,26,.14); }
+.news-h-thumb, .news-h-thumb-ph { width:100%; height:150px; flex-shrink:0; }
 .news-h-thumb { object-fit:cover; }
 .news-h-thumb-ph {
-  display:flex; align-items:center; justify-content:center; text-align:center; padding:2px;
+  display:flex; align-items:center; justify-content:center; text-align:center; padding:8px;
   background:linear-gradient(135deg,#FFE3C2,#FFD1A6);
-  font-family:'Sarabun',sans-serif; font-size:.52rem; font-weight:800; letter-spacing:.04em;
+  font-family:'Sarabun',sans-serif; font-size:.7rem; font-weight:800; letter-spacing:.08em;
   text-transform:uppercase; color:#B8480A;
 }
-.news-h-body { flex:1; min-width:0; display:flex; flex-direction:column; gap:3px; }
-.news-h-tag { font-size:.64rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#D6590C; }
-.news-h-title { font-family:'Sarabun',sans-serif; font-size:.86rem; font-weight:700; color:#2B1B16; line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-.news-h-date { font-size:.68rem; color:rgba(43,27,22,.45); }
+.news-h-body { padding:14px 16px 16px; display:flex; flex-direction:column; gap:6px; }
+.news-h-tag { font-size:.68rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#D6590C; }
+.news-h-title { font-family:'Sarabun',sans-serif; font-size:.98rem; font-weight:700; color:#2B1B16; line-height:1.45; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.news-h-date { font-size:.74rem; color:rgba(43,27,22,.45); }
 
 /* ── SHOP ONLINE (Shopee / Lazada) ── */
 .shop-section { margin-top:clamp(40px,5vw,56px); }
@@ -78,7 +79,7 @@
 .shop-ico svg { width:26px; height:26px; }
 .shop-name { font-family:'Sarabun',sans-serif; font-weight:800; font-size:1.1rem; }
 .shop-photos { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-.shop-photos img { width:100%; aspect-ratio:1; object-fit:cover; border-radius:10px; background:rgba(255,255,255,.15); }
+.shop-photos img { width:100%; aspect-ratio:1; object-fit:contain; border-radius:10px; background:#fff; padding:6px; }
 .shop-cta { display:flex; align-items:center; gap:8px; font-family:'Sarabun',sans-serif; font-weight:700; font-size:.86rem; margin-top:auto; }
 .shop-arrow { font-size:1.2rem; flex-shrink:0; transition:transform .3s; }
 .shop-card:hover .shop-arrow { transform:translateX(6px); }
