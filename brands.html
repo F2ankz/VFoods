@@ -332,9 +332,10 @@ body { transition:background-color .6s ease; }
 .page-hero.brand-banner {
   background-size:cover !important; background-position:center !important; background-repeat:no-repeat !important;
   transition:background-image .45s ease-in-out;
-  min-height:clamp(140px,18vw,220px);
+  padding:0 !important; margin-top:88px; aspect-ratio:24/5; min-height:0;
 }
 .page-hero.brand-banner::after { content:none; }
+@media(max-width:900px) { .page-hero.brand-banner { margin-top:74px; } }
 
 /* ── brand kicker heading (moved down from the banner, sits above the catalog title) ── */
 .brand-kicker {
