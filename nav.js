@@ -28,7 +28,7 @@
     ['#jam', 'แยมสับปะรด'], ['#wafer-stick', 'เวเฟอร์สติ๊ก'], ['#sandwich', 'คุ้กกี้สอดไส้ครีม'],
     ['#snack', 'ขนมทานเล่น'], ['#wafer', 'เวเฟอร์แผ่น'], ['#fried', 'ตัวทอด']
   ];
-  var brands = ['VFOODS','Mr. Teddy','Dear Teddy','Royal Wafer','Mr. Mee','Celebrate','Mix','Indy','Bless','Pina','Benjy','Chido'];
+  var brands = ['VFOODS','Mix','Dear Teddy','Royal Wafer','Celebrate','Mr. Mee','Bless','Pina','Mr. Teddy','Benjy','Chido'];
 
   var prodItems = products.map(function (p) {
     return '<a href="' + P + 'products.html' + p[0] + '">' + p[1] + '</a>';
