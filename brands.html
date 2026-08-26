@@ -328,21 +328,19 @@ body { transition:background-color .6s ease; }
 .bc-title p { color:rgba(43,27,22,.68); font-size:.9rem; font-weight:300; line-height:1.62; }
 .bc-head .cat-toolbar { margin:0; justify-content:flex-end; }
 
-/* ── brand banner hero (background photo swaps per selected brand) ── */
+/* ── brand banner hero (background photo swaps per selected brand, no overlay text) ── */
 .page-hero.brand-banner {
   background-size:cover !important; background-position:center !important; background-repeat:no-repeat !important;
   transition:background-image .45s ease-in-out;
+  min-height:clamp(140px,18vw,220px);
 }
-.page-hero.brand-banner::after {
-  content:''; position:absolute; inset:0;
-  background:
-    radial-gradient(ellipse 65% 150% at 50% 50%, rgba(8,3,1,.8) 0%, rgba(8,3,1,.62) 55%, rgba(8,3,1,.4) 100%),
-    linear-gradient(180deg, rgba(8,3,1,.4) 0%, rgba(8,3,1,.18) 40%, rgba(8,3,1,.48) 100%);
+.page-hero.brand-banner::after { content:none; }
+
+/* ── brand kicker heading (moved down from the banner, sits above the catalog title) ── */
+.brand-kicker {
+  font-family:'Sarabun',sans-serif; font-size:clamp(1.1rem,2.4vw,1.55rem); font-weight:700;
+  color:#C4160C; text-align:center; letter-spacing:-.01em; margin:0 0 6px;
 }
-.page-hero.brand-banner .eyebrow { background:rgba(255,255,255,.14) !important; border-color:rgba(255,255,255,.35) !important; color:#fff !important; }
-.page-hero.brand-banner h1 { color:#fff !important; text-shadow:0 3px 18px rgba(0,0,0,.55); }
-.page-hero.brand-banner p { color:rgba(255,255,255,.9) !important; text-shadow:0 2px 10px rgba(0,0,0,.4); }
-.page-hero.brand-banner h1 .ital { color:#FFD9A8 !important; -webkit-text-fill-color:#FFD9A8 !important; }
 
 /* ── brand chips selector (replaces the 12-card grid) ── */
 .brand-chips { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:26px; }
@@ -426,17 +424,14 @@ body { transition:background-color .6s ease; }
 </div>
 
 <!-- HERO -->
-<div class="page-hero brand-banner" id="brandBanner">
-  <span class="eyebrow">แคตตาล็อกสินค้า · 129 รายการ</span>
-  <h1>แบรนด์ของเรา</h1>
-  <p>รวมสินค้าทุกแบรนด์ในกลุ่มวีฟู้ดส์ พร้อมขนาดสินค้า ขนาดลัง และจำนวนบรรจุจริงจากโรงงาน</p>
-</div>
+<div class="page-hero brand-banner" id="brandBanner"></div>
 
 <!-- ── FLAVOR FILTER ── -->
 <div class="brands-section">
   <div class="brands-inner">
     <div style="margin-bottom:26px;padding-top:8px;">
       <div class="sec-eye">Product Catalog</div>
+      <h1 class="brand-kicker">แบรนด์ของเรา</h1>
       <h2 class="sec-title reveal">สินค้าทั้งหมดพร้อมขนาดจริง</h2>
       <p class="sec-desc reveal">เลือกแบรนด์เพื่อดูสินค้าทั้งหมด พร้อมขนาดสินค้า ขนาดลัง และจำนวนบรรจุต่อลัง — อ้างอิงสเปคจริงจากโรงงาน</p>
     </div>
