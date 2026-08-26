@@ -332,7 +332,7 @@ body { transition:background-color .6s ease; }
 .page-hero.brand-banner {
   background-size:cover !important; background-position:center !important; background-repeat:no-repeat !important;
   transition:background-image .45s ease-in-out;
-  padding:0 !important; margin-top:88px; aspect-ratio:24/5; min-height:0;
+  padding:0 !important; margin-top:88px; height:clamp(220px,26vw,420px); aspect-ratio:unset; min-height:0;
 }
 .page-hero.brand-banner::after { content:none; }
 @media(max-width:900px) { .page-hero.brand-banner { margin-top:74px; } }
@@ -534,7 +534,7 @@ initTilt('.brand-card, .pk-card');
 <script>
 (function(){
   const P = window.BRAND_PRODUCTS || [];
-  const state = { brand:'VFOODS', group:'all', q:'', otherPick:null };
+  const state = { brand:'VFOODS', group:'all', q:'' };
 
   // Every record already carries its English name — hand the pairs to the
   // language switch so card titles and image alts translate with the rest.
@@ -542,15 +542,20 @@ initTilt('.brand-card, .pk-card');
   window.VF_I18N_EXTRA = window.VF_I18N_EXTRA || {};
   P.forEach(p => { if (p.n && p.en) window.VF_I18N_EXTRA[p.n] = p.en; });
 
-  // brand selector order — brands with data + an "Other" bucket for the rest
+  // brand selector — all 11 brands get their own chip; the 5 without a
+  // catalog yet (no product photos/listing) just render a blank panel.
   const BRANDS = [
-    { key:'VFOODS',      label:'VFOODS',      mono:'VF' },
-    { key:'Mix',         label:'มิกซ์',        mono:'Mx' },
-    { key:'Benjy',       label:'เบนจี้',       mono:'Bj' },
-    { key:'Dear Teddy',  label:'Dear Teddy',  mono:'DT' },
-    { key:'Royal Wafer', label:'Royal Wafer', mono:'RW' },
-    { key:'Celebrate',   label:'Celebrate',   mono:'Ce' },
-    { key:'Other',       label:'อื่นๆ',        mono:'•', other:['Mr. Mee','Bless','Pina','Mr. Teddy','Chido'] },
+    { key:'VFOODS',      label:'VFOODS',         mono:'VF' },
+    { key:'Mix',         label:'มิกซ์',           mono:'Mx' },
+    { key:'Dear Teddy',  label:'Dear Teddy',     mono:'DT' },
+    { key:'Royal Wafer', label:'Royal Wafer',    mono:'RW' },
+    { key:'Celebrate',   label:'Celebrate',      mono:'Ce' },
+    { key:'Mr. Mee',     label:'มิสเตอร์หมี',     mono:'MM' },
+    { key:'Bless',       label:'เบลส',           mono:'Bl' },
+    { key:'Pina',        label:'พิน่า',           mono:'Pi' },
+    { key:'Mr. Teddy',   label:'มิสเตอร์เทดดี้',  mono:'MT' },
+    { key:'Benjy',       label:'เบนจี้',          mono:'Bj' },
+    { key:'Chido',       label:'ชิโด',            mono:'Ch' },
   ];
 
   const grid   = document.getElementById('catGrid');
@@ -571,7 +576,7 @@ initTilt('.brand-card, .pk-card');
     'Dear Teddy':'dear-teddy', 'Royal Wafer':'royal-wafer', Celebrate:'celebrate',
   };
 
-  function brandCount(k){ return k==='Other'?0:P.filter(p=>p.b===k).length; }
+  function brandCount(k){ return P.filter(p=>p.b===k).length; }
 
   function renderChips(){
     chipsEl.innerHTML = BRANDS.map(b=>{
@@ -616,13 +621,10 @@ initTilt('.brand-card, .pk-card');
   }
 
   function renderGrid(){
-    // "Other" bucket → list the placeholder brands, no products
-    if(state.brand==='Other'){
-      const b = BRANDS.find(x=>x.key==='Other');
-      cntEl.innerHTML=''; grid.innerHTML='';
-      const names = (b.other||[]).map(n=>n===state.otherPick?`<u>${n}</u>`:n).join(' · ');
-      emptyEl.innerHTML = 'แบรนด์ต่อไปนี้กำลังจัดเตรียมแคตตาล็อกสินค้า เร็วๆ นี้<br><b>'+names+'</b>';
-      emptyEl.hidden=false; return;
+    // brand has no product photos/listing yet → blank panel, no "not found" message
+    if(brandCount(state.brand)===0){
+      cntEl.innerHTML=''; grid.innerHTML=''; emptyEl.hidden=true;
+      return;
     }
     const q = state.q.trim().toLowerCase();
     const items = P.filter(p=>
@@ -664,23 +666,14 @@ initTilt('.brand-card, .pk-card');
     t = setTimeout(()=>{ state.q=e.target.value; renderGrid(); }, 140);
   });
 
-  const OTHER_NAMES = BRANDS.find(x=>x.key==='Other').other; // placeholder brands with no catalog yet
-
   function selectBrand(key, scroll){
-    // deep-links (nav menu / other sources) can pass one of the placeholder
-    // brand names directly — route those into the "Other" bucket and
-    // highlight the one requested instead of silently falling back.
-    let chipKey = key, otherPick = null;
-    if(!BRANDS.some(x=>x.key===key)){
-      if(OTHER_NAMES.includes(key)){ chipKey='Other'; otherPick=key; }
-      else chipKey='VFOODS';
-    }
-    const b = BRANDS.find(x=>x.key===chipKey) || { key:chipKey, label:chipKey, mono:chipKey.slice(0,2) };
-    state.brand = chipKey; state.otherPick = otherPick; state.group='all'; state.q=''; if(searchEl) searchEl.value='';
+    const b = BRANDS.find(x=>x.key===key) || BRANDS[0];
+    const chipKey = b.key;
+    state.brand = chipKey; state.group='all'; state.q=''; if(searchEl) searchEl.value='';
     chipsEl.querySelectorAll('.brand-chip').forEach(c=>c.classList.toggle('active', c.dataset.key===chipKey));
     const count = brandCount(chipKey);
     const hasDims = P.some(p=>p.b===chipKey && !noDims(p));
-    monoEl.textContent = b.mono; bnameEl.textContent = otherPick || b.label;
+    monoEl.textContent = b.mono; bnameEl.textContent = b.label;
     bcntEl.textContent = count ? `${count} สินค้า` : '';
     bcntEl.style.display = count ? '' : 'none';
     toolbarEl.style.display = count ? '' : 'none';
