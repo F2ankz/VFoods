@@ -534,7 +534,7 @@ initTilt('.brand-card, .pk-card');
 <script>
 (function(){
   const P = window.BRAND_PRODUCTS || [];
-  const state = { brand:'VFOODS', group:'all', q:'' };
+  const state = { brand:'VFOODS', group:'all', q:'', otherPick:null };
 
   // Every record already carries its English name — hand the pairs to the
   // language switch so card titles and image alts translate with the rest.
@@ -620,7 +620,8 @@ initTilt('.brand-card, .pk-card');
     if(state.brand==='Other'){
       const b = BRANDS.find(x=>x.key==='Other');
       cntEl.innerHTML=''; grid.innerHTML='';
-      emptyEl.innerHTML = 'แบรนด์ต่อไปนี้กำลังจัดเตรียมแคตตาล็อกสินค้า เร็วๆ นี้<br><b>'+(b.other||[]).join(' · ')+'</b>';
+      const names = (b.other||[]).map(n=>n===state.otherPick?`<u>${n}</u>`:n).join(' · ');
+      emptyEl.innerHTML = 'แบรนด์ต่อไปนี้กำลังจัดเตรียมแคตตาล็อกสินค้า เร็วๆ นี้<br><b>'+names+'</b>';
       emptyEl.hidden=false; return;
     }
     const q = state.q.trim().toLowerCase();
@@ -663,13 +664,23 @@ initTilt('.brand-card, .pk-card');
     t = setTimeout(()=>{ state.q=e.target.value; renderGrid(); }, 140);
   });
 
+  const OTHER_NAMES = BRANDS.find(x=>x.key==='Other').other; // placeholder brands with no catalog yet
+
   function selectBrand(key, scroll){
-    const b = BRANDS.find(x=>x.key===key) || { key, label:key, mono:key.slice(0,2) };
-    state.brand = key; state.group='all'; state.q=''; if(searchEl) searchEl.value='';
-    chipsEl.querySelectorAll('.brand-chip').forEach(c=>c.classList.toggle('active', c.dataset.key===key));
-    const count = brandCount(key);
-    const hasDims = P.some(p=>p.b===key && !noDims(p));
-    monoEl.textContent = b.mono; bnameEl.textContent = b.label;
+    // deep-links (nav menu / other sources) can pass one of the placeholder
+    // brand names directly — route those into the "Other" bucket and
+    // highlight the one requested instead of silently falling back.
+    let chipKey = key, otherPick = null;
+    if(!BRANDS.some(x=>x.key===key)){
+      if(OTHER_NAMES.includes(key)){ chipKey='Other'; otherPick=key; }
+      else chipKey='VFOODS';
+    }
+    const b = BRANDS.find(x=>x.key===chipKey) || { key:chipKey, label:chipKey, mono:chipKey.slice(0,2) };
+    state.brand = chipKey; state.otherPick = otherPick; state.group='all'; state.q=''; if(searchEl) searchEl.value='';
+    chipsEl.querySelectorAll('.brand-chip').forEach(c=>c.classList.toggle('active', c.dataset.key===chipKey));
+    const count = brandCount(chipKey);
+    const hasDims = P.some(p=>p.b===chipKey && !noDims(p));
+    monoEl.textContent = b.mono; bnameEl.textContent = otherPick || b.label;
     bcntEl.textContent = count ? `${count} สินค้า` : '';
     bcntEl.style.display = count ? '' : 'none';
     toolbarEl.style.display = count ? '' : 'none';
@@ -678,14 +689,16 @@ initTilt('.brand-card, .pk-card');
                  : 'สินค้าแบรนด์นี้ (ข้อมูลขนาดบรรจุอยู่ระหว่างจัดเก็บ) — คลิกแบรนด์อื่นเพื่อสลับดู')
       : 'แบรนด์ในกลุ่มนี้กำลังจัดเตรียมข้อมูลสินค้า เร็วๆ นี้';
     renderGroups(); renderGrid();
-    const slug = BANNER_IMG[key] || 'vfoods';
+    const slug = BANNER_IMG[chipKey] || 'vfoods';
     bannerEl.style.setProperty('background-image', `url('img/brand-banners/${slug}.jpg')`, 'important');
     if(scroll!==false) bannerEl.scrollIntoView({behavior:'smooth', block:'start'});
   }
   window.openBrand = selectBrand;
 
   renderChips();
-  selectBrand('VFOODS', false); // default, no scroll on load
+  // deep-link from the nav's brand menu, e.g. brands.html?brand=Mr.%20Mee
+  const urlBrand = new URLSearchParams(location.search).get('brand');
+  selectBrand(urlBrand || 'VFOODS', false); // no scroll on initial load
 })();
 </script>
 <script src="i18n.js?v=1"></script>

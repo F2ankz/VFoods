@@ -34,7 +34,7 @@
     return '<a href="' + P + 'products.html' + p[0] + '">' + p[1] + '</a>';
   }).join('');
   var brandItems = brands.map(function (b) {
-    return '<a href="' + P + 'brands.html">' + b + '</a>';
+    return '<a href="' + P + 'brands.html?brand=' + encodeURIComponent(b) + '">' + b + '</a>';
   }).join('');
 
   // Language switch — two national flags. i18n.js wires up the clicks and
