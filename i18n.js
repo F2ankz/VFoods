@@ -54,8 +54,8 @@
     'กลับหน้าหลัก': 'Back to Home',
     'ผู้ผลิตขนมปังปี๊บอันดับ 1 ในประเทศไทย': 'Thailand’s No.1 tin-packed biscuit manufacturer',
     'บริษัท วาไรตี้ ฟู้ดส์ อินเตอร์เนชั่นแนล จำกัด': 'Variety Foods International Co., Ltd.',
-    'บริษัท วาไรตี้ ฟู้ดส์ อินเตอร์เนชั่นแนล จำกัด ผู้ผลิตบิสกิตและขนมขบเคี้ยวคุณภาพสูง อันดับ 1 ในประเทศไทย ส่งออกกว่า 30 ประเทศทั่วโลก':
-      'Variety Foods International Co., Ltd. — Thailand’s No.1 manufacturer of premium biscuits and snacks, exporting to over 30 countries worldwide.',
+    'บริษัท วาไรตี้ ฟู้ดส์ อินเตอร์เนชั่นแนล จำกัด ผู้ผลิตบิสกิตและขนมขบเคี้ยวคุณภาพสูง อันดับ 1 ในประเทศไทย ส่งออก 50+ ประเทศทั่วโลก':
+      'Variety Foods International Co., Ltd. — Thailand’s No.1 manufacturer of premium biscuits and snacks, exporting to 50+ countries worldwide.',
     'บริษัท วาไรตี้ ฟู้ดส์ จำกัด ผู้ผลิตขนมปังปี๊บและบิสกิตคุณภาพสูง อันดับ 1 ในประเทศไทย':
       'Variety Foods Co., Ltd. — Thailand’s No.1 manufacturer of premium tin-packed biscuits and cookies.',
 
@@ -65,8 +65,8 @@
     'ดูสินค้า': 'View Products',
     'เมนูด่วน': 'Quick menu',
     'บริษัทของเรา': 'Our Company',
-    'บริษัท วาไรตี้ ฟู้ดส์ อินเตอร์เนชั่นแนล จำกัด เป็นผู้นำด้านการผลิตบิสกิต และขนมขบเคี้ยวของประเทศไทย ด้วยการคัดสรรส่วนประกอบคุณภาพ และเฟ้นหารสชาติที่ดีที่สุด ไปจนถึงกระบวนการผลิตที่ทันสมัย และปลอดภัย รวมไปถึงการได้รับความไว้วางใจจากลูกค้า โดยมีสินค้าส่งออกไปกว่า 30 ประเทศทั่วโลก':
-      'Variety Foods International Co., Ltd. is a leader in biscuit and snack manufacturing in Thailand — from selecting quality ingredients and searching out the very best flavours, to a modern, safe production process and the trust our customers place in us, with products exported to more than 30 countries worldwide.',
+    'บริษัท วาไรตี้ ฟู้ดส์ อินเตอร์เนชั่นแนล จำกัด เป็นผู้นำด้านการผลิตบิสกิต และขนมขบเคี้ยวของประเทศไทย ด้วยการคัดสรรส่วนประกอบคุณภาพ และเฟ้นหารสชาติที่ดีที่สุด ไปจนถึงกระบวนการผลิตที่ทันสมัย และปลอดภัย รวมไปถึงการได้รับความไว้วางใจจากลูกค้า โดยมีสินค้าส่งออกไป 50+ ประเทศทั่วโลก':
+      'Variety Foods International Co., Ltd. is a leader in biscuit and snack manufacturing in Thailand — from selecting quality ingredients and searching out the very best flavours, to a modern, safe production process and the trust our customers place in us, with products exported to 50+ countries worldwide.',
     'Finish · เสร็จ!': 'Finish · Done!',
     'ผู้เชี่ยวชาญด้านการผลิตบิสกิต คุกกี้ แครกเกอร์ เวเฟอร์ และขนมขบเคี้ยว เราใส่ใจในทุกขั้นตอนการผลิต และพิถีพิถันในการเลือกสรรวัตถุดิบ':
       'Specialists in biscuits, cookies, crackers, wafers and snacks. We care about every step of production and are meticulous about the ingredients we choose.',
