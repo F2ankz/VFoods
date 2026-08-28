@@ -34,3 +34,5 @@ Cookie 3D wlk/
 
 # …except the web-ready models the site actually serves
 !models/*.glb
+# …and the catalog PDF the site serves for download
+!downloads/*.pdf

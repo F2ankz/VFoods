@@ -52,6 +52,20 @@
     'ช้อปออนไลน์:': 'Shop online:',
     'คู่มือ OEM': 'OEM Guide',
     'กลับหน้าหลัก': 'Back to Home',
+
+    /* ── catalog page ── */
+    'แคตตาล็อกสินค้า — VFoods': 'Product Catalog — VFoods',
+    'แคตตาล็อกสินค้า 2026': 'Product Catalog 2026',
+    'เปิดดูสินค้าทั้งหมดของ VFoods ฉบับล่าสุด — ขนมปังปี๊บ บิสกิต เวเฟอร์ คุกกี้สอดไส้ และอีกมากมาย พลิกอ่านทั้ง 2 เล่มได้เลยด้านล่าง หรือดาวน์โหลดไฟล์ PDF ไปดูภายหลัง':
+      'Browse VFoods’ full product range in the latest edition — tin-packed biscuits, wafers, cream-filled cookies and more. Flip through both volumes below, or download the PDFs for later.',
+    'เล่ม 1': 'Volume 1',
+    'เล่ม 2': 'Volume 2',
+    'แคตตาล็อก อัปเดต 2026': 'Catalog Update 2026',
+    'แคตตาล็อกสินค้า VFOODS 2026': 'VFOODS Product Catalog 2026',
+    'ดาวน์โหลด PDF': 'Download PDF',
+    'เปิดแบบเต็มหน้าจอ': 'Open full screen',
+    'หากพลิกอ่านไม่ได้': 'Can’t flip through it?',
+    'ดาวน์โหลดไฟล์ PDF ที่นี่': 'Download the PDF here',
     'ผู้ผลิตขนมปังปี๊บอันดับ 1 ในประเทศไทย': 'Thailand’s No.1 tin-packed biscuit manufacturer',
     'บริษัท วาไรตี้ ฟู้ดส์ อินเตอร์เนชั่นแนล จำกัด': 'Variety Foods International Co., Ltd.',
     'บริษัท วาไรตี้ ฟู้ดส์ อินเตอร์เนชั่นแนล จำกัด ผู้ผลิตบิสกิตและขนมขบเคี้ยวคุณภาพสูง อันดับ 1 ในประเทศไทย ส่งออก 50+ ประเทศทั่วโลก':
@@ -226,9 +240,9 @@
     /* ── products page ── */
     'สินค้าของเรา — VFoods': 'Our Products — VFoods',
     '9 หมวดหมู่ หลากหลายรสชาติ เพื่อทุกรสนิยม': '9 categories, countless flavours — one for every taste',
-    'อุโมงค์แห่งรสชาติ': 'The Flavour Tunnel',
-    'เลื่อนลงเพื่อบินทะลุ 9 หมวดหมู่สินค้า — ทุกประตูคือรสชาติใหม่ที่รอให้ค้นพบ':
-      'Scroll to fly through all 9 product categories — every gate is a new flavour waiting to be found',
+    'อุโมงค์แห่งความหลากหลาย': 'The Tunnel of Variety',
+    'บินทะลุ 9 หมวดหมู่สินค้าที่หลากหลายสไตล์วาไรตี้ฟู้ดส์ - ทุกประตูคือความอร่อยที่รอให้ค้นพบ':
+      'Fly through all 9 product categories, the Variety Foods way — every gate is a taste waiting to be found',
     'เลื่อนต่อเพื่อเดินทางผ่านรสชาติ ↓': 'Keep scrolling to travel through the flavours ↓',
     'ขนมขาไก่กรุบกรอบ หลากหลายรสชาติ ใส่ซองสะดวก':
       'Crunchy biscuit sticks in a range of flavours, in convenient packs',
@@ -569,6 +583,7 @@
     'Products': 'สินค้า',
     'Our Brands': 'แบรนด์ของเรา',
     'OEM Engagement Guide': 'คู่มือการร่วมงาน OEM',
+    'Product Catalog 2026': 'แคตตาล็อกสินค้า 2026',
     'Contact Us': 'ติดต่อเรา',
     'OEM Guide': 'คู่มือ OEM',
 

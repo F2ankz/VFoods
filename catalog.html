@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แคตตาล็อกสินค้า — VFoods</title>
+<meta name="description" content="เปิดดูแคตตาล็อกสินค้า VFoods ฉบับปี 2026 — ขนมปังปี๊บ บิสกิต เวเฟอร์ คุกกี้ และอีกมากมาย">
+<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="theme-white.css?v=2">
+<link rel="stylesheet" href="nav.css?v=2">
+<link rel="stylesheet" href="i18n.css?v=1">
+<link rel="stylesheet" href="cursor.css?v=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800;1,700&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   CATALOG — flipbook embed on a white/cream page
+   ══════════════════════════════════════════ */
+.cat-wrap { max-width:1180px; margin:0 auto; padding:clamp(110px,12vw,150px) 24px clamp(56px,7vw,88px); }
+
+.cat-head { text-align:center; margin-bottom:clamp(28px,4vw,44px); }
+.cat-eyebrow {
+  display:inline-block; font-family:'Sarabun',sans-serif; font-size:.74rem; font-weight:700;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--og5,#B8480A);
+  border:1px solid rgba(255,109,26,.32); border-radius:50px; padding:7px 16px; margin-bottom:18px;
+}
+.cat-title {
+  font-family:'Sarabun',sans-serif; font-weight:800; color:var(--dark,#2B1B16);
+  font-size:clamp(1.9rem,4.4vw,3rem); line-height:1.2; margin:0 0 12px;
+}
+.cat-sub {
+  font-family:'Sarabun',sans-serif; font-weight:300; color:rgba(43,27,22,.66);
+  font-size:clamp(.95rem,1.6vw,1.08rem); line-height:1.8; max-width:640px; margin:0 auto;
+}
+
+/* each volume — stacked top to bottom */
+.cat-vol { margin-top:clamp(48px,6vw,72px); }
+.cat-vol:first-of-type { margin-top:0; }
+.cat-vol + .cat-vol { padding-top:clamp(48px,6vw,72px); border-top:1px solid rgba(255,109,26,.16); }
+.cat-vol-head { display:flex; align-items:baseline; gap:12px; margin-bottom:18px; }
+.cat-vol-num {
+  font-family:'Sarabun',sans-serif; font-weight:800; font-size:.82rem; letter-spacing:.04em;
+  color:#fff; background:#E45F06; border-radius:50px; padding:5px 13px; flex-shrink:0;
+}
+.cat-vol-title {
+  font-family:'Sarabun',sans-serif; font-weight:800; color:var(--dark,#2B1B16);
+  font-size:clamp(1.15rem,2.4vw,1.5rem); line-height:1.3; margin:0;
+}
+
+/* flipbook frame */
+.cat-book {
+  position:relative; width:100%; height:min(80vh,820px);
+  background:#FBF6EF; border:1px solid rgba(255,109,26,.18); border-radius:var(--r2,24px);
+  overflow:hidden; box-shadow:0 18px 50px rgba(255,109,26,.12);
+}
+.cat-book iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+.cat-actions { display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:clamp(24px,3.5vw,36px); }
+.cat-btn {
+  display:inline-flex; align-items:center; gap:9px;
+  font-family:'Sarabun',sans-serif; font-weight:700; font-size:.92rem; text-decoration:none;
+  padding:13px 24px; border-radius:50px; transition:transform .25s, box-shadow .25s, background .25s;
+}
+.cat-btn svg { width:17px; height:17px; }
+.cat-btn-primary { background:#E45F06; color:#fff; box-shadow:0 10px 26px rgba(228,95,6,.28); }
+.cat-btn-primary:hover { transform:translateY(-3px); box-shadow:0 16px 34px rgba(228,95,6,.36); }
+.cat-btn-ghost { background:#fff; color:#B8480A; border:1px solid rgba(255,109,26,.34); }
+.cat-btn-ghost:hover { transform:translateY(-3px); box-shadow:0 12px 28px rgba(255,109,26,.16); }
+
+.cat-note { text-align:center; margin-top:16px; font-size:.82rem; color:rgba(43,27,22,.5); }
+.cat-note a { color:#B8480A; }
+
+@media(max-width:600px) {
+  .cat-book { height:72vh; }
+  .cat-actions { flex-direction:column; }
+  .cat-btn { justify-content:center; }
+}
+
+/* footer = orange (same as other pages) */
+html #g-footer { background:#E45F06 !important; }
+html #g-footer .logo-text, html #g-footer .footer-col h4 { color:#fff !important; }
+html #g-footer .footer-brand p, html #g-footer .footer-col a { color:rgba(255,255,255,.82) !important; }
+html #g-footer .footer-col a:hover { color:#fff !important; }
+html #g-footer .footer-bottom { border-top-color:rgba(255,255,255,.28) !important; }
+html #g-footer .footer-bottom p { color:rgba(255,255,255,.85) !important; }
+html #g-footer .f-social-btn { color:#fff !important; border-color:rgba(255,255,255,.4) !important; }
+</style>
+</head>
+<body>
+
+<!-- legacy fallback nav — nav.js replaces this with the shared menu -->
+<nav id="g-nav">
+  <a class="nav-brand" href="scroll-site/index.html"><img class="nav-logo-img" src="img/logo-vfoods.png" alt="VFOODS วีฟู้ดส์"></a>
+  <div class="nav-links">
+    <a href="scroll-site/index.html">Home</a>
+    <a href="news.html">News &amp; Activities</a>
+    <a href="products.html">Products</a>
+    <a href="brands.html">Our Brands</a>
+    <a href="oem-guide.html">OEM Engagement Guide</a>
+    <a href="catalog.html">Product Catalog 2026</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+</nav>
+
+<main class="cat-wrap">
+  <div class="cat-head">
+    <span class="cat-eyebrow">Catalog 2026</span>
+    <h1 class="cat-title">แคตตาล็อกสินค้า 2026</h1>
+    <p class="cat-sub">เปิดดูสินค้าทั้งหมดของ VFoods ฉบับล่าสุด — ขนมปังปี๊บ บิสกิต เวเฟอร์ คุกกี้สอดไส้ และอีกมากมาย พลิกอ่านทั้ง 2 เล่มได้เลยด้านล่าง หรือดาวน์โหลดไฟล์ PDF ไปดูภายหลัง</p>
+  </div>
+
+  <section class="cat-vol">
+    <div class="cat-vol-head">
+      <span class="cat-vol-num">เล่ม 1</span>
+      <h2 class="cat-vol-title">แคตตาล็อก อัปเดต 2026</h2>
+    </div>
+    <div class="cat-book">
+      <iframe src="https://online.fliphtml5.com/mhyeh/Catalog_Update_2026/" title="แคตตาล็อก อัปเดต 2026" seamless="seamless" scrolling="no" allowtransparency="true" allowfullscreen="true" loading="lazy"></iframe>
+    </div>
+    <div class="cat-actions">
+      <a class="cat-btn cat-btn-primary" href="downloads/catalog_update_2026.pdf" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        ดาวน์โหลด PDF
+      </a>
+      <a class="cat-btn cat-btn-ghost" href="https://online.fliphtml5.com/mhyeh/Catalog_Update_2026/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        เปิดแบบเต็มหน้าจอ
+      </a>
+    </div>
+    <p class="cat-note">หากพลิกอ่านไม่ได้ <a href="downloads/catalog_update_2026.pdf" target="_blank" rel="noopener">ดาวน์โหลดไฟล์ PDF ที่นี่</a></p>
+  </section>
+
+  <section class="cat-vol">
+    <div class="cat-vol-head">
+      <span class="cat-vol-num">เล่ม 2</span>
+      <h2 class="cat-vol-title">แคตตาล็อกสินค้า VFOODS 2026</h2>
+    </div>
+    <div class="cat-book">
+      <iframe src="https://online.fliphtml5.com/mhyeh/VFOODS_catalog_Product2026/" title="แคตตาล็อกสินค้า VFOODS 2026" seamless="seamless" scrolling="no" allowtransparency="true" allowfullscreen="true" loading="lazy"></iframe>
+    </div>
+    <div class="cat-actions">
+      <a class="cat-btn cat-btn-primary" href="downloads/vfoods_catalog_product2026.pdf" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        ดาวน์โหลด PDF
+      </a>
+      <a class="cat-btn cat-btn-ghost" href="https://online.fliphtml5.com/mhyeh/VFOODS_catalog_Product2026/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        เปิดแบบเต็มหน้าจอ
+      </a>
+    </div>
+    <p class="cat-note">หากพลิกอ่านไม่ได้ <a href="downloads/vfoods_catalog_product2026.pdf" target="_blank" rel="noopener">ดาวน์โหลดไฟล์ PDF ที่นี่</a></p>
+  </section>
+</main>
+
+<footer id="g-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo-text">VFoods</div>
+      <p>บริษัท วาไรตี้ ฟู้ดส์ จำกัด ผู้ผลิตขนมปังปี๊บและบิสกิตคุณภาพสูง อันดับ 1 ในประเทศไทย</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/VarietyFoods" target="_blank" class="f-social-btn" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+        <a href="https://www.instagram.com/vfoods_official/" target="_blank" class="f-social-btn" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+        <a href="https://www.tiktok.com/@vfoods_shop?_r=1&amp;_t=ZS-98gYfrkz9oy" target="_blank" class="f-social-btn" aria-label="TikTok"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
+        <a href="https://shopee.co.th/vfoods_official" target="_blank" class="f-social-btn" aria-label="Shopee"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.9414 17.9633c.229-1.879-.981-3.077-4.1758-4.0969-1.548-.528-2.277-1.22-2.26-2.1719.065-1.056 1.048-1.825 2.352-1.85a5.2898 5.2898 0 0 1 2.8838.89c.116.072.197.06.263-.039.09-.145.315-.494.39-.62.051-.081.061-.187-.068-.281-.185-.1369-.704-.4149-.983-.5319a6.4697 6.4697 0 0 0-2.5118-.514c-1.909.008-3.4129 1.215-3.5389 2.826-.082 1.1629.494 2.1078 1.73 2.8278.262.152 1.6799.716 2.2438.892 1.774.552 2.695 1.5419 2.478 2.6969-.197 1.047-1.299 1.7239-2.818 1.7439-1.2039-.046-2.2878-.537-3.1278-1.19l-.141-.11c-.104-.08-.218-.075-.287.03-.05.077-.376.547-.458.67-.077.108-.035.168.045.234.35.293.817.613 1.134.775a6.7097 6.7097 0 0 0 2.8289.727 4.9048 4.9048 0 0 0 2.0759-.354c1.095-.465 1.8029-1.394 1.9449-2.554zM11.9986 1.4009c-2.068 0-3.7539 1.95-3.8329 4.3899h7.6657c-.08-2.44-1.765-4.3899-3.8328-4.3899zm7.8516 22.5981-.08.001-15.7843-.002c-1.074-.04-1.863-.91-1.971-1.991l-.01-.195L1.298 6.2858a.459.459 0 0 1 .45-.494h4.9748C6.8448 2.568 9.1607 0 11.9996 0c2.8388 0 5.1537 2.5689 5.2757 5.7898h4.9678a.459.459 0 0 1 .458.483l-.773 15.5883-.007.131c-.094 1.094-.979 1.9769-2.0709 2.0059z"/></svg></a>
+        <a href="https://www.youtube.com/channel/UC-5HbsQsaBov9dHHvGUVoag" target="_blank" class="f-social-btn" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>สินค้า</h4>
+      <a href="products.html">ทั้งหมด</a>
+      <a href="brands.html">แบรนด์</a>
+      <a href="oem-guide.html">OEM Guide</a>
+    </div>
+    <div class="footer-col">
+      <h4>บริษัท</h4>
+      <a href="scroll-site/index.html">เกี่ยวกับเรา</a>
+      <a href="news.html">ข่าวสาร</a>
+      <a href="contact.html#join">ร่วมงานกับเรา</a>
+    </div>
+    <div class="footer-col">
+      <h4>ติดต่อ</h4>
+      <a href="mailto:info@vfoods.co.th">info@vfoods.co.th</a>
+      <a href="tel:+6634845448">034-845-448-9</a>
+      <a href="https://www.vfoods.co.th" target="_blank">vfoods.co.th</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 <a href="https://www.vfoods.co.th">VFoods Co., Ltd.</a> All rights reserved.</p>
+    <p style="color:rgba(255,255,255,.85)">Made with love in Thailand</p>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script src="nav.js?v=3"></script>
+<script src="i18n.js?v=3"></script>
+</body>
+</html>

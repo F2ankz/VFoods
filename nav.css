@@ -54,6 +54,7 @@
   transition:opacity .26s ease, transform .26s cubic-bezier(.23,1,.32,1);
   z-index:901;
 }
+.vn-dd:not(.vn-mega):not(.vn-mega3) { min-width:220px; }
 .vn-dd.vn-mega  { grid-template-columns:1fr 1fr; min-width:440px; }
 .vn-dd.vn-mega3 { grid-template-columns:1fr 1fr 1fr; min-width:420px; }
 .vn-dd::before { content:''; position:absolute; top:-14px; left:0; right:0; height:16px; }
@@ -122,4 +123,6 @@
     transition:background .2s;
   }
   .vn-mobile a:hover, .vn-mobile a.vn-active { background:rgba(255,255,255,.12); color:#fff; }
+  .vn-mobile a.vn-sub { padding-left:40px; font-weight:500; text-transform:none; letter-spacing:.01em; opacity:.9; }
+  .vn-mobile a.vn-sub::before { content:'↳ '; opacity:.6; }
 }

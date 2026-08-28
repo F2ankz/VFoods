@@ -18,6 +18,7 @@
       file === 'brands.html'    ? 'brands'   :
       file === 'news.html'      ? 'news'     :
       file === 'oem-guide.html' ? 'oem'      :
+      file === 'catalog.html'   ? 'oem'      :
       file === 'contact.html'   ? 'contact'  :
       (inScrollSite && file === 'index.html') ? 'home' : '';
 
@@ -78,7 +79,12 @@
           '<a href="' + P + 'brands.html" class="vn-parent' + A('brands') + '">Our Brands <span class="vn-caret">▾</span></a>' +
           '<div class="vn-dd vn-mega3">' + brandItems + '</div>' +
         '</div>' +
-        '<a href="' + P + 'oem-guide.html"' + (active === 'oem' ? ' class="vn-active"' : '') + '>OEM Engagement Guide</a>' +
+        '<div class="vn-item">' +
+          '<a href="' + P + 'oem-guide.html" class="vn-parent' + A('oem') + '">OEM Engagement Guide <span class="vn-caret">▾</span></a>' +
+          '<div class="vn-dd">' +
+            '<a href="' + P + 'catalog.html">Product Catalog 2026</a>' +
+          '</div>' +
+        '</div>' +
         '<a href="' + P + 'contact.html"' + (active === 'contact' ? ' class="vn-active"' : '') + '>Contact Us</a>' +
       '</div>' +
       /* ลำดับ: ช่องค้นหาสินค้า มาก่อน แล้วปุ่มเปลี่ยนภาษาอยู่ขวาสุด */
@@ -95,6 +101,7 @@
       '<a href="' + P + 'products.html"' + A('products') + '>Products</a>' +
       '<a href="' + P + 'brands.html"' + A('brands') + '>Our Brands</a>' +
       '<a href="' + P + 'oem-guide.html"' + (active === 'oem' ? ' class="vn-active"' : '') + '>OEM Engagement Guide</a>' +
+      '<a href="' + P + 'catalog.html" class="vn-sub' + (file === 'catalog.html' ? ' vn-active' : '') + '">Product Catalog 2026</a>' +
       '<a href="' + P + 'contact.html"' + (active === 'contact' ? ' class="vn-active"' : '') + '>Contact Us</a>' +
     '</div>';
 
