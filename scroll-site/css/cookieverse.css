@@ -561,6 +561,7 @@ body::after {
 .jp-coin.k3{width:24%;height:24%;left:21%;top:89%;animation-delay:-2.2s;}
 .jp-coin.k4{width:27%;height:27%;left:63%;top:84%;animation-delay:-.7s;}
 .jp-coin.k5{width:25%;height:25%;left:88%;top:50%;animation-delay:-2.7s;}
+.jp-coin.k6{width:22%;height:22%;left:37%;top:-6%;animation-delay:-2s;}
 
 /* finish panel extras */
 .jp-fin-list{list-style:none;display:grid;gap:11px;margin:0 0 26px;}
