@@ -27,7 +27,8 @@ html[data-view="mobile"] input[type="reset"], html[data-view="mobile"] [onclick]
 html[data-view="mobile"] .spin-obj,
 html[data-view="mobile"] .gc-obj,
 html[data-view="mobile"] .fv-obj,
-html[data-view="mobile"] .pk-obj {
+html[data-view="mobile"] .pk-obj,
+html[data-view="mobile"] .pkg-scene img {
   animation: none !important;
   transform: none !important;
   transition: none !important;
@@ -37,6 +38,7 @@ html[data-view="mobile"] .sc:hover,
 html[data-view="mobile"] .gc:hover,
 html[data-view="mobile"] .fv-card:hover,
 html[data-view="mobile"] .pk:hover,
+html[data-view="mobile"] .pkg-item:hover,
 html[data-view="mobile"] .fc:hover,
 html[data-view="mobile"] .prod-card:hover,
 html[data-view="mobile"] .brand-card:hover,

@@ -355,33 +355,33 @@ nav{
 .fv-name{font-family:'Sarabun',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:-.01em;margin-top:10px;margin-bottom:3px;}
 .fv-sub{font-size:.7rem;color:var(--t3);font-weight:300;}
 
-/* ── PACKAGING ── */
+/* ── PACKAGING · 4.12 ประเภทบรรจุภัณฑ์ (รวมในหน้าเดียว) ── */
 .pack-sec{padding:var(--sec-pt) 22px var(--sec-pb);background:var(--cr);}
-.pack-in{max-width:1100px;margin:0 auto;}
-.pack-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;}
-.pk{
-  background:var(--w);border:1.5px solid rgba(26,6,8,.07);border-radius:var(--rad2);
-  padding:38px 28px;text-align:center;position:relative;overflow:hidden;
-  transition:all .45s cubic-bezier(.23,1,.32,1);
-}
-.pk:hover{transform:translateY(-8px);box-shadow:var(--sh2);border-color:rgba(232,23,43,.25);}
-.pk::before{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(ellipse 80% 55% at 50% 0%,rgba(232,23,43,.04),transparent 70%);opacity:0;transition:opacity .4s;}
-.pk:hover::before{opacity:1;}
-.pk-scene{perspective:900px;height:200px;display:flex;align-items:flex-end;justify-content:center;position:relative;}
-.pk-obj{animation:spinY 7s linear infinite;cursor:grab;filter:drop-shadow(0 12px 26px rgba(232,23,43,.14)) drop-shadow(0 3px 8px rgba(0,0,0,.09));transition:filter .3s,animation-duration .4s;}
-.pk:hover .pk-obj{animation-duration:3s;filter:drop-shadow(0 18px 38px rgba(232,23,43,.28)) drop-shadow(0 3px 8px rgba(0,0,0,.11));}
-.pk-obj:active{cursor:grabbing;}
-/* real packaging mockups — floating 3D presentation */
-.pk-scene::before{content:'';position:absolute;left:50%;top:44%;width:74%;height:66%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(232,23,43,.11),transparent 70%);filter:blur(6px);opacity:.65;transition:opacity .45s,transform .5s;pointer-events:none;}
-.pk:hover .pk-scene::before{opacity:1;transform:translate(-50%,-50%) scale(1.13);}
-.pk-scene::after{content:'';position:absolute;left:50%;bottom:2px;width:60%;height:16px;transform:translateX(-50%);background:radial-gradient(ellipse at center,rgba(80,34,10,.32),transparent 72%);filter:blur(5px);transition:width .5s cubic-bezier(.23,1,.32,1),opacity .5s;pointer-events:none;}
-.pk:hover .pk-scene::after{width:46%;opacity:.85;}
-.pk-photo{position:relative;z-index:1;max-width:84%;max-height:186px;object-fit:contain;filter:drop-shadow(0 16px 22px rgba(80,34,10,.24));animation:pkbob 5s ease-in-out infinite;transition:transform .5s cubic-bezier(.23,1,.32,1),filter .4s;transform-origin:50% 100%;will-change:transform;}
-.pk:hover .pk-photo{animation:none;transform:translateY(-10px) scale(1.06);filter:drop-shadow(0 28px 34px rgba(232,23,43,.3));}
+.pack-in{max-width:1120px;margin:0 auto;}
 @keyframes pkbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
-.pk-name{font-family:'Sarabun',sans-serif;font-size:1.05rem;font-weight:700;letter-spacing:-.02em;margin-top:14px;margin-bottom:5px;}
-.pk-desc{font-size:.81rem;color:var(--t3);line-height:1.74;font-weight:300;}
-.pk-tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:14px;}
+
+.pkg-group{margin-top:40px;}
+.pkg-group:first-of-type{margin-top:4px;}
+.pkg-ghead{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;margin-bottom:16px;padding-bottom:11px;border-bottom:1.5px solid var(--bd);}
+.pkg-gnum{flex:0 0 auto;font-family:'Sarabun',sans-serif;font-size:.8rem;font-weight:700;color:#fff;background:var(--r);border-radius:8px;padding:3px 11px;letter-spacing:.02em;}
+.pkg-gname{font-family:'Sarabun',sans-serif;font-size:1.18rem;font-weight:700;letter-spacing:-.02em;color:var(--t);}
+.pkg-gsub{font-size:.8rem;color:var(--t3);font-weight:300;line-height:1.6;}
+.pkg-sub{margin-top:18px;}
+.pkg-sublabel{font-size:.76rem;font-weight:600;color:var(--acc);letter-spacing:.03em;margin-bottom:10px;}
+.pkg-row{display:flex;flex-wrap:wrap;gap:14px;}
+.pkg-item{
+  flex:1 1 158px;max-width:216px;
+  background:var(--w);border:1.5px solid rgba(26,6,8,.07);border-radius:var(--rad);
+  padding:16px 14px 15px;text-align:center;
+  transition:transform .4s cubic-bezier(.23,1,.32,1),box-shadow .4s,border-color .4s;
+}
+.pkg-item:hover{transform:translateY(-6px);box-shadow:var(--sh2);border-color:rgba(232,23,43,.25);}
+.pkg-scene{height:158px;display:flex;align-items:center;justify-content:center;margin-bottom:11px;}
+.pkg-scene img{max-width:100%;max-height:158px;object-fit:contain;filter:drop-shadow(0 12px 20px rgba(80,34,10,.2));animation:pkbob 5.5s ease-in-out infinite;transition:transform .4s cubic-bezier(.23,1,.32,1);}
+.pkg-item:hover .pkg-scene img{animation:none;transform:scale(1.06) translateY(-4px);}
+.pkg-cap{font-family:'Sarabun',sans-serif;font-size:.8rem;font-weight:600;color:var(--t2);line-height:1.5;}
+.pkg-cap span{display:block;font-size:.7rem;font-weight:300;color:var(--t3);margin-top:2px;}
+.pkg-tempnote{margin-top:14px;font-size:.73rem;color:var(--t3);font-weight:300;font-style:italic;}
 
 /* ── FEATURES ── */
 .feat-sec{padding:var(--sec-pt) 22px var(--sec-pb);}
@@ -1073,48 +1073,99 @@ img.fv-obj{width:92px;height:92px;object-fit:contain;animation:oemFloat 4.6s eas
 <!-- ════ PACKAGING ════ -->
 <section class="pack-sec" id="packaging">
   <div class="pack-in">
-    <div class="sec-eye">Packaging Options</div>
-    <h2 class="sec-title">บรรจุภัณฑ์ที่เลือกได้</h2>
-    <p class="sec-desc">หลากรูปแบบให้เลือก ออกแบบลายบรรจุภัณฑ์ได้เอง เพื่อให้แบรนด์ของคุณโดดเด่นบนชั้นวาง</p>
-    <div class="pack-grid">
-      <!-- 1) Kraft Corrugated Carton · กล่องลังกระดาษ -->
-      <div class="pk">
-        <div class="pk-scene">
-          <img class="pk-photo" src="img/packaging/carton.webp" alt="ลังลูกฟูกกระดาษคราฟท์ VFOODS" loading="lazy">
-        </div>
-        <div class="pk-name">กล่องลังกระดาษ</div>
-        <div class="pk-desc">ลังลูกฟูกกระดาษคราฟท์ แข็งแรง สำหรับบรรจุ-ขนส่งจำนวนมาก พิมพ์โลโก้แบรนด์ได้</div>
-        <div class="pk-tags"><span class="stag">ลูกฟูกแข็งแรง</span><span class="stag">ขนส่งได้</span><span class="stag">พิมพ์โลโก้</span></div>
+    <div class="sec-eye">Packaging Options · 4.12</div>
+    <h2 class="sec-title">ประเภทบรรจุภัณฑ์</h2>
+    <p class="sec-desc">รวมทุกรูปแบบบรรจุภัณฑ์ที่ VFoods ผลิตได้ไว้ในหน้าเดียว — เลือกรูปแบบที่ใช่ แล้วออกแบบลายเองให้แบรนด์ของคุณโดดเด่นบนชั้นวาง</p>
+
+    <!-- 1 · พรีเมียม -->
+    <div class="pkg-group">
+      <div class="pkg-ghead">
+        <span class="pkg-gnum">1</span>
+        <span class="pkg-gname">พรีเมียม</span>
+        <span class="pkg-gsub">กล่องของขวัญเวเฟอร์ พิมพ์ลายหรู เหมาะเป็นของฝาก</span>
+      </div>
+      <div class="pkg-row">
+        <div class="pkg-item"><div class="pkg-scene"><img src="img/packaging/oem/premium-durian.webp" alt="Premium Durian Wafers 120g" loading="lazy"></div><div class="pkg-cap">เวเฟอร์ทุเรียน<span>Durian Wafers 120g</span></div></div>
+        <div class="pkg-item"><div class="pkg-scene"><img src="img/packaging/oem/premium-mango.webp" alt="Premium Mango Wafers 120g" loading="lazy"></div><div class="pkg-cap">เวเฟอร์มะม่วง<span>Mango Wafers 120g</span></div></div>
+        <div class="pkg-item"><div class="pkg-scene"><img src="img/packaging/oem/premium-mangosteen.webp" alt="Premium Mangosteen Wafers 120g" loading="lazy"></div><div class="pkg-cap">เวเฟอร์มังคุด<span>Mangosteen Wafers 120g</span></div></div>
+      </div>
+    </div>
+
+    <!-- 2 · Family Pack -->
+    <div class="pkg-group">
+      <div class="pkg-ghead">
+        <span class="pkg-gnum">2</span>
+        <span class="pkg-gname">Family Pack</span>
+        <span class="pkg-gsub">ซองครอบครัว / ถุงหิ้ว / ถุงโหล — ปริมาณเยอะ แบ่งกินได้หลายมื้อ</span>
       </div>
 
-      <!-- 2) Stand-up Zip Pouch · ซองซิปล็อก -->
-      <div class="pk">
-        <div class="pk-scene">
-          <img class="pk-photo" src="img/packaging/pouch.webp" alt="ซองฟอยล์ตั้งได้ Doy-pack" loading="lazy" style="animation-delay:-1s">
+      <div class="pkg-sub">
+        <div class="pkg-sublabel">Assorted Party Snacks Box</div>
+        <div class="pkg-row">
+          <div class="pkg-item"><div class="pkg-scene"><img src="img/packaging/oem/familypack-party-yellow.webp" alt="Assorted Party Snacks Box สีเหลือง 330g" loading="lazy"></div><div class="pkg-cap">ถังปาร์ตี้ สีเหลือง<span>Assorted Party Snacks Box 330g</span></div></div>
+          <div class="pkg-item"><div class="pkg-scene"><img src="img/packaging/oem/familypack-party-red.webp" alt="Assorted Party Snacks Box สีแดง 330g" loading="lazy"></div><div class="pkg-cap">ถังปาร์ตี้ สีแดง<span>Assorted Party Snacks Box 330g</span></div></div>
         </div>
-        <div class="pk-name">ซองตั้งได้ Stand-up</div>
-        <div class="pk-desc">ซองฟอยล์ตั้งได้ Doy-pack ซีลแน่นกันความชื้น มีหูแขวน พิมพ์ฟิล์มสีจริง</div>
-        <div class="pk-tags"><span class="stag">หูแขวน</span><span class="stag">กันความชื้น</span><span class="stag">ตั้งได้</span></div>
       </div>
 
-      <!-- 3) Metal Tin · ปี๊บ -->
-      <div class="pk">
-        <div class="pk-scene">
-          <img class="pk-photo" src="img/packaging/tin.webp" alt="ปี๊บโลหะฝาหน้าต่าง VFOODS" loading="lazy" style="animation-delay:-2s">
+      <div class="pkg-sub">
+        <div class="pkg-sublabel">ถุงโหล VFoods</div>
+        <div class="pkg-row">
+          <div class="pkg-item"><div class="pkg-scene"><img src="img/packaging/oem/familypack-johl-blue.webp" alt="ถุงโหล VFoods สีน้ำเงิน คุกกี้ครีมรวมรส 200g" loading="lazy"></div><div class="pkg-cap">ซองน้ำเงิน<span>คุกกี้ครีมรวมรส 200g</span></div></div>
+          <div class="pkg-item"><div class="pkg-scene"><img src="img/packaging/oem/familypack-johl-green.webp" alt="ถุงโหล VFoods สีเขียว บิสกิตสับปะรดรวมรส 200g" loading="lazy"></div><div class="pkg-cap">ซองเขียว<span>บิสกิตสับปะรดรวมรส 200g</span></div></div>
+          <div class="pkg-item"><div class="pkg-scene"><img src="img/packaging/oem/familypack-johl-orange.webp" alt="ถุงโหล VFoods สีส้ม แซนด์วิชบิสกิตรวมรส 480g" loading="lazy"></div><div class="pkg-cap">ซองส้ม<span>แซนด์วิชบิสกิตรวมรส 480g</span></div></div>
         </div>
-        <div class="pk-name">ปี๊บ (กระป๋องโลหะ)</div>
-        <div class="pk-desc">บรรจุภัณฑ์โลหะทรงเหลี่ยม ทน ปิดสนิท เก็บได้นาน ดูพรีเมียม เหมาะเป็นของฝาก</div>
-        <div class="pk-tags"><span class="stag">โลหะ</span><span class="stag">ปิดสนิท</span><span class="stag">เก็บนาน</span></div>
       </div>
 
-      <!-- 4) Jar · กระปุก -->
-      <div class="pk">
-        <div class="pk-scene">
-          <img class="pk-photo" src="img/packaging/jar.webp" alt="กระปุกใส PET VFOODS" loading="lazy" style="animation-delay:-3s">
+      <div class="pkg-sub">
+        <div class="pkg-sublabel">Assorted 130–150 กรัม</div>
+        <div class="pkg-row">
+          <div class="pkg-item"><div class="pkg-scene"><img src="img/packaging/oem/assorted-flower.webp" alt="บิสกิตดอกไม้ครีมรวมรส 150g" loading="lazy"></div><div class="pkg-cap">บิสกิตดอกไม้ครีมรวมรส<span>150 g</span></div></div>
+          <div class="pkg-item"><div class="pkg-scene"><img src="img/packaging/oem/assorted-bearsea.webp" alt="บิสกิตลายหมีและสัตว์ทะเลรวมรส 150g" loading="lazy"></div><div class="pkg-cap">บิสกิตลายหมี &amp; สัตว์ทะเลรวมรส<span>150 g</span></div></div>
+          <div class="pkg-item"><div class="pkg-scene"><img src="img/packaging/oem/assorted-pineapple.webp" alt="บิสกิตสับปะรดรวมรส 150g" loading="lazy"></div><div class="pkg-cap">บิสกิตสับปะรดรวมรส<span>150 g</span></div></div>
+          <div class="pkg-item"><div class="pkg-scene"><img src="img/packaging/oem/assorted-galaxy.webp" alt="มินิคุกกี้กาแล็กซีสอดไส้รวมรสครีมและแยม 150g" loading="lazy"></div><div class="pkg-cap">มินิคุกกี้กาแล็กซีสอดไส้รวมรส<span>150 g</span></div></div>
+          <div class="pkg-item"><div class="pkg-scene"><img src="img/packaging/oem/assorted-violin.webp" alt="แครกเกอร์ไวโอลีนครีมรวมรส 150g" loading="lazy"></div><div class="pkg-cap">แครกเกอร์ไวโอลีนครีมรวมรส<span>150 g</span></div></div>
         </div>
-        <div class="pk-name">กระปุก</div>
-        <div class="pk-desc">กระปุกใส PET เห็นตัวสินค้าชัด ฝาเกลียวปิดแน่น หยิบง่าย เหมาะวางหน้าร้าน-โชว์คุกกี้</div>
-        <div class="pk-tags"><span class="stag">มองเห็นสินค้า</span><span class="stag">ฝาเกลียว</span><span class="stag">โชว์หน้าร้าน</span></div>
+      </div>
+    </div>
+
+    <!-- 3 · Tin -->
+    <div class="pkg-group">
+      <div class="pkg-ghead">
+        <span class="pkg-gnum">3</span>
+        <span class="pkg-gname">Tin (ปี๊บโลหะ)</span>
+        <span class="pkg-gsub">ทรงเหลี่ยม ปิดสนิท เก็บได้นาน ดูพรีเมียม — ยกตัวอย่างรส “กะทิสับปะรด”</span>
+      </div>
+      <div class="pkg-row">
+        <div class="pkg-item"><div class="pkg-scene"><img src="img/packaging/oem/tin-big-kathi.webp" alt="Big Tin กะทิสับปะรด 5 กก." loading="lazy"></div><div class="pkg-cap">Big Tin<span>กะทิสับปะรด 5 กก.</span></div></div>
+        <div class="pkg-item"><div class="pkg-scene"><img src="img/brand-packs/kathi.webp" alt="Medium Tin กะทิสับปะรด" loading="lazy"></div><div class="pkg-cap">Medium Tin<span>กะทิสับปะรด</span></div></div>
+        <div class="pkg-item"><div class="pkg-scene"><img src="img/brand-packs/kathi.webp" alt="Supermini Tin กะทิสับปะรด" loading="lazy"></div><div class="pkg-cap">Supermini<span>กะทิสับปะรด</span></div></div>
+      </div>
+      <div class="pkg-tempnote">* ภาพ Medium Tin และ Supermini เป็นภาพชั่วคราว รอรูปถ่ายจริงจากทีมงาน</div>
+    </div>
+
+    <!-- 4 · Plastic Jar Snack -->
+    <div class="pkg-group">
+      <div class="pkg-ghead">
+        <span class="pkg-gnum">4</span>
+        <span class="pkg-gname">Plastic Jar Snack (กระปุกพลาสติก)</span>
+        <span class="pkg-gsub">ใส หยิบง่าย โชว์ตัวสินค้า — ยกตัวอย่างรส “กะทิสับปะรด”</span>
+      </div>
+      <div class="pkg-row">
+        <div class="pkg-item"><div class="pkg-scene"><img src="img/brand-packs/kathi.webp" alt="กระปุกฝา EOE กะทิสับปะรด 160g" loading="lazy"></div><div class="pkg-cap">EOE (ฝาดึง)<span>กะทิสับปะรด 160 g</span></div></div>
+        <div class="pkg-item"><div class="pkg-scene"><img src="img/brand-packs/kathi.webp" alt="กระปุกฝาหมุน กะทิสับปะรด" loading="lazy"></div><div class="pkg-cap">ฝาหมุน<span>กะทิสับปะรด</span></div></div>
+      </div>
+      <div class="pkg-tempnote">* ภาพฝาหมุนเป็นภาพชั่วคราว รอรูปถ่ายจริงจากทีมงาน</div>
+    </div>
+
+    <!-- 5 · Bag &amp; Box -->
+    <div class="pkg-group">
+      <div class="pkg-ghead">
+        <span class="pkg-gnum">5</span>
+        <span class="pkg-gname">Bag &amp; Box</span>
+        <span class="pkg-gsub">ถุง/กล่องเวเฟอร์แผ่นสอดไส้ครีม</span>
+      </div>
+      <div class="pkg-row">
+        <div class="pkg-item"><div class="pkg-scene"><img src="img/packaging/oem/bagbox-coconut-wafer.webp" alt="กล่องเวเฟอร์แผ่นสอดไส้ครีม รสมะพร้าว" loading="lazy"></div><div class="pkg-cap">เวเฟอร์แผ่นสอดไส้ครีม<span>รสมะพร้าว</span></div></div>
       </div>
     </div>
   </div>
@@ -1189,7 +1240,7 @@ if(!window.VF_LITE){
   document.querySelectorAll('.spin-obj,.gc-obj,.fv-obj,.pk-obj').forEach(makeDraggable);
 
   /* ── CARD 3D TILT ── */
-  document.querySelectorAll('.sc,.gc,.fv-card,.pk,.fc').forEach(card=>{
+  document.querySelectorAll('.sc,.gc,.fv-card,.pk,.pkg-item,.fc').forEach(card=>{
     card.addEventListener('mousemove',e=>{
       const r=card.getBoundingClientRect();
       const x=(e.clientX-r.left)/r.width-.5;
@@ -1218,7 +1269,7 @@ const io=new IntersectionObserver(entries=>{
     if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}
   });
 },{threshold:.1});
-document.querySelectorAll('.sc,.gc,.fv-card,.pk,.fc').forEach(el=>{
+document.querySelectorAll('.sc,.gc,.fv-card,.pk,.pkg-item,.fc').forEach(el=>{
   el.style.opacity='0';el.style.transform='translateY(38px)';
   el.style.transition='opacity .7s ease, transform .7s cubic-bezier(.23,1,.32,1)';
   io.observe(el);
