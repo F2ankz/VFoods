@@ -340,48 +340,200 @@ nav{
 .gc-desc{font-size:.8rem;color:var(--t3);line-height:1.72;font-weight:300;}
 
 /* ── FLAVORS ── */
-.flavor-sec{padding:var(--sec-pt) 22px var(--sec-pb);max-width:1200px;margin:0 auto;}
-.flavor-visual-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;}
+.flavor-sec{padding:var(--sec-pt) 22px var(--sec-pb);}
+.flavor-in{max-width:1100px;margin:0 auto;}
+
+.fv-group{margin-top:44px;}
+.fv-group:first-of-type{margin-top:8px;}
+.fv-ghead{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;margin-bottom:18px;padding-bottom:11px;border-bottom:1.5px solid var(--bd);}
+.fv-gname{font-family:'Sarabun',sans-serif;font-size:1.12rem;font-weight:700;letter-spacing:-.02em;color:var(--t);}
+.fv-gsub{font-size:.8rem;color:var(--t3);font-weight:300;}
+.fv-gcount{margin-left:auto;font-size:.68rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--acc);}
+
+/* ตารางคงที่ 4 คอลัมน์ทั้งสองกลุ่ม — การ์ดกว้างเท่ากันหมด เรียงตรงกันทุกแถว */
+.flavor-visual-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+@media(max-width:860px){.flavor-visual-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:600px){.flavor-visual-grid{grid-template-columns:repeat(2,1fr);gap:12px;}}
 .fv-card{
   background:var(--w);border:1.5px solid rgba(26,6,8,.07);border-radius:var(--rad2);
-  padding:24px 16px;text-align:center;cursor:default;
+  padding:26px 16px 22px;text-align:center;cursor:default;
   transition:all .45s cubic-bezier(.23,1,.32,1);position:relative;overflow:hidden;
 }
-.fv-card:hover{transform:translateY(-8px);box-shadow:var(--sh2);border-color:rgba(232,23,43,.22);}
-.fv-scene{perspective:400px;height:96px;display:flex;align-items:center;justify-content:center;}
+.fv-card::before{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(198,77,8,.07),transparent 70%);opacity:0;transition:opacity .4s;}
+.fv-card:hover::before{opacity:1;}
+.fv-card:hover{transform:translateY(-8px);box-shadow:var(--sh2);border-color:rgba(198,77,8,.24);}
+.fv-scene{perspective:400px;height:96px;display:flex;align-items:center;justify-content:center;position:relative;}
 .fv-obj{animation:spinY 7s linear infinite;cursor:grab;filter:drop-shadow(0 7px 14px rgba(0,0,0,.12));transition:filter .3s,animation-duration .4s;}
 .fv-card:hover .fv-obj{animation-duration:2.5s;filter:drop-shadow(0 11px 24px rgba(0,0,0,.2));}
 .fv-obj:active{cursor:grabbing;}
-.fv-name{font-family:'Sarabun',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:-.01em;margin-top:10px;margin-bottom:3px;}
-.fv-sub{font-size:.7rem;color:var(--t3);font-weight:300;}
+.fv-name{font-family:'Sarabun',sans-serif;font-size:.92rem;font-weight:700;letter-spacing:-.01em;margin-top:12px;margin-bottom:4px;position:relative;}
+.fv-sub{font-size:.7rem;color:var(--t3);font-weight:300;letter-spacing:.06em;text-transform:uppercase;position:relative;}
+
+/* รสพิเศษ — แถบเต็มความกว้าง */
+.fv-custom{
+  margin-top:44px;display:flex;align-items:center;gap:28px;flex-wrap:wrap;
+  background:var(--cr);border:1.5px dashed rgba(198,77,8,.34);border-radius:var(--rad2);
+  padding:26px 32px;transition:all .45s cubic-bezier(.23,1,.32,1);
+}
+.fv-custom:hover{border-color:var(--r);box-shadow:var(--sh2);transform:translateY(-4px);}
+.fv-custom .fv-scene{flex:0 0 auto;height:104px;width:104px;}
+.fv-cust-body{flex:1;min-width:240px;}
+.fv-cust-eye{font-size:.66rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--acc);margin-bottom:6px;}
+.fv-cust-name{font-family:'Sarabun',sans-serif;font-size:1.24rem;font-weight:700;letter-spacing:-.02em;margin-bottom:7px;}
+.fv-cust-desc{font-size:.86rem;color:var(--t3);line-height:1.72;font-weight:300;}
+.fv-cust-cta{
+  flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;
+  background:var(--r);color:#fff;font-family:'Sarabun',sans-serif;font-size:.86rem;font-weight:700;
+  padding:13px 24px;border-radius:999px;text-decoration:none;transition:transform .3s,box-shadow .3s;
+}
+.fv-cust-cta:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(198,77,8,.34);}
+@media(max-width:600px){
+  .fv-custom{padding:24px 22px;gap:20px;text-align:center;justify-content:center;}
+  .fv-cust-cta{width:100%;justify-content:center;}
+}
 
 /* ── PACKAGING · 4.12 ประเภทบรรจุภัณฑ์ (รวมในหน้าเดียว) ── */
 .pack-sec{padding:var(--sec-pt) 22px var(--sec-pb);background:var(--cr);}
 .pack-in{max-width:1120px;margin:0 auto;}
 @keyframes pkbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
 
-.pkg-group{margin-top:40px;}
-.pkg-group:first-of-type{margin-top:4px;}
-.pkg-ghead{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;margin-bottom:16px;padding-bottom:11px;border-bottom:1.5px solid var(--bd);}
-.pkg-gnum{flex:0 0 auto;font-family:'Sarabun',sans-serif;font-size:.8rem;font-weight:700;color:#fff;background:var(--r);border-radius:8px;padding:3px 11px;letter-spacing:.02em;}
-.pkg-gname{font-family:'Sarabun',sans-serif;font-size:1.18rem;font-weight:700;letter-spacing:-.02em;color:var(--t);}
-.pkg-gsub{font-size:.8rem;color:var(--t3);font-weight:300;line-height:1.6;}
-.pkg-sub{margin-top:18px;}
-.pkg-sublabel{font-size:.76rem;font-weight:600;color:var(--acc);letter-spacing:.03em;margin-bottom:10px;}
-.pkg-row{display:flex;flex-wrap:wrap;gap:14px;}
+.pkg-group{margin-top:52px;scroll-margin-top:96px;}
+.pkg-group:first-of-type{margin-top:34px;}
+.pkg-ghead{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:5px 13px;
+  margin-bottom:20px;padding-bottom:13px;border-bottom:1.5px solid var(--bd);
+}
+.pkg-gnum{
+  grid-row:1/3;align-self:start;flex:0 0 auto;
+  font-family:'Sarabun',sans-serif;font-size:1.02rem;font-weight:700;color:#fff;background:var(--r);
+  width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 16px rgba(198,77,8,.26);
+}
+.pkg-gname{font-family:'Sarabun',sans-serif;font-size:1.18rem;font-weight:700;letter-spacing:-.02em;color:var(--t);align-self:end;}
+.pkg-gsub{grid-column:2;font-size:.8rem;color:var(--t3);font-weight:300;line-height:1.6;align-self:start;}
+.pkg-gcount{
+  grid-column:3;grid-row:1/3;align-self:center;white-space:nowrap;
+  font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--acc);
+  background:rgba(198,77,8,.09);border-radius:999px;padding:5px 12px;
+}
+@media(max-width:600px){
+  .pkg-ghead{grid-template-columns:auto 1fr;}
+  .pkg-gcount{grid-column:2;grid-row:3;justify-self:start;margin-top:4px;}
+}
+
+.pkg-sub{margin-top:24px;}
+.pkg-sub:first-of-type{margin-top:0;}
+.pkg-sublabel{
+  display:flex;align-items:center;gap:9px;
+  font-size:.76rem;font-weight:700;color:var(--acc);letter-spacing:.03em;margin-bottom:12px;
+}
+.pkg-sublabel::before{content:'';width:16px;height:2px;border-radius:2px;background:var(--r);flex:0 0 auto;}
+
+/* ตารางคงที่ — การ์ดกว้างเท่ากันทุกใบ ทุกกลุ่ม แม้กลุ่มนั้นจะมีชิ้นเดียว */
+.pkg-row{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;}
+@media(max-width:1000px){.pkg-row{grid-template-columns:repeat(4,1fr);}}
+@media(max-width:760px){.pkg-row{grid-template-columns:repeat(3,1fr);gap:12px;}}
+@media(max-width:560px){.pkg-row{grid-template-columns:repeat(2,1fr);}}
 .pkg-item{
-  flex:1 1 158px;max-width:216px;
   background:var(--w);border:1.5px solid rgba(26,6,8,.07);border-radius:var(--rad);
-  padding:16px 14px 15px;text-align:center;
+  padding:16px 14px 15px;text-align:center;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
   transition:transform .4s cubic-bezier(.23,1,.32,1),box-shadow .4s,border-color .4s;
 }
-.pkg-item:hover{transform:translateY(-6px);box-shadow:var(--sh2);border-color:rgba(232,23,43,.25);}
-.pkg-scene{height:158px;display:flex;align-items:center;justify-content:center;margin-bottom:11px;}
+.pkg-item::before{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(198,77,8,.07),transparent 70%);opacity:0;transition:opacity .4s;}
+.pkg-item:hover::before{opacity:1;}
+.pkg-item:hover{transform:translateY(-6px);box-shadow:var(--sh2);border-color:rgba(198,77,8,.26);}
+.pkg-scene{height:158px;display:flex;align-items:center;justify-content:center;margin-bottom:11px;position:relative;}
 .pkg-scene img{max-width:100%;max-height:158px;object-fit:contain;filter:drop-shadow(0 12px 20px rgba(80,34,10,.2));animation:pkbob 5.5s ease-in-out infinite;transition:transform .4s cubic-bezier(.23,1,.32,1);}
 .pkg-item:hover .pkg-scene img{animation:none;transform:scale(1.06) translateY(-4px);}
-.pkg-cap{font-family:'Sarabun',sans-serif;font-size:.8rem;font-weight:600;color:var(--t2);line-height:1.5;}
-.pkg-cap span{display:block;font-size:.7rem;font-weight:300;color:var(--t3);margin-top:2px;}
-.pkg-tempnote{margin-top:14px;font-size:.73rem;color:var(--t3);font-weight:300;font-style:italic;}
+.pkg-cap{font-family:'Sarabun',sans-serif;font-size:.8rem;font-weight:600;color:var(--t2);line-height:1.5;margin-top:auto;position:relative;}
+.pkg-cap span{display:block;font-size:.7rem;font-weight:300;color:var(--t3);margin-top:3px;}
+.pkg-tempnote{
+  display:inline-flex;align-items:center;gap:7px;margin-top:16px;
+  font-size:.72rem;color:var(--t3);font-weight:300;line-height:1.5;
+  background:rgba(198,77,8,.07);border-radius:999px;padding:6px 14px;
+}
+
+/* ── การ์ดประเภทบรรจุภัณฑ์ · ประเภทละ 1 รูป กดเปิดดูทุกขนาด ── */
+/* 5 ประเภท — ล็อก 3 คอลัมน์ให้ตกเป็นจังหวะ 3+2 การ์ดกว้างเท่ากันหมด */
+.pkgcat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px;}
+@media(max-width:860px){.pkgcat-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:540px){.pkgcat-grid{grid-template-columns:1fr;gap:14px;}}
+.pkgcat{
+  appearance:none;font:inherit;color:inherit;text-align:left;cursor:pointer;
+  background:var(--w);border:1.5px solid rgba(26,6,8,.07);border-radius:var(--rad2);
+  padding:22px 20px 20px;display:flex;flex-direction:column;position:relative;overflow:hidden;
+  transition:transform .45s cubic-bezier(.23,1,.32,1),box-shadow .45s,border-color .45s;
+}
+.pkgcat::before{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(198,77,8,.08),transparent 70%);opacity:0;transition:opacity .4s;}
+.pkgcat:hover::before,.pkgcat:focus-visible::before{opacity:1;}
+.pkgcat:hover,.pkgcat:focus-visible{transform:translateY(-8px);box-shadow:var(--sh2);border-color:rgba(198,77,8,.3);}
+.pkgcat:focus-visible{outline:2px solid var(--r);outline-offset:3px;}
+.pkgcat-num{
+  position:absolute;top:16px;left:16px;z-index:2;
+  font-family:'Sarabun',sans-serif;font-size:.86rem;font-weight:700;color:#fff;background:var(--r);
+  width:30px;height:30px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 16px rgba(198,77,8,.28);
+}
+.pkgcat-scene{height:172px;display:flex;align-items:center;justify-content:center;margin-bottom:15px;position:relative;}
+.pkgcat-scene img{max-width:100%;max-height:172px;object-fit:contain;filter:drop-shadow(0 14px 24px rgba(80,34,10,.22));animation:pkbob 5.5s ease-in-out infinite;transition:transform .45s cubic-bezier(.23,1,.32,1);}
+.pkgcat:hover .pkgcat-scene img{animation:none;transform:scale(1.07) translateY(-5px);}
+.pkgcat-name{font-family:'Sarabun',sans-serif;font-size:1.06rem;font-weight:700;letter-spacing:-.02em;margin-bottom:6px;position:relative;}
+.pkgcat-sub{font-size:.78rem;color:var(--t3);font-weight:300;line-height:1.65;margin-bottom:16px;position:relative;}
+.pkgcat-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;position:relative;}
+.pkgcat-count{
+  font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--acc);
+  background:rgba(198,77,8,.09);border-radius:999px;padding:5px 12px;
+}
+.pkgcat-go{display:inline-flex;align-items:center;gap:6px;font-family:'Sarabun',sans-serif;font-size:.79rem;font-weight:700;color:var(--r);}
+.pkgcat-go span{transition:transform .35s cubic-bezier(.23,1,.32,1);}
+.pkgcat:hover .pkgcat-go span{transform:translateX(4px);}
+
+/* ── หน้าต่างรายละเอียดของแต่ละประเภท ── */
+.pkg-details{display:none;}
+.pkgm{position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;padding:22px;}
+body.pkgm-open .float-back{opacity:0;pointer-events:none;}
+.pkgm[hidden]{display:none;}
+.pkgm-back{position:absolute;inset:0;background:rgba(43,27,22,.58);backdrop-filter:blur(5px);animation:pkgmFade .3s ease;}
+.pkgm-panel{
+  position:relative;width:min(1120px,100%);max-height:min(88vh,940px);
+  display:flex;flex-direction:column;overflow:hidden;
+  background:var(--cr);border-radius:var(--rad3);box-shadow:0 30px 90px rgba(43,27,22,.4);
+  animation:pkgmRise .42s cubic-bezier(.23,1,.32,1);
+}
+@keyframes pkgmFade{from{opacity:0}to{opacity:1}}
+@keyframes pkgmRise{from{opacity:0;transform:translateY(28px) scale(.97)}to{opacity:1;transform:none}}
+.pkgm-head{
+  flex:0 0 auto;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:4px 14px;
+  padding:24px 28px 18px;border-bottom:1.5px solid var(--bd);background:var(--cr);
+}
+.pkgm-num{
+  grid-row:1/3;align-self:start;
+  font-family:'Sarabun',sans-serif;font-size:1.02rem;font-weight:700;color:#fff;background:var(--r);
+  width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 16px rgba(198,77,8,.26);
+}
+.pkgm-title{font-family:'Sarabun',sans-serif;font-size:1.24rem;font-weight:700;letter-spacing:-.02em;color:var(--t);align-self:end;margin:0;}
+.pkgm-sub{grid-column:2;font-size:.8rem;color:var(--t3);font-weight:300;line-height:1.6;align-self:start;margin:0;}
+.pkgm-close{
+  grid-column:3;grid-row:1/3;align-self:center;
+  appearance:none;cursor:pointer;background:var(--w);border:1.5px solid var(--bd);
+  width:40px;height:40px;border-radius:50%;font-size:1.3rem;line-height:1;color:var(--t2);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .3s,color .3s,border-color .3s,transform .3s;
+}
+.pkgm-close:hover{background:var(--r);border-color:var(--r);color:#fff;transform:rotate(90deg);}
+.pkgm-close:focus-visible{outline:2px solid var(--r);outline-offset:3px;}
+.pkgm-body{flex:1 1 auto;overflow-y:auto;padding:24px 28px 30px;-webkit-overflow-scrolling:touch;}
+.pkgm-body .pkg-group,.pkgm-body .pkg-group:first-of-type{margin-top:0;}
+.pkgm-body .pkg-item{opacity:1!important;transform:none!important;}
+body.pkgm-open{overflow:hidden;}
+@media(max-width:600px){
+  .pkgm{padding:0;}
+  .pkgm-panel{max-height:100vh;height:100%;width:100%;border-radius:0;}
+  .pkgm-head{padding:18px 18px 14px;grid-template-columns:auto 1fr auto;}
+  .pkgm-body{padding:18px 18px 26px;}
+}
 
 /* ── FEATURES ── */
 .feat-sec{padding:var(--sec-pt) 22px var(--sec-pb);}
@@ -1029,19 +1181,49 @@ img.fv-obj{width:92px;height:92px;object-fit:contain;animation:oemFloat 4.6s eas
     <p class="sec-desc">เลือกจากหลายประเภทหรือให้เราพัฒนารูปแบบใหม่ตามความต้องการของคุณ</p>
     <div class="gallery-grid">
       <div class="gc">
-        <div class="gc-scene"><img class="gc-obj" src="img/products/c6-daisychoc.webp" alt="คุกกี้เดซี่ช็อกโกแลต" loading="lazy"></div>
-        <div class="gc-name">คุกกี้เดซี่ช็อกโกแลต</div>
-        <div class="gc-desc">คุกกี้ทรงเดซี่ สอดไส้ครีมช็อกโกแลตเข้มข้น หอมนุ่มทุกคำ</div>
+        <div class="gc-scene"><img class="gc-obj" src="img/products/c1-5flavor.webp" alt="ขนมขาไก่" loading="lazy"></div>
+        <div class="gc-name">ขนมขาไก่ · Biscuit Sticks</div>
+        <div class="gc-desc">แท่งบิสกิตอบกรอบ ทำได้หลายรสทั้งหวานและเค็ม เคี้ยวเพลิน</div>
       </div>
       <div class="gc">
-        <div class="gc-scene"><img class="gc-obj" src="img/products/c6-galaxy.webp" alt="คุกกี้กาแล็กซี่" loading="lazy"></div>
-        <div class="gc-name">คุกกี้กาแล็กซี่</div>
-        <div class="gc-desc">ลายกาแล็กซี่สุดพิเศษ สอดไส้ครีมหวานละมุน</div>
+        <div class="gc-scene"><img class="gc-obj" src="img/products/c2-english.webp" alt="บิสกิตและแครกเกอร์" loading="lazy"></div>
+        <div class="gc-name">บิสกิตและแครกเกอร์ · Biscuit &amp; Cracker</div>
+        <div class="gc-desc">แผ่นบางกรอบ รสดั้งเดิม งา สาหร่าย หรือขึ้นรูปเป็นตัวการ์ตูน</div>
       </div>
       <div class="gc">
-        <div class="gc-scene"><img class="gc-obj" src="img/products/c3-teddy.webp" alt="คุกกี้หมีน้อย" loading="lazy"></div>
-        <div class="gc-name">คุกกี้หมีน้อย</div>
-        <div class="gc-desc">บิสกิตทรงหมี ทั้งรสนมและช็อกโกแลต ถูกใจเด็ก ๆ</div>
+        <div class="gc-scene"><img class="gc-obj" src="img/products/c3-bearchoc.webp" alt="บิสกิตสอดไส้" loading="lazy"></div>
+        <div class="gc-name">บิสกิตสอดไส้ · Cream Filled</div>
+        <div class="gc-desc">บิสกิตขึ้นรูปสอดไส้ครีม ทั้งทรงหมี ดอกไม้ และไวโอลิน</div>
+      </div>
+      <div class="gc">
+        <div class="gc-scene"><img class="gc-obj" src="img/products/c4-donut.webp" alt="บิสกิตสอดไส้แยมสับปะรด" loading="lazy"></div>
+        <div class="gc-name">แยมสับปะรด · Pineapple Jam</div>
+        <div class="gc-desc">บิสกิตสอดไส้แยมสับปะรดแท้ หลากทรง โดนัท ทาร์ต จักรทอง</div>
+      </div>
+      <div class="gc">
+        <div class="gc-scene"><img class="gc-obj" src="img/products/c5-vochoc.webp" alt="เวเฟอร์สติ๊ก" loading="lazy"></div>
+        <div class="gc-name">เวเฟอร์สติ๊ก · Rolled Wafer</div>
+        <div class="gc-desc">เวเฟอร์ม้วนสอดไส้ครีม ช็อกโกแลต ทุเรียน ชาไทย และอีกมาก</div>
+      </div>
+      <div class="gc">
+        <div class="gc-scene"><img class="gc-obj" src="img/products/c6-daisychoc.webp" alt="คุกกี้สอดไส้ครีม" loading="lazy"></div>
+        <div class="gc-name">คุกกี้สอดไส้ครีม · Sandwich Cookies</div>
+        <div class="gc-desc">คุกกี้ประกบไส้ครีม ทรงเดซี่ กระต่าย พร้อมรสไทย ๆ อย่างเผือกและชาไทย</div>
+      </div>
+      <div class="gc">
+        <div class="gc-scene"><img class="gc-obj" src="img/products/c7-friesbbq.webp" alt="ขนมทานเล่น" loading="lazy"></div>
+        <div class="gc-name">ขนมทานเล่น · Snack</div>
+        <div class="gc-desc">เฟรนช์ฟรายส์ มันจัง ข้าวโพดอบ หนวดกุ้ง หลายรสจัดจ้าน</div>
+      </div>
+      <div class="gc">
+        <div class="gc-scene"><img class="gc-obj" src="img/products/c8-choc.webp" alt="เวเฟอร์แผ่น" loading="lazy"></div>
+        <div class="gc-name">เวเฟอร์แผ่น · Wafer</div>
+        <div class="gc-desc">เวเฟอร์แผ่นซ้อนชั้นครีม รสช็อกโกแลต นม มะพร้าว ส้ม และลูกเต๋า</div>
+      </div>
+      <div class="gc">
+        <div class="gc-scene"><img class="gc-obj" src="img/products/c9-shrimpgrid.webp" alt="ตัวทอด" loading="lazy"></div>
+        <div class="gc-name">ตัวทอด · Fried Snacks</div>
+        <div class="gc-desc">ข้าวเกรียบทอดกรอบ ทรงตารางและทรงหลอด รสกุ้งและปาปริก้า</div>
       </div>
     </div>
   </div>
@@ -1049,18 +1231,50 @@ img.fv-obj{width:92px;height:92px;object-fit:contain;animation:oemFloat 4.6s eas
 
 <!-- ════ FLAVORS ════ -->
 <section class="flavor-sec" id="flavors">
-  <div class="sec-eye">Available Flavors</div>
-  <h2 class="sec-title">รสชาติที่เรามี</h2>
-  <p class="sec-desc">หลากหลายรสให้เลือก ทั้งรสคลาสสิกและรสผลไม้ไทย หรือสั่งรสพิเศษเฉพาะแบรนด์คุณก็ได้เลย</p>
-  <div class="flavor-visual-grid">
-    <div class="fv-card"><div class="fv-scene"><img class="fv-obj" src="img/flavor/Ripe_strawberries.png" alt="สตรอเบอรี่" loading="lazy"></div><div class="fv-name">สตรอเบอรี่</div><div class="fv-sub">Strawberry</div></div>
-    <div class="fv-card"><div class="fv-scene"><img class="fv-obj" src="img/flavor/Dark_chocolate.png" alt="ช็อคโกแลต" loading="lazy"></div><div class="fv-name">ช็อคโกแลต</div><div class="fv-sub">Chocolate</div></div>
-    <div class="fv-card"><div class="fv-scene"><img class="fv-obj" src="img/flavor/Fresh_milk.png" alt="รสนม" loading="lazy"></div><div class="fv-name">รสนม</div><div class="fv-sub">Milk</div></div>
-    <div class="fv-card"><div class="fv-scene"><img class="fv-obj" src="img/flavor/Durian.png" alt="ทุเรียน" loading="lazy"></div><div class="fv-name">ทุเรียน</div><div class="fv-sub">Durian</div></div>
-    <div class="fv-card"><div class="fv-scene"><img class="fv-obj" src="img/flavor/mangoes.png" alt="มะม่วง" loading="lazy"></div><div class="fv-name">มะม่วง</div><div class="fv-sub">Mango</div></div>
-    <div class="fv-card"><div class="fv-scene"><img class="fv-obj" src="img/flavor/Coconuts.png" alt="มะพร้าว" loading="lazy"></div><div class="fv-name">มะพร้าว</div><div class="fv-sub">Coconut</div></div>
-    <div class="fv-card"><div class="fv-scene"><img class="fv-obj" src="img/flavor/pineapple.png" alt="สับปะรด" loading="lazy"></div><div class="fv-name">สับปะรด</div><div class="fv-sub">Pineapple</div></div>
-    <div class="fv-card"><div class="fv-scene"><img class="fv-obj" src="img/flavor/special.png" alt="รสพิเศษ" loading="lazy"></div><div class="fv-name">รสพิเศษ</div><div class="fv-sub">Custom Order</div></div>
+  <div class="flavor-in">
+    <div class="sec-eye">Available Flavors</div>
+    <h2 class="sec-title">รสชาติที่หลากหลาย</h2>
+    <p class="sec-desc">หลากหลายรสให้เลือก ทั้งรสคลาสสิกและรสผลไม้ไทย หรือสั่งรสพิเศษเฉพาะแบรนด์คุณก็ได้เลย</p>
+
+    <!-- รสคลาสสิก -->
+    <div class="fv-group">
+      <div class="fv-ghead">
+        <span class="fv-gname">รสคลาสสิก</span>
+        <span class="fv-gsub">รสยอดนิยมที่ขายได้ทุกตลาด</span>
+        <span class="fv-gcount">3 รส</span>
+      </div>
+      <div class="flavor-visual-grid">
+        <div class="fv-card"><div class="fv-scene"><img class="fv-obj" src="img/flavor/Ripe_strawberries.png" alt="สตรอเบอรี่" loading="lazy"></div><div class="fv-name">สตรอเบอรี่</div><div class="fv-sub">Strawberry</div></div>
+        <div class="fv-card"><div class="fv-scene"><img class="fv-obj" src="img/flavor/Dark_chocolate.png" alt="ช็อคโกแลต" loading="lazy"></div><div class="fv-name">ช็อคโกแลต</div><div class="fv-sub">Chocolate</div></div>
+        <div class="fv-card"><div class="fv-scene"><img class="fv-obj" src="img/flavor/Fresh_milk.png" alt="รสนม" loading="lazy"></div><div class="fv-name">รสนม</div><div class="fv-sub">Milk</div></div>
+      </div>
+    </div>
+
+    <!-- รสผลไม้ไทย -->
+    <div class="fv-group">
+      <div class="fv-ghead">
+        <span class="fv-gname">รสผลไม้ไทย</span>
+        <span class="fv-gsub">จุดขายสำหรับตลาดส่งออกและของฝาก</span>
+        <span class="fv-gcount">4 รส</span>
+      </div>
+      <div class="flavor-visual-grid">
+        <div class="fv-card"><div class="fv-scene"><img class="fv-obj" src="img/flavor/Durian.png" alt="ทุเรียน" loading="lazy"></div><div class="fv-name">ทุเรียน</div><div class="fv-sub">Durian</div></div>
+        <div class="fv-card"><div class="fv-scene"><img class="fv-obj" src="img/flavor/mangoes.png" alt="มะม่วง" loading="lazy"></div><div class="fv-name">มะม่วง</div><div class="fv-sub">Mango</div></div>
+        <div class="fv-card"><div class="fv-scene"><img class="fv-obj" src="img/flavor/Coconuts.png" alt="มะพร้าว" loading="lazy"></div><div class="fv-name">มะพร้าว</div><div class="fv-sub">Coconut</div></div>
+        <div class="fv-card"><div class="fv-scene"><img class="fv-obj" src="img/flavor/pineapple.png" alt="สับปะรด" loading="lazy"></div><div class="fv-name">สับปะรด</div><div class="fv-sub">Pineapple</div></div>
+      </div>
+    </div>
+
+    <!-- รสพิเศษ -->
+    <div class="fv-custom">
+      <div class="fv-scene"><img class="fv-obj" src="img/flavor/special.png" alt="รสพิเศษ" loading="lazy"></div>
+      <div class="fv-cust-body">
+        <div class="fv-cust-eye">Custom Order</div>
+        <div class="fv-cust-name">รสพิเศษเฉพาะแบรนด์คุณ</div>
+        <div class="fv-cust-desc">อยากได้รสที่ยังไม่มีในลิสต์? ทีม R&amp;D ของเราพัฒนารสใหม่ให้ได้ตั้งแต่ต้น ทั้งชาไทย เผือก ลิ้นจี่ ไปจนถึงรสที่คุณคิดขึ้นเอง</div>
+      </div>
+      <a class="fv-cust-cta" href="contact.html">ปรึกษาทีม R&amp;D <span aria-hidden="true">→</span></a>
+    </div>
   </div>
 </section>
 
@@ -1071,12 +1285,55 @@ img.fv-obj{width:92px;height:92px;object-fit:contain;animation:oemFloat 4.6s eas
     <h2 class="sec-title">ประเภทบรรจุภัณฑ์</h2>
     <p class="sec-desc">รวมทุกรูปแบบบรรจุภัณฑ์ที่ VFoods ผลิตได้ไว้ในหน้าเดียว — เลือกรูปแบบที่ใช่ แล้วออกแบบลายเองให้แบรนด์ของคุณโดดเด่นบนชั้นวาง</p>
 
+    <!-- ประเภทละ 1 รูป · กดเพื่อดูทุกขนาดและตัวอย่างของประเภทนั้น -->
+    <div class="pkgcat-grid">
+      <button type="button" class="pkgcat" data-pkg="pkg-premium">
+        <span class="pkgcat-num">1</span>
+        <span class="pkgcat-scene"><img src="img/packaging/oem/premium-durian.webp" alt="ตัวอย่างกล่องพรีเมียม" loading="lazy"></span>
+        <span class="pkgcat-name">พรีเมียม</span>
+        <span class="pkgcat-sub">กล่องของขวัญเวเฟอร์ พิมพ์ลายหรู เหมาะเป็นของฝาก</span>
+        <span class="pkgcat-foot"><span class="pkgcat-count">3 แบบ</span><span class="pkgcat-go">ดูทั้งหมด <span aria-hidden="true">→</span></span></span>
+      </button>
+      <button type="button" class="pkgcat" data-pkg="pkg-family">
+        <span class="pkgcat-num">2</span>
+        <span class="pkgcat-scene"><img src="img/packaging/oem/familypack-party-yellow.webp" alt="ตัวอย่าง Family Pack" loading="lazy"></span>
+        <span class="pkgcat-name">Family Pack</span>
+        <span class="pkgcat-sub">ซองครอบครัว / ถุงหิ้ว / ถุงโหล — ปริมาณเยอะ แบ่งกินได้หลายมื้อ</span>
+        <span class="pkgcat-foot"><span class="pkgcat-count">10 แบบ</span><span class="pkgcat-go">ดูทั้งหมด <span aria-hidden="true">→</span></span></span>
+      </button>
+      <button type="button" class="pkgcat" data-pkg="pkg-tin">
+        <span class="pkgcat-num">3</span>
+        <span class="pkgcat-scene"><img src="img/packaging/oem/tin-big-kathi.webp" alt="ตัวอย่างปี๊บโลหะ" loading="lazy"></span>
+        <span class="pkgcat-name">Tin (ปี๊บโลหะ)</span>
+        <span class="pkgcat-sub">ทรงเหลี่ยม ปิดสนิท เก็บได้นาน ดูพรีเมียม</span>
+        <span class="pkgcat-foot"><span class="pkgcat-count">3 ขนาด</span><span class="pkgcat-go">ดูทั้งหมด <span aria-hidden="true">→</span></span></span>
+      </button>
+      <button type="button" class="pkgcat" data-pkg="pkg-jar">
+        <span class="pkgcat-num">4</span>
+        <span class="pkgcat-scene"><img src="img/brand-packs/kathi.webp" alt="ตัวอย่างกระปุกพลาสติก" loading="lazy"></span>
+        <span class="pkgcat-name">Plastic Jar Snack</span>
+        <span class="pkgcat-sub">กระปุกใส หยิบง่าย โชว์ตัวสินค้าบนชั้นวาง</span>
+        <span class="pkgcat-foot"><span class="pkgcat-count">2 แบบฝา</span><span class="pkgcat-go">ดูทั้งหมด <span aria-hidden="true">→</span></span></span>
+      </button>
+      <button type="button" class="pkgcat" data-pkg="pkg-bagbox">
+        <span class="pkgcat-num">5</span>
+        <span class="pkgcat-scene"><img src="img/packaging/oem/bagbox-coconut-wafer.webp" alt="ตัวอย่างถุงและกล่อง" loading="lazy"></span>
+        <span class="pkgcat-name">Bag &amp; Box</span>
+        <span class="pkgcat-sub">ถุง/กล่องเวเฟอร์แผ่นสอดไส้ครีม</span>
+        <span class="pkgcat-foot"><span class="pkgcat-count">1 แบบ</span><span class="pkgcat-go">ดูทั้งหมด <span aria-hidden="true">→</span></span></span>
+      </button>
+    </div>
+
+    <!-- แหล่งข้อมูลของแต่ละประเภท — ซ่อนไว้ ใช้โคลนเข้าหน้าต่างรายละเอียด -->
+    <div class="pkg-details" id="pkgDetails">
+
     <!-- 1 · พรีเมียม -->
-    <div class="pkg-group">
+    <div class="pkg-group" id="pkg-premium">
       <div class="pkg-ghead">
         <span class="pkg-gnum">1</span>
         <span class="pkg-gname">พรีเมียม</span>
         <span class="pkg-gsub">กล่องของขวัญเวเฟอร์ พิมพ์ลายหรู เหมาะเป็นของฝาก</span>
+        <span class="pkg-gcount">3 แบบ</span>
       </div>
       <div class="pkg-row">
         <div class="pkg-item"><div class="pkg-scene"><img src="img/packaging/oem/premium-durian.webp" alt="Premium Durian Wafers 120g" loading="lazy"></div><div class="pkg-cap">เวเฟอร์ทุเรียน<span>Durian Wafers 120g</span></div></div>
@@ -1086,11 +1343,12 @@ img.fv-obj{width:92px;height:92px;object-fit:contain;animation:oemFloat 4.6s eas
     </div>
 
     <!-- 2 · Family Pack -->
-    <div class="pkg-group">
+    <div class="pkg-group" id="pkg-family">
       <div class="pkg-ghead">
         <span class="pkg-gnum">2</span>
         <span class="pkg-gname">Family Pack</span>
         <span class="pkg-gsub">ซองครอบครัว / ถุงหิ้ว / ถุงโหล — ปริมาณเยอะ แบ่งกินได้หลายมื้อ</span>
+        <span class="pkg-gcount">10 แบบ</span>
       </div>
 
       <div class="pkg-sub">
@@ -1123,47 +1381,66 @@ img.fv-obj{width:92px;height:92px;object-fit:contain;animation:oemFloat 4.6s eas
     </div>
 
     <!-- 3 · Tin -->
-    <div class="pkg-group">
+    <div class="pkg-group" id="pkg-tin">
       <div class="pkg-ghead">
         <span class="pkg-gnum">3</span>
         <span class="pkg-gname">Tin (ปี๊บโลหะ)</span>
         <span class="pkg-gsub">ทรงเหลี่ยม ปิดสนิท เก็บได้นาน ดูพรีเมียม — ยกตัวอย่างรส “กะทิสับปะรด”</span>
+        <span class="pkg-gcount">3 ขนาด</span>
       </div>
       <div class="pkg-row">
         <div class="pkg-item"><div class="pkg-scene"><img src="img/packaging/oem/tin-big-kathi.webp" alt="Big Tin กะทิสับปะรด 5 กก." loading="lazy"></div><div class="pkg-cap">Big Tin<span>กะทิสับปะรด 5 กก.</span></div></div>
         <div class="pkg-item"><div class="pkg-scene"><img src="img/brand-packs/kathi.webp" alt="Medium Tin กะทิสับปะรด" loading="lazy"></div><div class="pkg-cap">Medium Tin<span>กะทิสับปะรด</span></div></div>
         <div class="pkg-item"><div class="pkg-scene"><img src="img/brand-packs/kathi.webp" alt="Supermini Tin กะทิสับปะรด" loading="lazy"></div><div class="pkg-cap">Supermini<span>กะทิสับปะรด</span></div></div>
       </div>
-      <div class="pkg-tempnote">* ภาพ Medium Tin และ Supermini เป็นภาพชั่วคราว รอรูปถ่ายจริงจากทีมงาน</div>
+      <div class="pkg-tempnote"><span aria-hidden="true">📷</span> ภาพ Medium Tin และ Supermini เป็นภาพชั่วคราว รอรูปถ่ายจริงจากทีมงาน</div>
     </div>
 
     <!-- 4 · Plastic Jar Snack -->
-    <div class="pkg-group">
+    <div class="pkg-group" id="pkg-jar">
       <div class="pkg-ghead">
         <span class="pkg-gnum">4</span>
         <span class="pkg-gname">Plastic Jar Snack (กระปุกพลาสติก)</span>
         <span class="pkg-gsub">ใส หยิบง่าย โชว์ตัวสินค้า — ยกตัวอย่างรส “กะทิสับปะรด”</span>
+        <span class="pkg-gcount">2 แบบฝา</span>
       </div>
       <div class="pkg-row">
         <div class="pkg-item"><div class="pkg-scene"><img src="img/brand-packs/kathi.webp" alt="กระปุกฝา EOE กะทิสับปะรด 160g" loading="lazy"></div><div class="pkg-cap">EOE (ฝาดึง)<span>กะทิสับปะรด 160 g</span></div></div>
         <div class="pkg-item"><div class="pkg-scene"><img src="img/brand-packs/kathi.webp" alt="กระปุกฝาหมุน กะทิสับปะรด" loading="lazy"></div><div class="pkg-cap">ฝาหมุน<span>กะทิสับปะรด</span></div></div>
       </div>
-      <div class="pkg-tempnote">* ภาพฝาหมุนเป็นภาพชั่วคราว รอรูปถ่ายจริงจากทีมงาน</div>
+      <div class="pkg-tempnote"><span aria-hidden="true">📷</span> ภาพฝาหมุนเป็นภาพชั่วคราว รอรูปถ่ายจริงจากทีมงาน</div>
     </div>
 
     <!-- 5 · Bag &amp; Box -->
-    <div class="pkg-group">
+    <div class="pkg-group" id="pkg-bagbox">
       <div class="pkg-ghead">
         <span class="pkg-gnum">5</span>
         <span class="pkg-gname">Bag &amp; Box</span>
         <span class="pkg-gsub">ถุง/กล่องเวเฟอร์แผ่นสอดไส้ครีม</span>
+        <span class="pkg-gcount">1 แบบ</span>
       </div>
       <div class="pkg-row">
         <div class="pkg-item"><div class="pkg-scene"><img src="img/packaging/oem/bagbox-coconut-wafer.webp" alt="กล่องเวเฟอร์แผ่นสอดไส้ครีม รสมะพร้าว" loading="lazy"></div><div class="pkg-cap">เวเฟอร์แผ่นสอดไส้ครีม<span>รสมะพร้าว</span></div></div>
       </div>
     </div>
+
+    </div><!-- /pkg-details -->
   </div>
 </section>
+
+<!-- หน้าต่างรายละเอียดบรรจุภัณฑ์ -->
+<div class="pkgm" id="pkgModal" hidden>
+  <div class="pkgm-back" data-pkgm-close></div>
+  <div class="pkgm-panel" role="dialog" aria-modal="true" aria-labelledby="pkgmTitle">
+    <div class="pkgm-head">
+      <span class="pkgm-num" id="pkgmNum"></span>
+      <h3 class="pkgm-title" id="pkgmTitle"></h3>
+      <p class="pkgm-sub" id="pkgmSub"></p>
+      <button type="button" class="pkgm-close" id="pkgmClose" aria-label="ปิด" data-pkgm-close>&times;</button>
+    </div>
+    <div class="pkgm-body" id="pkgmBody"></div>
+  </div>
+</div>
 
 <footer class="site-foot">
   <div class="foot-grid">
@@ -1257,7 +1534,7 @@ if(!window.VF_LITE){
   document.querySelectorAll('.spin-obj,.gc-obj,.fv-obj,.pk-obj').forEach(makeDraggable);
 
   /* ── CARD 3D TILT ── */
-  document.querySelectorAll('.sc,.gc,.fv-card,.pk,.pkg-item,.fc').forEach(card=>{
+  document.querySelectorAll('.sc,.gc,.fv-card,.pk,.pkgcat,.fc').forEach(card=>{
     card.addEventListener('mousemove',e=>{
       const r=card.getBoundingClientRect();
       const x=(e.clientX-r.left)/r.width-.5;
@@ -1286,11 +1563,59 @@ const io=new IntersectionObserver(entries=>{
     if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}
   });
 },{threshold:.1});
-document.querySelectorAll('.sc,.gc,.fv-card,.pk,.pkg-item,.fc').forEach(el=>{
+document.querySelectorAll('.sc,.gc,.fv-card,.fv-custom,.pk,.pkgcat,.fc').forEach(el=>{
   el.style.opacity='0';el.style.transform='translateY(38px)';
   el.style.transition='opacity .7s ease, transform .7s cubic-bezier(.23,1,.32,1)';
   io.observe(el);
 });
+
+/* ── PACKAGING DETAIL — การ์ดประเภทเปิดหน้าต่างรวมทุกขนาดของประเภทนั้น ── */
+(function(){
+  const modal=document.getElementById('pkgModal');
+  if(!modal)return;
+  const body=document.getElementById('pkgmBody');
+  const num=document.getElementById('pkgmNum');
+  const title=document.getElementById('pkgmTitle');
+  const sub=document.getElementById('pkgmSub');
+  const closeBtn=document.getElementById('pkgmClose');
+  let lastFocus=null;
+
+  function open(id){
+    const src=document.getElementById(id);
+    if(!src)return;
+    const head=src.querySelector('.pkg-ghead');
+    num.textContent=head.querySelector('.pkg-gnum').textContent;
+    title.textContent=head.querySelector('.pkg-gname').textContent;
+    sub.textContent=head.querySelector('.pkg-gsub').textContent;
+
+    /* โคลนเนื้อหา แล้วตัดหัวกลุ่มออก เพราะหัวหน้าต่างแสดงให้แล้ว */
+    const clone=src.cloneNode(true);
+    clone.removeAttribute('id');
+    clone.querySelector('.pkg-ghead').remove();
+    body.replaceChildren(clone);
+    body.scrollTop=0;
+
+    lastFocus=document.activeElement;
+    modal.hidden=false;
+    document.body.classList.add('pkgm-open');
+    closeBtn.focus();
+  }
+  function close(){
+    modal.hidden=true;
+    body.replaceChildren();
+    document.body.classList.remove('pkgm-open');
+    if(lastFocus&&lastFocus!==document.body)lastFocus.focus();
+    else closeBtn.blur();
+  }
+
+  document.querySelectorAll('.pkgcat').forEach(btn=>{
+    btn.addEventListener('click',()=>open(btn.dataset.pkg));
+  });
+  modal.querySelectorAll('[data-pkgm-close]').forEach(el=>el.addEventListener('click',close));
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'&&!modal.hidden)close();
+  });
+})();
 
 /* ── NAV scroll — keep the orange bar (match other pages); just deepen shadow ── */
 const nav=document.getElementById('navbar');
