@@ -508,8 +508,22 @@ nav{
 .bnav-pick b{color:var(--acc);}
 @media(max-width:560px){.bnav-pick{display:none;}.bpanel-wrap{padding:26px 20px 0;}.bnav{padding:18px 20px;}}
 
-footer{padding:34px 20px;text-align:center;border-top:1px solid rgba(26,6,8,.06);color:var(--t3);font-size:.78rem;}
-footer a{color:var(--acc);text-decoration:none;font-weight:600;}
+/* ── SHARED SITE FOOTER (matches homepage scroll-site/index.html) ── */
+.site-foot{background:#240604;color:rgba(255,245,243,.75);padding:56px 6vw 26px;font-size:.85rem;font-weight:300;border-top:1px solid rgba(255,255,255,.08);text-align:left;}
+.site-foot .foot-grid{max-width:1220px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:38px;}
+.site-foot .foot-logo{font-family:'Sarabun',sans-serif;font-weight:800;font-size:1.6rem;color:#FF8082;letter-spacing:.03em;margin-bottom:12px;}
+.site-foot .foot-brand p{line-height:1.9;color:rgba(255,245,243,.55);max-width:320px;margin-bottom:10px;}
+.site-foot .foot-shop a{color:#FF8082;font-weight:500;text-decoration:none;}
+.site-foot .foot-shop a:hover{text-decoration:underline;}
+.site-foot .foot-social{display:flex;gap:10px;margin-top:12px;}
+.site-foot .foot-social a{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:1rem;text-decoration:none;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);transition:background .3s,transform .3s;}
+.site-foot .foot-social a:hover{background:rgba(229,26,29,.4);transform:translateY(-3px);}
+.site-foot .foot-col h4{font-family:'Sarabun',sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;color:#FF8082;margin-bottom:16px;}
+.site-foot .foot-col a{display:block;color:rgba(255,245,243,.68);margin-bottom:10px;text-decoration:none;transition:color .25s,transform .25s;}
+.site-foot .foot-col a:hover{color:#fff;transform:translateX(4px);}
+.site-foot .foot-bottom{max-width:1220px;margin:42px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:.74rem;color:rgba(255,245,243,.45);}
+@media(max-width:820px){.site-foot .foot-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.site-foot{padding:44px 20px 24px;}.site-foot .foot-grid{grid-template-columns:1fr;}}
 @keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── NAV REDESIGN — orange bar · logo · EN menu · dropdown · search ── */
@@ -1151,8 +1165,43 @@ img.fv-obj{width:92px;height:92px;object-fit:contain;animation:oemFloat 4.6s eas
   </div>
 </section>
 
-<footer>
-  <p>© 2025 <a href="https://www.vfoods.co.th">VFoods Co., Ltd.</a> — OEM Manufacturing &amp; Consulting Thailand</p>
+<footer class="site-foot">
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="foot-logo">VFOODS</div>
+      <p>บริษัท วาไรตี้ ฟู้ดส์ อินเตอร์เนชั่นแนล จำกัด ผู้ผลิตบิสกิตและขนมขบเคี้ยวคุณภาพสูง อันดับ 1 ในประเทศไทย ส่งออก 50+ ประเทศทั่วโลก</p>
+      <p class="foot-shop">ช้อปออนไลน์: <a href="https://s.lazada.co.th/s.ZRjUrg?c=x" target="_blank" rel="noopener">Lazada</a> · <a href="https://shopee.co.th/vfoods_official" target="_blank" rel="noopener">Shopee</a></p>
+      <div class="foot-social">
+        <a href="https://www.facebook.com/VarietyFoods" target="_blank" rel="noopener" aria-label="Facebook">📘</a>
+        <a href="https://www.tiktok.com/@vfoods_shop?_r=1&amp;_t=ZS-98gYfrkz9oy" target="_blank" rel="noopener" aria-label="TikTok">🎵</a>
+        <a href="https://www.instagram.com/vfoods_official/" target="_blank" rel="noopener" aria-label="Instagram">📸</a>
+        <a href="https://www.youtube.com/channel/UC-5HbsQsaBov9dHHvGUVoag" target="_blank" rel="noopener" aria-label="YouTube">▶️</a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h4>เมนู</h4>
+      <a href="scroll-site/index.html">หน้าแรก</a>
+      <a href="products.html">สินค้าของเรา</a>
+      <a href="brands.html">แบรนด์ของเรา</a>
+      <a href="news.html">ข่าวสาร</a>
+    </div>
+    <div class="foot-col">
+      <h4>บริการ</h4>
+      <a href="oem-guide.html">คู่มือ OEM</a>
+      <a href="contact.html">ติดต่อเรา</a>
+      <a href="contact.html#join">ร่วมงานกับเรา</a>
+    </div>
+    <div class="foot-col">
+      <h4>ติดต่อ</h4>
+      <a href="mailto:info@vfoods.co.th">info@vfoods.co.th</a>
+      <a href="https://www.vfoods.co.th" target="_blank" rel="noopener">www.vfoods.co.th</a>
+      <a href="contact.html">แผนที่บริษัท</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <p>© 2026 Variety Foods International Co., Ltd. All rights reserved.</p>
+    <p>FSSC 22000 · HACCP · GMP · HALAL · Thailand Trust Mark</p>
+  </div>
 </footer>
 
 <script>

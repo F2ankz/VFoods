@@ -45,6 +45,13 @@
     titleEl.textContent = item.title || '';
     body.appendChild(titleEl);
 
+    if (item.text) {
+      var textEl = document.createElement('p');
+      textEl.className = 'news-h-text';
+      textEl.textContent = item.text;
+      body.appendChild(textEl);
+    }
+
     var dateEl = document.createElement('div');
     dateEl.className = 'news-h-date';
     dateEl.textContent = item.date || '';
