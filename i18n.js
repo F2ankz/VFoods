@@ -433,7 +433,7 @@
       'More than a manufacturer — we are OEM specialists, ready to advise on the product, the flavour and the packaging that answers your brand’s brief.',
     'ปรึกษาทีม OEM': 'Talk to the OEM Team',
     'ดูขั้นตอน OEM': 'See the OEM Steps',
-    'คุกกี้หลากหลายรูปแบบ': 'Cookies in Many Shapes',
+    'ขนมหลากหลายรูปแบบ': 'Snacks in Many Shapes',
     'เลือกจากหลายประเภทหรือให้เราพัฒนารูปแบบใหม่ตามความต้องการของคุณ':
       'Choose from our range, or let us develop a new shape to your requirements',
     'คุกกี้ทรงเดซี่ สอดไส้ครีมช็อกโกแลตเข้มข้น หอมนุ่มทุกคำ':
@@ -443,8 +443,9 @@
     'บิสกิตทรงดอกไม้ สอดไส้ครีมสตรอว์เบอร์รีหวานน่ารัก':
       'Flower-shaped biscuits with a sweet strawberry cream filling',
     'รสชาติที่เรามี': 'Our Flavours',
-    'หลากหลายรสให้เลือก ทั้งรสคลาสสิกและรสผลไม้ไทย หรือสั่งรสพิเศษเฉพาะแบรนด์คุณก็ได้เลย':
-      'A wide range to choose from — classics and Thai fruit flavours — or order a flavour made only for your brand',
+    'หลากหลายรสให้เลือก ทั้งรสคลาสสิกและรสผลไม้ไทย หรือเสนอรสพิเศษในแบบที่คุณต้องการก็ได้เลย':
+      'A wide range to choose from — classics and Thai fruit flavours — or propose a special flavour of your own',
+    'รสพิเศษเฉพาะแบรนด์ของคุณ': 'A special flavour made only for your brand',
     'บรรจุภัณฑ์ที่เลือกได้': 'Packaging You Can Choose',
     'หลากรูปแบบให้เลือก ออกแบบลายบรรจุภัณฑ์ได้เอง เพื่อให้แบรนด์ของคุณโดดเด่นบนชั้นวาง':
       'Plenty of formats, with artwork you design yourself, so your brand stands out on the shelf',
