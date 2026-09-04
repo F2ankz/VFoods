@@ -690,11 +690,16 @@ body::after {
 .cust-sec .sec-head h2{ color:#fff; }   /* ไม่มีออร่า เช่นเดียวกับหัวข้ออื่น */
 .cust-sec .sec-head p{ color:var(--cv-cream-dim); }
 .logo-marquee{
+  position:relative; width:100%;
+  display:flex; flex-direction:column; gap:22px;
+}
+.logo-row{
   position:relative; width:100%; overflow:hidden;
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
           mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
 }
-.logo-track{ display:flex; align-items:center; gap:24px; width:max-content; animation:logoScroll 52s linear infinite; }
+.logo-track{ display:flex; align-items:center; gap:24px; width:max-content; animation:logoScroll 46s linear infinite; }
+.logo-row--rev .logo-track{ animation-direction:reverse; }
 .logo-marquee:hover .logo-track{ animation-play-state:paused; }
 .logo-item{
   flex:0 0 auto; width:172px; height:100px;
