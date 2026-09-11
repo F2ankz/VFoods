@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ข่าวสาร — VFoods</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="theme-white.css?v=2">
+<link rel="stylesheet" href="nav.css?v=2">
+<link rel="stylesheet" href="i18n.css?v=1">
+<link rel="stylesheet" href="cursor.css?v=1">
+<style>
+/* ─────────────────────────────────────────────────────────────
+   หน้าข่าวเต็ม — คอลัมน์เดียวแบบหน้าข่าวทั่วไป
+   รูปแทรกอยู่ในเนื้อข่าวพร้อมคำบรรยายใต้รูป แล้วปิดท้ายด้วยข่าวอ่านต่อ
+   ───────────────────────────────────────────────────────────── */
+.art-wrap { padding:clamp(96px,10vw,126px) 24px clamp(26px,3vw,38px); background:#fff; }
+.art-inner { max-width:740px; margin:0 auto; }
+
+.art-back { display:inline-flex; align-items:center; gap:6px; font-family:'Sarabun',sans-serif; font-size:.82rem; font-weight:700; color:#D6590C; text-decoration:none; padding:7px 14px; border-radius:999px; border:1px solid rgba(255,109,26,.28); transition:background .25s, transform .25s; }
+.art-back:hover { background:rgba(255,109,26,.09); transform:translateX(-3px); }
+
+/* ── หัวข่าว ── */
+.art-kicker { display:block; width:max-content; max-width:100%; margin:24px 0 12px; padding:5px 13px; border-radius:999px; background:linear-gradient(135deg,#FF7E33,#D6590C); color:#fff; font-family:'Sarabun',sans-serif; font-size:.71rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; }
+.art-title { font-family:'Sarabun',sans-serif; font-size:clamp(1.6rem,3.8vw,2.5rem); font-weight:800; line-height:1.34; color:#1B1310; margin:0 0 18px; letter-spacing:-.01em; }
+
+/* แถวแหล่งข่าว + วันที่ */
+.art-byline { display:flex; align-items:center; gap:11px; padding-bottom:20px; border-bottom:1px solid rgba(43,27,22,.1); }
+.art-avatar { width:38px; height:38px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#FF7E33,#D6590C); color:#fff; font-family:'Sarabun',sans-serif; font-weight:800; font-size:.95rem; letter-spacing:.02em; }
+.art-source { font-family:'Sarabun',sans-serif; font-size:.88rem; font-weight:700; color:#2B1B16; line-height:1.35; }
+.art-sub { font-size:.78rem; color:rgba(43,27,22,.5); display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.art-sub .dot { width:3px; height:3px; border-radius:50%; background:rgba(43,27,22,.3); }
+
+/* ── รูปในข่าว (ปก + รูปแทรก ใช้หน้าตาเดียวกัน) ── */
+.art-figure { margin:24px 0 28px; }
+.art-figure img { width:100%; height:auto; display:block; border-radius:14px; background:#FBF6EF; cursor:zoom-in; transition:filter .25s; }
+.art-figure img:hover { filter:brightness(.97); }
+.art-figure figcaption { margin-top:10px; padding-left:11px; border-left:3px solid rgba(255,109,26,.4); font-family:'Sarabun',sans-serif; font-size:.82rem; line-height:1.62; color:rgba(43,27,22,.56); }
+.art-figure--hero { margin-top:26px; }
+
+/* ── เนื้อข่าว ── */
+.art-body p { font-family:'Sarabun',sans-serif; font-size:1.06rem; line-height:2.02; color:rgba(27,19,16,.86); margin:0 0 20px; }
+.art-body p.lead { font-size:1.15rem; line-height:1.95; color:#2B1B16; font-weight:500; }
+
+.art-fb { display:inline-flex; align-items:center; gap:10px; margin-top:14px; padding:13px 22px; border-radius:14px; background:linear-gradient(135deg,#1877F2,#0D5DB8); color:#fff; text-decoration:none; font-family:'Sarabun',sans-serif; font-weight:700; font-size:.88rem; box-shadow:0 10px 26px rgba(24,119,242,.26); transition:transform .3s, box-shadow .3s; }
+.art-fb:hover { transform:translateY(-3px); box-shadow:0 16px 34px rgba(24,119,242,.34); }
+.art-fb svg { width:18px; height:18px; }
+
+.art-end { margin:34px 0 0; padding-top:22px; border-top:1px solid rgba(43,27,22,.1); display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; }
+.art-end-note { font-size:.8rem; color:rgba(43,27,22,.45); }
+
+.art-empty { text-align:center; padding:60px 20px; color:rgba(43,27,22,.55); font-family:'Sarabun',sans-serif; }
+.art-empty h1 { font-size:1.4rem; color:#2B1B16; margin:0 0 10px; }
+
+/* ── อ่านข่าวต่อ (2 ข่าว) ── */
+.next-wrap { padding:clamp(34px,5vw,52px) 24px clamp(50px,6vw,68px); background:#FFF6ED; }
+.next-inner { max-width:740px; margin:0 auto; }
+.next-head { display:flex; align-items:center; gap:12px; margin:0 0 18px; }
+.next-head h2 { font-family:'Sarabun',sans-serif; font-size:1.06rem; font-weight:800; color:#2B1B16; margin:0; }
+.next-head .line { flex:1; height:1px; background:rgba(255,109,26,.24); }
+.next-list { display:flex; flex-direction:column; gap:14px; }
+.next-card { display:flex; gap:16px; align-items:stretch; background:#fff; border:1px solid rgba(255,109,26,.14); border-radius:16px; overflow:hidden; text-decoration:none; color:inherit; transition:transform .3s cubic-bezier(.23,1,.32,1), box-shadow .3s, border-color .3s; }
+.next-card:hover { transform:translateY(-4px); border-color:rgba(255,109,26,.34); box-shadow:0 14px 30px rgba(255,109,26,.14); }
+.next-thumb, .next-ph { width:184px; min-height:124px; flex-shrink:0; align-self:stretch; }
+.next-thumb { object-fit:cover; }
+.next-ph { display:flex; align-items:center; justify-content:center; text-align:center; padding:8px; background:linear-gradient(135deg,#FFE3C2,#FFD1A6); color:#B8480A; font-family:'Sarabun',sans-serif; font-size:.68rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+.next-body { padding:14px 18px 14px 0; display:flex; flex-direction:column; gap:6px; justify-content:center; min-width:0; }
+.next-tag { font-size:.66rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:#D6590C; }
+.next-title { font-family:'Sarabun',sans-serif; font-size:1rem; font-weight:700; line-height:1.5; color:#2B1B16; }
+.next-text { margin:0; font-size:.82rem; line-height:1.6; color:rgba(43,27,22,.58); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.next-date { font-size:.74rem; color:rgba(43,27,22,.45); }
+.next-all { display:inline-flex; align-items:center; gap:6px; margin-top:18px; font-family:'Sarabun',sans-serif; font-size:.84rem; font-weight:700; color:#D6590C; text-decoration:none; padding:10px 18px; border-radius:999px; border:1px dashed rgba(255,109,26,.4); transition:background .25s; }
+.next-all:hover { background:rgba(255,109,26,.08); }
+
+/* ── กดรูปเพื่อดูเต็มจอ ── */
+.lb { position:fixed; inset:0; z-index:9999; background:rgba(24,14,10,.94); display:none; align-items:center; justify-content:center; }
+.lb.open { display:flex; }
+.lb img { max-width:92vw; max-height:82vh; border-radius:12px; box-shadow:0 24px 70px rgba(0,0,0,.6); }
+.lb-cap { position:absolute; left:0; right:0; bottom:26px; text-align:center; color:rgba(255,255,255,.82); font-family:'Sarabun',sans-serif; font-size:.86rem; padding:0 60px; }
+.lb-btn { position:absolute; background:rgba(255,255,255,.12); color:#fff; border:none; width:46px; height:46px; border-radius:50%; font-size:1.4rem; line-height:1; cursor:pointer; transition:background .2s; }
+.lb-btn:hover { background:rgba(255,255,255,.26); }
+.lb-prev { left:18px; top:50%; transform:translateY(-50%); }
+.lb-next { right:18px; top:50%; transform:translateY(-50%); }
+.lb-close { right:18px; top:18px; }
+
+@media(max-width:620px) {
+  .art-body p { font-size:1.01rem; line-height:1.95; }
+  .art-body p.lead { font-size:1.08rem; }
+  .next-card { flex-direction:column; }
+  .next-thumb, .next-ph { width:100%; height:168px; min-height:0; }
+  .next-body { padding:0 16px 16px; }
+}
+</style>
+<link rel="stylesheet" href="mobile-view.css?v=1">
+<link rel="stylesheet" href="fonts.css?v=1">
+<link rel="stylesheet" href="linebreak.css?v=1">
+<script src="mobile-view.js?v=1"></script>
+</head>
+<body>
+
+<article class="art-wrap">
+  <div class="art-inner" id="article"></div>
+</article>
+
+<section class="next-wrap" id="nextWrap" style="display:none">
+  <div class="next-inner">
+    <div class="next-head"><h2>อ่านข่าวต่อ</h2><span class="line"></span></div>
+    <div class="next-list" id="nextList"></div>
+    <a class="next-all" href="news-archive.html">ดูข่าวทั้งหมด →</a>
+  </div>
+</section>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="ดูรูปขนาดเต็ม">
+  <button class="lb-btn lb-close" id="lbClose" aria-label="ปิด">✕</button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="รูปก่อนหน้า">‹</button>
+  <img id="lbImg" alt="">
+  <button class="lb-btn lb-next" id="lbNext" aria-label="รูปถัดไป">›</button>
+  <div class="lb-cap" id="lbCap"></div>
+</div>
+
+<footer class="site-foot">
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="foot-logo">VFOODS</div>
+      <p>บริษัท วาไรตี้ ฟู้ดส์ อินเตอร์เนชั่นแนล จำกัด ผู้ผลิตบิสกิตและขนมขบเคี้ยวคุณภาพสูง อันดับ 1 ในประเทศไทย ส่งออก 50+ ประเทศทั่วโลก</p>
+      <p class="foot-shop">ช้อปออนไลน์: <a href="https://s.lazada.co.th/s.ZRjUrg?c=x" target="_blank" rel="noopener">Lazada</a> · <a href="https://shopee.co.th/vfoods_official" target="_blank" rel="noopener">Shopee</a></p>
+      <div class="foot-social">
+        <a href="https://www.facebook.com/VarietyFoods" target="_blank" rel="noopener" aria-label="Facebook">📘</a>
+        <a href="https://www.tiktok.com/@vfoods_shop?_r=1&amp;_t=ZS-98gYfrkz9oy" target="_blank" rel="noopener" aria-label="TikTok">🎵</a>
+        <a href="https://www.instagram.com/vfoods_official/" target="_blank" rel="noopener" aria-label="Instagram">📸</a>
+        <a href="https://www.youtube.com/channel/UC-5HbsQsaBov9dHHvGUVoag" target="_blank" rel="noopener" aria-label="YouTube">▶️</a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h4>เมนู</h4>
+      <a href="scroll-site/index.html">หน้าแรก</a>
+      <a href="products.html">สินค้าของเรา</a>
+      <a href="brands.html">แบรนด์ของเรา</a>
+      <a href="news.html">ข่าวสาร</a>
+    </div>
+    <div class="foot-col">
+      <h4>บริการ</h4>
+      <a href="oem-guide.html">คู่มือ OEM</a>
+      <a href="contact.html">ติดต่อเรา</a>
+      <a href="contact.html#join">ร่วมงานกับเรา</a>
+    </div>
+    <div class="foot-col">
+      <h4>ติดต่อ</h4>
+      <a href="mailto:info@vfoods.co.th">info@vfoods.co.th</a>
+      <a href="https://www.vfoods.co.th" target="_blank" rel="noopener">www.vfoods.co.th</a>
+      <a href="contact.html">แผนที่บริษัท</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <p>© 2026 Variety Foods International Co., Ltd. All rights reserved.</p>
+    <p>FSSC 22000 · HACCP · GMP · HALAL · Thailand Trust Mark</p>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script src="nav.js?v=3"></script>
+<script src="news/news-index.js?v=1"></script>
+<script>
+(function () {
+  var IDX = window.NEWS_INDEX || { current: [], archive: [] };
+  var ALL = (IDX.current || []).concat(IDX.archive || []);
+  var id = new URLSearchParams(location.search).get('id');
+  var pos = -1;
+  for (var k = 0; k < ALL.length; k++) { if (ALL[k].slug === id) { pos = k; break; } }
+  var item = pos > -1 ? ALL[pos] : null;
+  var mount = document.getElementById('article');
+
+  if (!item) {
+    mount.innerHTML =
+      '<div class="art-empty"><h1>ไม่พบข่าวนี้</h1>' +
+      '<p>ข่าวที่คุณเปิดอาจถูกย้ายหรือลบไปแล้ว</p>' +
+      '<a class="art-back" href="news.html">← กลับหน้าข่าวสาร</a></div>';
+    return;
+  }
+
+  document.title = item.title + ' — ข่าวสาร VFoods';
+
+  function el(tag, cls, txt) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (txt != null) n.textContent = txt;
+    return n;
+  }
+
+  /* รวมรูปทุกใบไว้ชุดเดียว เพื่อให้กดดูเต็มจอแล้วเลื่อนต่อกันได้ */
+  var shots = [];
+  if (item.cover) shots.push({ src: item.cover, caption: '' });
+  (item.images || []).forEach(function (im) {
+    if (im && im.src) shots.push({ src: im.src, caption: im.caption || '' });
+  });
+
+  /* ── ปุ่มย้อนกลับ ── */
+  var back = el('a', 'art-back', '← กลับหน้าข่าวสาร');
+  back.href = 'news.html';
+  mount.appendChild(back);
+
+  /* ── หัวข่าว ── */
+  if (item.tag) mount.appendChild(el('span', 'art-kicker', item.tag));
+  mount.appendChild(el('h1', 'art-title', item.title || ''));
+
+  var byline = el('div', 'art-byline');
+  byline.appendChild(el('span', 'art-avatar', 'V'));
+  var who = el('div');
+  who.appendChild(el('div', 'art-source', 'VFOODS · ข่าวสารและกิจกรรม'));
+  var sub = el('div', 'art-sub');
+  if (item.date) sub.appendChild(el('span', null, item.date));
+  if (shots.length) {
+    if (item.date) sub.appendChild(el('span', 'dot'));
+    sub.appendChild(el('span', null, shots.length + ' รูป'));
+  }
+  who.appendChild(sub);
+  byline.appendChild(who);
+  mount.appendChild(byline);
+
+  /* ── รูปปก ── */
+  if (item.cover) mount.appendChild(figure(item.cover, '', 0, true));
+
+  /* ── เนื้อข่าว + รูปแทรกสลับระหว่างย่อหน้า ── */
+  var paras = (item.body && item.body.length ? item.body : (item.text ? [item.text] : []))
+                .filter(function (p) { return String(p).trim(); });
+  var extra = (item.images || []).filter(function (im) { return im && im.src; });
+  var offset = item.cover ? 1 : 0;   // ลำดับรูปในชุดดูเต็มจอ
+
+  var bodyBox = el('div', 'art-body');
+
+  if (!paras.length) {
+    // ไม่มีเนื้อข่าว — เรียงรูปต่อกันไปเลย
+    extra.forEach(function (im, i) { bodyBox.appendChild(figure(im.src, im.caption, offset + i)); });
+  } else {
+    // กระจายรูปให้แทรกหลังย่อหน้าอย่างสม่ำเสมอ (รูปแรกอยู่หลังย่อหน้าแรกเป็นอย่างน้อย)
+    var slot = {};
+    extra.forEach(function (im, i) {
+      var after = Math.round(((i + 1) * paras.length) / (extra.length + 1));
+      after = Math.max(1, Math.min(paras.length, after));
+      (slot[after] = slot[after] || []).push({ im: im, i: i });
+    });
+
+    paras.forEach(function (p, pi) {
+      var para = el('p', pi === 0 ? 'lead' : null, p);
+      bodyBox.appendChild(para);
+      (slot[pi + 1] || []).forEach(function (s) {
+        bodyBox.appendChild(figure(s.im.src, s.im.caption, offset + s.i));
+      });
+    });
+  }
+  mount.appendChild(bodyBox);
+
+  /* ── ท้ายข่าว ── */
+  var end = el('div', 'art-end');
+  if (item.link) {
+    var fb = el('a', 'art-fb');
+    fb.href = item.link;
+    fb.target = '_blank';
+    fb.rel = 'noopener';
+    fb.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg><span>ดูโพสต์ต้นฉบับบน Facebook</span>';
+    end.appendChild(fb);
+  }
+  end.appendChild(el('span', 'art-end-note', 'ที่มา: VFOODS — วาไรตี้ ฟู้ดส์ อินเตอร์เนชั่นแนล'));
+  mount.appendChild(end);
+
+  /* ── อ่านข่าวต่อ: หยิบ 2 ข่าวถัดไปแบบวนลิสต์ ── */
+  var next = [];
+  for (var n = 1; n < ALL.length && next.length < 2; n++) {
+    next.push(ALL[(pos + n) % ALL.length]);
+  }
+  if (next.length) {
+    var list = document.getElementById('nextList');
+    next.forEach(function (o) {
+      var a = el('a', 'next-card');
+      a.href = 'news-article.html?id=' + encodeURIComponent(o.slug);
+      if (o.cover) {
+        var t = document.createElement('img');
+        t.className = 'next-thumb';
+        t.src = o.cover;
+        t.alt = '';
+        t.loading = 'lazy';
+        t.onerror = function () { t.replaceWith(el('div', 'next-ph', o.tag || 'NEWS')); };
+        a.appendChild(t);
+      } else {
+        a.appendChild(el('div', 'next-ph', o.tag || 'NEWS'));
+      }
+      var b = el('div', 'next-body');
+      b.appendChild(el('span', 'next-tag', o.tag || ''));
+      b.appendChild(el('div', 'next-title', o.title || ''));
+      if (o.text) b.appendChild(el('p', 'next-text', o.text));
+      b.appendChild(el('div', 'next-date', o.date || ''));
+      a.appendChild(b);
+      list.appendChild(a);
+    });
+    document.getElementById('nextWrap').style.display = '';
+  }
+
+  /* ── ตัวช่วยสร้างรูป + คำบรรยาย ── */
+  function figure(src, caption, shotIndex, isHero) {
+    var fig = el('figure', 'art-figure' + (isHero ? ' art-figure--hero' : ''));
+    var img = document.createElement('img');
+    img.src = src;
+    img.alt = caption || item.title || '';
+    if (!isHero) img.loading = 'lazy';
+    img.onerror = function () { fig.remove(); };
+    img.addEventListener('click', function () { openLb(shotIndex); });
+    fig.appendChild(img);
+    if (caption) fig.appendChild(el('figcaption', null, caption));
+    return fig;
+  }
+
+  /* ── ดูรูปเต็มจอ ── */
+  var lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg'),
+      lbCap = document.getElementById('lbCap'), cur = 0;
+
+  function openLb(i) {
+    if (!shots.length) return;
+    cur = (i + shots.length) % shots.length;
+    lbImg.src = shots[cur].src;
+    lbCap.textContent = (cur + 1) + ' / ' + shots.length + (shots[cur].caption ? ' · ' + shots[cur].caption : '');
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLb() { lb.classList.remove('open'); document.body.style.overflow = ''; }
+
+  document.getElementById('lbClose').addEventListener('click', closeLb);
+  document.getElementById('lbPrev').addEventListener('click', function (e) { e.stopPropagation(); openLb(cur - 1); });
+  document.getElementById('lbNext').addEventListener('click', function (e) { e.stopPropagation(); openLb(cur + 1); });
+  lb.addEventListener('click', function (e) { if (e.target === lb || e.target === lbImg) closeLb(); });
+  document.addEventListener('keydown', function (e) {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLb();
+    if (e.key === 'ArrowLeft') openLb(cur - 1);
+    if (e.key === 'ArrowRight') openLb(cur + 1);
+  });
+  if (shots.length < 2) {
+    document.getElementById('lbPrev').style.display = 'none';
+    document.getElementById('lbNext').style.display = 'none';
+  }
+})();
+</script>
+<script src="i18n.js?v=3"></script>
+</body>
+</html>

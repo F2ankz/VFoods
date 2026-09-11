@@ -1,35 +1,39 @@
-// Renders NEWS_ITEMS (news-data.js) into the #news-cards grid on news.html.
-// Update news-data.js to change what shows here — this file never needs editing.
+// Renders the 3 current stories (news/news-index.js) into the #news-cards grid on news.html.
+// Each card links to news-article.html?id=<slug> — the full story page with all its photos.
+// Update news via admin/news-admin.html; this file never needs editing.
 (function () {
   var mount = document.getElementById('news-cards');
-  if (!mount || typeof NEWS_ITEMS === 'undefined') return;
+  if (!mount || typeof window.NEWS_INDEX === 'undefined') return;
 
-  NEWS_ITEMS.forEach(function (item) {
-    var card = document.createElement(item.link ? 'a' : 'div');
+  var items = (window.NEWS_INDEX.current || []).slice(0, 3);
+
+  items.forEach(function (item) {
+    var card = document.createElement('a');
     card.className = 'news-h-card';
-    if (item.link) {
-      card.href = item.link;
-      card.target = '_blank';
-      card.rel = 'noopener';
-    }
+    card.href = 'news-article.html?id=' + encodeURIComponent(item.slug);
 
-    if (item.img) {
+    var shots = 1 + ((item.images && item.images.length) || 0);
+
+    if (item.cover) {
+      var thumbWrap = document.createElement('div');
+      thumbWrap.className = 'news-h-thumb-wrap';
+
       var img = document.createElement('img');
       img.className = 'news-h-thumb';
       img.alt = '';
-      img.src = item.img;
-      img.onerror = function () {
-        var ph = document.createElement('div');
-        ph.className = 'news-h-thumb-ph';
-        ph.textContent = item.tag || 'NEWS';
-        img.replaceWith(ph);
-      };
-      card.appendChild(img);
+      img.src = item.cover;
+      img.onerror = function () { img.replaceWith(placeholder(item)); };
+      thumbWrap.appendChild(img);
+
+      if (shots > 1) {
+        var count = document.createElement('span');
+        count.className = 'news-h-count';
+        count.textContent = '🖼 ' + shots + ' รูป';
+        thumbWrap.appendChild(count);
+      }
+      card.appendChild(thumbWrap);
     } else {
-      var ph = document.createElement('div');
-      ph.className = 'news-h-thumb-ph';
-      ph.textContent = item.tag || 'NEWS';
-      card.appendChild(ph);
+      card.appendChild(placeholder(item));
     }
 
     var body = document.createElement('div');
@@ -52,12 +56,28 @@
       body.appendChild(textEl);
     }
 
-    var dateEl = document.createElement('div');
+    var foot = document.createElement('div');
+    foot.className = 'news-h-foot';
+
+    var dateEl = document.createElement('span');
     dateEl.className = 'news-h-date';
     dateEl.textContent = item.date || '';
-    body.appendChild(dateEl);
+    foot.appendChild(dateEl);
 
+    var more = document.createElement('span');
+    more.className = 'news-h-more';
+    more.textContent = 'อ่านข่าวเต็ม →';
+    foot.appendChild(more);
+
+    body.appendChild(foot);
     card.appendChild(body);
     mount.appendChild(card);
   });
+
+  function placeholder(item) {
+    var ph = document.createElement('div');
+    ph.className = 'news-h-thumb-ph';
+    ph.textContent = item.tag || 'NEWS';
+    return ph;
+  }
 })();

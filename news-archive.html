@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ข่าวย้อนหลังทั้งหมด — VFoods</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="theme-white.css?v=2">
+<link rel="stylesheet" href="nav.css?v=2">
+<link rel="stylesheet" href="i18n.css?v=1">
+<link rel="stylesheet" href="cursor.css?v=1">
+<style>
+.arc-wrap { padding:clamp(100px,10vw,132px) 24px clamp(50px,6vw,74px); }
+.arc-inner { max-width:1100px; margin:0 auto; }
+.arc-back { display:inline-flex; align-items:center; gap:6px; font-family:'Sarabun',sans-serif; font-size:.84rem; font-weight:700; color:#D6590C; text-decoration:none; padding:8px 14px; border-radius:999px; border:1px solid rgba(255,109,26,.28); transition:background .25s, transform .25s; }
+.arc-back:hover { background:rgba(255,109,26,.09); transform:translateX(-3px); }
+.arc-title { font-family:'Sarabun',sans-serif; font-size:clamp(1.5rem,3.2vw,2.1rem); font-weight:800; color:#2B1B16; margin:20px 0 6px; }
+.arc-desc { font-size:.92rem; color:rgba(43,27,22,.6); margin:0 0 30px; }
+
+.arc-group-head { display:flex; align-items:center; gap:12px; margin:32px 0 16px; }
+.arc-group-head h2 { font-family:'Sarabun',sans-serif; font-size:1.05rem; font-weight:800; color:#2B1B16; margin:0; }
+.arc-group-head .pill { padding:3px 10px; border-radius:999px; background:rgba(255,109,26,.12); color:#D6590C; font-size:.7rem; font-weight:800; }
+.arc-group-head .line { flex:1; height:1px; background:rgba(255,109,26,.2); }
+
+.arc-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:18px; }
+.arc-card { display:flex; flex-direction:column; background:#fff; border:1px solid rgba(255,109,26,.14); border-radius:18px; overflow:hidden; text-decoration:none; color:inherit; transition:transform .3s cubic-bezier(.23,1,.32,1), box-shadow .3s, border-color .3s; }
+.arc-card:hover { transform:translateY(-6px); border-color:rgba(255,109,26,.34); box-shadow:0 16px 34px rgba(255,109,26,.15); }
+.arc-thumb-wrap { position:relative; }
+.arc-thumb, .arc-ph { width:100%; height:158px; display:block; }
+.arc-thumb { object-fit:cover; }
+.arc-ph { display:flex; align-items:center; justify-content:center; text-align:center; padding:8px; background:linear-gradient(135deg,#FFE3C2,#FFD1A6); color:#B8480A; font-family:'Sarabun',sans-serif; font-size:.72rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+.arc-count { position:absolute; right:10px; bottom:10px; padding:4px 10px; border-radius:999px; background:rgba(43,27,22,.72); color:#fff; font-size:.7rem; font-weight:700; }
+.arc-body { padding:14px 16px 16px; display:flex; flex-direction:column; gap:6px; flex:1; }
+.arc-tag { font-size:.68rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:#D6590C; }
+.arc-name { font-family:'Sarabun',sans-serif; font-size:.98rem; font-weight:700; line-height:1.45; color:#2B1B16; }
+.arc-text { margin:0; font-size:.82rem; line-height:1.6; color:rgba(43,27,22,.6); display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+.arc-foot { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:auto; padding-top:6px; }
+.arc-date { font-size:.74rem; color:rgba(43,27,22,.45); }
+.arc-more { font-size:.76rem; font-weight:700; color:#D6590C; opacity:.75; transition:opacity .25s, transform .25s; }
+.arc-card:hover .arc-more { opacity:1; transform:translateX(3px); }
+.arc-empty { padding:40px 20px; text-align:center; color:rgba(43,27,22,.5); border:1.5px dashed rgba(255,109,26,.28); border-radius:16px; }
+</style>
+<link rel="stylesheet" href="mobile-view.css?v=1">
+<link rel="stylesheet" href="fonts.css?v=1">
+<link rel="stylesheet" href="linebreak.css?v=1">
+<script src="mobile-view.js?v=1"></script>
+</head>
+<body>
+
+<div class="arc-wrap">
+  <div class="arc-inner">
+    <a class="arc-back" href="news.html">← กลับหน้าข่าวสาร</a>
+    <h1 class="arc-title">ข่าวสารและกิจกรรมทั้งหมด</h1>
+    <p class="arc-desc">รวมทุกข่าวของ VFOODS ตั้งแต่ข่าวล่าสุดจนถึงข่าวย้อนหลัง คลิกที่การ์ดเพื่ออ่านข่าวเต็มพร้อมภาพทั้งหมด</p>
+
+    <div class="arc-group-head">
+      <h2>ข่าวล่าสุด</h2><span class="pill">กำลังแสดงบนหน้าข่าวสาร</span><span class="line"></span>
+    </div>
+    <div class="arc-grid" id="gridCurrent"></div>
+
+    <div class="arc-group-head">
+      <h2>ข่าวย้อนหลัง</h2><span class="line"></span>
+    </div>
+    <div class="arc-grid" id="gridArchive"></div>
+  </div>
+</div>
+
+<footer class="site-foot">
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="foot-logo">VFOODS</div>
+      <p>บริษัท วาไรตี้ ฟู้ดส์ อินเตอร์เนชั่นแนล จำกัด ผู้ผลิตบิสกิตและขนมขบเคี้ยวคุณภาพสูง อันดับ 1 ในประเทศไทย ส่งออก 50+ ประเทศทั่วโลก</p>
+      <p class="foot-shop">ช้อปออนไลน์: <a href="https://s.lazada.co.th/s.ZRjUrg?c=x" target="_blank" rel="noopener">Lazada</a> · <a href="https://shopee.co.th/vfoods_official" target="_blank" rel="noopener">Shopee</a></p>
+      <div class="foot-social">
+        <a href="https://www.facebook.com/VarietyFoods" target="_blank" rel="noopener" aria-label="Facebook">📘</a>
+        <a href="https://www.tiktok.com/@vfoods_shop?_r=1&amp;_t=ZS-98gYfrkz9oy" target="_blank" rel="noopener" aria-label="TikTok">🎵</a>
+        <a href="https://www.instagram.com/vfoods_official/" target="_blank" rel="noopener" aria-label="Instagram">📸</a>
+        <a href="https://www.youtube.com/channel/UC-5HbsQsaBov9dHHvGUVoag" target="_blank" rel="noopener" aria-label="YouTube">▶️</a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h4>เมนู</h4>
+      <a href="scroll-site/index.html">หน้าแรก</a>
+      <a href="products.html">สินค้าของเรา</a>
+      <a href="brands.html">แบรนด์ของเรา</a>
+      <a href="news.html">ข่าวสาร</a>
+    </div>
+    <div class="foot-col">
+      <h4>บริการ</h4>
+      <a href="oem-guide.html">คู่มือ OEM</a>
+      <a href="contact.html">ติดต่อเรา</a>
+      <a href="contact.html#join">ร่วมงานกับเรา</a>
+    </div>
+    <div class="foot-col">
+      <h4>ติดต่อ</h4>
+      <a href="mailto:info@vfoods.co.th">info@vfoods.co.th</a>
+      <a href="https://www.vfoods.co.th" target="_blank" rel="noopener">www.vfoods.co.th</a>
+      <a href="contact.html">แผนที่บริษัท</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <p>© 2026 Variety Foods International Co., Ltd. All rights reserved.</p>
+    <p>FSSC 22000 · HACCP · GMP · HALAL · Thailand Trust Mark</p>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script src="nav.js?v=3"></script>
+<script src="news/news-index.js?v=1"></script>
+<script>
+(function () {
+  var IDX = window.NEWS_INDEX || { current: [], archive: [] };
+
+  function el(tag, cls, txt) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (txt != null) n.textContent = txt;
+    return n;
+  }
+
+  function card(item) {
+    var a = el('a', 'arc-card');
+    a.href = 'news-article.html?id=' + encodeURIComponent(item.slug);
+
+    var shots = (item.cover ? 1 : 0) + ((item.images && item.images.length) || 0);
+    if (item.cover) {
+      var wrap = el('div', 'arc-thumb-wrap');
+      var img = document.createElement('img');
+      img.className = 'arc-thumb';
+      img.src = item.cover;
+      img.alt = '';
+      img.loading = 'lazy';
+      img.onerror = function () { img.replaceWith(el('div', 'arc-ph', item.tag || 'NEWS')); };
+      wrap.appendChild(img);
+      if (shots > 1) wrap.appendChild(el('span', 'arc-count', '🖼 ' + shots + ' รูป'));
+      a.appendChild(wrap);
+    } else {
+      a.appendChild(el('div', 'arc-ph', item.tag || 'NEWS'));
+    }
+
+    var b = el('div', 'arc-body');
+    b.appendChild(el('span', 'arc-tag', item.tag || ''));
+    b.appendChild(el('div', 'arc-name', item.title || ''));
+    if (item.text) b.appendChild(el('p', 'arc-text', item.text));
+    var foot = el('div', 'arc-foot');
+    foot.appendChild(el('span', 'arc-date', item.date || ''));
+    foot.appendChild(el('span', 'arc-more', 'อ่านข่าวเต็ม →'));
+    b.appendChild(foot);
+    a.appendChild(b);
+    return a;
+  }
+
+  function fill(mountId, list) {
+    var mount = document.getElementById(mountId);
+    if (!list || !list.length) {
+      var e = el('div', 'arc-empty', 'ยังไม่มีข่าวในหมวดนี้');
+      e.style.gridColumn = '1 / -1';
+      mount.appendChild(e);
+      return;
+    }
+    list.forEach(function (it) { mount.appendChild(card(it)); });
+  }
+
+  fill('gridCurrent', IDX.current);
+  fill('gridArchive', IDX.archive);
+})();
+</script>
+<script src="i18n.js?v=3"></script>
+</body>
+</html>

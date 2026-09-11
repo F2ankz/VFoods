@@ -17,6 +17,8 @@
       file === 'products.html'  ? 'products' :
       file === 'brands.html'    ? 'brands'   :
       file === 'news.html'      ? 'news'     :
+      file === 'news-article.html' ? 'news' :
+      file === 'news-archive.html' ? 'news' :
       file === 'oem-guide.html' ? 'oem'      :
       file === 'catalog.html'   ? 'oem'      :
       file === 'contact.html'   ? 'contact'  :

@@ -3,438 +3,855 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>จัดการข่าวสาร — VFoods Admin</title>
+<title>โปรแกรมอัปเดตข่าวสาร — VFoods</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet">
 <style>
-:root{
-  --og:#FF6D1A; --og2:#D6590C; --dark:#2B1B16; --bg:#FFF6ED;
-  --line:rgba(214,89,12,.18); --card:#fff;
-}
-*{box-sizing:border-box;}
+:root{ --og:#FF6D1A; --og2:#D6590C; --dark:#2B1B16; --bg:#FFF6ED; --line:rgba(214,89,12,.18); --card:#fff; }
+*{ box-sizing:border-box; }
 body{ margin:0; font-family:'Sarabun',sans-serif; background:var(--bg); color:var(--dark); }
-header{ background:linear-gradient(135deg,#FF7E33,#D6590C); color:#fff; padding:22px 28px; }
-header h1{ margin:0 0 4px; font-size:1.25rem; font-weight:800; }
-header p{ margin:0; font-size:.82rem; opacity:.9; }
 
-.toolbar{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; padding:16px 28px; background:#fff; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:5; }
+header{ background:linear-gradient(135deg,#FF7E33,#D6590C); color:#fff; padding:20px 26px; }
+header h1{ margin:0 0 4px; font-size:1.22rem; font-weight:800; }
+header p{ margin:0; font-size:.82rem; opacity:.92; }
+
+.toolbar{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; padding:14px 26px; background:#fff; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:20; }
 .btn{ font-family:'Sarabun',sans-serif; font-weight:700; font-size:.85rem; padding:10px 18px; border-radius:10px; border:1.5px solid var(--og2); background:#fff; color:var(--og2); cursor:pointer; transition:all .2s; }
 .btn:hover{ background:rgba(214,89,12,.08); }
 .btn.primary{ background:var(--og2); color:#fff; }
 .btn.primary:hover{ background:#B8480A; }
+.btn.ghost{ border-color:var(--line); color:rgba(43,27,22,.7); }
 .btn:disabled{ opacity:.4; cursor:not-allowed; }
-.status{ font-size:.8rem; color:rgba(43,27,22,.6); margin-left:auto; }
+.status{ font-size:.8rem; color:rgba(43,27,22,.6); margin-left:auto; text-align:right; }
 .status.dirty{ color:#B8480A; font-weight:700; }
-.status.saved{ color:#1a7a3c; font-weight:700; }
+.status.ok{ color:#1a7a3c; font-weight:700; }
 
-.wrap{ display:grid; grid-template-columns:1.3fr 1fr; gap:0; align-items:start; }
-.panel{ padding:24px 28px; }
-.panel h2{ font-size:.95rem; margin:0 0 14px; color:var(--og2); text-transform:uppercase; letter-spacing:.08em; }
+.wrap{ display:grid; grid-template-columns:330px 1fr; gap:0; align-items:start; }
+.side{ padding:18px; border-right:1px solid var(--line); min-height:calc(100vh - 128px); position:sticky; top:64px; max-height:calc(100vh - 64px); overflow:auto; }
+.main{ padding:22px 26px 60px; }
 
-.empty-hint{ padding:40px 20px; text-align:center; color:rgba(43,27,22,.5); font-size:.88rem; border:1.5px dashed var(--line); border-radius:14px; }
+.grp{ margin-bottom:20px; }
+.grp-head{ display:flex; align-items:center; gap:8px; margin-bottom:9px; }
+.grp-head h2{ font-size:.76rem; margin:0; color:var(--og2); text-transform:uppercase; letter-spacing:.08em; }
+.grp-head .cnt{ font-size:.7rem; font-weight:800; color:#fff; background:var(--og2); border-radius:999px; padding:1px 8px; }
+.grp-head .warn{ font-size:.7rem; font-weight:700; color:#C0392B; }
+.grp-note{ font-size:.72rem; color:rgba(43,27,22,.5); margin:-4px 0 9px; line-height:1.5; }
 
-.item{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; margin-bottom:12px; }
-.item-top{ display:flex; align-items:center; gap:8px; margin-bottom:10px; }
-.item-num{ font-size:.72rem; font-weight:800; color:#fff; background:var(--og2); width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-.item-top .spacer{ flex:1; }
-.icon-btn{ border:none; background:rgba(214,89,12,.08); color:var(--og2); width:28px; height:28px; border-radius:8px; cursor:pointer; font-size:.85rem; line-height:1; }
-.icon-btn:hover{ background:rgba(214,89,12,.18); }
-.icon-btn:disabled{ opacity:.3; cursor:not-allowed; }
-.icon-btn.danger{ color:#C0392B; background:rgba(192,57,43,.08); }
-.icon-btn.danger:hover{ background:rgba(192,57,43,.18); }
+.row{ display:flex; align-items:center; gap:8px; padding:9px 10px; background:#fff; border:1px solid var(--line); border-radius:11px; margin-bottom:7px; cursor:pointer; transition:border-color .2s, box-shadow .2s; }
+.row:hover{ border-color:rgba(214,89,12,.45); }
+.row.sel{ border-color:var(--og2); box-shadow:0 0 0 2px rgba(214,89,12,.15); }
+.row-thumb{ width:44px; height:34px; border-radius:7px; object-fit:cover; flex-shrink:0; background:linear-gradient(135deg,#FFE3C2,#FFD1A6); }
+.row-txt{ flex:1; min-width:0; }
+.row-title{ font-size:.82rem; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.row-sub{ font-size:.68rem; color:rgba(43,27,22,.5); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.row-acts{ display:flex; flex-direction:column; gap:2px; }
+.mini{ border:none; background:rgba(214,89,12,.08); color:var(--og2); width:22px; height:16px; border-radius:5px; cursor:pointer; font-size:.6rem; line-height:1; padding:0; }
+.mini:hover{ background:rgba(214,89,12,.2); }
+.mini:disabled{ opacity:.25; cursor:not-allowed; }
+.empty{ padding:18px; text-align:center; color:rgba(43,27,22,.45); font-size:.8rem; border:1.5px dashed var(--line); border-radius:12px; }
 
-.field-row{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px; }
-label{ display:block; font-size:.68rem; font-weight:700; color:rgba(43,27,22,.55); margin-bottom:3px; text-transform:uppercase; letter-spacing:.05em; }
-input[type=text]{ width:100%; font-family:'Sarabun',sans-serif; font-size:.85rem; padding:8px 10px; border:1px solid var(--line); border-radius:8px; background:#FFFBF6; color:var(--dark); }
-input[type=text]:focus{ outline:none; border-color:var(--og2); background:#fff; }
-.full{ grid-column:1 / -1; }
+.card{ background:var(--card); border:1px solid var(--line); border-radius:16px; padding:20px; margin-bottom:16px; }
+.card h3{ margin:0 0 14px; font-size:.86rem; color:var(--og2); text-transform:uppercase; letter-spacing:.07em; }
+.f-row{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
+.f-row.one{ grid-template-columns:1fr; }
+label{ display:block; font-size:.68rem; font-weight:700; color:rgba(43,27,22,.55); margin-bottom:4px; text-transform:uppercase; letter-spacing:.05em; }
+label .hint{ text-transform:none; letter-spacing:0; font-weight:400; color:rgba(43,27,22,.4); }
+input[type=text], textarea, select{ width:100%; font-family:'Sarabun',sans-serif; font-size:.88rem; padding:9px 11px; border:1px solid var(--line); border-radius:9px; background:#FFFBF6; color:var(--dark); }
+input[type=text]:focus, textarea:focus, select:focus{ outline:none; border-color:var(--og2); background:#fff; }
+textarea{ resize:vertical; line-height:1.7; }
 
-.add-row{ display:flex; justify-content:center; margin:18px 0 6px; }
+.drop{ border:2px dashed rgba(214,89,12,.35); border-radius:14px; padding:20px; text-align:center; background:#FFFBF6; cursor:pointer; transition:background .2s, border-color .2s; }
+.drop:hover, .drop.over{ background:rgba(255,109,26,.07); border-color:var(--og2); }
+.drop b{ color:var(--og2); }
+.drop span{ display:block; font-size:.76rem; color:rgba(43,27,22,.5); margin-top:5px; }
 
-/* ── live preview: mirrors the .news-h-card look on news.html ── */
-.preview-shell{ position:sticky; top:74px; background:#FBF6EF; border:1px solid var(--line); border-radius:16px; padding:16px; }
-.preview-grid{ display:grid; grid-template-rows:repeat(2,1fr); grid-auto-flow:column; grid-auto-columns:150px; gap:10px; overflow-x:auto; padding-bottom:6px; }
-.p-card{ display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-radius:12px; overflow:hidden; }
-.p-thumb{ width:100%; height:64px; object-fit:cover; }
-.p-thumb-ph{ width:100%; height:64px; display:flex; align-items:center; justify-content:center; text-align:center; padding:0 6px; background:linear-gradient(135deg,rgba(255,109,26,.14),rgba(255,109,26,.04)); font-size:.56rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--og2); }
-.p-body{ padding:8px 9px; display:flex; flex-direction:column; gap:2px; }
-.p-tag{ font-size:.5rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--og2); }
-.p-title{ font-size:.66rem; font-weight:700; line-height:1.35; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
-.p-date{ font-size:.55rem; color:rgba(43,27,22,.45); margin-top:auto; }
-.preview-note{ font-size:.72rem; color:rgba(43,27,22,.55); margin-top:10px; line-height:1.6; }
+.cover-box{ display:flex; gap:14px; align-items:flex-start; }
+.cover-prev{ width:190px; height:130px; border-radius:12px; object-fit:cover; border:1px solid var(--line); background:#FBF6EF; flex-shrink:0; }
+.cover-side{ flex:1; }
 
-.footnote{ padding:18px 28px 32px; font-size:.78rem; color:rgba(43,27,22,.55); line-height:1.8; }
-.footnote code{ background:rgba(214,89,12,.1); padding:1px 6px; border-radius:5px; }
+.shots{ display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:12px; margin-top:14px; }
+.shot{ border:1px solid var(--line); border-radius:12px; overflow:hidden; background:#FFFBF6; }
+.shot img{ width:100%; height:110px; object-fit:cover; display:block; }
+.shot-b{ padding:8px; }
+.shot-b input{ font-size:.76rem; padding:6px 8px; }
+.shot-acts{ display:flex; gap:5px; margin-top:6px; }
+.shot-acts button{ flex:1; border:none; background:rgba(214,89,12,.08); color:var(--og2); border-radius:6px; padding:5px; font-size:.7rem; cursor:pointer; font-family:'Sarabun',sans-serif; }
+.shot-acts button:hover{ background:rgba(214,89,12,.2); }
+.shot-acts button.del{ color:#C0392B; background:rgba(192,57,43,.08); }
+.shot-acts button:disabled{ opacity:.3; cursor:not-allowed; }
+.badge-new{ display:inline-block; font-size:.62rem; font-weight:800; color:#1a7a3c; background:rgba(26,122,60,.12); padding:2px 7px; border-radius:999px; }
+.badge-old{ display:inline-block; font-size:.62rem; font-weight:800; color:rgba(43,27,22,.5); background:rgba(43,27,22,.07); padding:2px 7px; border-radius:999px; }
 
-@media(max-width:860px){ .wrap{ grid-template-columns:1fr; } .preview-shell{ position:static; } }
+.danger-row{ display:flex; gap:10px; justify-content:flex-end; }
+.btn.del{ border-color:rgba(192,57,43,.5); color:#C0392B; }
+.btn.del:hover{ background:rgba(192,57,43,.08); }
+
+.howto{ background:#fff; border:1px solid var(--line); border-radius:16px; padding:18px 22px; font-size:.85rem; line-height:1.85; }
+.howto h3{ margin:0 0 10px; font-size:.86rem; color:var(--og2); text-transform:uppercase; letter-spacing:.07em; }
+.howto code{ background:rgba(214,89,12,.09); padding:2px 6px; border-radius:5px; font-size:.82rem; }
+.howto ol{ margin:0; padding-left:20px; }
+.nothing{ padding:60px 20px; text-align:center; color:rgba(43,27,22,.45); }
+
+@media(max-width:900px){
+  .wrap{ grid-template-columns:1fr; }
+  .side{ position:static; max-height:none; min-height:0; border-right:none; border-bottom:1px solid var(--line); }
+  .f-row{ grid-template-columns:1fr; }
+}
 </style>
 </head>
 <body>
 
 <header>
-  <h1>จัดการข่าวสาร &amp; กิจกรรม</h1>
-  <p>แก้ไขการ์ดข่าวที่โชว์ในหน้า news.html — เพิ่ม/ลบ/เรียงลำดับได้ที่นี่ ไม่ต้องแก้โค้ด</p>
+  <h1>โปรแกรมอัปเดตข่าวสาร VFOODS</h1>
+  <p>ใส่ข้อความ + ใส่รูปได้หลายรูปต่อหนึ่งข่าว → กด “ส่งออกเป็น .zip” → ส่งไฟล์ zip ให้คนดูแลเว็บนำไปแตกลง git</p>
 </header>
 
 <div class="toolbar">
-  <button class="btn primary" id="btnOpen">📂 เปิดไฟล์ news-data.js</button>
-  <button class="btn" id="btnSave" disabled>💾 บันทึก</button>
-  <button class="btn" id="btnDownload" disabled>⬇️ ดาวน์โหลดไฟล์</button>
-  <input type="file" id="fileFallback" accept=".js" style="display:none">
-  <span class="status" id="status">ยังไม่ได้เปิดไฟล์ — กด "เปิดไฟล์ news-data.js" แล้วเลือกไฟล์ในโฟลเดอร์เว็บ (D:\VFOOD\news-data.js)</span>
+  <button class="btn primary" id="btnAdd">+ เพิ่มข่าวใหม่</button>
+  <button class="btn" id="btnZip">📦 ส่งออกเป็น .zip</button>
+  <button class="btn ghost" id="btnReload">↺ เริ่มใหม่จากไฟล์เดิม</button>
+  <span class="status" id="status">พร้อมใช้งาน</span>
 </div>
 
 <div class="wrap">
-  <div class="panel">
-    <h2>รายการข่าว</h2>
-    <div id="list"></div>
-    <div class="add-row">
-      <button class="btn primary" id="btnAdd" disabled>+ เพิ่มข่าวใหม่</button>
+  <aside class="side">
+    <div class="grp">
+      <div class="grp-head">
+        <h2>ข่าวปัจจุบัน</h2><span class="cnt" id="cntCur">0</span><span class="warn" id="warnCur"></span>
+      </div>
+      <p class="grp-note">3 ข่าวนี้จะโชว์เป็นการ์ดใหญ่ข้างฟีด Facebook บนหน้าข่าวสาร (รูปเก็บใน <code>news/current/</code>)</p>
+      <div id="listCur"></div>
     </div>
-  </div>
+    <div class="grp">
+      <div class="grp-head">
+        <h2>ข่าวย้อนหลัง</h2><span class="cnt" id="cntArc">0</span>
+      </div>
+      <p class="grp-note">ข่าวเก่าที่ยังเปิดอ่านได้จากหน้า “ดูข่าวย้อนหลังทั้งหมด” (รูปเก็บใน <code>news/archive/</code>)</p>
+      <div id="listArc"></div>
+    </div>
+  </aside>
 
-  <div class="panel">
-    <div class="preview-shell">
-      <h2 style="margin-top:0;">พรีวิวบนหน้าเว็บ</h2>
-      <div class="preview-grid" id="previewGrid"></div>
-      <p class="preview-note">
-        นี่คือหน้าตาจริงของการ์ดในส่วน "ข่าวสารบริษัท" บนหน้า news.html (กริดแนวนอน 2 แถว ต่อจากฟีด Facebook) —
-        การ์ดที่อยู่บนสุดของรายการทางซ้าย = การ์ดแรกที่โชว์
-      </p>
+  <main class="main">
+    <div id="editor"><div class="nothing">เลือกข่าวทางซ้ายเพื่อแก้ไข หรือกด “+ เพิ่มข่าวใหม่”</div></div>
+
+    <div class="howto">
+      <h3>วิธีใช้</h3>
+      <ol>
+        <li>เลือกข่าวทางซ้าย (หรือกด <b>+ เพิ่มข่าวใหม่</b>) แล้วพิมพ์หัวข้อ / วันที่ / เนื้อข่าว</li>
+        <li>กดกล่องอัปโหลดเพื่อ <b>ใส่รูปปก</b> และ <b>ใส่รูปเพิ่มได้หลายรูป</b> (ลากรูปมาวางก็ได้) — โปรแกรมย่อรูปให้อัตโนมัติ</li>
+        <li>ข่าวปัจจุบันเก็บได้ 3 ข่าว ถ้าเกินให้กด <b>↓ ย้ายไปข่าวย้อนหลัง</b> ที่ข่าวเก่าสุด</li>
+        <li>กด <b>📦 ส่งออกเป็น .zip</b> → ได้ไฟล์ <code>news-update-วันที่.zip</code></li>
+        <li>ส่งไฟล์ zip ให้คนดูแลเว็บ → แตกไฟล์ทับที่โฟลเดอร์เว็บ (โฟลเดอร์ที่มี <code>news.html</code>) → <code>git add . &amp;&amp; git commit &amp;&amp; git push</code></li>
+      </ol>
     </div>
-  </div>
+  </main>
 </div>
 
-<div class="footnote">
-  <b>วิธีใช้งาน</b><br>
-  1. กด <b>"📂 เปิดไฟล์ news-data.js"</b> แล้วเลือกไฟล์ <code>news-data.js</code> ที่อยู่ในโฟลเดอร์เว็บ (เปิดครั้งเดียวต่อรอบการแก้ไข)<br>
-  2. แก้ไข / เพิ่ม / ลบ / สลับลำดับข่าวทางซ้าย — พรีวิวทางขวาจะอัปเดตให้ทันที<br>
-  3. กด <b>"💾 บันทึก"</b> เพื่อเขียนทับไฟล์ news-data.js โดยตรง (เบราว์เซอร์จะถามสิทธิ์ครั้งแรกที่บันทึก)<br>
-  4. ถ้าเบราว์เซอร์ไม่รองรับการบันทึกโดยตรง (เช่น Firefox) ให้ใช้ <b>"⬇️ ดาวน์โหลดไฟล์"</b> แล้วนำไฟล์ที่ได้ไปแทนที่ <code>news-data.js</code> เดิมเอง<br>
-  5. เว็บไซต์เป็นไฟล์สแตติก — หลังบันทึกแล้วต้อง commit + push ขึ้น GitHub อีกครั้งเพื่อให้เว็บจริงอัปเดต (บอก Claude ให้ "commit push deploy" ได้เลย)
-</div>
+<input type="file" id="pickCover" accept="image/*" hidden>
+<input type="file" id="pickShots" accept="image/*" multiple hidden>
 
+<script src="../news/news-index.js?v=1"></script>
 <script>
-var items = [];
-var fileHandle = null; // File System Access API handle, if supported
-var dirty = false;
+(function () {
+'use strict';
 
-var HEADER = "/*\n" +
-"  อัปเดตข่าวสาร/กิจกรรมของบริษัทได้จากไฟล์นี้ไฟล์เดียว — ไม่ต้องแตะ news.html เลย\n" +
-"\n" +
-"  วิธีเพิ่มข่าวใหม่:\n" +
-"  1. คัดลอกก้อน { ... } อันหนึ่งด้านล่างนี้\n" +
-"  2. วางไว้ที่ตำแหน่งแรกสุดของลิสต์ (ก้อนแรกจะโชว์เป็นการ์ดแรกในหน้าเว็บ)\n" +
-"  3. แก้ข้อความในก้อนที่คัดลอกมา:\n" +
-"       tag   = หมวดหมู่สั้นๆ เช่น \"NPD Update\", \"กิจกรรม\", \"รางวัล\", \"CSR\", \"ประกาศ\"\n" +
-"       title = หัวข้อข่าว\n" +
-"       date  = วันที่ (พิมพ์อิสระ เช่น \"เมษายน 2026\")\n" +
-"       img   = พาธรูปภาพ (ถ้าไม่มีรูป ลบบรรทัดนี้ทิ้งได้ — ระบบจะโชว์ป้ายหมวดหมู่แทนรูป)\n" +
-"       link  = ลิงก์เมื่อคลิกการ์ด (ถ้าไม่มีลิงก์ ลบบรรทัดนี้ทิ้งได้)\n" +
-"  4. บันทึกไฟล์ แล้วรีเฟรชหน้าเว็บ — การ์ดใหม่จะขึ้นทันที ไม่ต้องแก้โค้ดที่อื่น\n" +
-"\n" +
-"  ลบข่าวเก่า: ลบทั้งก้อน { ... } ของข่าวนั้นออก (อย่าลืมลบ , ที่เกินด้วย)\n" +
-"\n" +
-"  ไฟล์นี้ยังแก้ไขได้ผ่านโปรแกรมหลังบ้านขนาดย่อที่ admin/news-admin.html ด้วย\n" +
-"*/";
-
-var $list = document.getElementById('list');
-var $preview = document.getElementById('previewGrid');
-var $status = document.getElementById('status');
-var $btnOpen = document.getElementById('btnOpen');
-var $btnSave = document.getElementById('btnSave');
-var $btnDownload = document.getElementById('btnDownload');
-var $btnAdd = document.getElementById('btnAdd');
-var $fileFallback = document.getElementById('fileFallback');
-
-function parseItems(text) {
-  var m = text.match(/const\s+NEWS_ITEMS\s*=\s*(\[[\s\S]*?\]);/);
-  if (!m) throw new Error('หารายการ NEWS_ITEMS ในไฟล์ไม่เจอ — ไฟล์นี้ใช่ news-data.js หรือเปล่า?');
-  return Function('"use strict"; return (' + m[1] + ');')();
-}
-
-function esc(s) { return JSON.stringify(s == null ? '' : s); }
-
-function serialize() {
-  var blocks = items.map(function (it) {
-    var props = [];
-    if (it.tag)   props.push('    tag: ' + esc(it.tag));
-    if (it.title) props.push('    title: ' + esc(it.title));
-    if (it.date)  props.push('    date: ' + esc(it.date));
-    if (it.img)   props.push('    img: ' + esc(it.img));
-    if (it.link)  props.push('    link: ' + esc(it.link));
-    return '  {\n' + props.join(',\n') + '\n  }';
-  });
-  return HEADER + '\nconst NEWS_ITEMS = [\n' + blocks.join(',\n') + '\n];\n';
-}
-
-function setDirty(v) {
-  dirty = v;
-  $status.textContent = v ? 'มีการแก้ไขที่ยังไม่ได้บันทึก' : 'บันทึกแล้ว';
-  $status.className = 'status ' + (v ? 'dirty' : 'saved');
-}
-
-function render() {
-  $list.innerHTML = '';
-  if (!items.length) {
-    var e = document.createElement('div');
-    e.className = 'empty-hint';
-    e.textContent = 'ยังไม่มีข่าว — กด "+ เพิ่มข่าวใหม่" ด้านล่างเพื่อเริ่มเพิ่ม';
-    $list.appendChild(e);
+/* ══════════════════════════════════════════════════════════════
+   ตัวเขียนไฟล์ ZIP ขนาดจิ๋ว (แบบ store — ไม่บีบอัด เพราะรูป jpg/png
+   บีบมาแล้ว) ไม่ต้องพึ่งไลบรารีภายนอก จึงใช้งานแบบออฟไลน์ได้
+   ══════════════════════════════════════════════════════════════ */
+var CRC_TABLE = (function () {
+  var t = new Uint32Array(256);
+  for (var n = 0; n < 256; n++) {
+    var c = n;
+    for (var k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+    t[n] = c >>> 0;
   }
-  items.forEach(function (it, i) {
-    $list.appendChild(buildItemCard(it, i));
+  return t;
+})();
+
+function crc32(bytes) {
+  var c = 0xFFFFFFFF;
+  for (var i = 0; i < bytes.length; i++) c = CRC_TABLE[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8);
+  return (c ^ 0xFFFFFFFF) >>> 0;
+}
+
+function makeZip(files) { // files: [{ name, bytes:Uint8Array }]
+  var enc = new TextEncoder();
+  var now = new Date();
+  var dosTime = ((now.getHours() & 31) << 11) | ((now.getMinutes() & 63) << 5) | ((now.getSeconds() / 2) & 31);
+  var dosDate = (((now.getFullYear() - 1980) & 127) << 9) | (((now.getMonth() + 1) & 15) << 5) | (now.getDate() & 31);
+
+  var parts = [], central = [], offset = 0;
+
+  files.forEach(function (f) {
+    var nameBytes = enc.encode(f.name);
+    var crc = crc32(f.bytes);
+    var size = f.bytes.length;
+
+    var lh = new Uint8Array(30 + nameBytes.length);
+    var lv = new DataView(lh.buffer);
+    lv.setUint32(0, 0x04034b50, true);
+    lv.setUint16(4, 20, true);
+    lv.setUint16(6, 0x0800, true);   // UTF-8 filenames
+    lv.setUint16(8, 0, true);        // stored
+    lv.setUint16(10, dosTime, true);
+    lv.setUint16(12, dosDate, true);
+    lv.setUint32(14, crc, true);
+    lv.setUint32(18, size, true);
+    lv.setUint32(22, size, true);
+    lv.setUint16(26, nameBytes.length, true);
+    lv.setUint16(28, 0, true);
+    lh.set(nameBytes, 30);
+
+    var ch = new Uint8Array(46 + nameBytes.length);
+    var cv = new DataView(ch.buffer);
+    cv.setUint32(0, 0x02014b50, true);
+    cv.setUint16(4, 20, true);
+    cv.setUint16(6, 20, true);
+    cv.setUint16(8, 0x0800, true);
+    cv.setUint16(10, 0, true);
+    cv.setUint16(12, dosTime, true);
+    cv.setUint16(14, dosDate, true);
+    cv.setUint32(16, crc, true);
+    cv.setUint32(20, size, true);
+    cv.setUint32(24, size, true);
+    cv.setUint16(28, nameBytes.length, true);
+    cv.setUint32(42, offset, true);
+    ch.set(nameBytes, 46);
+
+    parts.push(lh, f.bytes);
+    central.push(ch);
+    offset += lh.length + size;
   });
-  renderPreview();
+
+  var cdSize = central.reduce(function (a, c) { return a + c.length; }, 0);
+  var eocd = new Uint8Array(22);
+  var ev = new DataView(eocd.buffer);
+  ev.setUint32(0, 0x06054b50, true);
+  ev.setUint16(8, files.length, true);
+  ev.setUint16(10, files.length, true);
+  ev.setUint32(12, cdSize, true);
+  ev.setUint32(16, offset, true);
+
+  return new Blob(parts.concat(central, [eocd]), { type: 'application/zip' });
 }
 
-function buildItemCard(it, i) {
-  var wrap = document.createElement('div');
-  wrap.className = 'item';
+/* ══════════════════════════════════════════════════════════════
+   สถานะข้อมูล
+   ══════════════════════════════════════════════════════════════ */
+var DATA = { current: [], archive: [] };
+var sel = null;            // { group:'current'|'archive', index:number }
+var dirty = false;
+var STAMP = Date.now().toString(36);
 
-  var top = document.createElement('div');
-  top.className = 'item-top';
+var $ = function (id) { return document.getElementById(id); };
 
-  var num = document.createElement('span');
-  num.className = 'item-num';
-  num.textContent = i + 1;
-  top.appendChild(num);
-
-  var spacer = document.createElement('span');
-  spacer.className = 'spacer';
-  top.appendChild(spacer);
-
-  var upBtn = mkIconBtn('▲', i === 0, function () { moveItem(i, -1); });
-  var downBtn = mkIconBtn('▼', i === items.length - 1, function () { moveItem(i, 1); });
-  var delBtn = mkIconBtn('🗑', false, function () { deleteItem(i); }, true);
-  top.appendChild(upBtn);
-  top.appendChild(downBtn);
-  top.appendChild(delBtn);
-  wrap.appendChild(top);
-
-  wrap.appendChild(buildFieldRow([
-    mkField('หมวดหมู่ (tag)', it.tag, function (v) { it.tag = v; onEdit(); }),
-    mkField('วันที่ (date)', it.date, function (v) { it.date = v; onEdit(); })
-  ]));
-  wrap.appendChild(buildFieldRow([
-    mkField('หัวข้อข่าว (title)', it.title, function (v) { it.title = v; onEdit(); }, true)
-  ]));
-  wrap.appendChild(buildFieldRow([
-    mkField('รูปภาพ (img) — เว้นว่างได้', it.img, function (v) { it.img = v; onEdit(); }, true)
-  ]));
-  wrap.appendChild(buildFieldRow([
-    mkField('ลิงก์เมื่อคลิก (link) — เว้นว่างได้', it.link, function (v) { it.link = v; onEdit(); }, true)
-  ]));
-
-  return wrap;
+function slugify(s) {
+  var out = String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  return out || ('news-' + Date.now().toString(36));
 }
 
-function mkIconBtn(txt, disabled, onClick, danger) {
+function normalize(raw) {
+  return {
+    slug: raw.slug || slugify(raw.title),
+    tag: raw.tag || '',
+    title: raw.title || '',
+    date: raw.date || '',
+    text: raw.text || '',
+    link: raw.link || '',
+    body: (raw.body || []).join('\n\n'),
+    cover: raw.cover ? { kind: 'path', src: raw.cover } : null,
+    images: (raw.images || []).filter(function (i) { return i && i.src; }).map(function (i) {
+      return { ref: { kind: 'path', src: i.src }, caption: i.caption || '' };
+    })
+  };
+}
+
+function loadFromIndex() {
+  var src = window.NEWS_INDEX || { current: [], archive: [] };
+  DATA = {
+    current: (src.current || []).map(normalize),
+    archive: (src.archive || []).map(normalize)
+  };
+  sel = DATA.current.length ? { group: 'current', index: 0 } : null;
+  setDirty(false);
+  render();
+}
+
+function setDirty(v, msg) {
+  dirty = v;
+  var s = $('status');
+  s.textContent = msg || (v ? 'มีการแก้ไขที่ยังไม่ได้ส่งออก — อย่าลืมกด “ส่งออกเป็น .zip”' : 'พร้อมใช้งาน');
+  s.className = 'status ' + (v ? 'dirty' : '');
+}
+
+function item() { return sel ? DATA[sel.group][sel.index] : null; }
+
+/* พาธของรูปเมื่อไปอยู่บนเว็บจริง */
+function webPath(ref, it, group) {
+  if (!ref) return '';
+  if (ref.kind === 'path') return ref.src;
+  return 'news/' + group + '/' + it.slug + '/' + ref.name;
+}
+/* พาธสำหรับแสดงตัวอย่างในหน้านี้ (หน้านี้อยู่ในโฟลเดอร์ /admin/) */
+function prevPath(ref, it, group) {
+  if (!ref) return '';
+  if (ref.kind === 'new') return ref.url;
+  return '../' + ref.src;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   รูปภาพ — ย่อขนาดอัตโนมัติ + ตรวจว่ามีพื้นโปร่งใสไหม
+   ══════════════════════════════════════════════════════════════ */
+var MAX_W = 1600;
+
+function readImage(file) {
+  return new Promise(function (resolve, reject) {
+    var url = URL.createObjectURL(file);
+    var img = new Image();
+    img.onload = function () { resolve(img); };
+    img.onerror = function () { URL.revokeObjectURL(url); reject(new Error('เปิดรูปไม่ได้: ' + file.name)); };
+    img.src = url;
+  });
+}
+
+function hasAlpha(ctx, w, h) {
+  var d = ctx.getImageData(0, 0, w, h).data;
+  for (var i = 3; i < d.length; i += 40) { if (d[i] < 250) return true; }
+  return false;
+}
+
+function bytesOf(blob) {
+  return blob.arrayBuffer().then(function (b) { return new Uint8Array(b); });
+}
+
+/* คืน { name, bytes, url, kind:'new' } */
+async function processImage(file, baseName) {
+  if (!/^image\//.test(file.type)) throw new Error('ไฟล์ "' + file.name + '" ไม่ใช่รูปภาพ');
+
+  var img = await readImage(file);
+  var ext = (file.type === 'image/png') ? 'png' : (file.type === 'image/webp' ? 'webp' : 'jpg');
+  var bytes;
+
+  // เล็กอยู่แล้ว → ใช้ไฟล์เดิม ไม่ต้องบีบซ้ำ (คมชัดกว่า)
+  if (img.naturalWidth <= MAX_W && file.size <= 700 * 1024) {
+    bytes = await bytesOf(file);
+  } else {
+    var scale = Math.min(1, MAX_W / img.naturalWidth);
+    var w = Math.max(1, Math.round(img.naturalWidth * scale));
+    var h = Math.max(1, Math.round(img.naturalHeight * scale));
+    var cv = document.createElement('canvas');
+    cv.width = w; cv.height = h;
+    var ctx = cv.getContext('2d');
+    ctx.drawImage(img, 0, 0, w, h);
+
+    var alpha = (file.type === 'image/png' || file.type === 'image/webp') && hasAlpha(ctx, w, h);
+    var outType = alpha ? 'image/png' : 'image/jpeg';
+    ext = alpha ? 'png' : 'jpg';
+
+    var blob = await new Promise(function (res) { cv.toBlob(res, outType, 0.86); });
+    bytes = await bytesOf(blob);
+    // ถ้าย่อแล้วใหญ่กว่าเดิม ให้ใช้ไฟล์เดิม
+    if (bytes.length >= file.size) {
+      bytes = await bytesOf(file);
+      ext = (file.type === 'image/png') ? 'png' : (file.type === 'image/webp' ? 'webp' : 'jpg');
+    }
+  }
+
+  var name = baseName + '.' + ext;
+  var url = URL.createObjectURL(new Blob([bytes], { type: file.type }));
+  return { kind: 'new', name: name, bytes: bytes, url: url, size: bytes.length };
+}
+
+/* ══════════════════════════════════════════════════════════════
+   รายการข่าวด้านซ้าย
+   ══════════════════════════════════════════════════════════════ */
+function render() {
+  renderList('current', $('listCur'), $('cntCur'));
+  renderList('archive', $('listArc'), $('cntArc'));
+  $('warnCur').textContent = DATA.current.length > 3 ? 'เกิน 3 ข่าว — ข่าวที่ 4 เป็นต้นไปจะไม่โชว์' : '';
+  renderEditor();
+}
+
+function renderList(group, mount, counter) {
+  mount.innerHTML = '';
+  counter.textContent = DATA[group].length;
+  if (!DATA[group].length) {
+    var e = document.createElement('div');
+    e.className = 'empty';
+    e.textContent = 'ยังไม่มีข่าวในกลุ่มนี้';
+    mount.appendChild(e);
+    return;
+  }
+  DATA[group].forEach(function (it, i) {
+    var row = document.createElement('div');
+    row.className = 'row' + (sel && sel.group === group && sel.index === i ? ' sel' : '');
+    row.onclick = function () { sel = { group: group, index: i }; render(); };
+
+    var thumb = document.createElement('img');
+    thumb.className = 'row-thumb';
+    thumb.alt = '';
+    if (it.cover) thumb.src = prevPath(it.cover, it, group);
+    thumb.onerror = function () { thumb.removeAttribute('src'); };
+    row.appendChild(thumb);
+
+    var txt = document.createElement('div');
+    txt.className = 'row-txt';
+    var t = document.createElement('div');
+    t.className = 'row-title';
+    t.textContent = it.title || '(ยังไม่มีหัวข้อ)';
+    var s = document.createElement('div');
+    s.className = 'row-sub';
+    var shots = (it.cover ? 1 : 0) + it.images.length;
+    s.textContent = (it.date || 'ไม่ระบุวันที่') + ' · ' + shots + ' รูป';
+    txt.appendChild(t); txt.appendChild(s);
+    row.appendChild(txt);
+
+    var acts = document.createElement('div');
+    acts.className = 'row-acts';
+    acts.appendChild(miniBtn('▲', i === 0, function (e) { e.stopPropagation(); move(group, i, -1); }));
+    acts.appendChild(miniBtn('▼', i === DATA[group].length - 1, function (e) { e.stopPropagation(); move(group, i, 1); }));
+    row.appendChild(acts);
+
+    mount.appendChild(row);
+  });
+}
+
+function miniBtn(txt, disabled, fn) {
   var b = document.createElement('button');
-  b.className = 'icon-btn' + (danger ? ' danger' : '');
+  b.className = 'mini';
   b.textContent = txt;
   b.disabled = !!disabled;
-  b.onclick = onClick;
+  b.onclick = fn;
   return b;
 }
 
-function mkField(labelText, value, onInput, full) {
+function move(group, i, dir) {
+  var j = i + dir;
+  if (j < 0 || j >= DATA[group].length) return;
+  var tmp = DATA[group][i]; DATA[group][i] = DATA[group][j]; DATA[group][j] = tmp;
+  if (sel && sel.group === group && sel.index === i) sel.index = j;
+  else if (sel && sel.group === group && sel.index === j) sel.index = i;
+  setDirty(true);
+  render();
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ฟอร์มแก้ไขข่าว
+   ══════════════════════════════════════════════════════════════ */
+function renderEditor() {
+  var mount = $('editor');
+  mount.innerHTML = '';
+  var it = item();
+  if (!it) {
+    mount.innerHTML = '<div class="nothing">เลือกข่าวทางซ้ายเพื่อแก้ไข หรือกด “+ เพิ่มข่าวใหม่”</div>';
+    return;
+  }
+  var group = sel.group;
+
+  /* ── เนื้อหา ── */
+  var c1 = card('เนื้อหาข่าว');
+  c1.appendChild(fRow([
+    field('หมวดหมู่ <span class="hint">เช่น กิจกรรม / รางวัล / NPD</span>', it.tag, function (v) { it.tag = v; touch(); }),
+    field('วันที่ <span class="hint">เช่น สิงหาคม 2026</span>', it.date, function (v) { it.date = v; touch(); })
+  ]));
+  c1.appendChild(fRow([
+    field('หัวข้อข่าว', it.title, function (v) { it.title = v; touch(); })
+  ], true));
+  c1.appendChild(fRow([
+    area('เนื้อหาย่อ <span class="hint">2–3 บรรทัด ใช้โชว์บนการ์ด</span>', it.text, 3, function (v) { it.text = v; touch(); })
+  ], true));
+  c1.appendChild(fRow([
+    area('เนื้อข่าวเต็ม <span class="hint">เว้นบรรทัดว่างเพื่อขึ้นย่อหน้าใหม่</span>', it.body, 9, function (v) { it.body = v; touch(); })
+  ], true));
+  c1.appendChild(fRow([
+    field('ลิงก์โพสต์ Facebook <span class="hint">ไม่มีก็เว้นว่าง</span>', it.link, function (v) { it.link = v; touch(); })
+  ], true));
+  mount.appendChild(c1);
+
+  /* ── รูปปก ── */
+  var c2 = card('รูปปก');
   var box = document.createElement('div');
-  if (full) box.className = 'full';
-  var lbl = document.createElement('label');
-  lbl.textContent = labelText;
-  var inp = document.createElement('input');
-  inp.type = 'text';
-  inp.value = value || '';
-  inp.addEventListener('input', function () { onInput(inp.value); });
-  box.appendChild(lbl);
-  box.appendChild(inp);
+  box.className = 'cover-box';
+
+  var prev = document.createElement('img');
+  prev.className = 'cover-prev';
+  prev.alt = '';
+  if (it.cover) prev.src = prevPath(it.cover, it, group);
+  box.appendChild(prev);
+
+  var side = document.createElement('div');
+  side.className = 'cover-side';
+  var drop = mkDrop('เลือกรูปปก', 'คลิกเพื่อเลือกไฟล์ หรือลากรูปมาวางตรงนี้', function (files) {
+    setCover(files[0]);
+  });
+  side.appendChild(drop);
+  if (it.cover) {
+    var info = document.createElement('div');
+    info.style.marginTop = '10px';
+    info.innerHTML = it.cover.kind === 'new'
+      ? '<span class="badge-new">รูปใหม่</span> ' + it.cover.name + ' (' + kb(it.cover.size) + ')'
+      : '<span class="badge-old">รูปเดิมในเว็บ</span> ' + it.cover.src;
+    var rm = document.createElement('button');
+    rm.className = 'btn ghost';
+    rm.textContent = 'ลบรูปปก';
+    rm.style.marginTop = '10px';
+    rm.onclick = function () { it.cover = null; touch(); render(); };
+    side.appendChild(info);
+    side.appendChild(rm);
+  }
+  box.appendChild(side);
+  c2.appendChild(box);
+  mount.appendChild(c2);
+
+  /* ── รูปเพิ่มเติม ── */
+  var c3 = card('รูปในเนื้อข่าว (ใส่ได้หลายรูป)');
+  c3.appendChild(mkDrop('เพิ่มรูป', 'เลือกได้ทีละหลายไฟล์ หรือลากรูปมาวางตรงนี้ — รูปจะถูกแทรกสลับระหว่างย่อหน้าในหน้าข่าวตามลำดับนี้', function (files) {
+    addShots(files);
+  }));
+
+  if (it.images.length) {
+    var grid = document.createElement('div');
+    grid.className = 'shots';
+    it.images.forEach(function (sh, i) {
+      var cell = document.createElement('div');
+      cell.className = 'shot';
+
+      var im = document.createElement('img');
+      im.alt = '';
+      im.src = prevPath(sh.ref, it, group);
+      cell.appendChild(im);
+
+      var b = document.createElement('div');
+      b.className = 'shot-b';
+      b.innerHTML = sh.ref.kind === 'new'
+        ? '<span class="badge-new">รูปใหม่</span>'
+        : '<span class="badge-old">รูปเดิม</span>';
+
+      var cap = document.createElement('input');
+      cap.type = 'text';
+      cap.placeholder = 'คำบรรยายใต้รูป (ไม่ใส่ก็ได้)';
+      cap.value = sh.caption;
+      cap.style.marginTop = '6px';
+      cap.oninput = function () { sh.caption = cap.value; touch(); };
+      b.appendChild(cap);
+
+      var acts = document.createElement('div');
+      acts.className = 'shot-acts';
+      acts.appendChild(sBtn('◀', i === 0, function () { swapShot(i, -1); }));
+      acts.appendChild(sBtn('▶', i === it.images.length - 1, function () { swapShot(i, 1); }));
+      var del = sBtn('ลบ', false, function () { it.images.splice(i, 1); touch(); render(); });
+      del.className = 'del';
+      acts.appendChild(del);
+      b.appendChild(acts);
+
+      cell.appendChild(b);
+      grid.appendChild(cell);
+    });
+    c3.appendChild(grid);
+  }
+  mount.appendChild(c3);
+
+  /* ── ตั้งค่า / จัดการ ── */
+  var c4 = card('การจัดเก็บ');
+  c4.appendChild(fRow([
+    field('ชื่อโฟลเดอร์/ลิงก์ (slug) <span class="hint">a-z 0-9 และ - เท่านั้น</span>', it.slug, function (v) { it.slug = slugify(v); touch(); })
+  ], true));
+
+  var where = document.createElement('p');
+  where.style.cssText = 'font-size:.8rem;color:rgba(43,27,22,.6);line-height:1.7;margin:0 0 14px';
+  where.innerHTML = 'รูปใหม่ของข่าวนี้จะถูกเก็บที่ <code>news/' + group + '/' + it.slug + '/</code><br>' +
+                    'เปิดอ่านได้ที่ <code>news-article.html?id=' + it.slug + '</code>';
+  c4.appendChild(where);
+
+  var acts2 = document.createElement('div');
+  acts2.className = 'danger-row';
+  var moveBtn = document.createElement('button');
+  moveBtn.className = 'btn';
+  moveBtn.textContent = group === 'current' ? '↓ ย้ายไปข่าวย้อนหลัง' : '↑ ย้ายขึ้นเป็นข่าวปัจจุบัน';
+  moveBtn.onclick = function () { moveGroup(); };
+  var delBtn = document.createElement('button');
+  delBtn.className = 'btn del';
+  delBtn.textContent = '🗑 ลบข่าวนี้';
+  delBtn.onclick = function () {
+    if (!confirm('ลบข่าว "' + (it.title || '(ไม่มีหัวข้อ)') + '" ?')) return;
+    DATA[group].splice(sel.index, 1);
+    sel = DATA[group].length ? { group: group, index: Math.max(0, sel.index - 1) } : null;
+    touch(); render();
+  };
+  acts2.appendChild(moveBtn);
+  acts2.appendChild(delBtn);
+  c4.appendChild(acts2);
+  mount.appendChild(c4);
+
+  /* helpers ที่ผูกกับข่าวปัจจุบัน */
+  function setCover(file) {
+    if (!file) return;
+    processImage(file, 'cover-' + STAMP).then(function (ref) {
+      it.cover = ref; touch(); render();
+    }).catch(function (e) { alert(e.message); });
+  }
+  function addShots(files) {
+    var jobs = Array.prototype.slice.call(files).map(function (f, i) {
+      return processImage(f, 'p-' + STAMP + '-' + (it.images.length + i + 1));
+    });
+    Promise.all(jobs).then(function (refs) {
+      refs.forEach(function (r) { it.images.push({ ref: r, caption: '' }); });
+      touch(); render();
+    }).catch(function (e) { alert(e.message); });
+  }
+  function swapShot(i, dir) {
+    var j = i + dir;
+    if (j < 0 || j >= it.images.length) return;
+    var t = it.images[i]; it.images[i] = it.images[j]; it.images[j] = t;
+    touch(); render();
+  }
+  function moveGroup() {
+    var from = group, to = group === 'current' ? 'archive' : 'current';
+    var moved = DATA[from].splice(sel.index, 1)[0];
+    if (to === 'current') DATA[to].unshift(moved); else DATA[to].unshift(moved);
+    sel = { group: to, index: 0 };
+    touch(); render();
+  }
+}
+
+/* ปุ่มเล็กใต้รูปในแกลเลอรี */
+function sBtn(txt, disabled, fn) {
+  var b = document.createElement('button');
+  b.type = 'button';
+  b.textContent = txt;
+  b.disabled = !!disabled;
+  b.onclick = fn;
+  return b;
+}
+
+function kb(n) { return n > 1024 * 1024 ? (n / 1048576).toFixed(1) + ' MB' : Math.round(n / 1024) + ' KB'; }
+
+function touch() { setDirty(true); }
+
+function card(title) {
+  var c = document.createElement('div');
+  c.className = 'card';
+  var h = document.createElement('h3');
+  h.textContent = title;
+  c.appendChild(h);
+  return c;
+}
+
+function fRow(fields, one) {
+  var r = document.createElement('div');
+  r.className = 'f-row' + (one || fields.length === 1 ? ' one' : '');
+  fields.forEach(function (f) { r.appendChild(f); });
+  return r;
+}
+
+function field(labelHtml, value, onInput) {
+  var box = document.createElement('div');
+  var l = document.createElement('label');
+  l.innerHTML = labelHtml;
+  var i = document.createElement('input');
+  i.type = 'text';
+  i.value = value || '';
+  i.oninput = function () { onInput(i.value); };
+  box.appendChild(l); box.appendChild(i);
   return box;
 }
 
-function buildFieldRow(fields) {
-  var row = document.createElement('div');
-  row.className = 'field-row';
-  fields.forEach(function (f) { row.appendChild(f); });
-  return row;
+function area(labelHtml, value, rows, onInput) {
+  var box = document.createElement('div');
+  var l = document.createElement('label');
+  l.innerHTML = labelHtml;
+  var t = document.createElement('textarea');
+  t.rows = rows;
+  t.value = value || '';
+  t.oninput = function () { onInput(t.value); };
+  box.appendChild(l); box.appendChild(t);
+  return box;
 }
 
-function onEdit() {
-  setDirty(true);
-  renderPreview();
+function mkDrop(title, sub, onFiles) {
+  var d = document.createElement('div');
+  d.className = 'drop';
+  d.innerHTML = '<b>' + title + '</b><span>' + sub + '</span>';
+  d.onclick = function () {
+    var inp = document.createElement('input');
+    inp.type = 'file';
+    inp.accept = 'image/*';
+    inp.multiple = true;
+    inp.onchange = function () { if (inp.files.length) onFiles(inp.files); };
+    inp.click();
+  };
+  d.ondragover = function (e) { e.preventDefault(); d.classList.add('over'); };
+  d.ondragleave = function () { d.classList.remove('over'); };
+  d.ondrop = function (e) {
+    e.preventDefault();
+    d.classList.remove('over');
+    if (e.dataTransfer.files.length) onFiles(e.dataTransfer.files);
+  };
+  return d;
 }
 
-function moveItem(i, dir) {
-  var j = i + dir;
-  if (j < 0 || j >= items.length) return;
-  var tmp = items[i];
-  items[i] = items[j];
-  items[j] = tmp;
-  setDirty(true);
-  render();
-}
+/* ══════════════════════════════════════════════════════════════
+   สร้างไฟล์ news-index.js + zip
+   ══════════════════════════════════════════════════════════════ */
+var HEADER = [
+'/* ─────────────────────────────────────────────────────────────',
+'   คลังข่าวสารของ VFOODS — ไฟล์นี้คือ "สารบัญข่าว" ไฟล์เดียวของทั้งเว็บ',
+'',
+'   โครงสร้างโฟลเดอร์',
+'     news/current/<slug>/   = รูปของ 3 ข่าวปัจจุบัน (ที่โชว์หน้า news.html)',
+'     news/archive/<slug>/   = รูปของข่าวเก่าทั้งหมด (โชว์ในหน้า news-archive.html)',
+'     news/news-index.js     = ไฟล์นี้ (ข้อความ + ลำดับ + พาธรูปของทุกข่าว)',
+'',
+'   ★ ไม่ต้องแก้ไฟล์นี้ด้วยมือ ★',
+'   ใช้โปรแกรมอัปเดตข่าวที่ admin/news-admin.html แทน:',
+'   เปิด → แก้ข้อความ/ใส่รูป → กด "ส่งออกเป็น .zip" → ส่งไฟล์ zip ให้คนดูแลเว็บ',
+'   → แตกไฟล์ zip ทับที่โฟลเดอร์เว็บ (ทับโฟลเดอร์ news/) → commit + push',
+'   ───────────────────────────────────────────────────────────── */'
+].join('\n');
 
-function deleteItem(i) {
-  if (!confirm('ลบข่าว "' + (items[i].title || '(ไม่มีหัวข้อ)') + '" ?')) return;
-  items.splice(i, 1);
-  setDirty(true);
-  render();
-}
+function jstr(s) { return JSON.stringify(s == null ? '' : String(s)); }
 
-function addItem() {
-  items.unshift({ tag: '', title: 'ข่าวใหม่', date: '', img: '', link: '' });
-  setDirty(true);
-  render();
-}
-
-function renderPreview() {
-  $preview.innerHTML = '';
-  items.forEach(function (it) {
-    var card = document.createElement('div');
-    card.className = 'p-card';
-
-    if (it.img) {
-      var img = document.createElement('img');
-      img.className = 'p-thumb';
-      img.alt = '';
-      // news-data.js paths are relative to the site root, but this admin page lives in /admin/
-      img.src = '../' + it.img;
-      img.onerror = function () {
-        var ph = document.createElement('div');
-        ph.className = 'p-thumb-ph';
-        ph.textContent = it.tag || 'NEWS';
-        img.replaceWith(ph);
-      };
-      card.appendChild(img);
-    } else {
-      var ph = document.createElement('div');
-      ph.className = 'p-thumb-ph';
-      ph.textContent = it.tag || 'NEWS';
-      card.appendChild(ph);
-    }
-
-    var body = document.createElement('div');
-    body.className = 'p-body';
-    var tag = document.createElement('span');
-    tag.className = 'p-tag';
-    tag.textContent = it.tag || '';
-    var title = document.createElement('div');
-    title.className = 'p-title';
-    title.textContent = it.title || '';
-    var date = document.createElement('div');
-    date.className = 'p-date';
-    date.textContent = it.date || '';
-    body.appendChild(tag);
-    body.appendChild(title);
-    body.appendChild(date);
-    card.appendChild(body);
-
-    $preview.appendChild(card);
+function serializeItem(it, group) {
+  var body = String(it.body || '').split(/\n\s*\n/).map(function (p) { return p.trim(); }).filter(Boolean);
+  var lines = [];
+  lines.push('      slug: ' + jstr(it.slug));
+  lines.push('      tag: ' + jstr(it.tag));
+  lines.push('      title: ' + jstr(it.title));
+  lines.push('      date: ' + jstr(it.date));
+  lines.push('      text: ' + jstr(it.text));
+  lines.push('      cover: ' + jstr(webPath(it.cover, it, group)));
+  lines.push('      body: [' + (body.length ? '\n        ' + body.map(jstr).join(',\n        ') + '\n      ' : '') + ']');
+  var imgs = it.images.map(function (sh) {
+    return '        { src: ' + jstr(webPath(sh.ref, it, group)) + ', caption: ' + jstr(sh.caption) + ' }';
   });
+  lines.push('      images: [' + (imgs.length ? '\n' + imgs.join(',\n') + '\n      ' : '') + ']');
+  if (it.link) lines.push('      link: ' + jstr(it.link));
+  return '    {\n' + lines.join(',\n') + '\n    }';
 }
 
-function loadFromText(text, sourceLabel) {
-  try {
-    items = parseItems(text);
-  } catch (err) {
-    alert(err.message);
+function serializeIndex() {
+  var cur = DATA.current.map(function (it) { return serializeItem(it, 'current'); }).join(',\n');
+  var arc = DATA.archive.map(function (it) { return serializeItem(it, 'archive'); }).join(',\n');
+  return HEADER + '\n' +
+    'window.NEWS_INDEX = {\n' +
+    '  /* 3 ข่าวปัจจุบัน — โชว์เป็นการ์ดใหญ่ข้างฟีด Facebook บนหน้า news.html */\n' +
+    '  current: [\n' + cur + '\n  ],\n\n' +
+    '  /* ข่าวย้อนหลัง — โชว์ในหน้า news-archive.html และท้ายหน้าข่าวแต่ละข่าว */\n' +
+    '  archive: [\n' + arc + '\n  ]\n' +
+    '};\n';
+}
+
+var HOWTO = [
+  'วิธีนำไฟล์ zip นี้ขึ้นเว็บ (สำหรับคนดูแล git)',
+  '=========================================',
+  '',
+  '1. แตกไฟล์ zip นี้ทับที่โฟลเดอร์เว็บ — โฟลเดอร์เดียวกับที่มีไฟล์ news.html',
+  '   (ตอบ "แทนที่ไฟล์เดิม / Replace" ได้เลย)',
+  '2. ในโฟลเดอร์เว็บ สั่ง:',
+  '     git add .',
+  '     git commit -m "อัปเดตข่าวสาร"',
+  '     git push',
+  '',
+  'ไฟล์ที่อยู่ใน zip',
+  '  news/news-index.js  = ข้อความ/ลำดับ/พาธรูปของทุกข่าว (เขียนทับของเดิม)',
+  '  news/current/...    = รูปของข่าวปัจจุบัน (3 ข่าวที่โชว์หน้าข่าวสาร)',
+  '  news/archive/...    = รูปของข่าวย้อนหลัง',
+  '',
+  'หมายเหตุ',
+  '  - zip จะมีเฉพาะ "รูปที่เพิ่งใส่ใหม่" ส่วนรูปเดิมที่มีอยู่ในเว็บแล้วไม่ต้องส่งซ้ำ',
+  '  - ถ้าย้ายข่าวจากปัจจุบัน -> ย้อนหลัง รูปเดิมจะยังอยู่โฟลเดอร์เดิมและใช้งานได้ปกติ',
+  '  - แก้ข่าวครั้งต่อไป เปิด admin/news-admin.html แล้วทำแบบเดิม',
+  ''
+].join('\r\n');
+
+function collect() {
+  var enc = new TextEncoder();
+  var files = [{ name: 'news/news-index.js', bytes: enc.encode(serializeIndex()) }];
+  var seen = {};
+  ['current', 'archive'].forEach(function (group) {
+    DATA[group].forEach(function (it) {
+      var refs = [];
+      if (it.cover) refs.push(it.cover);
+      it.images.forEach(function (sh) { refs.push(sh.ref); });
+      refs.forEach(function (r) {
+        if (r.kind !== 'new') return;
+        var name = 'news/' + group + '/' + it.slug + '/' + r.name;
+        if (seen[name]) return;
+        seen[name] = 1;
+        files.push({ name: name, bytes: r.bytes });
+      });
+    });
+  });
+  files.push({ name: 'news/HOW-TO-UPDATE.txt', bytes: enc.encode(HOWTO) });
+  return files;
+}
+
+function exportZip() {
+  var slugs = {}, dup = [];
+  ['current', 'archive'].forEach(function (g) {
+    DATA[g].forEach(function (it) {
+      if (!it.title.trim()) return;
+      if (slugs[it.slug]) dup.push(it.slug);
+      slugs[it.slug] = 1;
+    });
+  });
+  if (dup.length) {
+    alert('มี slug ซ้ำกัน: ' + dup.join(', ') + '\nกรุณาแก้ในช่อง "ชื่อโฟลเดอร์/ลิงก์ (slug)" ให้ไม่ซ้ำก่อนส่งออก');
     return;
   }
-  $btnAdd.disabled = false;
-  $btnDownload.disabled = false;
-  setDirty(false);
-  $status.textContent = 'เปิดไฟล์แล้ว (' + sourceLabel + ') — พร้อมแก้ไข';
-  $status.className = 'status';
-  render();
-}
 
-async function openFile() {
-  if (window.showOpenFilePicker) {
-    try {
-      var handles = await window.showOpenFilePicker({
-        types: [{ description: 'JavaScript file', accept: { 'text/javascript': ['.js'] } }],
-        excludeAcceptAllOption: false,
-        multiple: false
-      });
-      fileHandle = handles[0];
-      var file = await fileHandle.getFile();
-      var text = await file.text();
-      loadFromText(text, file.name);
-      $btnSave.disabled = false;
-    } catch (err) {
-      if (err.name !== 'AbortError') alert('เปิดไฟล์ไม่สำเร็จ: ' + err.message);
-    }
-  } else {
-    $fileFallback.click();
-  }
-}
+  var files = collect();
+  var blob = makeZip(files);
+  var d = new Date();
+  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+  var stamp = d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + '-' + pad(d.getHours()) + pad(d.getMinutes());
 
-$fileFallback.addEventListener('change', function () {
-  var file = $fileFallback.files[0];
-  if (!file) return;
-  var reader = new FileReader();
-  reader.onload = function () {
-    loadFromText(reader.result, file.name);
-    $btnSave.disabled = true; // no direct-write support — use download instead
-  };
-  reader.readAsText(file);
-});
-
-async function saveFile() {
-  var text = serialize();
-  if (fileHandle) {
-    try {
-      var writable = await fileHandle.createWritable();
-      await writable.write(text);
-      await writable.close();
-      setDirty(false);
-      $status.textContent = 'บันทึกลงไฟล์เรียบร้อย — อย่าลืม commit + push เพื่อขึ้นเว็บจริง';
-      $status.className = 'status saved';
-    } catch (err) {
-      alert('บันทึกไม่สำเร็จ: ' + err.message);
-    }
-  } else {
-    downloadFile();
-  }
-}
-
-function downloadFile() {
-  var text = serialize();
-  var blob = new Blob([text], { type: 'text/javascript' });
-  var url = URL.createObjectURL(blob);
   var a = document.createElement('a');
-  a.href = url;
-  a.download = 'news-data.js';
+  a.href = URL.createObjectURL(blob);
+  a.download = 'news-update-' + stamp + '.zip';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-  setDirty(false);
-  $status.textContent = 'ดาวน์โหลดไฟล์แล้ว — นำไปแทนที่ news-data.js เดิม แล้ว commit + push';
-  $status.className = 'status saved';
+  setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+
+  var imgCount = files.length - 2;
+  setDirty(false, '✅ ส่งออกแล้ว: ' + a.download + ' (news-index.js + รูปใหม่ ' + imgCount + ' ไฟล์ · ' + kb(blob.size) + ')');
+  $('status').className = 'status ok';
 }
 
-$btnOpen.addEventListener('click', openFile);
-$btnSave.addEventListener('click', saveFile);
-$btnDownload.addEventListener('click', downloadFile);
-$btnAdd.addEventListener('click', addItem);
+/* ══════════════════════════════════════════════════════════════
+   ปุ่มบนแถบเครื่องมือ
+   ══════════════════════════════════════════════════════════════ */
+$('btnAdd').onclick = function () {
+  DATA.current.unshift(normalize({ title: 'ข่าวใหม่', slug: 'news-' + Date.now().toString(36), tag: '', date: '' }));
+  sel = { group: 'current', index: 0 };
+  setDirty(true);
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+$('btnZip').onclick = exportZip;
+
+$('btnReload').onclick = function () {
+  if (dirty && !confirm('ทิ้งการแก้ไขทั้งหมดแล้วเริ่มใหม่จากไฟล์เดิม?')) return;
+  loadFromIndex();
+};
 
 window.addEventListener('beforeunload', function (e) {
-  if (dirty) { e.preventDefault(); e.returnValue = ''; }
+  if (!dirty) return;
+  e.preventDefault();
+  e.returnValue = '';
 });
 
-// Try to auto-load the current news-data.js for a quick look (read-only until "เปิดไฟล์" grants write access)
-fetch('../news-data.js').then(function (r) {
-  if (!r.ok) throw new Error();
-  return r.text();
-}).then(function (text) {
-  if (!fileHandle) {
-    loadFromText(text, 'พรีวิวอัตโนมัติ — ยังบันทึกไม่ได้จนกว่าจะกด "เปิดไฟล์"');
-    $btnSave.disabled = true;
-  }
-}).catch(function () { /* served without a local server, or file missing — ignore */ });
+if (!window.NEWS_INDEX) {
+  document.getElementById('editor').innerHTML =
+    '<div class="nothing">เปิดไฟล์ <b>news/news-index.js</b> ไม่ได้ — กรุณาเปิดหน้านี้จากในโฟลเดอร์เว็บ (admin/news-admin.html)</div>';
+} else {
+  loadFromIndex();
+}
+})();
 </script>
-
 </body>
 </html>
