@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>แคตตาล็อกสินค้า — VFoods</title>
-<meta name="description" content="เปิดดูแคตตาล็อกสินค้า VFoods ฉบับปี 2026 — ขนมปังปี๊บ บิสกิต เวเฟอร์ คุกกี้ และอีกมากมาย">
+<meta name="description" content="ดาวน์โหลดแคตตาล็อกสินค้า VFoods ฉบับปี 2026 — ขนมปังปี๊บ บิสกิต เวเฟอร์ คุกกี้ และอีกมากมาย">
 <link rel="stylesheet" href="style.css?v=3">
 <link rel="stylesheet" href="theme-white.css?v=2">
 <link rel="stylesheet" href="nav.css?v=2">
@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800;1,700&display=swap" rel="stylesheet">
 <style>
 /* ══════════════════════════════════════════
-   CATALOG — flipbook embed on a white/cream page
+   CATALOG — PDF download cards on a white/cream page
    ══════════════════════════════════════════ */
 .cat-wrap { max-width:1180px; margin:0 auto; padding:clamp(110px,12vw,150px) 24px clamp(56px,7vw,88px); }
 
@@ -34,29 +34,47 @@
   font-size:clamp(.95rem,1.6vw,1.08rem); line-height:1.8; max-width:640px; margin:0 auto;
 }
 
-/* each volume — stacked top to bottom */
-.cat-vol { margin-top:clamp(48px,6vw,72px); }
-.cat-vol:first-of-type { margin-top:0; }
-.cat-vol + .cat-vol { padding-top:clamp(48px,6vw,72px); border-top:1px solid rgba(255,109,26,.16); }
-.cat-vol-head { display:flex; align-items:baseline; gap:12px; margin-bottom:18px; }
+/* ── download cards ───────────────────────── */
+.cat-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:clamp(20px,3vw,32px); margin-top:clamp(34px,4.5vw,50px);
+}
+.cat-card {
+  display:flex; flex-direction:column; align-items:flex-start;
+  background:#fff; border:1px solid rgba(255,109,26,.18); border-radius:var(--r2,24px);
+  padding:clamp(26px,3.2vw,36px);
+  box-shadow:0 14px 40px rgba(255,109,26,.10);
+  transition:transform .3s, box-shadow .3s, border-color .3s;
+}
+.cat-card:hover { transform:translateY(-5px); box-shadow:0 22px 52px rgba(255,109,26,.18); border-color:rgba(255,109,26,.34); }
+
+.cat-card-icon {
+  width:54px; height:54px; border-radius:16px; flex-shrink:0;
+  display:grid; place-items:center; margin-bottom:18px;
+  background:linear-gradient(135deg,#FF8A3D,#E45F06); color:#fff;
+  box-shadow:0 10px 22px rgba(228,95,6,.28);
+}
+.cat-card-icon svg { width:26px; height:26px; }
+
 .cat-vol-num {
-  font-family:'Sarabun',sans-serif; font-weight:800; font-size:.82rem; letter-spacing:.04em;
-  color:#fff; background:#E45F06; border-radius:50px; padding:5px 13px; flex-shrink:0;
+  display:inline-block;
+  font-family:'Sarabun',sans-serif; font-weight:800; font-size:.78rem; letter-spacing:.04em;
+  color:#B8480A; background:rgba(255,109,26,.10); border-radius:50px; padding:5px 13px; margin-bottom:12px;
 }
 .cat-vol-title {
   font-family:'Sarabun',sans-serif; font-weight:800; color:var(--dark,#2B1B16);
-  font-size:clamp(1.15rem,2.4vw,1.5rem); line-height:1.3; margin:0;
+  font-size:clamp(1.15rem,2.2vw,1.42rem); line-height:1.35; margin:0 0 10px;
 }
-
-/* flipbook frame */
-.cat-book {
-  position:relative; width:100%; height:min(80vh,820px);
-  background:#FBF6EF; border:1px solid rgba(255,109,26,.18); border-radius:var(--r2,24px);
-  overflow:hidden; box-shadow:0 18px 50px rgba(255,109,26,.12);
+.cat-card-desc {
+  font-family:'Sarabun',sans-serif; font-weight:300; color:rgba(43,27,22,.62);
+  font-size:.95rem; line-height:1.75; margin:0 0 6px;
 }
-.cat-book iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+.cat-card-meta {
+  font-family:'Sarabun',sans-serif; font-size:.82rem; font-weight:500;
+  color:rgba(43,27,22,.45); letter-spacing:.02em; margin:0 0 22px;
+}
+.cat-card .cat-btn { margin-top:auto; }
 
-.cat-actions { display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:clamp(24px,3.5vw,36px); }
 .cat-btn {
   display:inline-flex; align-items:center; gap:9px;
   font-family:'Sarabun',sans-serif; font-weight:700; font-size:.92rem; text-decoration:none;
@@ -65,16 +83,13 @@
 .cat-btn svg { width:17px; height:17px; }
 .cat-btn-primary { background:#E45F06; color:#fff; box-shadow:0 10px 26px rgba(228,95,6,.28); }
 .cat-btn-primary:hover { transform:translateY(-3px); box-shadow:0 16px 34px rgba(228,95,6,.36); }
-.cat-btn-ghost { background:#fff; color:#B8480A; border:1px solid rgba(255,109,26,.34); }
-.cat-btn-ghost:hover { transform:translateY(-3px); box-shadow:0 12px 28px rgba(255,109,26,.16); }
 
-.cat-note { text-align:center; margin-top:16px; font-size:.82rem; color:rgba(43,27,22,.5); }
+.cat-note { text-align:center; margin-top:clamp(28px,4vw,40px); font-size:.86rem; color:rgba(43,27,22,.5); }
 .cat-note a { color:#B8480A; }
 
 @media(max-width:600px) {
-  .cat-book { height:72vh; }
-  .cat-actions { flex-direction:column; }
-  .cat-btn { justify-content:center; }
+  .cat-grid { grid-template-columns:1fr; }
+  .cat-card .cat-btn { width:100%; justify-content:center; }
 }
 
 </style>
@@ -99,50 +114,38 @@
   <div class="cat-head">
     <span class="cat-eyebrow">Catalog 2026</span>
     <h1 class="cat-title">แคตตาล็อกสินค้า 2026</h1>
-    <p class="cat-sub">เปิดดูสินค้าทั้งหมดของ VFoods ฉบับล่าสุด — ขนมปังปี๊บ บิสกิต เวเฟอร์ คุกกี้สอดไส้ และอีกมากมาย พลิกอ่านทั้ง 2 เล่มได้เลยด้านล่าง หรือดาวน์โหลดไฟล์ PDF ไปดูภายหลัง</p>
+    <p class="cat-sub">เปิดดูสินค้าทั้งหมดของ VFoods ฉบับล่าสุด — ขนมปังปี๊บ บิสกิต เวเฟอร์ คุกกี้สอดไส้ และอีกมากมาย ดาวน์โหลดไฟล์ PDF ทั้ง 2 เล่มได้ด้านล่าง</p>
   </div>
 
-  <section class="cat-vol">
-    <div class="cat-vol-head">
+  <div class="cat-grid">
+
+    <article class="cat-card">
+      <div class="cat-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg></div>
       <span class="cat-vol-num">เล่ม 1</span>
       <h2 class="cat-vol-title">แคตตาล็อก อัปเดต 2026</h2>
-    </div>
-    <div class="cat-book">
-      <iframe src="https://online.fliphtml5.com/mhyeh/Catalog_Update_2026/" title="แคตตาล็อก อัปเดต 2026" seamless="seamless" scrolling="no" allowtransparency="true" allowfullscreen="true" loading="lazy"></iframe>
-    </div>
-    <div class="cat-actions">
-      <a class="cat-btn cat-btn-primary" href="downloads/catalog_update_2026.pdf" target="_blank" rel="noopener">
+      <p class="cat-card-desc">รวมสินค้าใหม่และรายการอัปเดตล่าสุดประจำปี 2026</p>
+      <p class="cat-card-meta">PDF · ประมาณ 44 MB</p>
+      <a class="cat-btn cat-btn-primary" href="downloads/catalog_update_2026.pdf" download>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         ดาวน์โหลด PDF
       </a>
-      <a class="cat-btn cat-btn-ghost" href="https://online.fliphtml5.com/mhyeh/Catalog_Update_2026/" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        เปิดแบบเต็มหน้าจอ
-      </a>
-    </div>
-    <p class="cat-note">หากพลิกอ่านไม่ได้ <a href="downloads/catalog_update_2026.pdf" target="_blank" rel="noopener">ดาวน์โหลดไฟล์ PDF ที่นี่</a></p>
-  </section>
+    </article>
 
-  <section class="cat-vol">
-    <div class="cat-vol-head">
+    <article class="cat-card">
+      <div class="cat-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg></div>
       <span class="cat-vol-num">เล่ม 2</span>
       <h2 class="cat-vol-title">แคตตาล็อกสินค้า VFOODS 2026</h2>
-    </div>
-    <div class="cat-book">
-      <iframe src="https://online.fliphtml5.com/mhyeh/VFOODS_catalog_Product2026/" title="แคตตาล็อกสินค้า VFOODS 2026" seamless="seamless" scrolling="no" allowtransparency="true" allowfullscreen="true" loading="lazy"></iframe>
-    </div>
-    <div class="cat-actions">
-      <a class="cat-btn cat-btn-primary" href="downloads/vfoods_catalog_product2026.pdf" target="_blank" rel="noopener">
+      <p class="cat-card-desc">แคตตาล็อกสินค้าฉบับเต็มทุกแบรนด์ในเครือ VFOODS</p>
+      <p class="cat-card-meta">PDF · ประมาณ 36 MB</p>
+      <a class="cat-btn cat-btn-primary" href="downloads/vfoods_catalog_product2026.pdf" download>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         ดาวน์โหลด PDF
       </a>
-      <a class="cat-btn cat-btn-ghost" href="https://online.fliphtml5.com/mhyeh/VFOODS_catalog_Product2026/" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        เปิดแบบเต็มหน้าจอ
-      </a>
-    </div>
-    <p class="cat-note">หากพลิกอ่านไม่ได้ <a href="downloads/vfoods_catalog_product2026.pdf" target="_blank" rel="noopener">ดาวน์โหลดไฟล์ PDF ที่นี่</a></p>
-  </section>
+    </article>
+
+  </div>
+
+  <p class="cat-note">ต้องการแคตตาล็อกฉบับพิมพ์ หรือข้อมูลสินค้าเพิ่มเติม? <a href="contact.html">ติดต่อทีมงานของเรา</a></p>
 </main>
 
 <footer class="site-foot">
