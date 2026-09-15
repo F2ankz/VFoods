@@ -36,3 +36,10 @@ Cookie 3D wlk/
 !models/*.glb
 # …and the catalog PDF the site serves for download
 !downloads/*.pdf
+
+# ── โปรแกรมลงข่าว (.exe) — build เองจาก tools/news-app/build.bat ──
+VFoods-News.exe
+tools/news-app/build/
+tools/news-app/dist/
+tools/news-app/*.spec
+__pycache__/

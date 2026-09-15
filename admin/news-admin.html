@@ -104,11 +104,13 @@ textarea{ resize:vertical; line-height:1.7; }
 
 <header>
   <h1>โปรแกรมอัปเดตข่าวสาร VFOODS</h1>
-  <p>ใส่ข้อความ + ใส่รูปได้หลายรูปต่อหนึ่งข่าว → กด “ส่งออกเป็น .zip” → ส่งไฟล์ zip ให้คนดูแลเว็บนำไปแตกลง git</p>
+  <p id="lede">ใส่ข้อความ + ใส่รูปได้หลายรูปต่อหนึ่งข่าว → กด “ส่งออกเป็น .zip” → ส่งไฟล์ zip ให้คนดูแลเว็บนำไปแตกลง git</p>
 </header>
 
 <div class="toolbar">
   <button class="btn primary" id="btnAdd">+ เพิ่มข่าวใหม่</button>
+  <button class="btn" id="btnSave" hidden>💾 บันทึกลงเว็บ</button>
+  <button class="btn" id="btnPublish" hidden>🚀 อัปโหลดขึ้นเว็บจริง</button>
   <button class="btn" id="btnZip">📦 ส่งออกเป็น .zip</button>
   <button class="btn ghost" id="btnReload">↺ เริ่มใหม่จากไฟล์เดิม</button>
   <span class="status" id="status">พร้อมใช้งาน</span>
@@ -137,7 +139,7 @@ textarea{ resize:vertical; line-height:1.7; }
 
     <div class="howto">
       <h3>วิธีใช้</h3>
-      <ol>
+      <ol id="howto">
         <li>เลือกข่าวทางซ้าย (หรือกด <b>+ เพิ่มข่าวใหม่</b>) แล้วพิมพ์หัวข้อ / วันที่ / เนื้อข่าว</li>
         <li>กดกล่องอัปโหลดเพื่อ <b>ใส่รูปปก</b> และ <b>ใส่รูปเพิ่มได้หลายรูป</b> (ลากรูปมาวางก็ได้) — โปรแกรมย่อรูปให้อัตโนมัติ</li>
         <li>ข่าวปัจจุบันเก็บได้ 3 ข่าว ถ้าเกินให้กด <b>↓ ย้ายไปข่าวย้อนหลัง</b> ที่ข่าวเก่าสุด</li>
@@ -704,10 +706,21 @@ var HEADER = [
 '     news/archive/<slug>/   = รูปของข่าวเก่าทั้งหมด (โชว์ในหน้า news-archive.html)',
 '     news/news-index.js     = ไฟล์นี้ (ข้อความ + ลำดับ + พาธรูปของทุกข่าว)',
 '',
+'   ฟิลด์ของแต่ละข่าว',
+'     slug   = ชื่อโฟลเดอร์ + ชื่อในลิงก์ (news-article.html?id=slug) ห้ามซ้ำ',
+'     tag    = หมวดหมู่สั้นๆ เช่น "กิจกรรม" "รางวัล" "NPD"',
+'     title  = หัวข้อข่าว',
+'     date   = วันที่ (พิมพ์อิสระ เช่น "สิงหาคม 2026")',
+'     text   = เนื้อหาย่อ 2–3 บรรทัด (ใช้บนการ์ด)',
+'     cover  = รูปปก (พาธจากรากเว็บ)',
+'     body   = เนื้อข่าวเต็ม — 1 ย่อหน้าต่อ 1 บรรทัดในอาร์เรย์',
+'     images = รูปเพิ่มเติมในหน้าข่าว [{ src, caption }]',
+'     link   = ลิงก์โพสต์ต้นฉบับบน Facebook (ถ้ามี)',
+'',
 '   ★ ไม่ต้องแก้ไฟล์นี้ด้วยมือ ★',
-'   ใช้โปรแกรมอัปเดตข่าวที่ admin/news-admin.html แทน:',
-'   เปิด → แก้ข้อความ/ใส่รูป → กด "ส่งออกเป็น .zip" → ส่งไฟล์ zip ให้คนดูแลเว็บ',
-'   → แตกไฟล์ zip ทับที่โฟลเดอร์เว็บ (ทับโฟลเดอร์ news/) → commit + push',
+'   ใช้โปรแกรมลงข่าวแทน — ดับเบิลคลิก VFoods-News.exe ที่โฟลเดอร์เว็บ',
+'   แก้ข้อความ/ใส่รูป → กด "อัปโหลดขึ้นเว็บจริง" จบในปุ่มเดียว',
+'   (ถ้าไม่มีโปรแกรม: เปิด admin/news-admin.html → "ส่งออกเป็น .zip" → ส่งให้คนดูแลเว็บ)',
 '   ───────────────────────────────────────────────────────────── */'
 ].join('\n');
 
@@ -744,6 +757,13 @@ function serializeIndex() {
 }
 
 var HOWTO = [
+  'วิธีที่ง่ายที่สุด (แนะนำ)',
+  '  ดับเบิลคลิก VFoods-News.exe ที่โฟลเดอร์เว็บ -> แก้ข่าว -> กด "อัปโหลดขึ้นเว็บจริง" จบ',
+  '  ไม่ต้องใช้ zip และไม่ต้องพิมพ์คำสั่ง git เลย',
+  '',
+  'ด้านล่างนี้คือวิธีสำรอง สำหรับกรณีที่ใช้ปุ่ม "ส่งออกเป็น .zip" แทน',
+  '=========================================',
+  '',
   'วิธีนำไฟล์ zip นี้ขึ้นเว็บ (สำหรับคนดูแล git)',
   '=========================================',
   '',
@@ -824,6 +844,123 @@ function exportZip() {
 /* ══════════════════════════════════════════════════════════════
    ปุ่มบนแถบเครื่องมือ
    ══════════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════
+   โหมดโปรแกรม .exe (VFoods News Updater)
+   ถ้าเปิดหน้านี้ผ่านโปรแกรม จะมีปุ่มบันทึกลงเว็บ + อัปโหลดขึ้นเว็บให้ใช้
+   ถ้าเปิดจากไฟล์ตรง ๆ (file://) ปุ่มพวกนี้จะซ่อนไว้ ใช้ .zip เหมือนเดิม
+   ══════════════════════════════════════════════════════════════ */
+var APP = null;
+
+function b64(bytes) {
+  var s = '', chunk = 0x8000;
+  for (var i = 0; i < bytes.length; i += chunk) {
+    s += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+  }
+  return btoa(s);
+}
+
+function dupCheck() {
+  var slugs = {}, dup = [];
+  ['current', 'archive'].forEach(function (g) {
+    DATA[g].forEach(function (it) {
+      if (!it.title.trim()) return;
+      if (slugs[it.slug]) dup.push(it.slug);
+      slugs[it.slug] = 1;
+    });
+  });
+  if (dup.length) {
+    alert('มี slug ซ้ำกัน: ' + dup.join(', ') + '\nกรุณาแก้ในช่อง "ชื่อโฟลเดอร์/ลิงก์ (slug)" ให้ไม่ซ้ำก่อน');
+    return false;
+  }
+  return true;
+}
+
+function busy(on, msg) {
+  ['btnSave', 'btnPublish', 'btnZip', 'btnAdd'].forEach(function (id) {
+    var b = $(id); if (b) b.disabled = on;
+  });
+  if (msg) setDirty(dirty, msg);
+}
+
+async function saveToSite() {
+  if (!dupCheck()) return null;
+  var files = collect().filter(function (f) { return f.name !== 'news/HOW-TO-UPDATE.txt'; });
+  var payload = { files: files.map(function (f) { return { name: f.name, b64: b64(f.bytes) }; }) };
+  var res = await fetch('/__api/save', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  var out = await res.json();
+  if (!out.ok) throw new Error(out.error || 'บันทึกไม่สำเร็จ');
+  return out.written || [];
+}
+
+$('btnSave').onclick = async function () {
+  busy(true, '⏳ กำลังบันทึกลงโฟลเดอร์เว็บ …');
+  try {
+    var written = await saveToSite();
+    if (written === null) return;
+    setDirty(false, '✅ บันทึกลงโฟลเดอร์เว็บแล้ว (' + written.length + ' ไฟล์) — ยังไม่ขึ้นเว็บจริงจนกว่าจะกด "อัปโหลดขึ้นเว็บจริง"');
+    $('status').className = 'status ok';
+  } catch (e) {
+    alert('บันทึกไม่สำเร็จ\n\n' + e.message);
+    setDirty(true, '❌ บันทึกไม่สำเร็จ');
+  } finally {
+    busy(false);
+  }
+};
+
+$('btnPublish').onclick = async function () {
+  if (!confirm('บันทึกข่าวทั้งหมด แล้วอัปโหลดขึ้นเว็บจริงเลยไหม?\n\nหลังจากนี้ประมาณ 1–2 นาที ข่าวจะขึ้นบนเว็บ')) return;
+  busy(true, '⏳ กำลังบันทึก …');
+  try {
+    var written = await saveToSite();
+    if (written === null) return;
+    setDirty(dirty, '⏳ กำลังอัปโหลดขึ้นเว็บ …');
+    var res = await fetch('/__api/publish', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: 'อัปเดตข่าวสาร' })
+    });
+    var out = await res.json();
+    if (!out.ok) throw new Error(out.error || out.output || 'อัปโหลดไม่สำเร็จ');
+    setDirty(false, '🚀 อัปโหลดขึ้นเว็บเรียบร้อย — รอสักครู่ (1–2 นาที) แล้วกดรีเฟรชหน้าข่าวสารได้เลย');
+    $('status').className = 'status ok';
+  } catch (e) {
+    alert('อัปโหลดไม่สำเร็จ\n\n' + e.message + '\n\nข้อมูลถูกบันทึกลงโฟลเดอร์เว็บแล้ว สามารถให้คนดูแลเว็บสั่ง git push เองได้');
+    setDirty(true, '❌ อัปโหลดไม่สำเร็จ');
+  } finally {
+    busy(false);
+  }
+};
+
+(function detectApp() {
+  if (!/^https?:$/.test(location.protocol)) return;
+  fetch('/__api/ping').then(function (r) { return r.ok ? r.json() : null; }).then(function (info) {
+    if (!info || !info.ok) return;
+    APP = info;
+    $('btnSave').hidden = false;
+    $('btnPublish').hidden = !info.git;
+    $('btnZip').classList.add('ghost');
+    var ol = $('howto');
+    if (ol) {
+      var steps = ol.querySelectorAll('li');
+      if (steps.length >= 5) {
+        steps[3].innerHTML = info.git
+          ? 'กด <b>🚀 อัปโหลดขึ้นเว็บจริง</b> — โปรแกรมจะบันทึกไฟล์ + ส่งขึ้นเว็บให้เอง'
+          : 'กด <b>💾 บันทึกลงเว็บ</b> — โปรแกรมจะเขียนไฟล์ลงโฟลเดอร์เว็บให้เอง';
+        steps[4].innerHTML = info.git
+          ? 'รอประมาณ 1–2 นาที แล้วเปิดหน้า <b>ข่าวสาร</b> บนเว็บจริงเพื่อตรวจดู'
+          : 'ให้คนดูแลเว็บสั่ง <code>git add . &amp;&amp; git commit &amp;&amp; git push</code> ที่โฟลเดอร์เว็บ';
+      }
+    }
+    $('lede').innerHTML = info.git
+      ? 'ใส่ข้อความ + ใส่รูปได้หลายรูปต่อหนึ่งข่าว → กด <b>“อัปโหลดขึ้นเว็บจริง”</b> ได้เลย ไม่ต้องส่ง zip ให้ใคร'
+      : 'ใส่ข้อความ + ใส่รูปได้หลายรูปต่อหนึ่งข่าว → กด <b>“บันทึกลงเว็บ”</b> เพื่อเขียนลงโฟลเดอร์เว็บโดยตรง';
+  }).catch(function () {});
+})();
+
 $('btnAdd').onclick = function () {
   DATA.current.unshift(normalize({ title: 'ข่าวใหม่', slug: 'news-' + Date.now().toString(36), tag: '', date: '' }));
   sel = { group: 'current', index: 0 };
