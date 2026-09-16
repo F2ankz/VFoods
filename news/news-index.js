@@ -35,7 +35,18 @@ window.NEWS_INDEX = {
       body: [
         "จากชิ้นขนมแสนอร่อย มาเป็นตัวการ์ตูนน่ารักสดใส พร้อมหมวกสีส้มโลโก้ V ที่พร้อมเดินทางลุยทุกกิจกรรม พาลูกค้าแสนน่ารักของเราไปหาขนมแสนอร่อยหลากหลาย สไตล์วาไรตี้ฟู้ดส์ในทุกๆ วัน"
       ],
-      images: []
+      images: [
+        { src: "news/current/new-mascot-2026/01.jpg", caption: "" },
+        { src: "news/current/new-mascot-2026/02.jpg", caption: "" },
+        { src: "news/current/new-mascot-2026/03.jpg", caption: "" },
+        { src: "news/current/new-mascot-2026/04.jpg", caption: "" },
+        { src: "news/current/new-mascot-2026/05.jpg", caption: "" },
+        { src: "news/current/new-mascot-2026/06.jpg", caption: "" },
+        { src: "news/current/new-mascot-2026/07.jpg", caption: "" },
+        { src: "news/current/new-mascot-2026/08.jpg", caption: "" },
+        { src: "news/current/new-mascot-2026/09.jpg", caption: "" },
+        { src: "news/current/new-mascot-2026/10.jpg", caption: "" }
+      ]
     },
     {
       slug: "thaifex-2026",
@@ -47,7 +58,19 @@ window.NEWS_INDEX = {
       body: [
         "พาชมความอลังการของบูธ VFOODS ในงาน THAIFEX 2026 เปิดตัวสินค้าใหม่ พร้อมสินค้าหลากหลายจัดแสดงโชว์ เพื่อรอต้อนรับลูกค้าทั้งในและต่างประเทศที่สนใจเข้ามาสั่งผลิต OEM สินค้า"
       ],
-      images: [],
+      images: [
+        { src: "news/current/thaifex-2026/01.jpg", caption: "" },
+        { src: "news/current/thaifex-2026/02.jpg", caption: "" },
+        { src: "news/current/thaifex-2026/03.jpg", caption: "" },
+        { src: "news/current/thaifex-2026/04.jpg", caption: "" },
+        { src: "news/current/thaifex-2026/05.jpg", caption: "" },
+        { src: "news/current/thaifex-2026/06.jpg", caption: "" },
+        { src: "news/current/thaifex-2026/07.jpg", caption: "" },
+        { src: "news/current/thaifex-2026/08.jpg", caption: "" },
+        { src: "news/current/thaifex-2026/09.jpg", caption: "" },
+        { src: "news/current/thaifex-2026/10.jpg", caption: "" },
+        { src: "news/current/thaifex-2026/11.jpg", caption: "" }
+      ],
       link: "https://www.facebook.com/share/p/1JDN2hptCu/"
     },
     {
@@ -61,41 +84,13 @@ window.NEWS_INDEX = {
         "ทีม E-Commerce ของ VFOODS ไม่ธรรมดา คว้ารางวัลยอดขายสูงสุดในหมวด Food & Beverage บนช่องทาง TikTok",
         "VFOODS ขอขอบคุณลูกค้าทุกท่านที่ไว้วางใจและสั่งซื้อสินค้าของเรา จนติดอันดับ 1 บนช่องทาง TikTok"
       ],
-      images: []
+      images: [
+        { src: "news/current/tiktok-shop-awards-2026/01.jpg", caption: "" },
+        { src: "news/current/tiktok-shop-awards-2026/02.jpg", caption: "" }
+      ]
     }
   ],
 
   /* ข่าวย้อนหลัง — โชว์ในหน้า news-archive.html และท้ายหน้าข่าวแต่ละข่าว */
-  archive: [
-    {
-      slug: "factory-expansion-2025",
-      tag: "ประกาศ",
-      title: "ขยายโรงงานผลิตรองรับดีมานด์ที่เพิ่มขึ้น",
-      date: "ตุลาคม 2025",
-      text: "",
-      cover: "",
-      body: [],
-      images: []
-    },
-    {
-      slug: "matcha-wafer-2025",
-      tag: "NPD",
-      title: "เวเฟอร์รสใหม่! มัทฉะจากญี่ปุ่น",
-      date: "กันยายน 2025",
-      text: "",
-      cover: "news/archive/matcha-wafer-2025/cover.jpg",
-      body: [],
-      images: []
-    },
-    {
-      slug: "fried-snacks-2025",
-      tag: "NPD",
-      title: "Fried Snacks หมวดหมู่ใหม่ที่รอคอย",
-      date: "มิถุนายน 2025",
-      text: "",
-      cover: "news/archive/fried-snacks-2025/cover.jpg",
-      body: [],
-      images: []
-    }
-  ]
+  archive: []
 };
