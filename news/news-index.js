@@ -36,16 +36,7 @@ window.NEWS_INDEX = {
         "จากชิ้นขนมแสนอร่อย มาเป็นตัวการ์ตูนน่ารักสดใส พร้อมหมวกสีส้มโลโก้ V ที่พร้อมเดินทางลุยทุกกิจกรรม พาลูกค้าแสนน่ารักของเราไปหาขนมแสนอร่อยหลากหลาย สไตล์วาไรตี้ฟู้ดส์ในทุกๆ วัน"
       ],
       images: [
-        { src: "news/current/new-mascot-2026/01.jpg", caption: "" },
-        { src: "news/current/new-mascot-2026/02.jpg", caption: "" },
-        { src: "news/current/new-mascot-2026/03.jpg", caption: "" },
-        { src: "news/current/new-mascot-2026/04.jpg", caption: "" },
-        { src: "news/current/new-mascot-2026/05.jpg", caption: "" },
-        { src: "news/current/new-mascot-2026/06.jpg", caption: "" },
-        { src: "news/current/new-mascot-2026/07.jpg", caption: "" },
-        { src: "news/current/new-mascot-2026/08.jpg", caption: "" },
-        { src: "news/current/new-mascot-2026/09.jpg", caption: "" },
-        { src: "news/current/new-mascot-2026/10.jpg", caption: "" }
+        { src: "news/current/new-mascot-2026/01.jpg", caption: "" }
       ]
     },
     {

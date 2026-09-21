@@ -418,7 +418,7 @@ a { text-decoration: none; color: inherit; }
 }
 .certs-badges {
   max-width: 1080px; margin: 38px auto 0;
-  display: grid; grid-template-columns: repeat(5, 1fr);
+  display: grid; grid-template-columns: repeat(4, 1fr);
   gap: clamp(14px, 2.4vw, 30px);
 }
 .cert-badge {
@@ -441,7 +441,7 @@ a { text-decoration: none; color: inherit; }
   color: rgba(43, 5, 8, .68); max-width: 18ch;
 }
 @media (max-width: 860px) {
-  .certs-badges { grid-template-columns: repeat(3, 1fr); gap: 26px 18px; }
+  .certs-badges { grid-template-columns: repeat(2, 1fr); gap: 26px 18px; }
 }
 @media (max-width: 520px) {
   .certs-badges { grid-template-columns: repeat(2, 1fr); }
@@ -468,6 +468,8 @@ a { text-decoration: none; color: inherit; }
   background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .12);
   transition: background .3s, transform .3s;
 }
+.foot-social a { color: rgba(255, 245, 243, .85); }
+.foot-social svg { width:18px; height:18px; fill:currentColor; }
 .foot-social a:hover { background: rgba(229, 26, 29, .4); transform: translateY(-3px); }
 .foot-col h4 {
   font-family: var(--font-display); font-weight: 700; font-size: .82rem;
