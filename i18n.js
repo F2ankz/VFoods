@@ -308,7 +308,7 @@
     'โดนัทสับปะรด': 'Pineapple Donut',
     'ทาร์ตหนอนสับปะรด': 'Pineapple Worm Tart',
     'จักรทองสับปะรด': 'Golden Wheel Pineapple',
-    'มะลิสับปะรด': 'Jasmine Pineapple',
+    'จักรเล็กสับปะรด': 'Mini Golden Pineapple',
     'ยิ้มแฉ่งสับปะรด': 'Smiley Pineapple',
     'ชีสสอดไส้สับปะรด': 'Cheese with Pineapple Filling',
     'เกี๊ยวโก๊ะไส้สับปะรด': 'Kiew Koh Pineapple',
@@ -560,7 +560,7 @@
     'เราเปิดรับทีมที่มีความหลงใหลในการสร้างสรรค์ขนมที่ดีที่สุด ไม่ว่าจะเป็นสายการผลิต R&D การตลาด หรือโลจิสติกส์ — มาเติบโตไปด้วยกัน':
       'We are looking for people who love making the best snacks — in production, R&D, marketing or logistics. Let’s grow together.',
     'สมัครงานทางอีเมล': 'Apply by Email',
-    'ดูตำแหน่งงานบน Facebook': 'See Openings on Facebook',
+    'สมัครงานทาง LINE': 'Apply via LINE',
     'กำลังเปิดอีเมล...': 'Opening your email app...',
     'เปิดอีเมลแล้ว!': 'Email opened!',
     'เปิดโปรแกรมอีเมลแล้ว — กด Send เพื่อส่งถึงเรา':
