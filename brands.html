@@ -271,6 +271,15 @@ body { transition:background-color .6s ease; }
 .dim-l { font-size:.64rem; color:rgba(43,27,22,.55); font-weight:600; width:56px; flex:none; }
 .dim-v { font-size:.74rem; color:#2B1B16; font-weight:700; letter-spacing:.01em; }
 .cat-empty { text-align:center; padding:60px 0; color:rgba(43,27,22,.5); font-weight:600; }
+/* nav search → "also found in" other brands */
+.cat-other { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:-8px 0 22px; font-size:.86rem; font-weight:600; color:rgba(43,27,22,.65); }
+.cat-other[hidden] { display:none; }
+.cat-other button { font:inherit; font-size:.82rem; cursor:pointer; padding:5px 12px; border-radius:999px; border:1.5px solid rgba(229,26,29,.35); background:#fff; color:#C4160C; }
+.cat-other button:hover { background:#FFF1EC; border-color:#E51A1D; }
+.cat-other .co-clear { border-color:rgba(43,27,22,.2); color:rgba(43,27,22,.7); }
+/* the card the nav search landed on */
+.prod-card.hit { border-color:#E51A1D; box-shadow:0 0 0 3px rgba(229,26,29,.35), 0 26px 60px rgba(120,20,10,.20); animation:cardIn .5s both, hitPulse 1.4s .5s 2; }
+@keyframes hitPulse { 50% { box-shadow:0 0 0 9px rgba(229,26,29,.12), 0 26px 60px rgba(120,20,10,.20); } }
 
 @media(max-width:560px){
   .cat-grid { grid-template-columns:repeat(2,1fr); gap:11px; }
@@ -402,7 +411,6 @@ body { transition:background-color .6s ease; }
         <a href="brands.html">Indy</a>
         <a href="brands.html">Bless</a>
         <a href="brands.html">Pina</a>
-        <a href="brands.html">Benjy</a>
         <a href="brands.html">Chido</a>
       </div>
     </div>
@@ -457,6 +465,7 @@ body { transition:background-color .6s ease; }
           <span class="cat-count" id="catCount"></span>
         </div>
       </div>
+      <div class="cat-other" id="catOther" hidden></div>
       <div class="cat-grid" id="catGrid"></div>
       <div class="cat-empty" id="catEmpty" hidden>ไม่พบสินค้าที่ค้นหา</div>
     </div>
@@ -512,7 +521,7 @@ body { transition:background-color .6s ease; }
 </footer>
 
 <script src="main.js"></script>
-<script src="nav.js?v=3"></script>
+<script src="nav.js?v=5"></script>
 <script>
 // Brand hover — background morph
 const overlay = document.getElementById('bgOverlay');
@@ -558,10 +567,13 @@ initTilt('.brand-card, .pk-card');
 </script>
 
 <!-- ══════════════ CATALOG DATA + RENDER ══════════════ -->
-<script src="brand-products.js?v=3"></script>
+<script src="brand-products.js?v=4"></script>
 <script>
 (function(){
-  const P = window.BRAND_PRODUCTS || [];
+  // Brands taken off the site for now — their data/images stay in
+  // brand-products.js so they can come back by deleting the name here.
+  const HIDDEN_BRANDS = ['Benjy'];
+  const P = (window.BRAND_PRODUCTS || []).filter(p=>!HIDDEN_BRANDS.includes(p.b));
   const state = { brand:'VFOODS', group:'all', q:'' };
 
   // Every record already carries its English name — hand the pairs to the
@@ -582,7 +594,7 @@ initTilt('.brand-card, .pk-card');
     { key:'Bless',       label:'เบลส',           mono:'Bl' },
     { key:'Pina',        label:'พิน่า',           mono:'Pi' },
     { key:'Mr. Teddy',   label:'มิสเตอร์เทดดี้',  mono:'MT' },
-    { key:'Benjy',       label:'เบนจี้',          mono:'Bj' },
+    // { key:'Benjy',    label:'เบนจี้',          mono:'Bj' },  // hidden for now — see HIDDEN_BRANDS
     { key:'Chido',       label:'ชิโด',            mono:'Ch' },
   ];
 
@@ -598,6 +610,7 @@ initTilt('.brand-card, .pk-card');
   const toolbarEl = document.getElementById('catToolbar');
   const chipsEl = document.getElementById('brandChips');
   const bannerEl = document.getElementById('brandBanner');
+  const otherEl = document.getElementById('catOther');
 
   const BANNER_IMG = {
     VFOODS:'vfoods', Mix:'mix', Benjy:'benjy',
@@ -606,6 +619,18 @@ initTilt('.brand-card, .pk-card');
   };
 
   function brandCount(k){ return P.filter(p=>p.b===k).length; }
+
+  // Search matching: every word typed must appear somewhere in the Thai name,
+  // English name, brand or packaging. Spaces/dots are ignored and "กรัม" = "g",
+  // so "mr mee", "Mr.Mee", "มิกซ์ 100g" and "มิกซ์100กรัม" all hit.
+  function norm(s){ return (''+(s||'')).toLowerCase().replace(/กรัม/g,'g').replace(/[\s.\-_/()]+/g,''); }
+  function brandLabel(k){ const b=BRANDS.find(x=>x.key===k); return b ? b.label : ''; }
+  function matches(p, q){
+    const words = (q||'').trim().split(/\s+/).map(norm).filter(Boolean);
+    if(!words.length) return true;
+    const hay = norm(p.n+' '+(p.en||'')+' '+p.b+' '+brandLabel(p.b)+' '+p.g);
+    return words.every(w=>hay.includes(w));
+  }
 
   function renderChips(){
     chipsEl.innerHTML = BRANDS.map(b=>{
@@ -655,11 +680,10 @@ initTilt('.brand-card, .pk-card');
       cntEl.innerHTML=''; grid.innerHTML=''; emptyEl.hidden=true;
       return;
     }
-    const q = state.q.trim().toLowerCase();
     const items = P.filter(p=>
       p.b===state.brand &&
       (state.group==='all' || p.g===state.group) &&
-      (!q || (p.n+' '+(p.en||'')).toLowerCase().includes(q))
+      matches(p, state.q)
     );
     cntEl.innerHTML = `พบ <b>${items.length}</b> รายการ`;
     emptyEl.textContent = 'ไม่พบสินค้าที่ค้นหา';
@@ -677,7 +701,7 @@ initTilt('.brand-card, .pk-card');
         <div class="prod-stage">
           <span class="prod-pk">${p.g}</span>
           ${p.w?`<span class="prod-w">${p.w}</span>`:''}
-          <img src="${p.img}?v=6" loading="lazy" alt="${p.n.replace(/"/g,'&quot;')}"
+          <img src="${p.img}?v=7" loading="lazy" alt="${p.n.replace(/"/g,'&quot;')}"
                onerror="this.style.opacity=.15;this.onerror=null">
         </div>
         <div class="prod-body">
@@ -699,6 +723,7 @@ initTilt('.brand-card, .pk-card');
     const b = BRANDS.find(x=>x.key===key) || BRANDS[0];
     const chipKey = b.key;
     state.brand = chipKey; state.group='all'; state.q=''; if(searchEl) searchEl.value='';
+    otherEl.hidden = true;
     chipsEl.querySelectorAll('.brand-chip').forEach(c=>c.classList.toggle('active', c.dataset.key===chipKey));
     const count = brandCount(chipKey);
     const hasDims = P.some(p=>p.b===chipKey && !noDims(p));
@@ -717,10 +742,57 @@ initTilt('.brand-card, .pk-card');
   }
   window.openBrand = selectBrand;
 
+  // ── navbar search → jump to the product ──
+  // Finds the typed name across every brand, opens the brand that has it,
+  // filters the grid to the matches and scrolls to / highlights the first card.
+  function brandSearch(q){
+    q = (q||'').trim();
+    if(!q) return;
+    const nq = norm(q);
+    // typed a brand name ("mix", "มิสเตอร์หมี") → just open that brand
+    const byBrand = BRANDS.find(b=>norm(b.key)===nq || norm(b.label)===nq);
+    if(byBrand){ otherEl.hidden = true; selectBrand(byBrand.key); return; }
+
+    const hits = P.filter(p=>matches(p,q));
+    const counts = {};
+    hits.forEach(p=>counts[p.b]=(counts[p.b]||0)+1);
+    // best brand: one whose product name starts with what was typed, else most hits
+    const starts = hits.find(p=>norm(p.n).startsWith(nq) || norm(p.en).startsWith(nq));
+    const ranked = Object.keys(counts).sort((a,b)=>counts[b]-counts[a]);
+    const brand = starts ? starts.b : (ranked[0] || state.brand);
+
+    selectBrand(brand, false);
+    state.q = q; searchEl.value = q;
+    renderGrid();
+    if(!hits.length) emptyEl.textContent = `ไม่พบสินค้า “${q}” — ลองพิมพ์ชื่อสั้นลง หรือเลือกแบรนด์ด้านบน`;
+
+    const others = ranked.filter(b=>b!==brand);
+    otherEl.innerHTML = others.length
+      ? 'พบในแบรนด์อื่นด้วย: ' + others.map(b=>`<button type="button" data-b="${b}">${brandLabel(b)||b} (${counts[b]})</button>`).join('')
+      : '';
+    otherEl.hidden = !others.length;
+    otherEl.querySelectorAll('button').forEach(btn=>btn.onclick=()=>{
+      selectBrand(btn.dataset.b, false); state.q=q; searchEl.value=q; renderGrid(); focusFirst();
+      otherEl.hidden = false;
+      otherEl.querySelectorAll('button').forEach(x=>x.hidden = x===btn);
+    });
+    focusFirst();
+  }
+  function focusFirst(){
+    const card = grid.querySelector('.prod-card');
+    const target = card || document.getElementById('catalog');
+    if(card) card.classList.add('hit');
+    requestAnimationFrame(()=>target.scrollIntoView({behavior:'smooth', block: card ? 'center' : 'start'}));
+  }
+  window.vfBrandSearch = brandSearch;
+
   renderChips();
-  // deep-link from the nav's brand menu, e.g. brands.html?brand=Mr.%20Mee
-  const urlBrand = new URLSearchParams(location.search).get('brand');
+  // deep-links: ?brand= from the nav's brand menu, ?q= from the nav search box
+  const params = new URLSearchParams(location.search);
+  const urlBrand = params.get('brand');
   selectBrand(urlBrand || 'VFOODS', false); // no scroll on initial load
+  const urlQ = params.get('q');
+  if(urlQ) brandSearch(urlQ);
 })();
 </script>
 <script src="i18n.js?v=3"></script>

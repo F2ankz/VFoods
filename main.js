@@ -38,16 +38,15 @@
 })();
 
 // ── NAV SEARCH ──
-// พิมพ์คำค้น แล้ว Enter → ไปหน้าสินค้าพร้อมกรองตามชื่อ/แบรนด์
+// พิมพ์คำค้น แล้ว Enter → ไปหน้าแบรนด์ (brands.html) แล้วเลื่อนไปที่สินค้าชื่อนั้น
 window.navSearch = function(e){
   e.preventDefault();
   const form = e.currentTarget;
   const inp = form.querySelector('input');
   const q = (inp.value || '').trim();
   if(!q){ inp.focus(); return false; }
-  const onProducts = (location.pathname.split('/').pop() || '') === 'products.html';
-  if(onProducts) { applyProductSearch(q); history.replaceState(null,'','products.html?q='+encodeURIComponent(q)); }
-  else location.href = 'products.html?q=' + encodeURIComponent(q);
+  if(window.vfBrandSearch) { window.vfBrandSearch(q); history.replaceState(null,'','brands.html?q='+encodeURIComponent(q)); }
+  else location.href = 'brands.html?q=' + encodeURIComponent(q);
   return false;
 };
 

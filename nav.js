@@ -31,7 +31,7 @@
     ['#jam', 'แยมสับปะรด'], ['#wafer-stick', 'เวเฟอร์สติ๊ก'], ['#sandwich', 'คุ้กกี้สอดไส้ครีม'],
     ['#snack', 'ขนมทานเล่น'], ['#wafer', 'เวเฟอร์แผ่น'], ['#fried', 'ตัวทอด']
   ];
-  var brands = ['VFOODS','Mix','Dear Teddy','Royal Wafer','Celebrate','Mr. Mee','Bless','Pina','Mr. Teddy','Benjy','Chido'];
+  var brands = ['VFOODS','Mix','Dear Teddy','Royal Wafer','Celebrate','Mr. Mee','Bless','Pina','Mr. Teddy','Chido'];  // Benjy hidden for now (2026-09-22)
 
   var prodItems = products.map(function (p) {
     return '<a href="' + P + 'products.html' + p[0] + '">' + p[1] + '</a>';
@@ -139,7 +139,8 @@
       });
     }
 
-    // search → products page with ?q=
+    // search → brands.html?q= (finds the product by name and scrolls to it);
+    // already on brands.html → search in place, no reload
     var form = bar.querySelector('.vn-search');
     if (form) {
       form.addEventListener('submit', function (e) {
@@ -147,7 +148,13 @@
         var input = form.querySelector('input');
         var q = (input.value || '').trim();
         if (!q) { input.focus(); return; }
-        location.href = P + 'products.html?q=' + encodeURIComponent(q);
+        if (window.vfBrandSearch) {
+          window.vfBrandSearch(q);
+          history.replaceState(null, '', 'brands.html?q=' + encodeURIComponent(q));
+          input.blur();
+          return;
+        }
+        location.href = P + 'brands.html?q=' + encodeURIComponent(q);
       });
     }
   }
