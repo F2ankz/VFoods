@@ -656,8 +656,10 @@ body::after {
    ไม่ใช้จัตุรัส — ไม่งั้นรูปถูกบีบตามความสูงและเหลือพื้นที่ว่างซ้าย-ขวาเยอะ */
 .prod-preview{
   max-width:1160px; margin:38px auto 4px; padding:0 4vw;
-  display:grid; grid-template-columns:repeat(4,1fr); gap:20px;
+  display:flex; flex-wrap:wrap; justify-content:center; gap:20px;
 }
+/* 9 หมวดหมู่ → 5+4 จัดกลาง (desktop) · 3×3 (tablet/mobile) */
+.prod-preview > .pp-card{ flex:0 0 calc((100% - 80px)/5); }
 .pp-card{
   display:flex; flex-direction:column; align-items:center; gap:12px;
   text-decoration:none; padding:14px 12px 16px; border-radius:20px;
@@ -681,8 +683,12 @@ body::after {
 }
 .pp-card:hover .pp-stage img{ transform:translateY(-6px) scale(1.05); }
 .pp-name{ font-size:.94rem; font-weight:700; color:#7A2408; text-align:center; line-height:1.35; }
-@media(max-width:900px){ .prod-preview{ grid-template-columns:repeat(3,1fr); } }
-@media(max-width:560px){ .prod-preview{ grid-template-columns:repeat(2,1fr); gap:12px; } }
+@media(max-width:900px){ .prod-preview > .pp-card{ flex-basis:calc((100% - 40px)/3); } }
+@media(max-width:560px){
+  .prod-preview{ gap:10px; padding:0; }
+  .prod-preview > .pp-card{ flex-basis:calc((100% - 20px)/3); padding:8px 6px 10px; gap:8px; border-radius:14px; }
+  .pp-name{ font-size:.78rem; }
+}
 
 /* ═══ ลูกค้าของเรา · โลโก้แบรนด์เลื่อนวน (ย้ายมาจากหน้า OEM) ═══ */
 .cust-sec{ padding:var(--sec-pt) 0 var(--sec-pb); overflow:hidden; }
