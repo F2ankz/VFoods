@@ -682,6 +682,9 @@ body::after {
   transition:transform .45s cubic-bezier(.23,1,.32,1);
 }
 .pp-card:hover .pp-stage img{ transform:translateY(-6px) scale(1.05); }
+/* หมวดหมู่ใช้รูปตัวขนมจริง (สี่เหลี่ยมจัตุรัส) ไม่ใช่รูปแพ็ค */
+.pp-cats .pp-stage{ aspect-ratio:1/1; }
+.pp-cats .pp-stage img{ top:4%; height:92%; }
 .pp-name{ font-size:.94rem; font-weight:700; color:#7A2408; text-align:center; line-height:1.35; }
 @media(max-width:900px){ .prod-preview > .pp-card{ flex-basis:calc((100% - 40px)/3); } }
 @media(max-width:560px){
