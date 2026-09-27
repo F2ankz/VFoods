@@ -693,6 +693,18 @@ body::after {
   .pp-name{ font-size:.78rem; }
 }
 
+/* สินค้าของเรา · แบนเนอร์รวมสินค้า (หัวข้ออยู่ในรูปแล้ว) คลิกไปหน้าสินค้า */
+.pp-banner-title{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+.pp-banner{
+  display:block; max-width:1280px; margin:0 auto; border-radius:28px; overflow:hidden;
+  box-shadow:0 18px 44px rgba(150,40,5,.22);
+  transition:transform .45s cubic-bezier(.23,1,.32,1), box-shadow .45s;
+}
+.pp-banner img{ display:block; width:100%; height:auto; }
+.pp-banner:hover{ transform:translateY(-6px); box-shadow:0 26px 56px rgba(150,40,5,.3); }
+.pp-banner:focus-visible{ outline:3px solid #FFD35C; outline-offset:4px; }
+@media(max-width:560px){ .pp-banner{ border-radius:16px; } }
+
 /* ═══ ลูกค้าของเรา · โลโก้แบรนด์เลื่อนวน (ย้ายมาจากหน้า OEM) ═══ */
 .cust-sec{ padding:var(--sec-pt) 0 var(--sec-pb); overflow:hidden; }
 .cust-sec .sec-head{ margin-bottom:26px; }
