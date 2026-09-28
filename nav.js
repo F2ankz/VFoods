@@ -29,7 +29,7 @@
   var products = [
     ['#sticks', 'ขนมขาไก่'], ['#biscuit', 'บิสกิตและแครกเกอร์'], ['#cream', 'บิสกิตสอดไส้'],
     ['#jam', 'แยมสับปะรด'], ['#wafer-stick', 'เวเฟอร์สติ๊ก'], ['#sandwich', 'คุ้กกี้สอดไส้ครีม'],
-    ['#snack', 'ขนมทานเล่น'], ['#wafer', 'เวเฟอร์แผ่น'], ['#fried', 'ตัวทอด']
+    ['#wafer', 'เวเฟอร์แผ่น'], ['#snack', 'ข้าวโพดขึ้นรูป'], ['#fried', 'ตัวทอด']
   ];
   var brands = ['VFOODS','Mix','Dear Teddy','Royal Wafer','Celebrate','Mr. Mee','Bless','Pina','Mr. Teddy','Chido'];  // Benjy hidden for now (2026-09-22)
 
