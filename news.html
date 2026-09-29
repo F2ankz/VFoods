@@ -71,9 +71,9 @@
 .news-list-all { display:flex; align-items:center; justify-content:center; gap:6px; margin:0 14px 14px; padding:11px; border-radius:12px; border:1px dashed rgba(255,109,26,.35); text-decoration:none; font-family:Sarabun,sans-serif; font-size:.82rem; font-weight:700; color:#D6590C; transition:background .25s, border-color .25s; }
 .news-list-all:hover { background:rgba(255,109,26,.08); border-color:rgba(255,109,26,.6); }
 
-/* ── SHOP ONLINE (Shopee / Lazada) ── */
+/* ── SHOP ONLINE (Shopee / TikTok / Lazada) — 3 การ์ด, รูปแนวตั้ง 2 รูปต่อการ์ด ── */
 .shop-section { margin-top:clamp(40px,5vw,56px); }
-.shop-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.shop-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
 .shop-card {
   display:flex; flex-direction:column; gap:16px; padding:26px; border-radius:var(--r2);
   text-decoration:none; color:#fff; transition:transform .35s cubic-bezier(.23,1,.32,1), box-shadow .35s;
@@ -82,12 +82,13 @@
 .shop-card:hover { transform:translateY(-6px); box-shadow:0 18px 44px rgba(0,0,0,.2); }
 .shop-sp { background:linear-gradient(135deg,#FF6D3F,#EE4D2D); }
 .shop-lz { background:linear-gradient(135deg,#1A0DAB,#F03D6E 55%,#FF8B00); }
+.shop-tt { background:linear-gradient(135deg,#25F4EE -25%,#111 30%,#111 70%,#FE2C55 125%); }
 .shop-card-top { display:flex; align-items:center; gap:14px; }
 .shop-ico { width:48px; height:48px; border-radius:14px; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 .shop-ico svg { width:26px; height:26px; }
 .shop-name { font-family:'Sarabun',sans-serif; font-weight:800; font-size:1.1rem; }
-.shop-photos { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-.shop-photos img { width:100%; aspect-ratio:1; object-fit:contain; border-radius:10px; background:#fff; padding:6px; }
+.shop-photos { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.shop-photos img { width:100%; aspect-ratio:3/4; object-fit:contain; border-radius:12px; background:#fff; padding:10px; }
 .shop-cta { display:flex; align-items:center; gap:8px; font-family:'Sarabun',sans-serif; font-weight:700; font-size:.86rem; margin-top:auto; }
 .shop-arrow { font-size:1.2rem; flex-shrink:0; transition:transform .3s; }
 .shop-card:hover .shop-arrow { transform:translateX(6px); }
@@ -239,9 +240,19 @@ html .social-section .soc-ico { box-shadow:0 8px 24px rgba(0,0,0,.14) !important
           <div class="shop-photos">
             <img src="img/brand-packs/kai5.webp" alt="สินค้า VFoods บน Shopee" loading="lazy">
             <img src="img/brand-packs/jak.webp" alt="สินค้า VFoods บน Shopee" loading="lazy">
-            <img src="img/brand-packs/creamvanilla.webp" alt="สินค้า VFoods บน Shopee" loading="lazy">
           </div>
           <div class="shop-cta">ไปที่ร้าน Shopee <span class="shop-arrow">→</span></div>
+        </a>
+        <a href="https://vt.tiktok.com/ZS9AKpYTGpMut-kRJ9H/" target="_blank" rel="noopener" class="shop-card shop-tt">
+          <div class="shop-card-top">
+            <span class="shop-ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></span>
+            <div class="shop-name">TikTok Shop</div>
+          </div>
+          <div class="shop-photos">
+            <img src="img/brand-packs/abc.webp" alt="สินค้า VFoods บน TikTok Shop" loading="lazy">
+            <img src="img/brand-packs/bearchoc.webp" alt="สินค้า VFoods บน TikTok Shop" loading="lazy">
+          </div>
+          <div class="shop-cta">ไปที่ร้าน TikTok Shop <span class="shop-arrow">→</span></div>
         </a>
         <a href="https://s.lazada.co.th/s.ZRjUrg?c=x" target="_blank" rel="noopener" class="shop-card shop-lz">
           <div class="shop-card-top">
@@ -249,9 +260,8 @@ html .social-section .soc-ico { box-shadow:0 8px 24px rgba(0,0,0,.14) !important
             <div class="shop-name">Lazada</div>
           </div>
           <div class="shop-photos">
-            <img src="img/lazada/product-1.webp" alt="สินค้า VFoods บน Lazada" loading="lazy">
-            <img src="img/lazada/product-2.webp" alt="สินค้า VFoods บน Lazada" loading="lazy">
-            <img src="img/lazada/product-3.webp" alt="สินค้า VFoods บน Lazada" loading="lazy">
+            <img src="img/brand-packs/creamvanilla.webp" alt="สินค้า VFoods บน Lazada" loading="lazy">
+            <img src="img/brand-packs/kathi.webp" alt="สินค้า VFoods บน Lazada" loading="lazy">
           </div>
           <div class="shop-cta">ไปที่ร้าน Lazada <span class="shop-arrow">→</span></div>
         </a>
