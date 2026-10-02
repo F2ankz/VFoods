@@ -196,22 +196,6 @@ nav{
 .tour-bubble strong{color:var(--acc);}
 @media(max-width:600px){.tour-bubble::after{display:none;}}
 
-/* ── COOKIE CHARACTER ── */
-.ck-wrap{flex-shrink:0;position:relative;cursor:pointer;}
-.ck-float{animation:hfloat 3s ease-in-out infinite;filter:drop-shadow(0 10px 28px rgba(232,23,43,.2));transition:filter .3s;}
-.ck-float:hover{filter:drop-shadow(0 14px 36px rgba(232,23,43,.45));}
-.ck-floor{width:80px;height:10px;border-radius:50%;background:radial-gradient(ellipse,rgba(232,23,43,.18),transparent);margin:4px auto 0;animation:hshadow 3s ease-in-out infinite;}
-.ck-eye{animation:blink 4s ease infinite;}
-@keyframes blink{0%,88%,100%{transform:scaleY(1)}93%{transform:scaleY(.07)}}
-.ck-ll{animation:wL .44s ease infinite alternate;transform-origin:top center;}
-.ck-lr{animation:wR .44s ease infinite alternate;transform-origin:top center;}
-.ck-al{animation:aL .44s ease infinite alternate;transform-origin:top center;}
-.ck-ar{animation:aR .44s ease infinite alternate;transform-origin:top center;}
-@keyframes wL{0%{transform:rotate(-14deg)}100%{transform:rotate(14deg)}}
-@keyframes wR{0%{transform:rotate(14deg)} 100%{transform:rotate(-14deg)}}
-@keyframes aL{0%{transform:rotate(16deg)} 100%{transform:rotate(-16deg)}}
-@keyframes aR{0%{transform:rotate(-16deg)}100%{transform:rotate(16deg)}}
-
 /* ── COMMON SECTION LABELS ── */
 .sec-eye{
   font-family:'Sarabun',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.22em;
@@ -923,12 +907,9 @@ img.fv-obj{width:136px;height:136px;object-fit:contain;animation:oemFloat 4.6s e
 .mascot .m-shadow{width:110px;height:14px;margin:2px auto 0;border-radius:50%;
   background:radial-gradient(ellipse,rgba(58,38,0,.28),transparent 70%);animation:mShadow .5s ease-in-out infinite alternate;}
 @keyframes mShadow{0%{transform:scaleX(1);opacity:.7;}100%{transform:scaleX(.8);opacity:.45;}}
-/* Anchored to the TOP of the mascot, not a fixed pixel offset. The flat SVG
-   fallback is 141px tall but the 3D cookie that replaces it (mascot3d.js) is
-   190px — so the old hardcoded bottom:185px was tuned for the SVG and the
-   bubble sank 18px into the cookie's head as soon as the model loaded.
-   calc(100% + 20px) clears whichever mascot is on screen, and leaves room for
-   the 9px tail plus the 6px bob of .mascot-float. */
+/* Anchored to the TOP of the mascot, not a fixed pixel offset, so it clears
+   the 3D cookie (mascot3d.js) at whatever height it renders. calc(100% + 20px)
+   leaves room for the 9px tail plus the 6px bob of .mascot-float. */
 .m-bubble{position:absolute;bottom:calc(100% + 20px);left:50%;transform:translateX(-50%) scale(.6);transform-origin:bottom center;
   min-width:180px;max-width:264px;padding:11px 16px;border-radius:16px;background:#fff;border:2px solid #1A0604;
   box-shadow:0 6px 0 rgba(26,6,4,.16);font-family:'Baloo 2',sans-serif;font-weight:500;font-size:.86rem;line-height:1.5;
@@ -1171,31 +1152,6 @@ img.fv-obj{width:136px;height:136px;object-fit:contain;animation:oemFloat 4.6s e
           <div class="m-bubble" id="tourBubble">สวัสดีครับ! ผม <strong>คุกกี้น้อย</strong> — เลื่อนลงมาเดินไปพร้อมกันเลย!</div>
           <div class="mascot-float" id="mascotFloat">
             <canvas id="cookie-3d-canvas" width="260" height="320" style="display:none; margin:0 auto; width:100%; height:auto;"></canvas>
-            <svg id="svgMascotFallback" width="100" height="138" viewBox="0 0 120 160" fill="none">
-              <g class="ck-al"><rect x="9" y="70" width="13" height="32" rx="6.5" fill="#C8762A"/><rect x="11" y="70" width="9" height="32" rx="4.5" fill="#E09340"/><circle cx="15.5" cy="102" r="7.5" fill="#C8762A"/><circle cx="15.5" cy="102" r="5.5" fill="#E09340"/></g>
-              <g class="ck-ar"><rect x="98" y="70" width="13" height="32" rx="6.5" fill="#C8762A"/><rect x="100" y="70" width="9" height="32" rx="4.5" fill="#E09340"/><circle cx="104.5" cy="102" r="7.5" fill="#C8762A"/><circle cx="104.5" cy="102" r="5.5" fill="#E09340"/></g>
-              <ellipse cx="60" cy="88" rx="36" ry="34" fill="#C8762A"/><ellipse cx="60" cy="86" rx="32" ry="30" fill="#E09340"/>
-              <ellipse cx="47" cy="82" rx="5" ry="4" fill="#6B3200" transform="rotate(-10 47 82)"/>
-              <ellipse cx="68" cy="78" rx="5" ry="4" fill="#6B3200" transform="rotate(8 68 78)"/>
-              <ellipse cx="57" cy="96" rx="5" ry="4" fill="#6B3200"/>
-              <ellipse cx="60" cy="50" rx="34" ry="32" fill="#C8762A"/><ellipse cx="60" cy="48" rx="30" ry="28" fill="#E09340"/>
-              <ellipse cx="44" cy="44" rx="4.5" ry="3.5" fill="#6B3200" transform="rotate(-12 44 44)"/>
-              <ellipse cx="72" cy="40" rx="4.5" ry="3.5" fill="#6B3200" transform="rotate(8 72 40)"/>
-              <g class="ck-eye">
-                <ellipse cx="50" cy="49" rx="7" ry="7.5" fill="white"/><ellipse cx="70" cy="49" rx="7" ry="7.5" fill="white"/>
-                <circle cx="52" cy="50.5" r="4" fill="#3D1A00"/><circle cx="72" cy="50.5" r="4" fill="#3D1A00"/>
-                <circle cx="53.2" cy="49.2" r="1.5" fill="white"/><circle cx="73.2" cy="49.2" r="1.5" fill="white"/>
-              </g>
-              <ellipse cx="42" cy="58" rx="6" ry="3.5" fill="rgba(232,23,43,.32)"/>
-              <ellipse cx="78" cy="58" rx="6" ry="3.5" fill="rgba(232,23,43,.32)"/>
-              <path d="M52 62 Q60 70 68 62" stroke="#6B3200" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-              <ellipse cx="60" cy="20" rx="26" ry="6" fill="#5A2E00"/>
-              <rect x="44" y="5" width="32" height="17" rx="5.5" fill="white"/>
-              <ellipse cx="60" cy="5" rx="18" ry="8" fill="white"/>
-              <rect x="44" y="15" width="32" height="5" rx="1.5" fill="#E8172B" opacity=".85"/>
-              <g class="ck-ll"><rect x="38" y="118" width="13" height="26" rx="6.5" fill="#C8762A"/><rect x="40" y="118" width="9" height="26" rx="4.5" fill="#E09340"/><ellipse cx="44.5" cy="144" rx="9.5" ry="5.5" fill="#6B3200"/></g>
-              <g class="ck-lr"><rect x="69" y="118" width="13" height="26" rx="6.5" fill="#C8762A"/><rect x="71" y="118" width="9" height="26" rx="4.5" fill="#E09340"/><ellipse cx="75.5" cy="144" rx="9.5" ry="5.5" fill="#6B3200"/></g>
-            </svg>
           </div>
           <div class="m-shadow"></div>
         </div>
@@ -1755,7 +1711,6 @@ window.addEventListener('scroll',()=>{
     // same 3D mascot the home page walks — shared from mascot3d.js
     const mascot3d = (window.VFMascot3D && !reduce) ? window.VFMascot3D.init({
       canvas:   document.getElementById('cookie-3d-canvas'),
-      fallback: document.getElementById('svgMascotFallback'),
       section:  document.getElementById('steps') || document.getElementById('journeyScroll')
     }) : null;
 
