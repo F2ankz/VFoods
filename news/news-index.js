@@ -35,7 +35,17 @@ window.NEWS_INDEX = {
       body: [
         "จากชิ้นขนมแสนอร่อย มาเป็นตัวการ์ตูนน่ารักสดใส พร้อมหมวกสีส้มโลโก้ V ที่พร้อมเดินทางลุยทุกกิจกรรม พาลูกค้าแสนน่ารักของเราไปหาขนมแสนอร่อยหลากหลาย สไตล์วาไรตี้ฟู้ดส์ในทุกๆ วัน"
       ],
-      images: []
+      images: [
+        { src: "news/current/new-mascot-2026/01.jpg", caption: "PINE" },
+        { src: "news/current/new-mascot-2026/02.jpg", caption: "VIPPY" },
+        { src: "news/current/new-mascot-2026/03.jpg", caption: "CUTIE" },
+        { src: "news/current/new-mascot-2026/04.jpg", caption: "CORNNY" },
+        { src: "news/current/new-mascot-2026/05.jpg", caption: "MIXXY" },
+        { src: "news/current/new-mascot-2026/06.jpg", caption: "WAFFY" },
+        { src: "news/current/new-mascot-2026/07.jpg", caption: "BEARY" },
+        { src: "news/current/new-mascot-2026/08.jpg", caption: "ROLLY" },
+        { src: "news/current/new-mascot-2026/09.jpg", caption: "KOOKIE" }
+      ]
     },
     {
       slug: "thaifex-2026",
