@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css?v=4">
-<link rel="stylesheet" href="css/cookieverse.css?v=11">
+<link rel="stylesheet" href="css/cookieverse.css?v=12">
 <link rel="stylesheet" href="../nav.css?v=2">
 <link rel="stylesheet" href="../i18n.css?v=1">
 <link rel="stylesheet" href="../cursor.css?v=1">
@@ -301,12 +301,14 @@
 
 <!-- ═══ สินค้าของเรา — CTA ไปหน้าสินค้า ═══ -->
 <section class="products-cta" id="products">
-  <h2 class="pp-banner-title">สินค้าของเรา</h2>
-  <a class="pp-banner rv" href="../products.html" aria-label="สินค้าของเรา — ดูสินค้าทั้งหมด">
+  <a class="pp-banner rv" href="../products.html">
+    <div class="pp-banner-text">
+      <h2>สินค้าของเรา</h2>
+      <p>บิสกิต คุกกี้ เวเฟอร์ และขนมขบเคี้ยว กว่า 9 หมวดหมู่ — คัดสรรรสชาติที่ดีที่สุดในทุกคำ</p>
+    </div>
     <picture>
-      <source srcset="../img/product_home.webp" type="image/webp">
-      <img src="../img/product_home.jpg" width="1907" height="858" loading="lazy"
-           alt="สินค้าของเรา — บิสกิต คุกกี้ เวเฟอร์ และขนมขบเคี้ยว กว่า 9 หมวดหมู่">
+      <source media="(max-width: 640px)" srcset="../img/product_home_mobile.webp" width="1080" height="1350">
+      <img src="../img/product_home_desktop.webp" width="2000" height="900" loading="lazy" alt="">
     </picture>
   </a>
   <div class="sec-cta rv" style="--d:.2s"><a href="../products.html" class="btn-line">ดูสินค้าทั้งหมด →</a></div>

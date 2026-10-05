@@ -693,17 +693,39 @@ body::after {
   .pp-name{ font-size:.78rem; }
 }
 
-/* สินค้าของเรา · แบนเนอร์รวมสินค้า (หัวข้ออยู่ในรูปแล้ว) คลิกไปหน้าสินค้า */
-.pp-banner-title{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+/* สินค้าของเรา · แบนเนอร์รวมสินค้า คลิกไปหน้าสินค้า
+   รูปไม่มีตัวอักษร — หัวข้อเป็น text จริงเพื่อให้สลับภาษาได้ (i18n.js)
+   จอคอม: text อยู่แถบสีส้มเหนือรูป (ขอบบนรูปเฟดกลืน) · มือถือ: text ซ้อนบนพื้นที่ว่างด้านบนของรูปแนวตั้ง */
 .pp-banner{
-  display:block; max-width:1280px; margin:0 auto; border-radius:28px; overflow:hidden;
+  position:relative; display:block; max-width:1280px; margin:0 auto; border-radius:28px; overflow:hidden;
+  background:#FF7200; color:#fff; text-decoration:none;
   box-shadow:0 18px 44px rgba(150,40,5,.22);
   transition:transform .45s cubic-bezier(.23,1,.32,1), box-shadow .45s;
 }
-.pp-banner img{ display:block; width:100%; height:auto; }
+.pp-banner-text{ position:relative; z-index:1; text-align:center; padding:clamp(26px,3.4vw,44px) 24px 0; }
+.pp-banner-text h2{
+  font-family:var(--font-display); font-weight:800; font-size:clamp(2.2rem,5.2vw,4.4rem);
+  line-height:1.15; letter-spacing:-.01em; color:#fff; margin:0;
+  text-shadow:0 3px 18px rgba(150,40,5,.28);
+}
+.pp-banner-text p{
+  margin:.35em auto 0; max-width:62ch; font-weight:600; font-size:clamp(.95rem,1.5vw,1.3rem);
+  line-height:1.45; color:#fff; text-shadow:0 2px 10px rgba(150,40,5,.3);
+}
+.pp-banner img{
+  display:block; width:100%; height:auto; margin-top:-3%;
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 9%);
+          mask-image:linear-gradient(to bottom, transparent 0, #000 9%);
+}
 .pp-banner:hover{ transform:translateY(-6px); box-shadow:0 26px 56px rgba(150,40,5,.3); }
 .pp-banner:focus-visible{ outline:3px solid #FFD35C; outline-offset:4px; }
-@media(max-width:560px){ .pp-banner{ border-radius:16px; } }
+@media(max-width:640px){
+  .pp-banner{ border-radius:18px; }
+  .pp-banner-text{ position:absolute; inset:0 0 auto; padding:5% 16px 0; }
+  .pp-banner-text h2{ font-size:clamp(1.8rem,8.4vw,2.5rem); }
+  .pp-banner-text p{ margin-top:.2em; font-size:clamp(.74rem,3.2vw,.9rem); line-height:1.35; max-width:38ch; }
+  .pp-banner img{ margin-top:0; -webkit-mask-image:none; mask-image:none; }
+}
 
 /* ═══ ลูกค้าของเรา · โลโก้แบรนด์เลื่อนวน (ย้ายมาจากหน้า OEM) ═══ */
 .cust-sec{ padding:var(--sec-pt) 0 var(--sec-pb); overflow:hidden; }
