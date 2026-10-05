@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>ไม่พบหน้านี้ — VFoods</title>
+<script>
+/* GitHub Pages serves this file for every unknown path, so it doubles as the
+   redirect table for URLs from the old WordPress site (www.vfoods.co.th).
+   Old paths were English by default, Thai under /th/. */
+(function () {
+  var path = location.pathname.toLowerCase().replace(/\/+$/, '') + '/';
+  var thai = /^\/th\//.test(path);
+  path = path.replace(/^\/th\//, '/');
+
+  var exact = {
+    '/about-us/':            'index.html',
+    '/contact-us/':          'contact.html',
+    '/news-activities/':     'news.html',
+    '/oem-engagement-guide/':'oem-guide.html',
+    '/products/':            'products.html',
+    '/our-brands/':          'brands.html',
+
+    '/products/biscuit-sticks/':         'products.html#sticks',
+    '/products/biscuit-cracker/':        'products.html#biscuit',
+    '/products/cream-filled-biscuits/':  'products.html#cream',
+    '/products/pineapple-jam-biscuits/': 'products.html#jam',
+    '/products/rolled-wafer-stick/':     'products.html#wafer-stick',
+    '/products/sandwich-cookies/':       'products.html#sandwich',
+    '/products/wafer/':                  'products.html#wafer',
+    '/products/snack/':                  'products.html#snack',
+
+    '/our-brands/mix/':             'brands.html?brand=Mix',
+    '/our-brands/dear-teddy-150g/': 'brands.html?brand=Dear%20Teddy',
+    '/our-brands/dear-teddy-400g/': 'brands.html?brand=Dear%20Teddy',
+    '/our-brands/royal-wafer/':     'brands.html?brand=Royal%20Wafer',
+    '/our-brands/celebrate/':       'brands.html?brand=Celebrate',
+    '/our-brands/mr-mee/':          'brands.html?brand=Mr.%20Mee',
+    '/our-brands/bless/':           'brands.html?brand=Bless',
+    '/our-brands/pina/':            'brands.html?brand=Pina',
+    '/our-brands/mr-teddy/':        'brands.html?brand=Mr.%20Teddy',
+    '/our-brands/benjy/':           'brands.html?brand=Benjy',
+    '/our-brands/chido/':           'brands.html?brand=Chido'
+  };
+
+  var to = exact[path];
+  if (!to) {
+    if (/^\/our-brands\//.test(path)) to = 'brands.html';       // retired brand pages
+    else if (/^\/products\//.test(path)) to = 'products.html';
+    else if (/^\/post-\d+\//.test(path)) to = 'news.html';      // old news posts
+    else if (path === '/') to = 'index.html';                   // bare /th/
+  }
+  if (!to) return; // genuinely unknown — show the page below
+
+  // Old non-/th/ URLs were the English site; honour that unless the visitor
+  // already picked a language on the new site.
+  try {
+    if (!localStorage.getItem('vf-lang')) localStorage.setItem('vf-lang', thai ? 'th' : 'en');
+  } catch (e) { /* private mode */ }
+
+  location.replace('/' + to);
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root { --og: #8F3806; --dark: #2B0705; --w: #FFFFFF; --cream: #FFF6EC; }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    min-height: 100vh; display: grid; place-items: center; padding: 24px 16px;
+    background: var(--cream); color: var(--dark);
+    font-family: 'Sarabun', sans-serif; text-align: center;
+  }
+  .box { max-width: 460px; }
+  .box img { width: 140px; height: auto; margin-bottom: 28px; }
+  .code { font-size: 5rem; font-weight: 800; color: var(--og); line-height: 1; }
+  h1 { font-size: 1.4rem; margin: 12px 0 8px; }
+  p { opacity: .75; line-height: 1.6; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 28px; }
+  .links a {
+    padding: 10px 20px; border-radius: 999px; text-decoration: none; font-weight: 600;
+    border: 2px solid var(--og); color: var(--og);
+  }
+  .links a.solid { background: var(--og); color: var(--w); }
+</style>
+</head>
+<body>
+  <main class="box">
+    <img src="/img/logo-vfoods.png" alt="VFoods">
+    <div class="code">404</div>
+    <h1>ไม่พบหน้าที่คุณต้องการ</h1>
+    <p>หน้านี้อาจถูกย้ายหรือไม่มีอยู่แล้ว ลองเริ่มจากหน้าหลักหรือดูสินค้าของเราได้เลย<br>Page not found.</p>
+    <div class="links">
+      <a class="solid" href="/index.html">หน้าหลัก</a>
+      <a href="/products.html">สินค้า</a>
+      <a href="/brands.html">แบรนด์</a>
+      <a href="/contact.html">ติดต่อเรา</a>
+    </div>
+  </main>
+</body>
+</html>
