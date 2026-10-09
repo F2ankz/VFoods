@@ -245,7 +245,7 @@
     'เวเฟอร์สติ๊ก': 'Rolled Wafer Sticks',
     'คุ้กกี้สอดไส้ครีม': 'Sandwich Cookies',
     'ขนมทานเล่น': 'Snacks',
-    'ข้าวโพดขึ้นรูป': 'Corn Puffs',
+    'ข้าวโพดขึ้นรูป': 'Corn Snacks',
     'เวเฟอร์แผ่น': 'Wafer Sheets',
     'ตัวทอด': 'Fried Snacks',
     'บิสกิตสอดไส้แยมสับปะรด': 'Pineapple Jam Biscuits',
