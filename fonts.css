@@ -7,7 +7,8 @@
    ด้านล่างชนะฟอนต์ที่หน้านั้น ๆ ประกาศไว้เอง
 
    วิธีติดตั้งไฟล์ฟอนต์ (ลิขสิทธิ์ DB Fonts — ต้องซื้อ/มีสิทธิ์ใช้งานเอง):
-   วางไฟล์ไว้ที่ fonts/ ตามชื่อนี้ แล้วฟอนต์จะขึ้นเองทันที ไม่ต้องแก้โค้ดอีก
+   วางไฟล์ไว้ที่ fonts/ ตามชื่อนี้ แล้วเปิดบรรทัด url(...) ที่คอมเมนต์ไว้ใน
+   @font-face ด้านล่าง (ปิดไว้เพราะยังไม่มีไฟล์ — กันเบราว์เซอร์ขอไฟล์แล้วได้ 404)
      fonts/db-helvethaicamon-x.woff2   (ตัวปกติ — ใช้ทุกน้ำหนักได้)
      fonts/db-helvethaicamon-x-bold.woff2  (ถ้ามีตัวหนาแยกไฟล์)
    ระหว่างที่ยังไม่มีไฟล์ เว็บจะใช้ FC Vision Rounded → Sarabun เป็นตัวสำรอง
@@ -19,8 +20,8 @@
   font-family: 'DB HelvethaicaMon X';
   src: local('DB HelvethaicaMon X'),
        local('DB Helvethaica Mon X'),
-       local('DBHelvethaicaMonX'),
-       url('fonts/db-helvethaicamon-x.woff2') format('woff2');
+       local('DBHelvethaicaMonX');
+       /* , url('fonts/db-helvethaicamon-x.woff2') format('woff2') */
   font-weight: 100 700;
   font-style: normal;
   font-display: swap;
@@ -28,8 +29,8 @@
 @font-face {
   font-family: 'DB HelvethaicaMon X';
   src: local('DB HelvethaicaMon X Bd'),
-       local('DB Helvethaica Mon X Bold'),
-       url('fonts/db-helvethaicamon-x-bold.woff2') format('woff2');
+       local('DB Helvethaica Mon X Bold');
+       /* , url('fonts/db-helvethaicamon-x-bold.woff2') format('woff2') */
   font-weight: 701 900;
   font-style: normal;
   font-display: swap;

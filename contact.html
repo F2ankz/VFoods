@@ -279,7 +279,7 @@
 @keyframes pdot{ 0%,100%{box-shadow:0 0 0 0 rgba(255,227,188,.5)} 50%{box-shadow:0 0 0 6px rgba(255,227,188,0)} }
 </style>
 <link rel="stylesheet" href="mobile-view.css?v=1">
-<link rel="stylesheet" href="fonts.css?v=1">
+<link rel="stylesheet" href="fonts.css?v=2">
 <link rel="stylesheet" href="linebreak.css?v=1">
 <script src="mobile-view.js?v=1"></script>
   <link rel="icon" href="favicon.ico" sizes="any">
@@ -685,7 +685,8 @@ function submitForm(e) {
 }
 
 // ── SMOOTH SCROLL for join badge ──
-document.querySelector('.join-badge-wrap').addEventListener('click', function(e){
+const joinBadge = document.querySelector('.join-badge-wrap');
+if (joinBadge) joinBadge.addEventListener('click', function(e){
   e.preventDefault();
   document.querySelector('#join-me').scrollIntoView({behavior:'smooth', block:'start'});
 });
