@@ -65,7 +65,7 @@ html[data-view="mobile"] .rv {
 
 /* Hero: the clip is now a 16:9 still, so shorten the stage rather
    than crop the characters out of frame on a tall phone.
-   Scoped to #hero — the HOME hero — on purpose. oem-guide.html also has a
+   Scoped to #hero — the HOME hero — on purpose. oem-guide also has a
    `.hero`, but its headline and body copy are dark ink on a cream card;
    painting that stage solid orange here made the accent headline (#D6590C)
    the same colour as its own background and it vanished on phones. */
@@ -138,7 +138,7 @@ html[data-view="mobile"] .mascot .mascot-float,
 html[data-view="mobile"] .jm-row { animation: none !important; }
 
 /* ══════════ PRODUCTS ══════════ */
-/* The flavour tunnel falls back to a plain grid (products.html calls
+/* The flavour tunnel falls back to a plain grid (products calls
    useFallback in lite mode); make sure nothing 3D leaks through. */
 html[data-view="mobile"] #tunnel .tunnel-scene,
 html[data-view="mobile"] #tunnel .gate {

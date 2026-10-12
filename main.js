@@ -7,7 +7,7 @@
   const nav = document.getElementById('g-nav');
   const burger = document.getElementById('nav-burger');
   const mobileMenu = document.getElementById('nav-mobile');
-  const currentPage = location.pathname.split('/').pop() || 'index.html';
+  const currentPage = (location.pathname.split('/').pop() || 'index').replace(/\.html$/, '');
 
   // Mark active link
   document.querySelectorAll('.nav-links a, #nav-mobile a').forEach(a => {
@@ -38,15 +38,15 @@
 })();
 
 // ── NAV SEARCH ──
-// พิมพ์คำค้น แล้ว Enter → ไปหน้าแบรนด์ (brands.html) แล้วเลื่อนไปที่สินค้าชื่อนั้น
+// พิมพ์คำค้น แล้ว Enter → ไปหน้าแบรนด์ (brands) แล้วเลื่อนไปที่สินค้าชื่อนั้น
 window.navSearch = function(e){
   e.preventDefault();
   const form = e.currentTarget;
   const inp = form.querySelector('input');
   const q = (inp.value || '').trim();
   if(!q){ inp.focus(); return false; }
-  if(window.vfBrandSearch) { window.vfBrandSearch(q); history.replaceState(null,'','brands.html?q='+encodeURIComponent(q)); }
-  else location.href = 'brands.html?q=' + encodeURIComponent(q);
+  if(window.vfBrandSearch) { window.vfBrandSearch(q); history.replaceState(null,'','brand?q='+encodeURIComponent(q)); }
+  else location.href = 'brand?q=' + encodeURIComponent(q);
   return false;
 };
 
@@ -72,15 +72,15 @@ function applyProductSearch(q){
   const banner = document.getElementById('searchBanner');
   if(banner){
     banner.innerHTML = total
-      ? `ผลการค้นหา "<strong>${q}</strong>" — พบ <strong>${total}</strong> รายการ · <a href="products.html">ล้างการค้นหา</a>`
-      : `ไม่พบสินค้าที่ตรงกับ "<strong>${q}</strong>" · <a href="products.html">ดูสินค้าทั้งหมด</a>`;
+      ? `ผลการค้นหา "<strong>${q}</strong>" — พบ <strong>${total}</strong> รายการ · <a href="products">ล้างการค้นหา</a>`
+      : `ไม่พบสินค้าที่ตรงกับ "<strong>${q}</strong>" · <a href="products">ดูสินค้าทั้งหมด</a>`;
     banner.style.display = 'block';
   }
 }
 
 // เปิดหน้า products ด้วย ?q= → กรองอัตโนมัติ
 (function(){
-  if((location.pathname.split('/').pop() || '') !== 'products.html') return;
+  if((location.pathname.split('/').pop() || '').replace(/\.html$/, '') !== 'products') return;
   const q = new URLSearchParams(location.search).get('q');
   if(!q) return;
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => applyProductSearch(q));

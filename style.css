@@ -226,7 +226,7 @@ a { text-decoration:none; color:inherit; }
   .footer-grid { grid-template-columns:1fr; }
 }
 
-/* ── SHARED SITE FOOTER (matches homepage scroll-site/index.html) ── */
+/* ── SHARED SITE FOOTER (matches homepage home/) ── */
 .site-foot {
   background:#240604; color:rgba(255,245,243,.75);
   padding:56px 6vw 26px;

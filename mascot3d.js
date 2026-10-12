@@ -198,8 +198,8 @@
         }
       };
 
-      /* pages inside /scroll-site/ sit one level below the model */
-      const MODEL = (/\/scroll-site\//.test(location.pathname) ? '../' : '') + 'models/cookie_walk.glb';
+      /* the homepage (/home/) sits one level below the model */
+      const MODEL = (/\/home\//.test(location.pathname) ? '../' : '') + 'models/cookie_walk.glb';
 
       new THREE.GLTFLoader().load(MODEL, function (gltf) {
         mascotObj = buildMascot(gltf);

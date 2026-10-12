@@ -1,5 +1,5 @@
-// Renders the 3 current stories (news/news-index.js) into the #news-cards grid on news.html.
-// Each card links to news-article.html?id=<slug> — the full story page with all its photos.
+// Renders the 3 current stories (news/news-index.js) into the #news-cards grid on news.
+// Each card links to news-article?id=<slug> — the full story page with all its photos.
 // Update news via admin/news-admin.html; this file never needs editing.
 (function () {
   var mount = document.getElementById('news-cards');
@@ -10,7 +10,7 @@
   items.forEach(function (item) {
     var card = document.createElement('a');
     card.className = 'news-h-card';
-    card.href = 'news-article.html?id=' + encodeURIComponent(item.slug);
+    card.href = 'news-article?id=' + encodeURIComponent(item.slug);
 
     var shots = 1 + ((item.images && item.images.length) || 0);
 

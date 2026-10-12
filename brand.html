@@ -1,0 +1,804 @@
+﻿<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แบรนด์ของเรา — VFoods</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=5">
+<link rel="stylesheet" href="theme-white.css?v=2">
+<link rel="stylesheet" href="nav.css?v=2">
+<link rel="stylesheet" href="i18n.css?v=1">
+<link rel="stylesheet" href="cursor.css?v=1">
+<style>
+/* ── FLAVOR BG MORPH ── */
+body { transition:background-color .6s ease; }
+.brand-bg-overlay {
+  position:fixed; inset:0; z-index:-1; pointer-events:none;
+  transition:opacity .5s ease, background .5s ease;
+  opacity:0;
+}
+
+/* ── BRAND GRID ── */
+.brands-section { padding:clamp(36px,4.8vw,58px) 0; }
+.brands-inner { max-width:1200px; margin:0 auto; padding:0 24px; }
+.brands-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+.brand-card {
+  background:rgba(255,255,255,.1); backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.2); border-radius:var(--r2);
+  padding:32px 20px; text-align:center; cursor:pointer;
+  position:relative; overflow:hidden;
+  transition:all .45s cubic-bezier(.23,1,.32,1);
+}
+.brand-card::before {
+  content:''; position:absolute; inset:0; border-radius:inherit;
+  background:radial-gradient(ellipse 70% 50% at 50% 0%,var(--brand-glow,rgba(255,255,255,.15)),transparent 70%);
+  opacity:0; transition:opacity .4s;
+}
+.brand-card:hover::before { opacity:1; }
+.brand-card:hover {
+  transform:translateY(-10px) scale(1.02);
+  box-shadow:0 20px 60px rgba(0,0,0,.3);
+  border-color:rgba(255,255,255,.45);
+}
+.brand-card:hover .brand-logo-wrap { transform:scale(1.12) rotate(3deg); }
+
+.brand-logo-wrap {
+  width:80px; height:80px; border-radius:20px;
+  background:rgba(255,255,255,.15); border:1.5px solid rgba(255,255,255,.25);
+  display:flex; align-items:center; justify-content:center;
+  font-size:2.5rem; margin:0 auto 16px;
+  transition:all .4s cubic-bezier(.34,1.56,.64,1);
+}
+.brand-name { font-family:'Sarabun',sans-serif; font-size:1rem; font-weight:700; letter-spacing:-.01em; margin-bottom:6px; }
+.brand-name-th { font-size:.82rem; color:rgba(255,255,255,0.85); margin-bottom:12px; font-weight:300; }
+.brand-flavors { display:flex; flex-wrap:wrap; gap:5px; justify-content:center; margin-bottom:12px; }
+.flavor-chip {
+  padding:3px 9px; border-radius:20px; font-size:.62rem; font-weight:600;
+  border:1px solid; cursor:pointer; transition:all .25s;
+  font-family:'Sarabun',sans-serif;
+}
+.flavor-chip:hover { transform:scale(1.08); }
+/* Flavor color classes */
+.f-choc { background:rgba(0,0,0,.42); border-color:rgba(160,80,0,.5); color:#F5C070; }
+.f-straw { background:rgba(0,0,0,.42); border-color:rgba(220,50,80,.4); color:#FFB0B0; }
+.f-van { background:rgba(0,0,0,.42); border-color:rgba(220,190,80,.4); color:#FFE89C; }
+.f-mango { background:rgba(0,0,0,.42); border-color:rgba(240,160,0,.4); color:#FFCC60; }
+.f-coco { background:rgba(0,0,0,.42); border-color:rgba(0,180,130,.4); color:#80FFCC; }
+.f-durian { background:rgba(0,0,0,.42); border-color:rgba(160,200,0,.4); color:#D4F060; }
+.f-matcha { background:rgba(0,0,0,.42); border-color:rgba(60,140,40,.4); color:#A0FF88; }
+.f-milk { background:rgba(0,0,0,.42); border-color:rgba(240,220,140,.3); color:#FFEEC0; }
+.f-seafood { background:rgba(0,0,0,.42); border-color:rgba(0,140,220,.4); color:#80CCFF; }
+.f-bbq { background:rgba(0,0,0,.42); border-color:rgba(200,70,0,.4); color:#FFAA80; }
+.f-orig { background:rgba(0,0,0,.42); border-color:rgba(240,240,240,.3); color:#F0F0F0; }
+
+.brand-desc { font-size:.75rem; color:rgba(255,255,255,0.85); line-height:1.65; font-weight:300; }
+.brand-tag-new { display:inline-block; padding:3px 8px; border-radius:5px; background:rgba(0,0,0,.42); border:1px solid rgba(255,200,0,.4); font-size:.6rem; font-weight:700; color:#FFE060; font-family:'Sarabun',sans-serif; margin-left:6px; }
+
+/* ── FLAVOR FILTER TABS ── */
+.flavor-filter {
+  max-width:1200px; margin:0 auto 36px; padding:0 24px;
+  display:flex; gap:8px; flex-wrap:wrap;
+}
+.flt { padding:7px 16px; border-radius:8px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18); font-size:.75rem; font-weight:600; cursor:pointer; transition:all .25s; color:rgba(255,255,255,0.85); font-family:'Sarabun',sans-serif; }
+.flt:hover, .flt.active { background:rgba(255,255,255,.22); border-color:rgba(255,255,255,.45); color:#fff; transform:translateY(-2px); }
+
+/* ── PACKAGING SECTION (OEM formats) ── */
+.pack-section {
+  padding:clamp(42px,5.4vw,64px) 0 clamp(46px,6vw,70px); position:relative; overflow:hidden;
+  background:
+    radial-gradient(1100px 560px at 50% -12%, rgba(229,26,29,.22), transparent 62%),
+    var(--dark);
+}
+.pack-section::after {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(130% 90% at 50% 118%, rgba(0,0,0,.6), transparent 58%);
+}
+.pack-head { position:relative; z-index:1; max-width:640px; margin:0 auto 52px; padding:0 24px; }
+.pk-grid {
+  position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:0 24px;
+  display:grid; grid-template-columns:repeat(4,1fr); gap:22px;
+  perspective:1500px;                       /* 3D depth for card tilt */
+}
+.pk-card {
+  background:linear-gradient(180deg,#ffffff,#fff5f2);
+  border:1px solid rgba(255,255,255,.14); border-radius:22px; overflow:hidden;
+  box-shadow:0 18px 50px rgba(0,0,0,.42);
+  display:flex; flex-direction:column;
+  transform-style:preserve-3d;              /* let inner layers float in Z */
+  transition:transform .5s cubic-bezier(.23,1,.32,1), box-shadow .5s;
+}
+.pk-card:hover { box-shadow:0 40px 90px rgba(0,0,0,.6), 0 0 0 1px rgba(229,26,29,.3); }
+.pk-stage {
+  position:relative; aspect-ratio:1/1; display:flex; align-items:flex-end; justify-content:center;
+  padding:26px 22px 14px; overflow:hidden; transform-style:preserve-3d;
+  background:radial-gradient(120% 88% at 50% 20%, #fef8f4 0%, #fae9de 56%, #f1d6c6 100%);
+}
+/* spotlight glow behind the product */
+.pk-stage::before {
+  content:''; position:absolute; left:50%; top:40%; width:70%; height:62%;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle, var(--pg,rgba(229,26,29,.34)), transparent 70%);
+  filter:blur(6px); opacity:.5; transition:opacity .5s, transform .6s;
+}
+.pk-card:hover .pk-stage::before { opacity:.92; transform:translate(-50%,-50%) scale(1.14); }
+/* contact shadow ellipse on the floor — anchors the product in 3D space */
+.pk-stage::after {
+  content:''; position:absolute; left:50%; bottom:15px; width:58%; height:24px;
+  transform:translateX(-50%);
+  background:radial-gradient(ellipse at center, rgba(70,26,12,.4), transparent 72%);
+  filter:blur(5px); z-index:1;
+  transition:width .6s cubic-bezier(.23,1,.32,1), opacity .6s, bottom .6s;
+}
+.pk-card:hover .pk-stage::after { width:44%; opacity:.85; bottom:11px; }
+.pk-stage img {
+  position:relative; z-index:2; max-width:88%; max-height:92%; object-fit:contain;
+  filter:drop-shadow(0 20px 24px rgba(0,0,0,.28));
+  transform:translateZ(34px);               /* floats above the card face */
+  transition:transform .6s cubic-bezier(.23,1,.32,1), filter .5s, opacity .3s ease;
+  will-change:transform;
+}
+.pk-card:hover .pk-stage img {
+  transform:translateZ(74px) scale(1.06) translateY(-6px);
+  filter:drop-shadow(0 36px 40px rgba(0,0,0,.44));
+}
+.pk-tag {
+  position:absolute; top:13px; left:13px; z-index:3;
+  padding:4px 12px; border-radius:20px; font-family:'Sarabun',sans-serif;
+  font-size:.62rem; font-weight:800; letter-spacing:.02em;
+  background:#E51A1D; color:#fff; box-shadow:0 5px 16px rgba(229,26,29,.42);
+}
+.pk-body { padding:4px 20px 22px; text-align:center; }
+.pk-en { font-size:.6rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:#C4160C; margin-bottom:3px; font-family:'Sarabun',sans-serif; }
+/* NOTE: .pk-card is a WHITE gradient card, so this text stays dark. */
+.pk-name { font-family:'Sarabun',sans-serif; font-size:1.02rem; font-weight:800; color:#1A0005; letter-spacing:-.01em; }
+.pk-desc { font-family:'Sarabun',sans-serif; font-size:.74rem; line-height:1.62; color:rgba(26,0,5,.72); font-weight:300; margin-top:8px; }
+.pk-vars { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:14px; }
+.pk-thumb {
+  width:30px; height:30px; border-radius:9px; cursor:pointer; padding:0; border:1.5px solid rgba(26,0,5,.1);
+  background-size:cover; background-position:center; background-color:#fff;
+  transition:transform .2s, box-shadow .2s, border-color .2s;
+}
+.pk-thumb:hover { transform:translateY(-2px) scale(1.06); }
+.pk-thumb.active { border-color:#E51A1D; box-shadow:0 0 0 2px rgba(229,26,29,.35); }
+.pk-count { display:inline-block; margin-top:12px; font-family:'Sarabun',sans-serif; font-size:.6rem; font-weight:800; letter-spacing:.02em; color:#C4160C; background:rgba(196,22,12,.1); padding:4px 12px; border-radius:20px; }
+
+@media(max-width:980px) { .pk-grid { grid-template-columns:repeat(3,1fr); } }
+@media(max-width:900px) { .brands-grid { grid-template-columns:repeat(3,1fr); } }
+@media(max-width:680px) { .pk-grid { grid-template-columns:repeat(2,1fr); gap:16px; } }
+@media(max-width:640px) { .brands-grid { grid-template-columns:repeat(2,1fr); } }
+@media(max-width:420px) { .pk-grid { grid-template-columns:1fr; } }
+
+/* ══════════════ PRODUCT CATALOG (dimensions) ══════════════ */
+.catalog {
+  position:relative; padding:clamp(40px,5.2vw,60px) 0 clamp(44px,5.8vw,66px); overflow:hidden;
+  background:
+    radial-gradient(1200px 620px at 50% -10%, rgba(229,26,29,.10), transparent 60%),
+    linear-gradient(180deg,#FFF6ED 0%, #FFEFE3 100%);
+}
+.cat-inner { max-width:1240px; margin:0 auto; padding:0 24px; }
+.cat-head { text-align:center; max-width:720px; margin:0 auto 40px; }
+.cat-head .sec-eye { color:#C4160C; font-weight:800; letter-spacing:.18em; text-transform:uppercase; font-size:.72rem; }
+.cat-head h2 { font-size:clamp(1.7rem,3.4vw,2.5rem); font-weight:800; color:#2B1B16; letter-spacing:-.02em; margin:8px 0 12px; }
+.cat-head p { color:rgba(43,27,22,.72); line-height:1.72; font-weight:300; font-size:.95rem; }
+
+/* brand tabs */
+.cat-tabs { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-bottom:26px; }
+.cat-tab {
+  display:flex; align-items:center; gap:9px; padding:10px 18px; border-radius:999px;
+  background:#fff; border:1.5px solid rgba(142,27,24,.16); cursor:pointer;
+  font-weight:700; font-size:.9rem; color:#8E1B18; transition:all .28s cubic-bezier(.23,1,.32,1);
+  box-shadow:0 4px 14px rgba(142,27,24,.06);
+}
+.cat-tab:hover { transform:translateY(-2px); border-color:rgba(229,26,29,.5); }
+.cat-tab.active { background:linear-gradient(135deg,#E51A1D,#FF5A36); color:#fff; border-color:transparent; box-shadow:0 10px 26px rgba(229,26,29,.34); }
+.cat-tab .tab-n { font-size:.7rem; font-weight:800; padding:2px 8px; border-radius:999px; background:rgba(142,27,24,.1); color:#8E1B18; }
+.cat-tab.active .tab-n { background:rgba(255,255,255,.25); color:#fff; }
+
+/* toolbar */
+.cat-toolbar { display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:center; margin-bottom:30px; }
+.cat-search { position:relative; display:flex; align-items:center; }
+.cat-search svg { position:absolute; left:14px; color:#C4160C; pointer-events:none; }
+.cat-search input {
+  padding:11px 16px 11px 40px; width:290px; max-width:70vw; border-radius:10px;
+  border:1.5px solid rgba(142,27,24,.18); background:#fff; font-size:.9rem; color:#2B1B16;
+  outline:none; transition:border-color .2s, box-shadow .2s;
+}
+.cat-search input:focus { border-color:#E51A1D; box-shadow:0 0 0 3px rgba(229,26,29,.14); }
+.cat-select {
+  padding:11px 34px 11px 15px; border-radius:10px; border:1.5px solid rgba(142,27,24,.18);
+  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' fill='none' stroke='%238E1B18' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 13px center;
+  font-size:.88rem; color:#2B1B16; cursor:pointer; outline:none; appearance:none; -webkit-appearance:none;
+}
+.cat-select:focus { border-color:#E51A1D; box-shadow:0 0 0 3px rgba(229,26,29,.14); }
+.cat-count { font-size:.82rem; color:rgba(43,27,22,.6); font-weight:600; }
+.cat-count b { color:#C4160C; }
+
+/* grid */
+.cat-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(232px,1fr)); gap:20px; }
+.prod-card {
+  container-type:inline-size;   /* the size rows below key off the card, not the viewport */
+  background:linear-gradient(180deg,#ffffff,#fffaf7); border:1px solid rgba(142,27,24,.1);
+  border-radius:18px; overflow:hidden; display:flex; flex-direction:column;
+  box-shadow:0 10px 30px rgba(120,20,10,.08);
+  transition:transform .45s cubic-bezier(.23,1,.32,1), box-shadow .45s, border-color .45s;
+  animation:cardIn .5s both;
+}
+@keyframes cardIn { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+.prod-card:hover { transform:translateY(-8px); box-shadow:0 26px 60px rgba(120,20,10,.20); border-color:rgba(229,26,29,.28); }
+.prod-stage {
+  /* flex:none + min-height:0 keep the 1:1 box honest — without them the image's
+     intrinsic height wins over aspect-ratio and every stage ends up a different
+     height, which is only visible once the lazy images have actually loaded. */
+  position:relative; aspect-ratio:1/1; flex:none; min-height:0; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+  padding:20px; background:radial-gradient(circle at 50% 42%, #fff 0%, #fbf3ee 78%);
+}
+.prod-stage::after {
+  content:''; position:absolute; width:66%; height:22%; left:17%; bottom:9%;
+  background:radial-gradient(ellipse, rgba(120,20,10,.16), transparent 70%); filter:blur(3px);
+}
+.prod-stage img {
+  /* fills the stage's padding box, so the frame is identical on every card and
+     object-fit keeps each pack centred at its own proportions */
+  position:relative; z-index:1; width:100%; height:100%;
+  object-fit:contain; object-position:center;
+  filter:drop-shadow(0 12px 18px rgba(0,0,0,.18)); transition:transform .55s cubic-bezier(.23,1,.32,1);
+}
+.prod-card:hover .prod-stage img { transform:scale(1.07) translateY(-3px); }
+.prod-pk {
+  position:absolute; top:11px; left:11px; z-index:2; max-width:74%;
+  padding:4px 10px; border-radius:999px; background:rgba(43,27,22,.82); color:#FFE2D1;
+  font-size:.6rem; font-weight:700; letter-spacing:.01em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.prod-w {
+  position:absolute; top:11px; right:11px; z-index:2;
+  padding:4px 10px; border-radius:999px; background:#E51A1D; color:#fff;
+  font-size:.62rem; font-weight:800; box-shadow:0 4px 12px rgba(229,26,29,.4);
+}
+.prod-body { padding:14px 16px 16px; display:flex; flex-direction:column; flex:1; }
+.prod-name { font-size:.92rem; font-weight:800; color:#2B1B16; line-height:1.5; letter-spacing:-.01em;
+  height:4.5em; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+.prod-en { font-size:.64rem; color:rgba(43,27,22,.45); font-weight:400; margin-top:3px; line-height:1.45;
+  height:2.9em; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.prod-dims { margin-top:auto; padding-top:11px; border-top:1px dashed rgba(142,27,24,.16);
+  display:flex; flex-direction:column; justify-content:flex-start; gap:7px; min-height:91px; box-sizing:content-box; }
+.dim { display:flex; align-items:center; gap:8px; }
+.dim-ic { flex:none; width:22px; height:22px; border-radius:7px; display:flex; align-items:center; justify-content:center;
+  background:rgba(229,26,29,.09); color:#C4160C; }
+.dim-l { font-size:.64rem; color:rgba(43,27,22,.55); font-weight:600; width:56px; flex:none; }
+.dim-v { font-size:.74rem; color:#2B1B16; font-weight:700; letter-spacing:.01em; }
+.cat-empty { text-align:center; padding:60px 0; color:rgba(43,27,22,.5); font-weight:600; }
+/* nav search → "also found in" other brands */
+.cat-other { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:-8px 0 22px; font-size:.86rem; font-weight:600; color:rgba(43,27,22,.65); }
+.cat-other[hidden] { display:none; }
+.cat-other button { font:inherit; font-size:.82rem; cursor:pointer; padding:5px 12px; border-radius:999px; border:1.5px solid rgba(229,26,29,.35); background:#fff; color:#C4160C; }
+.cat-other button:hover { background:#FFF1EC; border-color:#E51A1D; }
+.cat-other .co-clear { border-color:rgba(43,27,22,.2); color:rgba(43,27,22,.7); }
+/* the card the nav search landed on */
+.prod-card.hit { border-color:#E51A1D; box-shadow:0 0 0 3px rgba(229,26,29,.35), 0 26px 60px rgba(120,20,10,.20); animation:cardIn .5s both, hitPulse 1.4s .5s 2; }
+@keyframes hitPulse { 50% { box-shadow:0 0 0 9px rgba(229,26,29,.12), 0 26px 60px rgba(120,20,10,.20); } }
+
+@media(max-width:560px){
+  .cat-grid { grid-template-columns:repeat(2,1fr); gap:11px; }
+  .prod-body { padding:11px 12px 13px; }
+  .prod-name { font-size:.8rem; height:4.5em; }
+  .prod-en { display:none; }
+}
+
+/* The widest carton string needs 239px of card to sit on one line, and the grid
+   hands out cards from 232px up — so below that, stack the label over the value.
+   Left inline, a string that wraps makes its row 8px taller and drags the whole
+   size band out of step with the card beside it. */
+@container (max-width:248px) {
+  .prod-dims { gap:6px; min-height:105px; }
+  .dim { flex-direction:column; align-items:flex-start; gap:1px; min-height:31px; }
+  .dim-ic { display:none; }
+  .dim-l { width:auto; font-size:.58rem; line-height:1.25; }
+  .dim-v { font-size:.68rem; line-height:1.3; }
+}
+
+/* 320px phones put the card down at ~127px, where even a stacked carton string
+   wraps and takes its row 10px out of line with the others. Buy the width back
+   from the side padding and the face. */
+@container (max-width:170px) {
+  .prod-body { padding-left:9px; padding-right:9px; }
+  .dim-l { font-size:.55rem; }
+  .dim-v { font-size:.62rem; }
+}
+
+/* brand-card product-count chip */
+.brand-count { display:inline-flex; align-items:center; gap:5px; margin-top:10px; padding:4px 12px; border-radius:999px;
+  background:rgba(229,26,29,.1); border:1px solid rgba(229,26,29,.32); color:#C4160C; font-size:.66rem; font-weight:800; }
+.brand-card.has-catalog { cursor:pointer; }
+.brand-card.has-catalog:hover .brand-count { background:#E51A1D; border-color:#E51A1D; color:#fff; }
+.brand-card.has-catalog .brand-count::after { content:' · ดูสินค้า →'; font-weight:800; }
+.brand-card.has-catalog:hover::after { opacity:1; transform:none; }
+.brand-soon { display:inline-block; margin-top:10px; padding:4px 11px; border-radius:999px;
+  background:rgba(43,27,22,.06); border:1px solid rgba(43,27,22,.14); font-size:.62rem; font-weight:700; color:rgba(43,27,22,.5); }
+.brand-card.no-cat { cursor:pointer; }
+
+/* selected brand card */
+.brand-card.selected { border-color:#E51A1D !important;
+  box-shadow:0 0 0 2px rgba(229,26,29,.55), 0 22px 54px rgba(120,20,10,.28) !important; }
+.brand-card.selected .brand-count { background:#E51A1D; border-color:#E51A1D; color:#fff; }
+
+/* ── inline brand catalog (inside the 12-brand section) ── */
+.brand-catalog { margin-top:46px; padding-top:38px; border-top:1px solid rgba(142,27,24,.16); scroll-margin-top:96px; }
+.bc-head { display:flex; justify-content:space-between; align-items:flex-end; gap:22px; flex-wrap:wrap; margin-bottom:28px; }
+.bc-title { max-width:640px; }
+.bc-title .sec-eye { color:#C4160C; font-weight:800; letter-spacing:.16em; font-size:.7rem; text-transform:uppercase; }
+.bc-title h3 { font-size:clamp(1.45rem,2.8vw,2rem); font-weight:800; color:#2B1B16; letter-spacing:-.02em; margin:7px 0 8px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.bc-mono { display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:11px;
+  background:linear-gradient(135deg,#E51A1D,#FF5A36); color:#fff; font-size:1rem; font-weight:800; box-shadow:0 8px 20px rgba(229,26,29,.32); }
+.bc-cnt { font-size:.78rem; font-weight:800; color:#C4160C; background:rgba(229,26,29,.1); padding:4px 12px; border-radius:999px; }
+.bc-title p { color:rgba(43,27,22,.68); font-size:.9rem; font-weight:300; line-height:1.62; }
+.bc-head .cat-toolbar { margin:0; justify-content:flex-end; }
+
+/* ── brand banner hero (background photo swaps per selected brand, no overlay text) ── */
+.page-hero.brand-banner {
+  background-size:cover !important; background-position:center !important; background-repeat:no-repeat !important;
+  transition:background-image .45s ease-in-out;
+  padding:0 !important; margin-top:88px; height:clamp(220px,26vw,420px); aspect-ratio:unset; min-height:0;
+}
+.page-hero.brand-banner::after { content:none; }
+@media(max-width:900px) { .page-hero.brand-banner { margin-top:74px; } }
+
+/* ── brand kicker heading (moved down from the banner, sits above the catalog title) ── */
+.brand-kicker {
+  font-family:'Sarabun',sans-serif; font-size:clamp(1.7rem,3.6vw,2.6rem); font-weight:700;
+  color:#C4160C; text-align:center; letter-spacing:-.02em; margin:0 0 8px;
+}
+
+/* ── brand chips selector (replaces the 12-card grid) ── */
+.brand-chips { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:26px; }
+.brand-chip { display:inline-flex; align-items:center; gap:9px; padding:9px 16px 9px 10px; border-radius:999px;
+  background:#fff; border:1.5px solid rgba(142,27,24,.16); cursor:pointer; font-weight:700; font-size:.9rem; color:#8E1B18;
+  box-shadow:0 4px 14px rgba(142,27,24,.06); transition:transform .28s cubic-bezier(.23,1,.32,1), border-color .28s, background .28s, box-shadow .28s; }
+.brand-chip:hover { transform:translateY(-2px); border-color:rgba(229,26,29,.5); }
+.brand-chip.active { background:linear-gradient(135deg,#E51A1D,#FF5A36); color:#fff; border-color:transparent; box-shadow:0 10px 26px rgba(229,26,29,.34); }
+.chip-mono { width:26px; height:26px; border-radius:8px; display:inline-flex; align-items:center; justify-content:center;
+  background:rgba(142,27,24,.1); color:#8E1B18; font-size:.72rem; font-weight:800; }
+.brand-chip.active .chip-mono { background:rgba(255,255,255,.22); color:#fff; }
+.chip-n { font-size:.68rem; font-weight:800; padding:2px 8px; border-radius:999px; background:rgba(142,27,24,.1); color:#8E1B18; }
+.brand-chip.active .chip-n { background:rgba(255,255,255,.25); color:#fff; }
+/* products without dimension data (image-only brands) */
+.prod-dims.prod-nd { justify-content:center; align-items:center; }
+.nd-note { font-size:.7rem; color:rgba(43,27,22,.5); font-weight:600; text-align:center; padding:3px 0; }
+</style>
+<link rel="stylesheet" href="mobile-view.css?v=1">
+<link rel="stylesheet" href="fonts.css?v=1">
+<link rel="stylesheet" href="linebreak.css?v=1">
+<script src="mobile-view.js?v=1"></script>
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="favicon-512.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+</head>
+<body>
+
+<!-- Flavor BG Overlay -->
+<div class="brand-bg-overlay" id="bgOverlay"></div>
+
+<!-- NAV -->
+<nav id="g-nav">
+  <a class="nav-brand" href="home/"><img class="nav-logo-img" src="img/logo-vfoods.png" alt="VFOODS วีฟู้ดส์"></a>
+  <div class="nav-links">
+    <a href="home/">Home</a>
+    <a href="news-activities">News &amp; Activities</a>
+    <div class="nav-item">
+      <a href="products" class="nav-parent">Products <span class="nav-caret">▾</span></a>
+      <div class="nav-dropdown mega">
+        <a href="products#sticks">ขนมขาไก่</a>
+        <a href="products#biscuit">บิสกิตและแครกเกอร์</a>
+        <a href="products#cream">บิสกิตสอดไส้</a>
+        <a href="products#jam">แยมสับปะรด</a>
+        <a href="products#wafer-stick">เวเฟอร์สติ๊ก</a>
+        <a href="products#sandwich">คุ้กกี้สอดไส้ครีม</a>
+        <a href="products#wafer">เวเฟอร์แผ่น</a>
+        <a href="products#snack">ข้าวโพดขึ้นรูป</a>
+        <a href="products#fried">ตัวทอด</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="brand" class="nav-parent active">Our Brands <span class="nav-caret">▾</span></a>
+      <div class="nav-dropdown mega-brands">
+        <a href="brand">VFOODS</a>
+        <a href="brand">Mr. Teddy</a>
+        <a href="brand">Dear Teddy</a>
+        <a href="brand">Royal Wafer</a>
+        <a href="brand">Mr. Mee</a>
+        <a href="brand">Celebrate</a>
+        <a href="brand">Mix</a>
+        <a href="brand">Indy</a>
+        <a href="brand">Bless</a>
+        <a href="brand">Pina</a>
+        <a href="brand">Chido</a>
+      </div>
+    </div>
+    <a href="oem">OEM Engagement Guide</a>
+    <a href="contact">Contact Us</a>
+  </div>
+  <form class="nav-search" role="search" onsubmit="return navSearch(event)">
+    <input type="search" placeholder="ค้นหาสินค้า…" aria-label="ค้นหาสินค้า">
+    <button type="submit" aria-label="ค้นหา"><svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="8.5" cy="8.5" r="5.5"/><line x1="12.8" y1="12.8" x2="18" y2="18" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="nav-hamburger" id="nav-burger"><span></span><span></span><span></span></div>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <a href="home/">Home</a>
+  <a href="news-activities">News &amp; Activities</a>
+  <a href="products">Products</a>
+  <a href="brand">Our Brands</a>
+  <a href="oem">OEM Engagement Guide</a>
+  <a href="contact">Contact Us</a>
+</div>
+
+<!-- HERO -->
+<div class="page-hero brand-banner" id="brandBanner"></div>
+
+<!-- ── FLAVOR FILTER ── -->
+<div class="brands-section">
+  <div class="brands-inner">
+    <div style="margin-bottom:26px;padding-top:8px;">
+      <div class="sec-eye">Product Catalog</div>
+      <h1 class="brand-kicker">แบรนด์ของเรา</h1>
+      <h2 class="sec-title reveal">สินค้าทั้งหมดพร้อมขนาดจริง</h2>
+      <p class="sec-desc reveal">เลือกแบรนด์เพื่อดูสินค้าทั้งหมด พร้อมขนาดสินค้า ขนาดลัง และจำนวนบรรจุต่อลัง — อ้างอิงสเปคจริงจากโรงงาน</p>
+    </div>
+
+    <!-- brand selector chips -->
+    <div class="brand-chips" id="brandChips"></div>
+
+    <!-- ── INLINE BRAND CATALOG (สินค้าทั้งหมดพร้อมขนาดจริง แยกตามแบรนด์) ── -->
+    <div class="brand-catalog" id="catalog">
+      <div class="bc-head">
+        <div class="bc-title">
+          <div class="sec-eye">Product Catalog · สินค้าพร้อมขนาดจริง</div>
+          <h3><span class="bc-mono" id="bcMono">VF</span> <span id="bcName">VFOODS</span> <span class="bc-cnt" id="bcCnt"></span></h3>
+          <p id="bcDesc">เลือกแบรนด์ด้านบนเพื่อดูสินค้าทั้งหมด พร้อมขนาดสินค้า ขนาดลัง และจำนวนบรรจุ — อ้างอิงสเปคจริงจากโรงงาน</p>
+        </div>
+        <div class="cat-toolbar" id="catToolbar">
+          <div class="cat-search">
+            <svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="8.5" cy="8.5" r="5.5"/><line x1="12.8" y1="12.8" x2="18" y2="18" stroke-linecap="round"/></svg>
+            <input type="search" id="catSearch" placeholder="ค้นหาชื่อสินค้า…" aria-label="ค้นหาสินค้า">
+          </div>
+          <select id="catGroup" class="cat-select" aria-label="กรองตามบรรจุภัณฑ์"></select>
+          <span class="cat-count" id="catCount"></span>
+        </div>
+      </div>
+      <div class="cat-other" id="catOther" hidden></div>
+      <div class="cat-grid" id="catGrid"></div>
+      <div class="cat-empty" id="catEmpty" hidden>ไม่พบสินค้าที่ค้นหา</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- OEM CTA -->
+<section style="padding:clamp(38px,5vw,56px) 24px;text-align:center;background:var(--og3);">
+  <div style="max-width:620px;margin:0 auto;">
+    <h2 style="font-family:'Sarabun',sans-serif;font-size:2rem;font-weight:700;letter-spacing:-.03em;margin-bottom:14px;">สร้างแบรนด์ของคุณ</h2>
+    <p style="color:rgba(255,255,255,.85);line-height:1.8;margin-bottom:32px;font-weight:300;">ผลิตสินค้าภายใต้แบรนด์ของคุณเองผ่านบริการ OEM ของเรา</p>
+    <a href="oem" class="btn-w">ดูคู่มือ OEM →</a>
+  </div>
+</section>
+
+<footer class="site-foot">
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="foot-logo">VFOODS</div>
+      <p>บริษัท วาไรตี้ ฟู้ดส์ อินเตอร์เนชั่นแนล จำกัด ผู้ผลิตบิสกิตและขนมขบเคี้ยวคุณภาพสูง อันดับ 1 ในประเทศไทย ส่งออก 50+ ประเทศทั่วโลก</p>
+      <p class="foot-shop">ช้อปออนไลน์: <a href="https://s.lazada.co.th/s.ZRjUrg?c=x" target="_blank" rel="noopener">Lazada</a> · <a href="https://shopee.co.th/vfoods_official" target="_blank" rel="noopener">Shopee</a></p>
+      <div class="foot-social">
+        <a href="https://www.facebook.com/VarietyFoods" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.4H8v3h2.6V21z"/></svg></a>
+        <a href="https://www.tiktok.com/@vfoods_shop?_r=1&amp;_t=ZS-98gYfrkz9oy" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 3c.3 2.2 1.6 3.6 3.9 3.8v2.6c-1.4.1-2.6-.3-3.9-1.1v5.3c0 6.8-7.4 8.9-10.4 4-1.9-3.1-.7-8.6 5.5-8.8v2.8c-.5.1-1 .2-1.4.4-1.4.5-2.2 1.3-2 2.9.4 3 5.9 3.9 5.4-2V3z"/></svg></a>
+        <a href="https://www.instagram.com/vfoods_official/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.6c2.7 0 3 0 4.1.1 2.8.1 4.1 1.5 4.2 4.2.1 1.1.1 1.4.1 4.1s0 3-.1 4.1c-.1 2.7-1.4 4.1-4.2 4.2-1.1.1-1.4.1-4.1.1s-3 0-4.1-.1c-2.8-.1-4.1-1.5-4.2-4.2C3.6 15 3.6 14.7 3.6 12s0-3 .1-4.1C3.8 5.2 5.1 3.8 7.9 3.7 9 3.6 9.3 3.6 12 3.6zM12 2c-2.7 0-3.1 0-4.1.1C4.2 2.2 2.2 4.2 2.1 7.9 2 8.9 2 9.3 2 12s0 3.1.1 4.1c.1 3.7 2.1 5.7 5.8 5.8 1 .1 1.4.1 4.1.1s3.1 0 4.1-.1c3.7-.1 5.7-2.1 5.8-5.8.1-1 .1-1.4.1-4.1s0-3.1-.1-4.1c-.1-3.7-2.1-5.7-5.8-5.8C15.1 2 14.7 2 12 2zm0 4.9a5.1 5.1 0 1 0 0 10.2 5.1 5.1 0 0 0 0-10.2zm0 8.5a3.4 3.4 0 1 1 0-6.8 3.4 3.4 0 0 1 0 6.8zm5.3-9.9a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"/></svg></a>
+        <a href="https://www.youtube.com/channel/UC-5HbsQsaBov9dHHvGUVoag" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4a2.5 2.5 0 0 0-1.8 1.8C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8c.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8zM10 15V9l5.2 3z"/></svg></a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h4>เมนู</h4>
+      <a href="home/">หน้าแรก</a>
+      <a href="products">สินค้าของเรา</a>
+      <a href="brand">แบรนด์ของเรา</a>
+      <a href="news-activities">ข่าวสาร</a>
+    </div>
+    <div class="foot-col">
+      <h4>บริการ</h4>
+      <a href="oem">คู่มือ OEM</a>
+      <a href="contact">ติดต่อเรา</a>
+      <a href="contact#join">ร่วมงานกับเรา</a>
+    </div>
+    <div class="foot-col">
+      <h4>ติดต่อ</h4>
+      <a href="https://www.vfoods.co.th" target="_blank" rel="noopener">www.vfoods.co.th</a>
+      <a href="contact">แผนที่บริษัท</a>
+      <a class="foot-line" href="https://lin.ee/6QHCjXr" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>เพิ่มเพื่อน LINE</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <p>© 2026 Variety Foods International Co., Ltd. All rights reserved.</p>
+    <p>FSSC 22000 · HACCP · GMP · HALAL</p>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script src="nav.js?v=6"></script>
+<script>
+// Brand hover — background morph
+const overlay = document.getElementById('bgOverlay');
+function brandHover(card) {
+  const bg = card.dataset.bg || 'rgba(255,100,0,.2)';
+  overlay.style.background = bg;
+  overlay.style.opacity = '1';
+}
+function brandLeave() {
+  overlay.style.opacity = '0';
+}
+
+// Flavor filter
+function filterFlavor(btn, flavor) {
+  document.querySelectorAll('.flt').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.brand-card').forEach(card => {
+    if(flavor === 'all') {
+      card.style.opacity = '1'; card.style.transform = '';
+    } else {
+      const flavors = card.dataset.flavors || '';
+      if(flavors.includes(flavor)) {
+        card.style.opacity = '1'; card.style.transform = '';
+      } else {
+        card.style.opacity = '.25'; card.style.transform = 'scale(.96)';
+      }
+    }
+  });
+}
+
+// Packaging variant image swap
+function pkSwap(btn, src) {
+  const card = btn.closest('.pk-card');
+  const img = card.querySelector('.pk-stage img');
+  if (img.getAttribute('src') === src) return;
+  img.style.opacity = '0';
+  setTimeout(() => { img.src = src; img.style.opacity = '1'; }, 160);
+  card.querySelectorAll('.pk-thumb').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+initTilt('.brand-card, .pk-card');
+</script>
+
+<!-- ══════════════ CATALOG DATA + RENDER ══════════════ -->
+<script src="brand-products.js?v=19"></script>
+<script>
+(function(){
+  // Brands taken off the site for now — their data/images stay in
+  // brand-products.js so they can come back by deleting the name here.
+  const HIDDEN_BRANDS = ['Benjy'];
+  const P = (window.BRAND_PRODUCTS || []).filter(p=>!HIDDEN_BRANDS.includes(p.b));
+  const state = { brand:'VFOODS', group:'all', q:'' };
+
+  // Every record already carries its English name — hand the pairs to the
+  // language switch so card titles and image alts translate with the rest.
+  // (i18n.js loads after this script, so leave them where it will find them.)
+  window.VF_I18N_EXTRA = window.VF_I18N_EXTRA || {};
+  P.forEach(p => { if (p.n && p.en) window.VF_I18N_EXTRA[p.n] = p.en; });
+
+  // brand selector — all 11 brands get their own chip; the 5 without a
+  // catalog yet (no product photos/listing) just render a blank panel.
+  const BRANDS = [
+    { key:'VFOODS',      label:'VFOODS',         mono:'VF' },
+    { key:'Mix',         label:'มิกซ์',           mono:'Mx' },
+    { key:'Dear Teddy',  label:'Dear Teddy',     mono:'DT' },
+    { key:'Royal Wafer', label:'Royal Wafer',    mono:'RW' },
+    { key:'Celebrate',   label:'Celebrate',      mono:'Ce' },
+    { key:'Mr. Mee',     label:'มิสเตอร์หมี',     mono:'MM' },
+    { key:'Bless',       label:'เบลส',           mono:'Bl' },
+    { key:'Pina',        label:'พิน่า',           mono:'Pi' },
+    { key:'Mr. Teddy',   label:'มิสเตอร์เทดดี้',  mono:'MT' },
+    // { key:'Benjy',    label:'เบนจี้',          mono:'Bj' },  // hidden for now — see HIDDEN_BRANDS
+    { key:'Chido',       label:'ชิโด',            mono:'Ch' },
+  ];
+
+  const grid   = document.getElementById('catGrid');
+  const grpEl  = document.getElementById('catGroup');
+  const cntEl  = document.getElementById('catCount');
+  const emptyEl= document.getElementById('catEmpty');
+  const searchEl = document.getElementById('catSearch');
+  const monoEl = document.getElementById('bcMono');
+  const bnameEl= document.getElementById('bcName');
+  const bcntEl = document.getElementById('bcCnt');
+  const descEl = document.getElementById('bcDesc');
+  const toolbarEl = document.getElementById('catToolbar');
+  const chipsEl = document.getElementById('brandChips');
+  const bannerEl = document.getElementById('brandBanner');
+  const otherEl = document.getElementById('catOther');
+
+  const BANNER_IMG = {
+    VFOODS:'vfoods', Mix:'mix', Benjy:'benjy',
+    'Dear Teddy':'dear-teddy', 'Royal Wafer':'royal-wafer', Celebrate:'celebrate',
+    'Mr. Mee':'mr-mee', Bless:'bless', Pina:'pina', 'Mr. Teddy':'mr-teddy', Chido:'chido',
+  };
+
+  function brandCount(k){ return P.filter(p=>p.b===k).length; }
+
+  // Search matching: every word typed must appear somewhere in the Thai name,
+  // English name, brand or packaging. Spaces/dots are ignored and "กรัม" = "g",
+  // so "mr mee", "Mr.Mee", "มิกซ์ 100g" and "มิกซ์100กรัม" all hit.
+  function norm(s){ return (''+(s||'')).toLowerCase().replace(/กรัม/g,'g').replace(/[\s.\-_/()]+/g,''); }
+  function brandLabel(k){ const b=BRANDS.find(x=>x.key===k); return b ? b.label : ''; }
+  function matches(p, q){
+    const words = (q||'').trim().split(/\s+/).map(norm).filter(Boolean);
+    if(!words.length) return true;
+    const hay = norm(p.n+' '+(p.en||'')+' '+p.b+' '+brandLabel(p.b)+' '+p.g);
+    return words.every(w=>hay.includes(w));
+  }
+
+  function renderChips(){
+    chipsEl.innerHTML = BRANDS.map(b=>{
+      const n = brandCount(b.key);
+      return `<button class="brand-chip" data-key="${b.key}">
+        <span class="chip-mono">${b.mono}</span> ${b.label}${n?`<span class="chip-n">${n}</span>`:''}</button>`;
+    }).join('');
+    chipsEl.querySelectorAll('.brand-chip').forEach(ch=>ch.onclick=()=>selectBrand(ch.dataset.key));
+  }
+
+  // clean numeric: 12.0 -> "12", '-' -> null
+  function num(v){
+    if(v===null||v===undefined) return null;
+    let s = (''+v).trim();
+    if(s===''||s==='-') return null;
+    s = s.replace(/\.0+$/,'');
+    return s;
+  }
+  function dims(w,l,h){
+    const a=[num(w),num(l),num(h)].filter(x=>x!==null);
+    return a.length ? a.join(' × ')+' ซม.' : '—';
+  }
+  function packFmt(pk){ return pk ? (''+pk).replace(/x/gi,'×') : '—'; }
+
+  const ICON = {
+    prod:'<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>',
+    carton:'<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="6" width="17" height="13" rx="1.5"/><path d="M3.5 10h17M9 6V4.5h6V6"/></svg>',
+    pack:'<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg>',
+  };
+
+  function renderGroups(){
+    const groups = [...new Set(P.filter(p=>p.b===state.brand).map(p=>p.g))];
+    grpEl.innerHTML = `<option value="all">บรรจุภัณฑ์ทั้งหมด (${groups.length})</option>` +
+      groups.map(g=>`<option value="${g}">${g}</option>`).join('');
+    grpEl.value = state.group;
+    grpEl.style.display = groups.length>1 ? '' : 'none';
+    grpEl.onchange = ()=>{ state.group=grpEl.value; renderGrid(); };
+  }
+
+  function noDims(p){
+    return p.nd || [p.pw,p.pl,p.ph,p.cw,p.cl,p.ch,p.pk].every(x=>x==null||x==='-'||x==='');
+  }
+
+  function renderGrid(){
+    // brand has no product photos/listing yet → blank panel, no "not found" message
+    if(brandCount(state.brand)===0){
+      cntEl.innerHTML=''; grid.innerHTML=''; emptyEl.hidden=true;
+      return;
+    }
+    const items = P.filter(p=>
+      p.b===state.brand &&
+      (state.group==='all' || p.g===state.group) &&
+      matches(p, state.q)
+    );
+    cntEl.innerHTML = `พบ <b>${items.length}</b> รายการ`;
+    emptyEl.textContent = 'ไม่พบสินค้าที่ค้นหา';
+    emptyEl.hidden = items.length>0;
+    grid.innerHTML = items.map((p,i)=>{
+      const dimBlock = noDims(p)
+        ? `<div class="prod-dims prod-nd"><span class="nd-note">น้ำหนัก ${p.w||'—'} · ขนาดบรรจุ: สอบถามฝ่ายขาย</span></div>`
+        : `<div class="prod-dims">
+            <div class="dim"><span class="dim-ic">${ICON.prod}</span><span class="dim-l">ขนาดสินค้า</span><span class="dim-v">${dims(p.pw,p.pl,p.ph)}</span></div>
+            <div class="dim"><span class="dim-ic">${ICON.carton}</span><span class="dim-l">ขนาดลัง</span><span class="dim-v">${dims(p.cw,p.cl,p.ch)}</span></div>
+            <div class="dim"><span class="dim-ic">${ICON.pack}</span><span class="dim-l">บรรจุ/ลัง</span><span class="dim-v">${packFmt(p.pk)}</span></div>
+          </div>`;
+      return `
+      <article class="prod-card" style="animation-delay:${Math.min(i*22,420)}ms">
+        <div class="prod-stage">
+          <span class="prod-pk">${p.g}</span>
+          ${p.w?`<span class="prod-w">${p.w}</span>`:''}
+          <img src="${p.img}?v=7" loading="lazy" alt="${p.n.replace(/"/g,'&quot;')}"
+               onerror="this.style.opacity=.15;this.onerror=null">
+        </div>
+        <div class="prod-body">
+          <h3 class="prod-name" title="${p.n.replace(/"/g,'&quot;')}">${p.n}</h3>
+          <div class="prod-en">${p.en||''}</div>
+          ${dimBlock}
+        </div>
+      </article>`;
+    }).join('');
+  }
+
+  let t;
+  searchEl.addEventListener('input', e=>{
+    clearTimeout(t);
+    t = setTimeout(()=>{ state.q=e.target.value; renderGrid(); }, 140);
+  });
+
+  function selectBrand(key, scroll){
+    const b = BRANDS.find(x=>x.key===key) || BRANDS[0];
+    const chipKey = b.key;
+    state.brand = chipKey; state.group='all'; state.q=''; if(searchEl) searchEl.value='';
+    otherEl.hidden = true;
+    chipsEl.querySelectorAll('.brand-chip').forEach(c=>c.classList.toggle('active', c.dataset.key===chipKey));
+    const count = brandCount(chipKey);
+    const hasDims = P.some(p=>p.b===chipKey && !noDims(p));
+    monoEl.textContent = b.mono; bnameEl.textContent = b.label;
+    bcntEl.textContent = count ? `${count} สินค้า` : '';
+    bcntEl.style.display = count ? '' : 'none';
+    toolbarEl.style.display = count ? '' : 'none';
+    descEl.textContent = count
+      ? (hasDims ? 'แสดงขนาดสินค้า · ขนาดลัง · จำนวนบรรจุต่อลัง อ้างอิงสเปคจริงจากโรงงาน — คลิกแบรนด์อื่นเพื่อสลับดู'
+                 : 'สินค้าแบรนด์นี้ (ข้อมูลขนาดบรรจุอยู่ระหว่างจัดเก็บ) — คลิกแบรนด์อื่นเพื่อสลับดู')
+      : 'แบรนด์ในกลุ่มนี้กำลังจัดเตรียมข้อมูลสินค้า เร็วๆ นี้';
+    renderGroups(); renderGrid();
+    const slug = BANNER_IMG[chipKey] || 'vfoods';
+    bannerEl.style.setProperty('background-image', `url('img/brand-banners/${slug}.jpg')`, 'important');
+    if(scroll!==false) bannerEl.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+  window.openBrand = selectBrand;
+
+  // ── navbar search → jump to the product ──
+  // Finds the typed name across every brand, opens the brand that has it,
+  // filters the grid to the matches and scrolls to / highlights the first card.
+  function brandSearch(q){
+    q = (q||'').trim();
+    if(!q) return;
+    const nq = norm(q);
+    // typed a brand name ("mix", "มิสเตอร์หมี") → just open that brand
+    const byBrand = BRANDS.find(b=>norm(b.key)===nq || norm(b.label)===nq);
+    if(byBrand){ otherEl.hidden = true; selectBrand(byBrand.key); return; }
+
+    const hits = P.filter(p=>matches(p,q));
+    const counts = {};
+    hits.forEach(p=>counts[p.b]=(counts[p.b]||0)+1);
+    // best brand: one whose product name starts with what was typed, else most hits
+    const starts = hits.find(p=>norm(p.n).startsWith(nq) || norm(p.en).startsWith(nq));
+    const ranked = Object.keys(counts).sort((a,b)=>counts[b]-counts[a]);
+    const brand = starts ? starts.b : (ranked[0] || state.brand);
+
+    selectBrand(brand, false);
+    state.q = q; searchEl.value = q;
+    renderGrid();
+    if(!hits.length) emptyEl.textContent = `ไม่พบสินค้า “${q}” — ลองพิมพ์ชื่อสั้นลง หรือเลือกแบรนด์ด้านบน`;
+
+    const others = ranked.filter(b=>b!==brand);
+    otherEl.innerHTML = others.length
+      ? 'พบในแบรนด์อื่นด้วย: ' + others.map(b=>`<button type="button" data-b="${b}">${brandLabel(b)||b} (${counts[b]})</button>`).join('')
+      : '';
+    otherEl.hidden = !others.length;
+    otherEl.querySelectorAll('button').forEach(btn=>btn.onclick=()=>{
+      selectBrand(btn.dataset.b, false); state.q=q; searchEl.value=q; renderGrid(); focusFirst();
+      otherEl.hidden = false;
+      otherEl.querySelectorAll('button').forEach(x=>x.hidden = x===btn);
+    });
+    focusFirst();
+  }
+  function focusFirst(){
+    const card = grid.querySelector('.prod-card');
+    const target = card || document.getElementById('catalog');
+    if(card) card.classList.add('hit');
+    requestAnimationFrame(()=>target.scrollIntoView({behavior:'smooth', block: card ? 'center' : 'start'}));
+  }
+  window.vfBrandSearch = brandSearch;
+
+  renderChips();
+  // deep-links: ?brand= from the nav's brand menu, ?q= from the nav search box
+  const params = new URLSearchParams(location.search);
+  const urlBrand = params.get('brand');
+  selectBrand(urlBrand || 'VFOODS', false); // no scroll on initial load
+  const urlQ = params.get('q');
+  if(urlQ) brandSearch(urlQ);
+})();
+</script>
+<script src="i18n.js?v=6"></script>
+</body>
+</html>

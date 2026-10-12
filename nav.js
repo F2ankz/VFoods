@@ -8,21 +8,23 @@
    The script auto-detects the prefix, so the same tag works anywhere.
    ══════════════════════════════════════════════ */
 (function () {
-  // Base path: pages inside /scroll-site/ need to climb one level.
-  var P = /\/scroll-site\//.test(location.pathname) ? '../' : '';
-  var file = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-  var inScrollSite = /\/scroll-site\//.test(location.pathname);
+  // Base path: the homepage lives in /home/ and needs to climb one level.
+  // Links are extensionless (/products, /brands …) — GitHub Pages serves
+  // products.html for /products — so strip ".html" before matching.
+  var inHome = /\/home\//.test(location.pathname);
+  var P = inHome ? '../' : '';
+  var file = (location.pathname.split('/').pop() || 'index').toLowerCase().replace(/\.html$/, '');
   // which top-level item is the current page
   var active =
-      file === 'products.html'  ? 'products' :
-      file === 'brands.html'    ? 'brands'   :
-      file === 'news.html'      ? 'news'     :
-      file === 'news-article.html' ? 'news' :
-      file === 'news-archive.html' ? 'news' :
-      file === 'oem-guide.html' ? 'oem'      :
-      file === 'catalog.html'   ? 'oem'      :
-      file === 'contact.html'   ? 'contact'  :
-      (inScrollSite && file === 'index.html') ? 'home' : '';
+      file === 'products'  ? 'products' :
+      file === 'brand'     ? 'brands'   :
+      file === 'news-activities' ? 'news' :
+      file === 'news-article' ? 'news' :
+      file === 'news-archive' ? 'news' :
+      file === 'oem'       ? 'oem'      :
+      file === 'catalog'   ? 'oem'      :
+      file === 'contact'   ? 'contact'  :
+      (inHome && file === 'index') ? 'home' : '';
 
   var A = function (key) { return active === key ? ' vn-active' : ''; };
 
@@ -34,10 +36,10 @@
   var brands = ['VFOODS','Mix','Dear Teddy','Royal Wafer','Celebrate','Mr. Mee','Bless','Pina','Mr. Teddy','Chido'];  // Benjy hidden for now (2026-09-22)
 
   var prodItems = products.map(function (p) {
-    return '<a href="' + P + 'products.html' + p[0] + '">' + p[1] + '</a>';
+    return '<a href="' + P + 'products' + p[0] + '">' + p[1] + '</a>';
   }).join('');
   var brandItems = brands.map(function (b) {
-    return '<a href="' + P + 'brands.html?brand=' + encodeURIComponent(b) + '">' + b + '</a>';
+    return '<a href="' + P + 'brand?brand=' + encodeURIComponent(b) + '">' + b + '</a>';
   }).join('');
 
   // Language switch — two national flags. i18n.js wires up the clicks and
@@ -67,27 +69,27 @@
 
   var nav =
     '<nav class="vn" id="vnav">' +
-      '<a class="vn-brand" href="' + P + 'scroll-site/index.html" aria-label="VFOODS หน้าแรก">' +
+      '<a class="vn-brand" href="' + P + 'home/" aria-label="VFOODS หน้าแรก">' +
         '<img class="vn-logo" src="' + P + 'img/vfoods-logo.png" alt="VFOODS วีฟู้ดส์">' +
       '</a>' +
       '<div class="vn-links">' +
-        '<a href="' + P + 'scroll-site/index.html"' + (active === 'home' ? ' class="vn-active"' : '') + '>Home</a>' +
-        '<a href="' + P + 'news.html"' + (active === 'news' ? ' class="vn-active"' : '') + '>News &amp; Activities</a>' +
+        '<a href="' + P + 'home/"' + (active === 'home' ? ' class="vn-active"' : '') + '>Home</a>' +
+        '<a href="' + P + 'news-activities"' + (active === 'news' ? ' class="vn-active"' : '') + '>News &amp; Activities</a>' +
         '<div class="vn-item">' +
-          '<a href="' + P + 'products.html" class="vn-parent' + A('products') + '">Products <span class="vn-caret">▾</span></a>' +
+          '<a href="' + P + 'products" class="vn-parent' + A('products') + '">Products <span class="vn-caret">▾</span></a>' +
           '<div class="vn-dd vn-mega">' + prodItems + '</div>' +
         '</div>' +
         '<div class="vn-item">' +
-          '<a href="' + P + 'brands.html" class="vn-parent' + A('brands') + '">Our Brands <span class="vn-caret">▾</span></a>' +
+          '<a href="' + P + 'brand" class="vn-parent' + A('brands') + '">Our Brands <span class="vn-caret">▾</span></a>' +
           '<div class="vn-dd vn-mega3">' + brandItems + '</div>' +
         '</div>' +
         '<div class="vn-item">' +
-          '<a href="' + P + 'oem-guide.html" class="vn-parent' + A('oem') + '">OEM Engagement Guide <span class="vn-caret">▾</span></a>' +
+          '<a href="' + P + 'oem" class="vn-parent' + A('oem') + '">OEM Engagement Guide <span class="vn-caret">▾</span></a>' +
           '<div class="vn-dd">' +
-            '<a href="' + P + 'catalog.html">Product Catalog 2026</a>' +
+            '<a href="' + P + 'catalog">Product Catalog 2026</a>' +
           '</div>' +
         '</div>' +
-        '<a href="' + P + 'contact.html"' + (active === 'contact' ? ' class="vn-active"' : '') + '>Contact Us</a>' +
+        '<a href="' + P + 'contact"' + (active === 'contact' ? ' class="vn-active"' : '') + '>Contact Us</a>' +
       '</div>' +
       /* ลำดับ: ช่องค้นหาสินค้า มาก่อน แล้วปุ่มเปลี่ยนภาษาอยู่ขวาสุด */
       '<form class="vn-search" role="search">' +
@@ -98,13 +100,13 @@
       '<button class="vn-burger" id="vnBurger" aria-label="เมนู" aria-expanded="false"><span></span><span></span><span></span></button>' +
     '</nav>' +
     '<div class="vn-mobile" id="vnMobile">' +
-      '<a href="' + P + 'scroll-site/index.html"' + (active === 'home' ? ' class="vn-active"' : '') + '>Home</a>' +
-      '<a href="' + P + 'news.html"' + (active === 'news' ? ' class="vn-active"' : '') + '>News &amp; Activities</a>' +
-      '<a href="' + P + 'products.html"' + A('products') + '>Products</a>' +
-      '<a href="' + P + 'brands.html"' + A('brands') + '>Our Brands</a>' +
-      '<a href="' + P + 'oem-guide.html"' + (active === 'oem' ? ' class="vn-active"' : '') + '>OEM Engagement Guide</a>' +
-      '<a href="' + P + 'catalog.html" class="vn-sub' + (file === 'catalog.html' ? ' vn-active' : '') + '">Product Catalog 2026</a>' +
-      '<a href="' + P + 'contact.html"' + (active === 'contact' ? ' class="vn-active"' : '') + '>Contact Us</a>' +
+      '<a href="' + P + 'home/"' + (active === 'home' ? ' class="vn-active"' : '') + '>Home</a>' +
+      '<a href="' + P + 'news-activities"' + (active === 'news' ? ' class="vn-active"' : '') + '>News &amp; Activities</a>' +
+      '<a href="' + P + 'products"' + A('products') + '>Products</a>' +
+      '<a href="' + P + 'brand"' + A('brands') + '>Our Brands</a>' +
+      '<a href="' + P + 'oem"' + (active === 'oem' ? ' class="vn-active"' : '') + '>OEM Engagement Guide</a>' +
+      '<a href="' + P + 'catalog" class="vn-sub' + (file === 'catalog' ? ' vn-active' : '') + '">Product Catalog 2026</a>' +
+      '<a href="' + P + 'contact"' + (active === 'contact' ? ' class="vn-active"' : '') + '>Contact Us</a>' +
     '</div>';
 
   function mount() {
@@ -139,8 +141,8 @@
       });
     }
 
-    // search → brands.html?q= (finds the product by name and scrolls to it);
-    // already on brands.html → search in place, no reload
+    // search → brands?q= (finds the product by name and scrolls to it);
+    // already on brands → search in place, no reload
     var form = bar.querySelector('.vn-search');
     if (form) {
       form.addEventListener('submit', function (e) {
@@ -150,11 +152,11 @@
         if (!q) { input.focus(); return; }
         if (window.vfBrandSearch) {
           window.vfBrandSearch(q);
-          history.replaceState(null, '', 'brands.html?q=' + encodeURIComponent(q));
+          history.replaceState(null, '', 'brand?q=' + encodeURIComponent(q));
           input.blur();
           return;
         }
-        location.href = P + 'brands.html?q=' + encodeURIComponent(q);
+        location.href = P + 'brand?q=' + encodeURIComponent(q);
       });
     }
   }

@@ -15,41 +15,42 @@
   path = path.replace(/^\/th\//, '/');
 
   var exact = {
-    '/about-us/':            'index.html',
-    '/contact-us/':          'contact.html',
-    '/news-activities/':     'news.html',
-    '/oem-engagement-guide/':'oem-guide.html',
-    '/products/':            'products.html',
-    '/our-brands/':          'brands.html',
+    '/about-us/':            'home/',
+    '/contact-us/':          'contact',
+    '/news-activities/':     'news-activities',
+    '/news/':                'news-activities',   // bare /news hits the news/ data folder
+    '/oem-engagement-guide/':'oem',
+    '/products/':            'products',
+    '/our-brands/':          'brand',
 
-    '/products/biscuit-sticks/':         'products.html#sticks',
-    '/products/biscuit-cracker/':        'products.html#biscuit',
-    '/products/cream-filled-biscuits/':  'products.html#cream',
-    '/products/pineapple-jam-biscuits/': 'products.html#jam',
-    '/products/rolled-wafer-stick/':     'products.html#wafer-stick',
-    '/products/sandwich-cookies/':       'products.html#sandwich',
-    '/products/wafer/':                  'products.html#wafer',
-    '/products/snack/':                  'products.html#snack',
+    '/products/biscuit-sticks/':         'products#sticks',
+    '/products/biscuit-cracker/':        'products#biscuit',
+    '/products/cream-filled-biscuits/':  'products#cream',
+    '/products/pineapple-jam-biscuits/': 'products#jam',
+    '/products/rolled-wafer-stick/':     'products#wafer-stick',
+    '/products/sandwich-cookies/':       'products#sandwich',
+    '/products/wafer/':                  'products#wafer',
+    '/products/snack/':                  'products#snack',
 
-    '/our-brands/mix/':             'brands.html?brand=Mix',
-    '/our-brands/dear-teddy-150g/': 'brands.html?brand=Dear%20Teddy',
-    '/our-brands/dear-teddy-400g/': 'brands.html?brand=Dear%20Teddy',
-    '/our-brands/royal-wafer/':     'brands.html?brand=Royal%20Wafer',
-    '/our-brands/celebrate/':       'brands.html?brand=Celebrate',
-    '/our-brands/mr-mee/':          'brands.html?brand=Mr.%20Mee',
-    '/our-brands/bless/':           'brands.html?brand=Bless',
-    '/our-brands/pina/':            'brands.html?brand=Pina',
-    '/our-brands/mr-teddy/':        'brands.html?brand=Mr.%20Teddy',
-    '/our-brands/benjy/':           'brands.html?brand=Benjy',
-    '/our-brands/chido/':           'brands.html?brand=Chido'
+    '/our-brands/mix/':             'brand?brand=Mix',
+    '/our-brands/dear-teddy-150g/': 'brand?brand=Dear%20Teddy',
+    '/our-brands/dear-teddy-400g/': 'brand?brand=Dear%20Teddy',
+    '/our-brands/royal-wafer/':     'brand?brand=Royal%20Wafer',
+    '/our-brands/celebrate/':       'brand?brand=Celebrate',
+    '/our-brands/mr-mee/':          'brand?brand=Mr.%20Mee',
+    '/our-brands/bless/':           'brand?brand=Bless',
+    '/our-brands/pina/':            'brand?brand=Pina',
+    '/our-brands/mr-teddy/':        'brand?brand=Mr.%20Teddy',
+    '/our-brands/benjy/':           'brand?brand=Benjy',
+    '/our-brands/chido/':           'brand?brand=Chido'
   };
 
   var to = exact[path];
   if (!to) {
-    if (/^\/our-brands\//.test(path)) to = 'brands.html';       // retired brand pages
-    else if (/^\/products\//.test(path)) to = 'products.html';
-    else if (/^\/post-\d+\//.test(path)) to = 'news.html';      // old news posts
-    else if (path === '/') to = 'index.html';                   // bare /th/
+    if (/^\/our-brands\//.test(path)) to = 'brand';       // retired brand pages
+    else if (/^\/products\//.test(path)) to = 'products';
+    else if (/^\/post-\d+\//.test(path)) to = 'news-activities';      // old news posts
+    else if (path === '/') to = 'home/';                   // bare /th/
   }
   if (!to) return; // genuinely unknown — show the page below
 
@@ -96,10 +97,10 @@
     <h1>ไม่พบหน้าที่คุณต้องการ</h1>
     <p>หน้านี้อาจถูกย้ายหรือไม่มีอยู่แล้ว ลองเริ่มจากหน้าหลักหรือดูสินค้าของเราได้เลย<br>Page not found.</p>
     <div class="links">
-      <a class="solid" href="/index.html">หน้าหลัก</a>
-      <a href="/products.html">สินค้า</a>
-      <a href="/brands.html">แบรนด์</a>
-      <a href="/contact.html">ติดต่อเรา</a>
+      <a class="solid" href="/home/">หน้าหลัก</a>
+      <a href="/products">สินค้า</a>
+      <a href="/brand">แบรนด์</a>
+      <a href="/contact">ติดต่อเรา</a>
     </div>
   </main>
 </body>
