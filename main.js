@@ -71,9 +71,11 @@ function applyProductSearch(q){
   document.querySelectorAll('.nav-search input').forEach(i => { i.value = q; });
   const banner = document.getElementById('searchBanner');
   if(banner){
+    // q มาจาก ?q= ในลิงก์ — escape ก่อนใส่ HTML กัน XSS
+    const safeQ = q.replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
     banner.innerHTML = total
-      ? `ผลการค้นหา "<strong>${q}</strong>" — พบ <strong>${total}</strong> รายการ · <a href="products">ล้างการค้นหา</a>`
-      : `ไม่พบสินค้าที่ตรงกับ "<strong>${q}</strong>" · <a href="products">ดูสินค้าทั้งหมด</a>`;
+      ? `ผลการค้นหา "<strong>${safeQ}</strong>" — พบ <strong>${total}</strong> รายการ · <a href="products">ล้างการค้นหา</a>`
+      : `ไม่พบสินค้าที่ตรงกับ "<strong>${safeQ}</strong>" · <a href="products">ดูสินค้าทั้งหมด</a>`;
     banner.style.display = 'block';
   }
 }
