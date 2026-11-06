@@ -26,6 +26,70 @@ window.NEWS_INDEX = {
   /* 3 ข่าวปัจจุบัน — โชว์เป็นการ์ดใหญ่ข้างฟีด Facebook บนหน้า news.html */
   current: [
     {
+      slug: "makro-horeca-2026",
+      tag: "กิจกรรม",
+      title: "Vfoods Mix ได้รับเกียรติ Collab เมนูสุดพิเศษกับซอสพริกศรีราชาพานิช ที่งาน Makro Horeca 2026",
+      date: "ตุลาคม 2026",
+      text: "Vfoods Mix ได้รับเกียรติ Collab เมนูสุดพิเศษกับซอสพริกศรีราชาพานิช ที่งาน Makro Horeca 2026🧡✨ เมื่อวันที่ 29 ต.ค. 2569 โดย Cooking Show เมนู “ก๋วยเตี๋ยวคั่วไก่ซอสพริกศรีราชาพานิช” จากเชฟซีตรอง แชมป์ MasterChef Thailand Season 6 บอกเลยว่า กลิ่นหอมมาก ความเข้มข้นของ #ซอสพริกศรีราชาพานิช ผสมกับความกรุบกรอบของ ขาไก่ #VFOODSMIX เข้ากันสุด ๆ🤩🔥",
+      cover: "news/current/makro-horeca-2026/cover.jpg",
+      body: [
+        "Vfoods Mix ได้รับเกียรติ Collab เมนูสุดพิเศษกับซอสพริกศรีราชาพานิช ที่งาน Makro Horeca 2026🧡✨ เมื่อวันที่ 29 ต.ค. 2569 โดย Cooking Show เมนู “ก๋วยเตี๋ยวคั่วไก่ซอสพริกศรีราชาพานิช” จากเชฟซีตรอง แชมป์ MasterChef Thailand Season 6 บอกเลยว่า กลิ่นหอมมาก ความเข้มข้นของ #ซอสพริกศรีราชาพานิช ผสมกับความกรุบกรอบของ ขาไก่ #VFOODSMIX เข้ากันสุด ๆ🤩🔥",
+        "ลองไปทำกินเองที่บ้านได้ง่าย ๆ ลองแล้วจะติดใจ ที่สำคัญอย่าลืม ซอสพริกศรีราชาพานิช และ ขาไก่ VFOODSMIX ไปผสมด้วยนะคะ😊🧡"
+      ],
+      images: [
+        { src: "news/current/makro-horeca-2026/01.jpg", caption: "" },
+        { src: "news/current/makro-horeca-2026/02.jpg", caption: "" },
+        { src: "news/current/makro-horeca-2026/03.jpg", caption: "" },
+        { src: "news/current/makro-horeca-2026/04.jpg", caption: "" },
+        { src: "news/current/makro-horeca-2026/05.jpg", caption: "" },
+        { src: "news/current/makro-horeca-2026/06.jpg", caption: "" },
+        { src: "news/current/makro-horeca-2026/07.jpg", caption: "" },
+        { src: "news/current/makro-horeca-2026/08.jpg", caption: "" },
+        { src: "news/current/makro-horeca-2026/09.jpg", caption: "" },
+        { src: "news/current/makro-horeca-2026/10.jpg", caption: "" },
+        { src: "news/current/makro-horeca-2026/11.jpg", caption: "" },
+        { src: "news/current/makro-horeca-2026/12.jpg", caption: "" },
+        { src: "news/current/makro-horeca-2026/13.jpg", caption: "" },
+        { src: "news/current/makro-horeca-2026/14.jpg", caption: "" },
+        { src: "news/current/makro-horeca-2026/15.jpg", caption: "" },
+        { src: "news/current/makro-horeca-2026/16.jpg", caption: "" },
+        { src: "news/current/makro-horeca-2026/17.jpg", caption: "" },
+        { src: "news/current/makro-horeca-2026/18.jpg", caption: "" },
+        { src: "news/current/makro-horeca-2026/19.jpg", caption: "" },
+        { src: "news/current/makro-horeca-2026/20.jpg", caption: "" }
+      ],
+      link: "https://www.facebook.com/share/p/1QRpEQEZ3z/"
+    },
+    {
+      slug: "wan-sang-suk-2026",
+      tag: "กิจกรรม",
+      title: "บริษัท วาไรตี้ ฟู้ดส์ อินเตอร์เนชั่นแนล จำกัด ร่วมส่งกำลังใจผ่านโครงการ \"วันสร้างสุข\"",
+      date: "ตุลาคม 2026",
+      text: "บริษัท วาไรตี้ ฟู้ดส์ อินเตอร์เนชั่นแนล จำกัด ร่วมส่งกำลังใจผ่านโครงการ \"วันสร้างสุข\" มอบขนมเพื่อจัดทำถุงยังชีพจำนวน 500 ชุด เตรียมส่งมอบให้แก่ผู้ประสบภัยน้ำท่วมในพื้นที่กรุงเทพฯ ปริมณฑล และจังหวัดใกล้เคียง เพื่อร่วมบรรเทาความเดือดร้อนและเคียงข้างทุกคนให้ผ่านพ้นวิกฤตนี้ไปด้วยกัน",
+      cover: "news/current/wan-sang-suk-2026/cover.jpg",
+      body: [
+        "บริษัท วาไรตี้ ฟู้ดส์ อินเตอร์เนชั่นแนล จำกัด ร่วมส่งกำลังใจผ่านโครงการ \"วันสร้างสุข\" มอบขนมเพื่อจัดทำถุงยังชีพจำนวน 500 ชุด เตรียมส่งมอบให้แก่ผู้ประสบภัยน้ำท่วมในพื้นที่กรุงเทพฯ ปริมณฑล และจังหวัดใกล้เคียง เพื่อร่วมบรรเทาความเดือดร้อนและเคียงข้างทุกคนให้ผ่านพ้นวิกฤตนี้ไปด้วยกัน"
+      ],
+      images: [
+        { src: "news/current/wan-sang-suk-2026/01.jpg", caption: "" },
+        { src: "news/current/wan-sang-suk-2026/02.jpg", caption: "" },
+        { src: "news/current/wan-sang-suk-2026/03.jpg", caption: "" },
+        { src: "news/current/wan-sang-suk-2026/04.jpg", caption: "" },
+        { src: "news/current/wan-sang-suk-2026/05.jpg", caption: "" },
+        { src: "news/current/wan-sang-suk-2026/06.jpg", caption: "" },
+        { src: "news/current/wan-sang-suk-2026/07.jpg", caption: "" },
+        { src: "news/current/wan-sang-suk-2026/08.jpg", caption: "" },
+        { src: "news/current/wan-sang-suk-2026/09.jpg", caption: "" },
+        { src: "news/current/wan-sang-suk-2026/10.jpg", caption: "" },
+        { src: "news/current/wan-sang-suk-2026/11.jpg", caption: "" },
+        { src: "news/current/wan-sang-suk-2026/12.jpg", caption: "" },
+        { src: "news/current/wan-sang-suk-2026/13.jpg", caption: "" },
+        { src: "news/current/wan-sang-suk-2026/14.jpg", caption: "" },
+        { src: "news/current/wan-sang-suk-2026/15.jpg", caption: "" }
+      ],
+      link: "https://www.facebook.com/share/p/1F2hcQFovZ/"
+    },
+    {
       slug: "new-mascot-2026",
       tag: "New Mascot",
       title: "เปิดตัว New Mascot ของวาไรตี้ฟู้ดส์",
@@ -46,7 +110,11 @@ window.NEWS_INDEX = {
         { src: "news/current/new-mascot-2026/08.jpg", caption: "ROLLY" },
         { src: "news/current/new-mascot-2026/09.jpg", caption: "KOOKIE" }
       ]
-    },
+    }
+  ],
+
+  /* ข่าวย้อนหลัง — โชว์ในหน้า news-archive.html และท้ายหน้าข่าวแต่ละข่าว */
+  archive: [
     {
       slug: "thaifex-2026",
       tag: "กิจกรรม",
@@ -88,8 +156,5 @@ window.NEWS_INDEX = {
         { src: "news/current/tiktok-shop-awards-2026/02.jpg", caption: "" }
       ]
     }
-  ],
-
-  /* ข่าวย้อนหลัง — โชว์ในหน้า news-archive.html และท้ายหน้าข่าวแต่ละข่าว */
-  archive: []
+  ]
 };
