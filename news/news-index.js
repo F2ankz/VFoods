@@ -88,7 +88,11 @@ window.NEWS_INDEX = {
         { src: "news/current/wan-sang-suk-2026/15.jpg", caption: "" }
       ],
       link: "https://www.facebook.com/share/p/1F2hcQFovZ/"
-    },
+    }
+  ],
+
+  /* ข่าวย้อนหลัง — โชว์ในหน้า news-archive.html และท้ายหน้าข่าวแต่ละข่าว */
+  archive: [
     {
       slug: "new-mascot-2026",
       tag: "New Mascot",
@@ -110,11 +114,7 @@ window.NEWS_INDEX = {
         { src: "news/current/new-mascot-2026/08.jpg", caption: "ROLLY" },
         { src: "news/current/new-mascot-2026/09.jpg", caption: "KOOKIE" }
       ]
-    }
-  ],
-
-  /* ข่าวย้อนหลัง — โชว์ในหน้า news-archive.html และท้ายหน้าข่าวแต่ละข่าว */
-  archive: [
+    },
     {
       slug: "thaifex-2026",
       tag: "กิจกรรม",
