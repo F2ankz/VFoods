@@ -26,6 +26,34 @@ window.NEWS_INDEX = {
   /* 3 ข่าวปัจจุบัน — โชว์เป็นการ์ดใหญ่ข้างฟีด Facebook บนหน้า news.html */
   current: [
     {
+      slug: "vfoods-ecnu-2026",
+      tag: "กิจกรรม",
+      title: "VFOODS MIX ร่วมงานเทศกาลวัฒนธรรมนานาชาติ (文化节) ครั้งที่ 20 ณ มหาวิทยาลัย East China Normal University",
+      date: "พฤศจิกายน 2026",
+      text: "ภาพบรรยากาศความอร่อย VFOODS MIX ในงานเทศกาลวัฒนธรรมนานาชาติ (文化节) ครั้งที่ 20 🇨🇳✨ ณ มหาวิทยาลัย East China Normal University วิทยาเขต Putuo นครเซี่ยงไฮ้ ประเทศจีน ส่งต่อความอร่อยกรุบกรอบของขนมขาไก่ VFOODS MIX ให้กับนักศึกษาและผู้ร่วมงานจากหลากหลายประเทศ",
+      cover: "news/current/vfoods-ecnu-2026/cover.jpg",
+      body: [
+        "ภาพบรรยากาศความอร่อย VFOODS MIX ในงานเทศกาลวัฒนธรรมนานาชาติ (文化节) ครั้งที่ 20 🇨🇳✨ ณ มหาวิทยาลัย East China Normal University (华东师范大学) วิทยาเขต Putuo นครเซี่ยงไฮ้ ประเทศจีน",
+        "ภายในบูธประเทศไทย VFOODS MIX ได้นำขนมขาไก่รสดั้งเดิมและรสฮอตชิลลี่ไปร่วมสร้างสีสันและส่งต่อความอร่อยกรุบกรอบสไตล์ไทย ให้กับนักศึกษาชาวไทย ชาวจีน และชาวต่างชาติที่มาร่วมงานกันอย่างคึกคัก #VFOODSMIX #MIXกล้าท้าให้ลอง #คนชิคๆกินมิกซ์เท่านั้น #ขาไก่ #มิกซ์"
+      ],
+      images: [
+        { src: "news/current/vfoods-ecnu-2026/01.jpg", caption: "" },
+        { src: "news/current/vfoods-ecnu-2026/02.jpg", caption: "" },
+        { src: "news/current/vfoods-ecnu-2026/03.jpg", caption: "" },
+        { src: "news/current/vfoods-ecnu-2026/04.jpg", caption: "" },
+        { src: "news/current/vfoods-ecnu-2026/05.jpg", caption: "" },
+        { src: "news/current/vfoods-ecnu-2026/06.jpg", caption: "" },
+        { src: "news/current/vfoods-ecnu-2026/07.jpg", caption: "" },
+        { src: "news/current/vfoods-ecnu-2026/08.jpg", caption: "" },
+        { src: "news/current/vfoods-ecnu-2026/09.jpg", caption: "" },
+        { src: "news/current/vfoods-ecnu-2026/10.jpg", caption: "" },
+        { src: "news/current/vfoods-ecnu-2026/11.jpg", caption: "" },
+        { src: "news/current/vfoods-ecnu-2026/12.jpg", caption: "" },
+        { src: "news/current/vfoods-ecnu-2026/13.jpg", caption: "" }
+      ],
+      link: "https://www.facebook.com/reel/2082037975849206/"
+    },
+    {
       slug: "makro-horeca-2026",
       tag: "กิจกรรม",
       title: "Vfoods Mix ได้รับเกียรติ Collab เมนูสุดพิเศษกับซอสพริกศรีราชาพานิช ที่งาน Makro Horeca 2026",
