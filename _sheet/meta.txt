@@ -1,0 +1,12 @@
+##### SHEET: Packaging  dims A1:Z1000
+  IMAGES embedded: 35
+    img anchor: 5,2
+    img anchor: 5,4
+    img anchor: 5,11
+    img anchor: 5,15
+    img anchor: 5,17
+##### SHEET: EOE  dims A1:H1
+  HYPERLINK H1: https://drive.google.com/drive/folders/1fPcxYEvUdhpjU7NR-Fw2eoHAjX75RSOj
+  IMAGES embedded: 0
+##### SHEET: ฝาหมุน P6  dims A1:E1
+  IMAGES embedded: 0

@@ -1,0 +1,6 @@
+[mcp_servers.blender]
+command = 'C:\Users\Unite\AppData\Local\Programs\Python\Python313\python.exe'
+args = [
+    "-c",
+    "from blender_mcp.server import main; main()",
+]
